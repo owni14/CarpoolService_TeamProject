@@ -11,7 +11,7 @@ public class AdminController {
 
 	@RequestMapping(value="/home", method= RequestMethod.GET)
 	public String homeAdmin() {
-		System.out.println("asdasd");
+		System.out.println("한글테스트");
 		return "admin/home_admin";
 	}
 

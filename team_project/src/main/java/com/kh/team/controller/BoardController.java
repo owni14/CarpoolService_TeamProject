@@ -38,7 +38,7 @@ public class BoardController {
 	}
 	
 	// 운전자 리스트 (비동기 방식)
-	@RequestMapping(value = "/reservationList", method = RequestMethod.GET)
+	@RequestMapping(value = "/driverList", method = RequestMethod.GET)
 	@ResponseBody
 	public List<MemberVo> passengerReservationList() {
 		List<MemberVo> memberList = memberService.getMemberList();

@@ -186,14 +186,14 @@ https://templatemo.com/tm-559-zay-shop
     </nav>
     <nav>
 	    <div class="smenu" id="smenu_1">
-	    	<a class="smenu_a" href="#">탑승 내역</a>
-	    	<a class="smenu_a" href="#">포인트 내역</a>
-	    	<a class="smenu_a" href="#">충전하기</a>
+	    	<a class="smenu_a" href="/my/history">탑승 내역</a>
+	    	<a class="smenu_a" href="/my/point">포인트 내역</a>
+	    	<a class="smenu_a" href="/my/purchasePoint">충전하기</a>
+	    	<a class="smenu_a" href="/my/rgstDriver">운전자 등록</a>
 	    </div>
 	    <div class="smenu" id="smenu_2">
-	    	<a class="smenu_a" href="#">예약 방법</a>
-	    	<a class="smenu_a" href="#">포인트</a>
-	    	<a class="smenu_a" href="#">운전자 등록</a>
+	    	<a class="smenu_a" href="/serviceInfo/method">예약 방법</a>
+	    	<a class="smenu_a" href="/serviceInfo/describe">포인트</a>
 	    </div>
 	    <div class="smenu" id="smenu_3">
 	   		<a class="smenu_a" href="/event/now">진행중인 이벤트</a>

@@ -85,12 +85,15 @@
 	});
 	 */
 	 
-	 $(".applyBoard").click(function() {
-		 console.log("clicked");
-	 });
+	 // 탑승 신청버튼 클릭
+	$("#tblDriver").on("click", ".applyBoard", function() {
+		console.log("clicked");
+		$("#modal-899906").trigger("click");
+	 }); // $("#tblDriver").on("click", ".applyBoard", function() {})
 	 
 }); // $(document).ready(function() {})
 </script>
+
 <!-- 카카오 지도 api -->
 <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
 	<div class="col-md-2"></div>
@@ -116,7 +119,6 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					...
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary">
@@ -174,10 +176,10 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td><button class="btn btn-success btn-sm" class="applyBoard">탑승신청</button></td>
+					<td><button class="btn btn-success btn-sm applyBoard">탑승신청</button></td>
 				</tr>
 			</table>
-			<table id="tblDriver" class="table">
+			<table class="table" id="tblDriver" class="table">
 				<tr>
 					<th>#</th>
 					<th>운전자</th>

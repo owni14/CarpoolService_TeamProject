@@ -5,7 +5,6 @@
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 ${pagingDto}
 <!-- start inner header -->
-<div class="pcoded-content">
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
 		<div class="main-body">
@@ -47,9 +46,27 @@ ${pagingDto}
 						<div class="card-header-right">
 							<ul class="list-unstyled card-option">
 								<li><i class="icofont icofont-simple-left "></i></li>
-								<li><i class="icofont icofont-maximize full-card"></i></li>
-								<li><i class="icofont icofont-minus minimize-card"></i></li>
-								<li><i class="icofont icofont-refresh reload-card"></i></li>
+								<li>
+									<select name="perPage" id="perPage" style="height:20px; display:inline-block;">
+										<option>5줄 보기</option>
+										<option>10줄 보기</option>
+										<option>15줄 보기</option>
+										<option>20줄 보기</option>
+									</select>
+								</li>
+<!-- 								<li> -->
+<!-- 									<select name="searchType" id="searchType"> -->
+<!-- 										<option>회원 아이디</option> -->
+<!-- 										<option>이름</option> -->
+<!-- 										<option>성별</option> -->
+<!-- 										<option>회사</option> -->
+<!-- 										<option>연락처</option> -->
+<!-- 										<option>회원 탈퇴 여부</option> -->
+<!-- 									</select> -->
+<!-- 								</li> -->
+<!-- 								<li> -->
+<!-- 									<input type="text" id="keyword" name="keyword"/> -->
+<!-- 								</li> -->
 								<li><i class="icofont icofont-error close-card"></i></li>
 							</ul>
 						</div>
@@ -117,9 +134,11 @@ ${pagingDto}
 									<a class="page-link" href="/admin/member_management?page=${v}">${v}</a>
 								</li>
 								</c:forEach>
+								<c:if test="${pagingDto.endPage != pagingDto.totalPage}">
 								<li class="page-item">
 									<a class="page-link" href="/admin/member_management?page=${pagingDto.endPage + 1}">다음</a>
 								</li>
+								</c:if>
 							</ul>
 						</nav>
 					</div>

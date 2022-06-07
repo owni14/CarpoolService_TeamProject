@@ -27,4 +27,8 @@
 	<select id="getMemberList" resultType="MemberVo">
 		select * from member
 	</select>
+	
+	<select id="adminGetCount" resultType="int">
+		select count(*) from member
+	</select>
 </mapper>

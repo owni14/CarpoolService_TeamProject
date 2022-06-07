@@ -38,4 +38,10 @@ public class MemberTest {
 		System.out.println("MemberTest, MemberList : " +  memberList);
 	}
 	// test ok
+	
+	@Test
+	public void getCount() {
+		int count = memberDao.adminGetCount();
+		System.out.println("count : " + count);
+	}
 }

@@ -16,4 +16,8 @@
 		where m_id = #{m_id}
 		and m_pw = #{m_pw}
 	</select>
+	
+	<select id="getMemberList" resultType="MemberVo">
+		select * from member
+	</select>
 </mapper>

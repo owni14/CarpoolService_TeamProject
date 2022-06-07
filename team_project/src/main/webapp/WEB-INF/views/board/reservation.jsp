@@ -42,7 +42,7 @@
 	
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
 		        var infowindow = new kakao.maps.InfoWindow({
-		            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;">출발 위치</div>'
 		        });
 		        infowindow.open(map, marker);
 	
@@ -93,7 +93,28 @@
 <div class="row">
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
-		<h5>운전자 리스트 출력</h5>
+		<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>운전자</th>
+						<th>부서</th>
+						<th>주소</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>TB - Monthly</td>
+						<td>01/04/2012</td>
+						<td>Default</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 	</div>
 	<div class="col-md-2"></div>
 </div>

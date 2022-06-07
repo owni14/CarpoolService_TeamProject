@@ -7,4 +7,5 @@ import com.kh.team.vo.MemberVo;
 public interface MemberDao {
 	public void insertMember(MemberVo memberVo); // 회원 추가
 	public MemberVo getMemberByIdAndPw(String userid, String userpw);
+	public List<MemberVo> getMemberList(); // 멤버 리스트
 }

@@ -1,6 +1,7 @@
 package com.kh.team.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -29,6 +30,12 @@ public class MemberDaoImpl implements MemberDao {
 		parameter.put("m_pw", m_pw);
 		MemberVo memberVo = sqlSession.selectOne(NAMESPACE + "getMemberByIdAndPw", parameter);
 		return memberVo;
+	}
+
+	@Override
+	public List<MemberVo> getMemberList() {
+		List<MemberVo> memberList = sqlSession.selectList(NAMESPACE + "getMemberList");
+		return memberList;
 	}
 
 }

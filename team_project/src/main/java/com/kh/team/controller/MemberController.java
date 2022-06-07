@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.MemberService;
 import com.kh.team.vo.MemberVo;
+
 
 @Controller
 @RequestMapping("/member")
@@ -56,6 +56,11 @@ public class MemberController {
 		return "member/join_form";
 	}
 	
-	//
+	@RequestMapping(value = "/join_run", method = RequestMethod.POST)
+	public String joinRun(MemberVo memberVo) {
+		System.out.println("MemberController, join_run, memberVo: " + memberVo);
+		memberService.insertMember(memberVo);
+		return "redirect:/";
+	}
 	
 }

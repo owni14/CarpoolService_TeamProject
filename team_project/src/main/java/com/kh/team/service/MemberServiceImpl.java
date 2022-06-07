@@ -38,4 +38,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberList;
 	}
 
+	@Override
+	public int adminGetCount() {
+		int count = memberDao.adminGetCount();
+		return count;
+	}
+
 }

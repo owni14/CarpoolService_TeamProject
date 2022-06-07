@@ -34,6 +34,13 @@ public class AdminController {
 	public String memberManagement() {
 		return "admin/memberManagement";
 	}
+	
+	@RequestMapping(value="/event_details", method= RequestMethod.GET)
+	public String eventGetBySeq(int event_seq,Model model) {
+		EventVo eventVo=eventService.getEventByEseq(event_seq);
+		model.addAttribute("eventVo", eventVo);
+		return "admin/eventDetails";
+	}
 
 }
 

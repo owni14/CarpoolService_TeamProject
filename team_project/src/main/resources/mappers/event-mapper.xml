@@ -5,7 +5,7 @@
 
 <mapper namespace="com.kh.team.mappers.event">
 	<select id="getEventList" resultType="EventVo">
-		select * from event
+		select * from event order by event_is_finish desc, event_seq desc
 	</select>
 
 	<insert id="insertEvent">

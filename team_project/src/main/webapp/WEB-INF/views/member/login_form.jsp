@@ -24,10 +24,10 @@ $(document).ready(function() {
 				<form role="form" method="post" action="/member/loginRun">
 					<span style="font-size: 50px;">통합회원 로그인</span>
 					<div class="m_id">
-						<input style="margin-top: 40px; " type="email" class="form-control inputLogin" value="${cookie.saveid.value}" name="m_id" id="m_id" placeholder="아이디(이메일)을 입력해주세요"/>
+						<input style="margin-top: 40px; width:100%" type="email" class="form-control inputLogin" value="${cookie.saveid.value}" name="m_id" id="m_id" placeholder="아이디(이메일)을 입력해주세요"/>
 					</div>
 					<div class="m_pw">
-						<input type="password" class="form-control inputLogin" name="m_pw" id="m_pw" placeholder="비밀번호를 입력해주세요"/>
+						<input style="width:100%" type="password" class="form-control inputLogin" name="m_pw" id="m_pw" placeholder="비밀번호를 입력해주세요"/>
 					</div>
 					<div class="checkbox" style="text-align:left;">
 						<label>

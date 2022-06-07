@@ -56,4 +56,6 @@ public class MemberController {
 		return "member/join_form";
 	}
 	
+	//
+	
 }

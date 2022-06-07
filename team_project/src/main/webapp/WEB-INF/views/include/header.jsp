@@ -21,6 +21,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="/resources/assets/css/fontawesome.min.css">
     
+    <!-- services 라이브러리 불러오기 -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ba11103bc3fedcece5c96fbe33782be3&libraries=services"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ba11103bc3fedcece5c96fbe33782be3"></script>
+	<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ba11103bc3fedcece5c96fbe33782be3&libraries=services,clusterer,drawing"></script>
+    
 <!--
     
 TemplateMo 559 Zay Shop

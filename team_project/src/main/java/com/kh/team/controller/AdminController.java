@@ -19,11 +19,9 @@ public class AdminController {
 	EventService eventService;
 	@RequestMapping(value="/home", method= RequestMethod.GET)
 	public String homeAdmin() {
-		
+
 		return "admin/home_admin";
 	}
-
-
 
 	@RequestMapping(value="/event", method= RequestMethod.GET)
 	public String eventList(Model model) {
@@ -32,7 +30,10 @@ public class AdminController {
 		return "admin/eventManagement";
 	}
 	
-	
+	@RequestMapping(value = "/member_management", method = RequestMethod.GET)
+	public String memberManagement() {
+		return "admin/memberManagement";
+	}
 
 }
 

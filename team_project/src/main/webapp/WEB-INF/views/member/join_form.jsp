@@ -42,8 +42,9 @@ $("#select").selectpicker();
 						<input type="text" class="form-control" id="m_cellphone" name="m_cellphone" placeholder="ex) 01012345678" required/>
 					</div>
 					<div class="form-group">
-						<input type="radio" name="gender" style="margin-right:10px;" checked><label style="margin-right: 15px;">남자</label>
-						<input type="radio" name="gender" style="margin-right:10px;">여자
+						<label style="margin-right: 15px;">성별</label>
+						<input type="radio" name="gender" style="margin-right:10px;" value="M" checked><label style="margin-right: 15px;">남자</label>
+						<input type="radio" name="gender" style="margin-right:10px;" value="W">여자
 					</div>
 					
 					<div class="form-group">
@@ -64,11 +65,16 @@ $("#select").selectpicker();
 					</div>
 					<div class="form-group">
 						<label for="m_dept">부서</label>
-						<input type="text" class="form-control" id="m_dept" name="m_dept" placeholder="ex) 회계부, 홍보부, 생산부" required/>
+						<input type="text" class="form-control" id="m_dept" name="m_dept" placeholder="ex) 회계부, 홍보부, 생산부"/>
 					</div>
 					<div class="form-group">
 						<label for="m_address">주소</label>
-						<input type="text" class="form-control" id="m_dept" name="m_dept" placeholder="도로명 주소 ex) 울산광역시 북구 아진로75" required/>
+						<input type="text" class="form-control" id="m_address" name="m_address" placeholder="도로명 주소 ex) 울산광역시 북구 아진로75" required/>
+					</div>
+					<div class="form-group">
+						<label style="margin-right: 15px;">흡연 여부</label>
+						<input type="radio" name="m_is_smoke" style="margin-right:10px;" value="Y"><label style="margin-right: 15px;">흡연자</label>
+						<input type="radio" name="m_is_smoke" style="margin-right:10px;" value="N" checked>비흡연자
 					</div>
 					<button type="submit" class="btn btn-primary" style="width:100%; height:50px; margin-top:20px;">
 						회원 가입

@@ -18,7 +18,7 @@ public class EventTest {
 	
 	@Test
 	public void eventInsertTest() {
-		EventVo eventVo=new EventVo(0, "test2", null, null, "�̺�Ʈ����2", "Y", null, 60, 95);	
+		EventVo eventVo=new EventVo(0, "test2", null, null, "테스트2", "Y", null, 60, 95);	
 		boolean result=eventDao.insertEvent(eventVo);
 		System.out.println("EventTest eventInsertTest result "+result);
 		//test ok
@@ -28,8 +28,24 @@ public class EventTest {
 	public void eventGetList() {
 		List<EventVo> list=eventDao.getEventList();
 		System.out.println("EventTest eventGetList list "+list);
+		//성공
 	}
 	@Test
 	public void eventUpdate() {
+		EventVo eventVo=new EventVo(2, "test4-수정", null, null, "테스트3수정", "N", null, 60, 95);
+		boolean result=eventDao.updateEvent(eventVo);
+		System.out.println("EventTest eventUpdate result "+result);
+		//성공 12
+	}
+	@Test
+	public void testIsEndEvent() {
+		System.out.println("EventTest testIsEvent result "+eventDao.isEndEventList("Y"));
+		
+	}
+	
+	@Test
+	public void testEventBySeq() {
+		System.out.println("EventTest testEventBySeq result "+eventDao.getEventByEseq(2));
+		
 	}
 }

@@ -48,9 +48,9 @@ public class EventDaoImpl implements EventDao{
 	}
 
 	@Override
-	public boolean isEndEventList(Date date) {
-		sqlSession.selectList(NAMESPACE);
-		return false;
+	public List<EventVo> isEndEventList(String event_is_finish) {
+		List<EventVo> eventList=sqlSession.selectList(NAMESPACE+"isEndEventList",event_is_finish);
+		return eventList;
 	}
 
 	@Override

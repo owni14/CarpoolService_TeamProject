@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- Latest compiled and minified CSS -->
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
+
 <style>
 .form-group {
 	margin-bottom:20px;
@@ -12,17 +14,14 @@
 $(document).ready(function() {
 	
 });
-$('.selectpicker').selectpicker({
-    style: 'btn-info',
-    size: 4
-});
+$("#select").selectpicker();
 </script>
 <div class="row">
 	<div class="col-md-12">
 		<div class="row" style="display: flex; height:1000px;">
 			<div class="col-md-4"></div>
 			<div class="col-md-4" style="margin-top: 50px;">
-				<form role="form">
+				<form role="form" action="join_run" method="post">
 					<div class="form-group" style="text-align: center;">
 						<span style="font-size: 50px;">회원 가입</span>
 					</div>
@@ -49,17 +48,18 @@ $('.selectpicker').selectpicker({
 					
 					<div class="form-group">
 						<label for="m_company">회사</label>
-						<select class="selectpicker btn">
-							<option>삼성</option>
-							<option>현대</option>
-							<option>SK</option>
-							<option>KAKAO</option>
-							<option>NAVER</option>
-							<option>NEXEN</option>
-							<option>LG</option>
-							<option>KT</option>
-							<option>한전</option>
-							<option>두산</option>
+						<select class="form-control btn" name="m_company">
+							<option>회사를 선택해주세요</option>
+							<option value="samsung">삼성</option>
+							<option value="hyundai">현대</option>
+							<option value="sk">SK</option>
+							<option value="kakao">KAKAO</option>
+							<option value="naver">NAVER</option>
+							<option value="nexen">NEXEN</option>
+							<option value="lg">LG</option>
+							<option value="kt">KT</option>
+							<option value="hanwha">한화</option>
+							<option value="dusan">두산</option>
 						</select>
 					</div>
 					<div class="form-group">

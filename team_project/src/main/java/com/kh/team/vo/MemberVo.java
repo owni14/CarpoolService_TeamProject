@@ -23,6 +23,19 @@ public class MemberVo {
 	}
 
 	public MemberVo(String m_id, String m_name, String m_pw, String gender, String m_company, String m_dept,
+			String m_address, String m_cellphone) {
+		super();
+		this.m_id = m_id;
+		this.m_name = m_name;
+		this.m_pw = m_pw;
+		this.gender = gender;
+		this.m_company = m_company;
+		this.m_dept = m_dept;
+		this.m_address = m_address;
+		this.m_cellphone = m_cellphone;
+	}
+
+	public MemberVo(String m_id, String m_name, String m_pw, String gender, String m_company, String m_dept,
 			String m_is_drop, int m_point, int m_evl, int m_blackpoint, Date m_joindate, String m_is_smoke,
 			String m_address, String m_cellphone) {
 		super();

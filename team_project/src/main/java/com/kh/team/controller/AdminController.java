@@ -19,7 +19,6 @@ public class AdminController {
 	EventService eventService;
 	@RequestMapping(value="/home", method= RequestMethod.GET)
 	public String homeAdmin() {
-
 		return "admin/home_admin";
 	}
 

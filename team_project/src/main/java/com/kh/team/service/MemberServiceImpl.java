@@ -1,5 +1,7 @@
 package com.kh.team.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,12 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVo getMemberByIdAndPw(String userid, String userpw) {
 		MemberVo memberVo = memberDao.getMemberByIdAndPw(userid, userpw);
 		return memberVo;
+	}
+
+	@Override
+	public List<MemberVo> getMemberList() {
+		List<MemberVo> memberList = memberDao.getMemberList();
+		return memberList;
 	}
 
 }

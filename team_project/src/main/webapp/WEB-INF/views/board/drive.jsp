@@ -13,6 +13,9 @@
 		<script>
 		$(document).ready(function() {
 			
+			var address = $("#startLoct").val();
+			console.log("startLocation:" + address); // 출발 위치 확인
+			
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {
 		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -26,7 +29,7 @@
 		var geocoder = new kakao.maps.services.Geocoder();
 	
 		// 주소로 좌표를 검색합니다
-		geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) { // 제주특별자치로 제주시 첨단로 242대신 위쪽에서 만든 "address" 넣기
+		geocoder.addressSearch(address, function(result, status) { 
 	
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === kakao.maps.services.Status.OK) {
@@ -63,7 +66,7 @@
 		<form role="form">
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="startLocation"> 출발 위치 </label> 
-				<input type="text" class="form-control" id="startLoct" name="startLocation" readonly="readonly" /> <!-- value값은 로그인된 회원 주소정보 입력 -->
+				<input type="text" class="form-control" id="startLoct" name="startLocation" readonly="readonly" value="${loginVo.m_address}"/>
 			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="isSmoke"> 흡연 여부 </label><br>

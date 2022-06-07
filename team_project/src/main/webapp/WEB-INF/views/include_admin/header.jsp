@@ -373,7 +373,7 @@ var nav = $('.fixed-button');
                             <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">회원</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li>
-                                    <a href="/admin/#">
+                                    <a href="/admin/member_management">
                                         <span class="pcoded-micon"><i class="ti-user"></i><b>FC</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.form-components.main">회원관리</span>
                                         <span class="pcoded-mcaret"></span>

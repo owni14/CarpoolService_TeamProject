@@ -3,6 +3,32 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
+
+<!-- Start Categories of The Month -->
+	<section class="container">
+		<div class="row">
+			<div class="col-12 col-md-6 p-5 mt-3">
+				<a href="board/drive"><img style="width:500px; height:300px;" src="/resources/assets/img/driver.jpg"
+					class=" img-fluid border"></a>
+				<h5 class="text-center mt-3 mb-3">운전하기</h5>
+			</div>
+			<div class="col-12 col-md-6 p-5 mt-3">
+				<a href="board/reservation"><img style="width:500px; height:300px;" src="/resources/assets/img/reservation.jpg"
+					class=" img-fluid border"></a>
+				<h2 class="h5 text-center mt-3 mb-3">예약하기</h2>
+			</div>
+<!-- 			<div class="col-12 col-md-4 p-5 mt-3"> -->
+<!-- 				<a href="#"><img src="/resources/assets/img/category_img_03.jpg" -->
+<!-- 					class="rounded-circle img-fluid border"></a> -->
+<!-- 				<h2 class="h5 text-center mt-3 mb-3">Accessories</h2> -->
+<!-- 				<p class="text-center"> -->
+<!-- 					<a class="btn btn-success">Go Shop</a> -->
+<!-- 				</p> -->
+<!-- 			</div> -->
+		</div>
+	</section>
+	<!-- End Categories of The Month -->
+
 <!-- Start Banner Hero -->
 	<div id="template-mo-zay-hero-carousel" class="carousel slide"
 		data-bs-ride="carousel">
@@ -99,42 +125,6 @@
 	</div>
 	<!-- End Banner Hero -->
 
-	<!-- Start Categories of The Month -->
-	<section class="container py-5">
-		<div class="row text-center pt-3">
-			<div class="col-lg-6 m-auto">
-				<h1 class="h1">Categories of The Month</h1>
-				<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa
-					qui officia deserunt mollit anim id est laborum.</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12 col-md-4 p-5 mt-3">
-				<a href="#"><img src="/resources/assets/img/category_img_01.jpg"
-					class="rounded-circle img-fluid border"></a>
-				<h5 class="text-center mt-3 mb-3">Watches</h5>
-				<p class="text-center">
-					<a class="btn btn-success">Go Shop</a>
-				</p>
-			</div>
-			<div class="col-12 col-md-4 p-5 mt-3">
-				<a href="#"><img src="/resources/assets/img/category_img_02.jpg"
-					class="rounded-circle img-fluid border"></a>
-				<h2 class="h5 text-center mt-3 mb-3">Shoes</h2>
-				<p class="text-center">
-					<a class="btn btn-success">Go Shop</a>
-				</p>
-			</div>
-			<div class="col-12 col-md-4 p-5 mt-3">
-				<a href="#"><img src="/resources/assets/img/category_img_03.jpg"
-					class="rounded-circle img-fluid border"></a>
-				<h2 class="h5 text-center mt-3 mb-3">Accessories</h2>
-				<p class="text-center">
-					<a class="btn btn-success">Go Shop</a>
-				</p>
-			</div>
-		</div>
-	</section>
-	<!-- End Categories of The Month -->
+	
 	
 	<%@ include file="/WEB-INF/views/include/footer.jsp"%>

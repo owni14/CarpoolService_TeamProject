@@ -131,7 +131,7 @@ https://templatemo.com/tm-559-zay-shop
                             <a class="nav-link" id="a_2"  href="#">서비스 안내</a>
                         </li>
                         <li class="nav-item"  id="menu_3">
-                            <a class="nav-link" id="a_3" href="#">이벤트 & 혜택</a>
+                            <a class="nav-link" id="a_3" href="board/event">이벤트 & 혜택</a>
                         </li>
                     </ul>
                    

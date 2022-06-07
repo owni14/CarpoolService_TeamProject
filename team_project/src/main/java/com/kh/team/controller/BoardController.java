@@ -39,4 +39,11 @@ public class BoardController {
 		List<MemberVo> memberList = memberService.getMemberList();
 		return memberList;
 	}
+	
+	// 이벤트 & 혜택 페이지로 이동
+	@RequestMapping(value = "/event", method = RequestMethod.GET)
+	public String event(Model model) {
+		
+		return "board/event";
+	}
 }

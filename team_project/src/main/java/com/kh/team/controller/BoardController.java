@@ -29,10 +29,15 @@ public class BoardController {
 	
 	// 예약하기 페이지로 이동
 	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
-	public String passengerReservation() {
+	public String passengerReservation(Model model) {
+		List<MemberVo> memberList = memberService.getMemberList();
+		if (memberList != null) {
+			model.addAttribute("driverList", memberList);
+		}
 		return "board/reservation";
 	}
 	
+	// 운전자 리스트 (비동기 방식)
 	@RequestMapping(value = "/reservationList", method = RequestMethod.GET)
 	@ResponseBody
 	public List<MemberVo> passengerReservationList() {

@@ -1,24 +1,32 @@
 
 package com.kh.team.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.kh.team.service.EventService;
+import com.kh.team.vo.EventVo;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-
+	@Autowired
+	EventService eventService;
 	@RequestMapping(value="/home", method= RequestMethod.GET)
 	public String homeAdmin() {
 
 		return "admin/home_admin";
 	}
 
-
-
 	@RequestMapping(value="/event", method= RequestMethod.GET)
-	public String eventList() {
+	public String eventList(Model model) {
+		List<EventVo> eventList=eventService.getEventList();
+		model.addAttribute("eventList", eventList);
 		return "admin/eventManagement";
 	}
 	
@@ -26,8 +34,6 @@ public class AdminController {
 	public String memberManagement() {
 		return "admin/memberManagement";
 	}
-	
-	
 
 }
 

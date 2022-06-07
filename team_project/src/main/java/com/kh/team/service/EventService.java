@@ -1,12 +1,11 @@
-package com.kh.team.dao;
+package com.kh.team.service;
 
 import java.sql.Date;
 import java.util.List;
 
 import com.kh.team.vo.EventVo;
 
-public interface EventDao {
-
+public interface EventService {
 	public List<EventVo> getEventList();
 	public boolean insertEvent(EventVo vo);
 	public boolean updateEvent(EventVo vo);

@@ -30,7 +30,7 @@
 		event_point=#{event_point}
 		where event_seq=#{event_seq}
 	</update>
-
+	
 	<delete id="deleteEvent">
 		delete from event
 		where event_seq=#{event_seq}

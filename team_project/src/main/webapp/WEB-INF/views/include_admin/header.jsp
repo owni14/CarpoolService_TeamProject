@@ -74,7 +74,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 		<!-- CDN chart.js -->
-
+<!-- naver smartEditor -->
+<script type="text/javascript" src="/resources/static/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 		
 		<script>
 var $window = $(window);

@@ -20,13 +20,13 @@
 				<div class="tabbable" id="tabs-391804">
 					<ul class="nav nav-tabs">
 						<li class="nav-item">
-							<a class="nav-link active" href="board/event/now" data-toggle="tab">진행중인 이벤트</a>
+							<a class="nav-link" href="/event/now">진행중인 이벤트</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="board/event/winner" data-toggle="tab">당첨자 발표</a>
+							<a class="nav-link active show" href="#">당첨자 발표</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="board/event/info" data-toggle="tab">등급별 혜택</a>
+							<a class="nav-link" href="/event/info">등급별 혜택</a>
 						</li>
 					</ul>
 					

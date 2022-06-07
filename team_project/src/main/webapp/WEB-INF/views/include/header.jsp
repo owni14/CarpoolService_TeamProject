@@ -137,7 +137,7 @@ https://templatemo.com/tm-559-zay-shop
                             <a class="nav-link" id="a_2"  href="#">서비스 안내</a>
                         </li>
                         <li class="nav-item"  id="menu_3">
-                            <a class="nav-link" id="a_3" href="event/now">이벤트 & 혜택</a>
+                            <a class="nav-link" id="a_3" href="/event/now">이벤트 & 혜택</a>
                         </li>
                     </ul>
                    
@@ -196,9 +196,9 @@ https://templatemo.com/tm-559-zay-shop
 	    	<a class="smenu_a" href="#">운전자 등록</a>
 	    </div>
 	    <div class="smenu" id="smenu_3">
-	   		<a class="smenu_a" href="now">진행중인 이벤트</a>
-	    	<a class="smenu_a" href="winner">당첨자 발표</a>
-	    	<a class="smenu_a" href="info">등급별 혜택</a>
+	   		<a class="smenu_a" href="/event/now">진행중인 이벤트</a>
+	    	<a class="smenu_a" href="/event/winner">당첨자 발표</a>
+	    	<a class="smenu_a" href="/event/info">등급별 혜택</a>
 	    </div>
 	</nav>
     </header>

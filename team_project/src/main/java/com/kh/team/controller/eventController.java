@@ -25,19 +25,18 @@ public class eventController {
 	// 현재 진행중인 이벤트로 이동
 	@RequestMapping(value = "/now", method = RequestMethod.GET)
 	public String now() {
-		return "board/event_now";
+		return "event/now";
 	}
 	
 	// 당첨자 발표 페이지로 이동
 	@RequestMapping(value = "/winner", method = RequestMethod.GET)
 	public String winner() {
-		return "board/event_winner";
+		return "event/winner";
 	}
 	
 	// 등급별 혜택
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public String info() {
-		System.out.println();
-		return "board/event_info";
+		return "event/info";
 	}
 }

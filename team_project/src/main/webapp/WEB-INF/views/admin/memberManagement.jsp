@@ -5,6 +5,7 @@
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 ${pagingDto}
 <!-- start inner header -->
+<div class="pcoded-content">
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
 		<div class="main-body">

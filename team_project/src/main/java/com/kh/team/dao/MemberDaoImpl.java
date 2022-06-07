@@ -34,8 +34,14 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<MemberVo> getMemberList(PagingDto pagingDto) {
-		List<MemberVo> memberList = sqlSession.selectList(NAMESPACE + "getMemberList", pagingDto);
+	public List<MemberVo> admingetMemberList(PagingDto pagingDto) {
+		List<MemberVo> memberList = sqlSession.selectList(NAMESPACE + "admingetMemberList", pagingDto);
+		return memberList;
+	}
+
+	@Override
+	public List<MemberVo> getMemberList() {
+		List<MemberVo> memberList = sqlSession.selectList(NAMESPACE + "getMemberList");
 		return memberList;
 	}
 

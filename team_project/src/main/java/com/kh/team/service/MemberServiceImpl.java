@@ -27,8 +27,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MemberVo> getMemberList(PagingDto pagingDto) {
-		List<MemberVo> memberList = memberDao.getMemberList(pagingDto);
+	public List<MemberVo> admingetMemberList(PagingDto pagingDto) {
+		List<MemberVo> memberList = memberDao.admingetMemberList(pagingDto);
+		return memberList;
+	}
+
+	@Override
+	public List<MemberVo> getMemberList() {
+		List<MemberVo> memberList = memberDao.getMemberList();
 		return memberList;
 	}
 

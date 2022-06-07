@@ -52,7 +52,7 @@ public class AdminController {
 		PagingDto pagingDto = new PagingDto();
 		pagingDto.setPage(page);
 //		System.out.println("AdminController int pagingDto : " + pagingDto);
-		List<MemberVo> memberList =  memberService.getMemberList(pagingDto);
+		List<MemberVo> memberList =  memberService.admingetMemberList(pagingDto);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pagingDto", pagingDto);
 		return "admin/memberManagement";

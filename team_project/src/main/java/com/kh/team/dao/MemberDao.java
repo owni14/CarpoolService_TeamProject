@@ -8,7 +8,7 @@ import com.kh.team.vo.PagingDto;
 public interface MemberDao {
 	public void insertMember(MemberVo memberVo); // 회원 추가
 	public MemberVo getMemberByIdAndPw(String userid, String userpw);
-
-	public List<MemberVo> getMemberList(PagingDto pagingDto);
+	public List<MemberVo> getMemberList();
+	public List<MemberVo> admingetMemberList(PagingDto pagingDto);
 
 }

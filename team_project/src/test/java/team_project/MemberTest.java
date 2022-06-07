@@ -34,7 +34,7 @@ public class MemberTest {
 	public void getMemberList() {
 		PagingDto pagingDto = new PagingDto();
 		pagingDto.setPage(2);
-		List<MemberVo> memberList = memberDao.getMemberList(pagingDto);
+		List<MemberVo> memberList = memberDao.admingetMemberList(pagingDto);
 		System.out.println("MemberTest, MemberList : " +  memberList);
 	}
 	// test ok

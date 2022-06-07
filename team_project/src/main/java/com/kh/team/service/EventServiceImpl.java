@@ -12,6 +12,7 @@ import com.kh.team.vo.EventVo;
 public class EventServiceImpl implements EventService {
 	@Autowired
 	EventDao eventDao;
+	
 	@Override
 	public List<EventVo> getEventList() {
 		

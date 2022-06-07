@@ -59,8 +59,7 @@ public class MemberController {
 	@RequestMapping(value = "/join_run", method = RequestMethod.POST)
 	public String joinRun(MemberVo memberVo) {
 		System.out.println("MemberController, join_run, memberVo: " + memberVo);
-//		memberService.insertMember(memberVo);
-		
+		memberService.insertMember(memberVo);
 		return "redirect:/";
 	}
 	

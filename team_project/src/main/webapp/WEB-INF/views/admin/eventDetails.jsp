@@ -14,7 +14,10 @@
 			oAppRef : oEditors,
 			elPlaceHolder : "editorTxt",
 			sSkinURI : "/resources/static/smarteditor/SmartEditor2Skin.html",
-			fCreator : "createSEditor2"
+			fCreator : "createSEditor2",
+			htParams :{
+		
+			}
 		});
 	}
 	

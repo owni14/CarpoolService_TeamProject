@@ -3,5 +3,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
-<h1>memberManagement1</h1>
+
+	<div class="pcoded-inner-content">
+		<!-- Main-body start -->
+		<div class="main-body">
+			<div class="page-wrapper">
+				<!-- Page-header start -->
+				<div class="page-header card">
+					<div class="row align-items-end">
+						<div class="col-lg-12">
+							<div class="page-header-title">
+								<i class="icofont icofont-table bg-c-blue"></i>
+								<div class="d-inline">
+									<h4>회원 테이블</h4>
+									<span></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+				
 <%@ include file="/WEB-INF/views/include_admin/footer.jsp"%>

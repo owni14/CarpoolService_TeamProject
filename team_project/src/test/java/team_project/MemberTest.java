@@ -1,5 +1,9 @@
 package team_project;
 
+
+
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +26,11 @@ public class MemberTest {
 		memberDao.insertMember(memberVo);
 	}
 	// test ok, value of phonenumber must be composed of number 
+	
+	@Test
+	public void getMemberList() {
+		List<MemberVo> memberList = memberDao.getMemberList();
+		System.out.println("MemberTest, MemberList : " +  memberList);
+	}
+	// test ok
 }

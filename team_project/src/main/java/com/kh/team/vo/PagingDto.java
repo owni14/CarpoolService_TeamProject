@@ -54,9 +54,9 @@ public class PagingDto {
 		this.startPage = PAGE_BLOCK*((page-1)/PAGE_BLOCK)+1;
 		this.endPage = this.startPage + (PAGE_BLOCK - 1);
 		
-//		if(this.endPage > this.totalPage) {
-//			this.endPage = this.totalPage;
-//		}
+		if(this.endPage > this.totalPage) {
+			this.endPage = this.totalPage;
+		}
 	}
 
 	public int getStartRow() {

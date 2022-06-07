@@ -21,7 +21,7 @@ public class BoardController {
 	private MemberService memberService;
 	
 	// 운전자 등록 페이지로 이동
-	@RequestMapping(value = "drive", method = RequestMethod.GET)
+	@RequestMapping(value = "/drive", method = RequestMethod.GET)
 	public String drive() {
 		return "board/drive";
 	}
@@ -35,5 +35,12 @@ public class BoardController {
 			model.addAttribute("driverList", memberList);
 		}
 		return "board/reservation";
+	}
+	
+	// 이벤트 & 혜택 페이지로 이동
+	@RequestMapping(value = "/event", method = RequestMethod.GET)
+	public String event(Model model) {
+		
+		return "board/event";
 	}
 }

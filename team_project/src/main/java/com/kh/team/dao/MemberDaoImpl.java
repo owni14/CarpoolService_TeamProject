@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.PagingDto;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -30,6 +31,12 @@ public class MemberDaoImpl implements MemberDao {
 		parameter.put("m_pw", m_pw);
 		MemberVo memberVo = sqlSession.selectOne(NAMESPACE + "getMemberByIdAndPw", parameter);
 		return memberVo;
+	}
+
+	@Override
+	public List<MemberVo> admingetMemberList(PagingDto pagingDto) {
+		List<MemberVo> memberList = sqlSession.selectList(NAMESPACE + "admingetMemberList", pagingDto);
+		return memberList;
 	}
 
 	@Override

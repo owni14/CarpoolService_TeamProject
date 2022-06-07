@@ -25,6 +25,7 @@ import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.PagingDto;
 
 @Controller
 @RequestMapping("/admin")
@@ -47,9 +48,15 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/member_management", method = RequestMethod.GET)
-	public String memberManagement(Model model) {
-		List<MemberVo> memberList = memberService.getMemberList();
+
+	public String memberManagement(Model model, int page) {
+//		System.out.println("AdminController int page : " + page);
+		PagingDto pagingDto = new PagingDto();
+		pagingDto.setPage(page);
+//		System.out.println("AdminController int pagingDto : " + pagingDto);
+		List<MemberVo> memberList =  memberService.admingetMemberList(pagingDto);
 		model.addAttribute("memberList", memberList);
+		model.addAttribute("pagingDto", pagingDto);
 		return "admin/memberManagement";
 	}
 

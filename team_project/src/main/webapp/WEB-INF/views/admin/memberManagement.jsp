@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
+${pagingDto}
 <!-- start inner header -->
 <div class="pcoded-content">
 	<div class="pcoded-inner-content">
@@ -41,6 +42,7 @@
 				<!-- Basic table card start -->
 				<div class="card">
 					<div class="card-header">
+						<i class="icofont icofont-ui-user"></i>
 						<h5>회원 테이블</h5>
 						<div class="card-header-right">
 							<ul class="list-unstyled card-option">
@@ -91,6 +93,38 @@
 						</div>
 					</div>
 				</div>
+				<!-- start pagination -->
+				<div class="row">
+					<div class="col-md-12">
+						<nav>
+							<ul class="pagination justify-content-center" >
+								<c:if test="${pagingDto.startPage != 1}">
+								<li class="page-item">
+									<a class="page-link" href="/admin/member_management?page=${pagingDto.startPage - 1}">이전</a>
+								</li>
+								</c:if>
+								<c:forEach var="v" begin="${pagingDto.startPage}" end="${pagingDto.endPage}">
+								<li 
+									<c:choose>
+										<c:when test="${v == param.page}">
+											class="page-item active"
+										</c:when>
+										<c:otherwise>
+											class="page-item"
+										</c:otherwise>
+									</c:choose>
+								>
+									<a class="page-link" href="/admin/member_management?page=${v}">${v}</a>
+								</li>
+								</c:forEach>
+								<li class="page-item">
+									<a class="page-link" href="/admin/member_management?page=${pagingDto.endPage + 1}">다음</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<!-- end pagination  -->
 				<!-- Basic table card end -->
 			</div>
 		</div>

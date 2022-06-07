@@ -11,7 +11,6 @@ public class AdminController {
 
 	@RequestMapping(value="/home", method= RequestMethod.GET)
 	public String homeAdmin() {
-		System.out.println("asdasd");
 		return "admin/home_admin";
 	}
 
@@ -19,8 +18,12 @@ public class AdminController {
 
 	@RequestMapping(value="/event", method= RequestMethod.GET)
 	public String eventList() {
-		String test = "";
 		return "admin/eventManagement";
+	}
+	
+	@RequestMapping(value = "/member_management", method = RequestMethod.GET)
+	public String memberManagement() {
+		return "admin/memberManagement";
 	}
 	
 	

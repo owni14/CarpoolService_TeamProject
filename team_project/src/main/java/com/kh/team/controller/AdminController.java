@@ -19,8 +19,10 @@ public class AdminController {
 
 	@RequestMapping(value="/event", method= RequestMethod.GET)
 	public String eventList() {
+		String test = "";
 		return "admin/eventManagement";
 	}
+	
 	
 
 }

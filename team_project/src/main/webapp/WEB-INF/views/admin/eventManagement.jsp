@@ -4,6 +4,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 ${eventList}
+<script>
+
+	$(document).ready(function() {
+		$("tr.eventListTr").click(function(e){
+			var event_seq=$(this).find("td").eq(0).attr("data-seq");
+			console.log(event_seq);
+			location.href="/admin/event_details?event_seq="+event_seq;	
+		});
+	});
+</script>
+
 <!-- start Event inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -74,9 +85,9 @@ ${eventList}
 					<tbody>
 					<c:forEach items="${eventList}" var="eventVo" varStatus="index">
 						<tr class="eventListTr">
-							<td>
+							<td data-seq="${eventVo.event_seq}">
 								<div class="task-contain">
-									<h6 class="bg-c-blue d-inline-block text-center">${index.count}</h6>
+									<h6 class="bg-c-blue d-inline-block text-center" >${index.count}</h6>
 									
 								</div>
 							</td>

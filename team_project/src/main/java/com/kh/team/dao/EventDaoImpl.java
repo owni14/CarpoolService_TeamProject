@@ -21,8 +21,8 @@ public class EventDaoImpl implements EventDao{
 	}
 
 	@Override
-	public boolean insertEvent(EventVo vo) {
-		int count=sqlSession.insert(NAMESPACE+"insertEvent",vo);
+	public boolean insertEvent(EventVo eventVo) {
+		int count=sqlSession.insert(NAMESPACE+"insertEvent",eventVo);
 		if(count>0) {
 			return true;
 		}
@@ -30,8 +30,8 @@ public class EventDaoImpl implements EventDao{
 	}
 
 	@Override
-	public boolean updateEvent(EventVo vo) {
-		int count=sqlSession.update(NAMESPACE+"updateEvent",vo);
+	public boolean updateEvent(EventVo eventVo) {
+		int count=sqlSession.update(NAMESPACE+"updateEvent",eventVo);
 		if(count>0) {
 			return true;
 		}

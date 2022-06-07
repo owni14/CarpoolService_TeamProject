@@ -4,6 +4,7 @@
 
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 <!-- start inner header -->
+<div class="pcoded-content">
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
 		<div class="main-body">
@@ -36,6 +37,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 <!-- end inner header -->
 				
 <%@ include file="/WEB-INF/views/include_admin/footer.jsp"%>

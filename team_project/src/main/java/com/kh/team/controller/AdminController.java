@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.team.service.EventService;
 import com.kh.team.vo.EventVo;
@@ -40,6 +41,14 @@ public class AdminController {
 		EventVo eventVo=eventService.getEventByEseq(event_seq);
 		model.addAttribute("eventVo", eventVo);
 		return "admin/eventDetails";
+	}
+	
+	
+	@RequestMapping(value="/event_update", method= RequestMethod.POST)
+	@ResponseBody
+	public String eventUpdate(EventVo eventVo) {
+		boolean result=eventService.updateEvent(eventVo);
+		return String.valueOf(result);
 	}
 
 }

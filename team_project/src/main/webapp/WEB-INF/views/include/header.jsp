@@ -164,8 +164,15 @@ https://templatemo.com/tm-559-zay-shop
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                     </a>
-                    <a href="/member/loginForm">로그인</a>
-                    <a href="/member/joinForm">회원가입</a>
+                    <c:choose>
+                    	<c:when test="${not empty loginVo}">
+                    		<p>${loginVo.m_name}님 환영합니다.</p>
+                    	</c:when>
+	                    <c:otherwise>
+	                    	<a href="/member/loginForm">로그인</a>
+		                    <a href="/member/joinForm">회원가입</a>
+	                    </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
 

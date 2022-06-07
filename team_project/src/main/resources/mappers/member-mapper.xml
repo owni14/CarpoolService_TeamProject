@@ -18,6 +18,9 @@
 	</select>
 	
 	<select id="getMemberList" resultType="MemberVo">
-		select * from member
+		select * from
+		(select rownum rnum,a.* from
+		(select * from member order by m_id desc) a)
+		where rnum between #{startRow} and #{endRow}
 	</select>
 </mapper>

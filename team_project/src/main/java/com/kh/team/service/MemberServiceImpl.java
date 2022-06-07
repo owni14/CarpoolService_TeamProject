@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.team.dao.MemberDao;
 import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.PagingDto;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -26,8 +27,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MemberVo> getMemberList() {
-		List<MemberVo> memberList = memberDao.getMemberList();
+	public List<MemberVo> getMemberList(PagingDto pagingDto) {
+		List<MemberVo> memberList = memberDao.getMemberList(pagingDto);
 		return memberList;
 	}
 

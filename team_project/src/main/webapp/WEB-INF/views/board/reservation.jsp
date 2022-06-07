@@ -1,4 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,9 +9,6 @@
 		<div id="map" style="height: 700px; width: 1400px;"></div>
 		<script>
 		$(document).ready(function() {
-			$("#btnCheck").click(function() {
-				var address = $("#boardLoct").val();
-			});
 			
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {
@@ -26,6 +22,12 @@
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
 	
+		// 비동기로 데이터 가져오기
+		var url = "/board/reservationList";
+		$.get(url, function(rData) {
+			console.log(rData);
+		});
+		
 		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
 	
@@ -105,12 +107,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td>TB - Monthly</td>
-						<td>01/04/2012</td>
-						<td>Default</td>
-					</tr>
+					<c:forEach items="${driverList}" var="memberVo" varStatus="status"> 
+						<tr>
+							<td>${status.count}</td>
+							<td>${memberVo.m_name}</td>
+							<td>${memberVo.m_dept}</td>
+							<td>${memberVo.m_address}</td>
+						</tr>	
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>

@@ -1,4 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -23,10 +22,12 @@
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
 	
-		var driverList = "${driverList}";
-		$.each(driverList, function(driver) {
-			
+		// 비동기로 데이터 가져오기
+		var url = "/board/reservationList";
+		$.get(url, function(rData) {
+			console.log(rData);
 		});
+		
 		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
 	

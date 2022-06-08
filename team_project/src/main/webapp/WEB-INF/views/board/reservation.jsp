@@ -21,6 +21,7 @@
 	var url = "/board/driverList";
 	$.get(url, function(rData) {
 		$.each(rData, function() {
+			var that = this;
 			// 주소로 좌표를 검색합니다
 			geocoder.addressSearch(this.m_address, function(result, status) {
 		
@@ -34,10 +35,10 @@
 			            map: map,
 			            position: coords
 			        });
-		
+			
 			        // 인포윈도우로 장소에 대한 설명을 표시합니다
 			        var infowindow = new kakao.maps.InfoWindow({
-			            content: '<div style="width:150px;text-align:center;padding:2px 0;">' + this.m_name + '</div>'
+			            content: "<div style='width:150px;text-align:center;padding:2px 0;'>" + that.m_name + "</div>"
 			        });
 			        infowindow.open(map, marker);
 		
@@ -99,7 +100,6 @@
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
 		<div id="map" style="height: 700px; width: 1400px;"></div>
-		
 	</div>
 	<div class="col-md-2"></div>
 </div>

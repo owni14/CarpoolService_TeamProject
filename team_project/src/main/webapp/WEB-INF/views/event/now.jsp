@@ -13,6 +13,21 @@
 .e_finish { text-align: center; width: 70px;}
 </style>
 
+<script>
+$(document).ready(function() {
+	var frmPaging = $("#frmPaging"); 
+	$("a.page-link").click(function (e) {
+		e.preventDefault();
+		var pageValue = $(this).attr("href");
+		var page = frmPaging.find("input[name=page]");
+		page.val(pageValue);
+		frmPaging.attr("action","/event/now");
+		frmPaging.attr("method","get");
+		frmPaging.submit();
+	});
+});
+</script>
+<%@ include file="/WEB-INF/views/include/frmPaging.jsp" %>
 <div class="row">
 	<div class="col-md-12">
 		<div class="row">
@@ -26,7 +41,7 @@
 								<img class="e_img" src="/resources/assets/img/event.jpg" alt="">
 							</td>
 							<td class="align-middle">
-								<p class="e_content">${eventVo.event_content}</p>
+								<p class="e_content">${eventVo.event_name}</p>
 								<p class="e_date">${eventVo.event_startdate} ~ ${eventVo.event_enddate}</p>
 							</td>
 							<td class="align-middle">
@@ -44,27 +59,30 @@
 				</table>
 				<nav>
 				<ul class="pagination justify-content-center">
-					<li class="page-item">
-						<a class="page-link" href="#">Previous</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">1</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">2</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">3</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">4</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">5</a>
-					</li>
-					<li class="page-item">
-						<a class="page-link" href="#">Next</a>
-					</li>
+					<c:if test="${pagingDto.startPage != 1}">
+						<li class="page-item">
+							<a class="page-link" href="${pagingDto.startPage - 1}">이전</a>
+						</li>
+					</c:if>
+					<c:forEach var="v" begin="${pagingDto.startPage}" end="${pagingDto.endPage}">
+						<li class="page-item"
+							<c:choose>
+								<c:when test="${v == param.page}">
+									class="page-item active"
+								</c:when>
+								<c:otherwise>
+									class="page-item"
+								</c:otherwise>
+							</c:choose>
+						>
+							<a class="page-link" href="${v}">${v}</a>
+						</li>
+					</c:forEach>
+						<c:if test="${pagingDto.endPage != pagingDto.totalPage}">
+							<li class="page-item">
+								<a class="page-link" href="${pagingDto.endPage + 1}">다음</a>
+							</li>
+						</c:if>
 				</ul>
 			</nav>
 			</div>

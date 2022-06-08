@@ -19,6 +19,8 @@ public class PagingDto {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 	public PagingDto(int page, int startRow, int endRow, String searchType, String keyword, int perPage, int totalPage,
 			int count, int startPage, int endPage) {
@@ -47,8 +49,9 @@ public class PagingDto {
 		//	3			21			 30
 		
 		this.startRow = (page-1)*this.perPage + 1;
+//		System.out.println("startRow: " + startRow);
 		this.endRow = this.page*this.perPage;
-		
+//		System.out.println("endRow: " + endRow);
 		this.totalPage = (int)(Math.ceil(((double)count/this.perPage)));
 		
 		this.startPage = PAGE_BLOCK*((page-1)/PAGE_BLOCK)+1;

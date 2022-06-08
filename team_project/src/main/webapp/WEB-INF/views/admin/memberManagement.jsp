@@ -25,6 +25,19 @@
 			frmPaging.submit();
 		});
 		
+		$("#btnSearch").click(function () {
+			var searchTypeValue = $("#searchTypeSelector").val();
+			var keywordValue = $("#adminKeyword").val();
+			
+			var searchType = frmPaging.find("input[name=searchType]");
+			searchType.val(searchTypeValue);
+			var keyword = frmPaging.find("input[name=keyword]");
+			keyword.val(keywordValue);
+			frmPaging.find("input[name=page]").val(1);
+			frmPaging.attr("action","/admin/member_management");
+			frmPaging.attr("method","get");
+			frmPaging.submit();
+		});
 		
 	});
 </script>
@@ -39,7 +52,7 @@
 					<div class="row align-items-end">
 						<div class="col-lg-8">
 							<div class="page-header-title">
-								<i class="icofont icofont-table bg-c-blue"></i>
+								<i class="icofont icofont-address-book bg-c-blue"></i>
 								<div class="d-inline">
 									<h4>회원 테이블</h4>
 									<span></span>
@@ -52,8 +65,8 @@
 								<li class="breadcrumb-item">
 								<a href="/admin/home"><i class="icofont icofont-home"></i></a>
 								</li>
-								<li class="breadcrumb-item"><a href="#!">회원관리</a></li>
-								<li class="breadcrumb-item"><a href="#!">회원테이블</a></li>
+								<li class="breadcrumb-item"><a href="#!">회원 관리</a></li>
+								<li class="breadcrumb-item"><a href="#!">회원 테이블</a></li>
 							</ul>
 						</div>
 					</div>
@@ -68,6 +81,48 @@
 					<div class="card-header">
 						<i class="icofont icofont-ui-user"></i>
 						<h5>회원 테이블</h5>
+						<h5>
+							<select id="searchTypeSelector" name="searchTypeSelector" style="height:25px">
+								<option value="i"
+									<c:if test="${pagingDto.searchType == 'i'}">
+										selected
+									</c:if>
+								>회원 아이디</option>
+								<option value="n"
+									<c:if test="${pagingDto.searchType == 'n'}">
+										selected
+									</c:if>
+								>이름</option>
+								<option value="g"
+									<c:if test="${pagingDto.searchType == 'g'}">
+										selected
+									</c:if>
+								>성별</option>
+								<option value="c"
+									<c:if test="${pagingDto.searchType == 'c'}">
+										selected
+									</c:if>
+								>회사</option>
+								<option value="a"
+									<c:if test="${pagingDto.searchType == 'a'}">
+										selected
+									</c:if>
+								>주소</option>
+								<option value="t"
+									<c:if test="${pagingDto.searchType == 't'}">
+										selected
+									</c:if>
+								>연락처</option>
+								<option value="w"
+									<c:if test="${pagingDto.searchType == 'w'}">
+										selected
+									</c:if>
+								>회사 탈퇴 여부</option>
+							</select>
+						
+							<input type="text" id="adminKeyword" name="adminKeyword" style="height:25px">
+							<button id="btnSearch" style="background-color:white; border-color: #d2d2d2">검색&nbsp;&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
+						</h5>
 						<div class="card-header-right">
 							<ul class="list-unstyled card-option">
 								<li><i class="icofont icofont-simple-left "></i></li>

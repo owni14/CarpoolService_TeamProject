@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.PagingDto;
 @Repository
 public class EventDaoImpl implements EventDao{
 	private final String NAMESPACE="com.kh.team.mappers.event.";
@@ -57,6 +58,18 @@ public class EventDaoImpl implements EventDao{
 	public EventVo getEventByEseq(int event_seq) {
 		EventVo eventVo=sqlSession.selectOne(NAMESPACE+"getEventByEseq",event_seq);
 		return eventVo;
+	}
+
+	@Override
+	public int getCountEvent(PagingDto pagingDto) {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "getCountEvent"); 
+		return count;
+	}
+
+	@Override
+	public List<EventVo> getEventMainList(PagingDto pagingDto) {
+		List<EventVo> eventList=sqlSession.selectList(NAMESPACE+"getEventMainList", pagingDto);
+		return eventList;
 	}
 
 }

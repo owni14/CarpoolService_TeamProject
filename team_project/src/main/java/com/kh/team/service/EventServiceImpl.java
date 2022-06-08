@@ -1,6 +1,5 @@
 package com.kh.team.service;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.team.dao.EventDao;
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.PagingDto;
 @Service
 public class EventServiceImpl implements EventService {
 	@Autowired
@@ -42,6 +42,16 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public EventVo getEventByEseq(int event_seq) {
 		return eventDao.getEventByEseq(event_seq);
+	}
+
+	@Override
+	public int getCountEvent(PagingDto pagingDto) {
+		return eventDao.getCountEvent(pagingDto);
+	}
+
+	@Override
+	public List<EventVo> getEventMainList(PagingDto pagingDto) {
+		return eventDao.getEventMainList(pagingDto);
 	}
 
 }

@@ -3,20 +3,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <script>
-	$(document).ready(function() {
-		var count = 1;
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
-	    };  
-
+$(document).ready(function() {
+	var count = 1;
+	var mapContainer = document.getElementById('map') // 지도를 표시할 div
+	
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+	
 	// 지도를 생성합니다    
 	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+	var mapTypeControl = new kakao.maps.MapTypeControl();
+	
+	// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+	// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+	map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	var zoomControl = new kakao.maps.ZoomControl();
+	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
 	// 주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
-
+	
 	// 비동기로 데이터 가져오기
 	var url = "/board/driverList";
 	$.get(url, function(rData) {
@@ -54,6 +66,8 @@
 			tds.eq(1).text(this.m_name);
 			tds.eq(2).text(this.m_dept);
 			tds.eq(3).text(this.m_address);
+			tds.eq(4).attr("data-m_id", this.m_id);
+			tds.eq(4).attr("data-m_address", this.m_address);
 			$("#tblDriver").append(tr);
 			
 		}); // $.each(rData, function() {})
@@ -86,11 +100,38 @@
 	});
 	 */
 	 
+	 function showModalMap() {
+		 var modalMapContainer = document.getElementById('mapInModal') // 지도를 표시할 div
+		 modalMapOption = {
+			    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			    level: 3 // 지도의 확대 레벨
+			};  
+		// 지도를 생성합니다    
+		var modalMap = new kakao.maps.Map(modalMapContainer, modalMapOption);
+		
+		var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
+
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+		    position: markerPosition
+		});
+
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(modalMap);
+		
+		
+		setTimeout(function(){ modalMap.relayout(); modalMap.setCenter(new kakao.maps.LatLng(33.450701, 126.570667)),  modalMap.setLevel(3); }, 250);
+	 }
+	 
 	 // 탑승 신청버튼 클릭
-	$("#tblDriver").on("click", ".applyBoard", function() {
-		console.log("clicked");
-		$("#modal-899906").trigger("click");
-	 }); // $("#tblDriver").on("click", ".applyBoard", function() {})
+	 $("#tblDriver").on("click", ".btnBoard", function() {
+		 showModalMap();
+	 }); //  $("#tblDriver").on("click", ".btnBoard", function() {})
+	 
+	 $("#modal-899906").on("show.bs.modal", function () {
+		  console.log("check");
+	});
+	 
 	 
 }); // $(document).ready(function() {})
 </script>
@@ -99,33 +140,37 @@
 <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
-		<div id="map" style="height: 700px; width: 1400px;"></div>
+		<div id="map" style="height: 700px; width: 100%;"></div>
 	</div>
 	<div class="col-md-2"></div>
 </div>
 <!-- // 카카오 지도 api -->
 
 <!-- 모달창 -->
- <a id="modal-899906" href="#modal-container-899906" role="button" class="btn" data-toggle="modal" style="display: none;">modal</a>
+ <a id="modal-899906" style="display: none;">modal</a>
 	<div class="modal fade" id="modal-container-899906" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="myModalLabel">
-						Modal title
-					</h5> 
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
+					<h5 class="modal-title" id="myModalLabel" style="font-weight: bold;">
+						운전자 정보
+					</h5>
 				</div>
 				<div class="modal-body">
+					<label> 이름 : </label> 
+					<label> 홍길동 </label><br>
+					<label> 부서 : </label>
+					<label> 인사부 </label><br>
+					<label> 출발 위치 : </label>
+					<label> 어딘가 </label>
+					<div id="mapInModal" style="height: 300px; width: 100%;"></div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">
-						Save changes
+					<button type="button" class="btn btn-success">
+						신청하기
 					</button> 
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">
-						Close
+					<button type="button" class="btn btn-danger" data-dismiss="modal">
+						취소
 					</button>
 				</div>
 			</div>
@@ -139,6 +184,7 @@
 	<div class="col-md-8">
 		<form role="form">
 			<div class="form-group" style="margin-bottom: 10px;">
+				<h3 style="text-align: center">운전자 위치를 확인해주세요</h3>
 				<label for="startLocation"> 탑승 위치 </label> 
 				<input type="text" class="form-control" id="boardLoct" name="startLocation"/>
 			</div>
@@ -176,7 +222,7 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td><button class="btn btn-success btn-sm applyBoard">탑승신청</button></td>
+					<td><a href="#modal-container-899906" role="button" class="btn btn-info btn-sm btnBoard" data-toggle="modal">탑승신청</a></td>
 				</tr>
 			</table>
 			<table class="table" id="tblDriver" class="table">

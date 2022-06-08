@@ -7,9 +7,7 @@ import java.util.UUID;
 import org.springframework.util.FileCopyUtils;
 
 public class FileUploadHelper {
-	public static String uploadFile(String uploadPath, String originalFilename
-			,byte[] fileData) 
-	{
+	public static String uploadFile(String uploadPath, String originalFilename, byte[] fileData) {
 		UUID uuid=UUID.randomUUID();
 		String saveFilename= uploadPath+"/"+uuid+"_"+originalFilename;
 		System.out.println("save saveFilename :"+saveFilename);

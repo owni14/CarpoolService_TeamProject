@@ -15,4 +15,6 @@ public interface EventService {
 	public EventVo getEventByEseq(int event_seq);
 	public int getCountEvent(PagingDto pagingDto); // 이벤트 수 확인
 	public List<EventVo> getEventMainList(PagingDto pagingDto);
+	public void updateEventFinish(int event_seq);
+	public String getContent(int event_seq); 
 }

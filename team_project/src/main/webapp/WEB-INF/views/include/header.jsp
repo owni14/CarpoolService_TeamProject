@@ -17,6 +17,12 @@
     <link rel="stylesheet" href="/resources/assets/css/templatemo.css">
     <link rel="stylesheet" href="/resources/assets/css/custom.css">
 
+	<!-- icofont -->
+	<link rel="stylesheet" type="text/css" href="/resources/admin/assets/icon/icofont/css/icofont.css">
+	
+	<!-- bootstrap-icon -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+	
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="/resources/assets/css/fontawesome.min.css">
@@ -54,7 +60,7 @@ https://templatemo.com/tm-559-zay-shop
     $(function() {
     	var header = $("#header");
     	
-    	 $(".nav-item").mouseenter(function() {
+    	 $(".main_menu").mouseenter(function() {
     		$(".smenu").hide();
     		var a = $(this).attr("id");
     		header.stop().animate({height:'150px'}, 300);
@@ -132,13 +138,13 @@ https://templatemo.com/tm-559-zay-shop
               <div class="flex-fill">
                 <div>
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto clearfix"  id="navul">
-                        <li class="nav-item" id="menu_1">
-                            <a class="nav-link" id="a_1" href="#">마이 카풀</a>
-                        </li>
-                        <li class="nav-item" id="menu_2">
+                        <li class="nav-item main_menu" id="menu_1">
+                            <a class="nav-link" id="a_1" href="/my/boardedHistory">마이 카풀</a>
+                        </li> 
+                        <li class="nav-item main_menu" id="menu_2">
                             <a class="nav-link" id="a_2"  href="#">서비스 안내</a>
                         </li>
-                        <li class="nav-item"  id="menu_3">
+                        <li class="nav-item main_menu"  id="menu_3">
                             <a class="nav-link" id="a_3" href="/event/now">이벤트 & 혜택</a>
                         </li>
                     </ul>
@@ -164,21 +170,21 @@ https://templatemo.com/tm-559-zay-shop
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
-                    </a>
+<!--                     <a class="nav-icon position-relative text-decoration-none" href="#"> -->
+<!--                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i> -->
+<!--                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span> -->
+<!--                     </a> -->
+<!--                     <a class="nav-icon position-relative text-decoration-none" href="#"> -->
+<!--                         <i class="fa fa-fw fa-user text-dark mr-3"></i> -->
+<!--                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span> -->
+<!--                     </a> -->
                     <c:choose>
                     	<c:when test="${not empty loginVo}">
                     		<p>${loginVo.m_name}님 환영합니다.</p>
                     	</c:when>
 	                    <c:otherwise>
-	                    	<a href="/member/loginForm">로그인</a>
-		                    <a href="/member/joinForm">회원가입</a>
+	                    	<a href="/member/loginForm"><i class="icofont icofont-login" style="font-size: 25px; margin-right: 10px;"></i></a>
+		                    <a href="/member/joinForm"><i class="bi bi-person-plus-fill" style="font-size: 25px;"></i></a>
 	                    </c:otherwise>
                     </c:choose>
                 </div>

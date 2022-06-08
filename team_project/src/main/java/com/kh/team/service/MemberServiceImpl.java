@@ -44,4 +44,10 @@ public class MemberServiceImpl implements MemberService {
 		return count;
 	}
 
+	@Override
+	public MemberVo getMemberById(String m_id) {
+		MemberVo driverInfo = memberDao.getMemberById(m_id);
+		return driverInfo;
+	}
+
 }

@@ -39,3 +39,4 @@ public class NotifyDaoImpl implements NotifyDao{
 	}
 
 }
+

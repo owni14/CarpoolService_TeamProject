@@ -1,5 +1,8 @@
 package com.kh.team.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,9 +30,15 @@ public class PointDaoImpl implements PointDao {
 	}
 
 	@Override
-	public PointHistoryVo getPointHistoryById(String m_id) {
-		PointHistoryVo pointHistoryVo = sqlSession.selectOne(NAMESPACE + "getPointHistoryById", m_id);
-		return pointHistoryVo;
+	public List<PointHistoryVo> getPointHistoryById(String m_id) {
+		List<PointHistoryVo> pointHistoryList = sqlSession.selectList(NAMESPACE + "getPointHistoryById", m_id);
+		return pointHistoryList;
+	}
+
+	@Override
+	public List<Map<String, Object>> getPointListById(String m_id) {
+		List<Map<String, Object>> pointList = sqlSession.selectList(NAMESPACE + "getPointListById", m_id);
+		return pointList;
 	}
 
 	

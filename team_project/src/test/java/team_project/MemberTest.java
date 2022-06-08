@@ -1,5 +1,4 @@
 package team_project;
-
 import java.util.List;
 
 import org.junit.Test;
@@ -51,6 +50,10 @@ public class MemberTest {
 		MemberVo memberVo = memberDao.getMemberByIdAndPw("hong@naver.com", "1234");
 		System.out.println("MemverTest, MemberVo : " + memberVo);
 	}
+	
+	@Test
+	public void testgetMember() {
+	System.out.println(memberDao.getMemberById("user0187@gmail.com"));	
+	}
 }
-
 

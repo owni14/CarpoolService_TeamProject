@@ -72,4 +72,9 @@ public class EventDaoImpl implements EventDao{
 		return eventList;
 	}
 
+	@Override
+	public void updateEventFinish(int event_seq) {
+		sqlSession.update(NAMESPACE+"updateEventFinish",event_seq);
+	}
+
 }

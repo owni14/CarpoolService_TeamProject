@@ -50,7 +50,6 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/member_management", method = RequestMethod.GET)
-
 	public String memberManagement(Model model, PagingDto pagingDto) {
 		System.out.println("AdminController int count : " + memberService.adminGetCount(pagingDto));
 		pagingDto.setCount(memberService.adminGetCount(pagingDto));
@@ -60,6 +59,11 @@ public class AdminController {
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pagingDto", pagingDto);
 		return "admin/memberManagement";
+	}
+	
+	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
+	public String reportManagement() {
+		return "admin/reportManagement";
 	}
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)
@@ -72,6 +76,7 @@ public class AdminController {
 	@RequestMapping(value = "/event_update", method = RequestMethod.POST)
 	@ResponseBody
 	public String eventUpdate(EventVo eventVo) {
+		System.out.println("eventUpdate EventVo"+eventVo);
 		boolean result = eventService.updateEvent(eventVo);
 		return String.valueOf(result);
 	}
@@ -79,6 +84,11 @@ public class AdminController {
 	@RequestMapping(value="/event_filesAttach", method= RequestMethod.POST)
 	public void eventFiles(HttpServletRequest request, HttpServletResponse response ) {
 		System.out.println(request.getHeader("file-name"));
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		String today= formatter.format(new java.util.Date());
+		String year=today.substring(0,4);
+		String month=today.substring(4,6);
+		String day=today.substring(6);
 		try {
 			 //파일정보
 			 String sFileInfo = "";
@@ -102,29 +112,27 @@ public class AdminController {
 
 			 //이미지가 아님
 			 if(cnt == 0) {
-				 PrintWriter print = response.getWriter();
-				 print.print("NOTALLOW_"+filename);
-				 print.flush();
-				 print.close();
+				 PrintWriter pw = response.getWriter();
+				 pw.print("NOTALLOW_"+filename);
+				 pw.flush();
+				 pw.close();
 			 } else {
 			 //이미지이므로 신규 파일로 디렉토리 설정 및 업로드	
 			 //파일 기본경로
-			 String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+//			 String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 			 //파일 기본경로 _ 상세경로
-//			 String filePath = dftFilePath + "resources" + File.separator + "editor" + File.separator +"multiupload" + File.separator;
-			 String filePath = "//192.168.0.232/ServerFolder/editor/multiupload/";
+			 String filePath = "//192.168.0.232/ServerFolder/"+year+"/"+month+"/"+day+"/";
 			 File file = new File(filePath);
 			 if(!file.exists()) {
 			 	file.mkdirs();
 			 }
 			 String realFileNm = "";
-			 SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-			 String today= formatter.format(new java.util.Date());
-			 realFileNm = today+UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
-			 String rlFileNm = filePath + realFileNm;
+			 
+			 realFileNm = UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
+			 String targetFileName = filePath + realFileNm;
 			 ///////////////// 서버에 파일쓰기 ///////////////// 
 			 InputStream is = request.getInputStream();
-			 OutputStream os=new FileOutputStream(rlFileNm);
+			 OutputStream os=new FileOutputStream(targetFileName);
 			 int numRead;
 			 byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
 			 while((numRead = is.read(b,0,b.length)) != -1){
@@ -141,7 +149,7 @@ public class AdminController {
 			 sFileInfo += "&bNewLine=true";
 			 // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			 sFileInfo += "&sFileName="+ filename;;
-			 sFileInfo += "&sFileURL=/admin/displayImage?filename="+rlFileNm;
+			 sFileInfo += "&sFileURL=/admin/displayImage?filename="+targetFileName;
 			 System.out.println(sFileInfo);
 			 PrintWriter print = response.getWriter();
 			 print.print(sFileInfo);

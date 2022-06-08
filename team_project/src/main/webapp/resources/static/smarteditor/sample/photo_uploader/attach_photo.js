@@ -393,6 +393,7 @@
 	    		if( !!aTemp[i] && aTemp[i] != "" && aTemp[i].indexOf("=") > 0){
 	    			aSubTemp = aTemp[i].split("=");
 	    			if (aSubTemp.length > 2) {
+	    				//add 강제 url추가
 	    				aSubTemp[1] += "=" + aSubTemp[2];
 	    			}
 	    			htTemp[aSubTemp[0]] = aSubTemp[1];
@@ -409,7 +410,7 @@
     	if(aResult.length == nImageFileCount){
     		setPhotoToEditor(aResult); 
     		aResult = null;
-//    		window.close();
+    		window.close();
     	}
     }
     

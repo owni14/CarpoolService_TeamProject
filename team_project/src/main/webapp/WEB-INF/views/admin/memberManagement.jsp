@@ -52,7 +52,7 @@
 					<div class="row align-items-end">
 						<div class="col-lg-8">
 							<div class="page-header-title">
-								<i class="icofont icofont-table bg-c-blue"></i>
+								<i class="icofont icofont-address-book bg-c-blue"></i>
 								<div class="d-inline">
 									<h4>회원 테이블</h4>
 									<span></span>

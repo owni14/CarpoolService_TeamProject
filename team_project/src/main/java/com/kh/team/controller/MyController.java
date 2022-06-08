@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.kh.team.service.PointService;
 import com.kh.team.service.PointServiceImpl;
 import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.PagingDto;
 import com.kh.team.vo.PointHistoryVo;
 
 @Controller
@@ -30,10 +31,11 @@ public class MyController {
 	
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
-	public String pointHistory(HttpSession session) {
+	public String pointHistory(HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
 		System.out.println("loginVo :" + loginVo);
-		List<Map<String, Object>> pointList = pointService.getPointListById(loginVo.getM_id());
+		pagingDto.setCount(pointService.getCountPointById(pagingDto));
+		List<Map<String, Object>> pointList = pointService.getPointListById(loginVo.getM_id(), pagingDto);
 		System.out.println("pointList : " + pointList);
 		session.setAttribute("pointList", pointList);
 		return "my/pointHistory";

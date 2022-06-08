@@ -61,7 +61,7 @@ public class EventDaoImpl implements EventDao{
 	}
 
 	@Override
-	public int getCountEvent(PagingDto pagingDto) {
+	public int getCountEvent() {
 		int count = (int)sqlSession.selectOne(NAMESPACE + "getCountEvent"); 
 		return count;
 	}
@@ -75,6 +75,12 @@ public class EventDaoImpl implements EventDao{
 	@Override
 	public void updateEventFinish(int event_seq) {
 		sqlSession.update(NAMESPACE+"updateEventFinish",event_seq);
+	}
+
+	@Override
+	public String getContent(int event_seq) {
+		String event_content=sqlSession.selectOne(NAMESPACE+"getContent",event_seq );
+		return event_content;
 	}
 
 }

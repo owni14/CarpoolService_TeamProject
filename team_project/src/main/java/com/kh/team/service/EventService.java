@@ -13,7 +13,8 @@ public interface EventService {
 	public boolean deleteEvent(int event_seq);
 	public List<EventVo> isEndEventList(String event_is_finish);
 	public EventVo getEventByEseq(int event_seq);
-	public int getCountEvent(PagingDto pagingDto); // 이벤트 수 확인
+	public int getCountEvent(); // 이벤트 수 확인
 	public List<EventVo> getEventMainList(PagingDto pagingDto);
 	public void updateEventFinish(int event_seq);
+	public String getContent(int event_seq); 
 }

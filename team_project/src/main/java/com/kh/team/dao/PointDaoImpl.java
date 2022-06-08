@@ -1,5 +1,6 @@
 package com.kh.team.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.team.vo.PagingDto;
 import com.kh.team.vo.PointCodeVo;
 import com.kh.team.vo.PointHistoryVo;
 
@@ -36,9 +38,18 @@ public class PointDaoImpl implements PointDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> getPointListById(String m_id) {
-		List<Map<String, Object>> pointList = sqlSession.selectList(NAMESPACE + "getPointListById", m_id);
+	public List<Map<String, Object>> getPointListById(String m_id, PagingDto pagingDto) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("pagingDto", pagingDto);
+		List<Map<String, Object>> pointList = sqlSession.selectList(NAMESPACE + "getPointListById",map);
 		return pointList;
+	}
+
+	@Override
+	public int getCountPointById(PagingDto pagingDto) {
+		int count = sqlSession.selectOne(NAMESPACE + "getCountPointById", pagingDto);
+		return count;
 	}
 
 	

@@ -46,10 +46,10 @@ public class PagingDto {
 		//	2			11			 20
 		//	3			21			 30
 		
-		this.startRow = (page-1)*10 + 1;
-		this.endRow = this.page*10;
+		this.startRow = (page-1)*this.perPage + 1;
+		this.endRow = this.page*this.perPage;
 		
-		this.totalPage = (int)(Math.ceil(((double)count/10)));
+		this.totalPage = (int)(Math.ceil(((double)count/this.perPage)));
 		
 		this.startPage = PAGE_BLOCK*((page-1)/PAGE_BLOCK)+1;
 		this.endPage = this.startPage + (PAGE_BLOCK - 1);

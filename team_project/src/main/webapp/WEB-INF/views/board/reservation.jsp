@@ -66,9 +66,8 @@ $(document).ready(function() {
 			tds.eq(1).text(this.m_name);
 			tds.eq(2).text(this.m_dept);
 			tds.eq(3).text(this.m_address);
-			tds.eq(4).attr("data-m_id", this.m_id);
-			tds.eq(4).attr("data-m_address", this.m_address);
-			$("#tblDriver").append(tr);
+			tds.find(".btnBoard").attr("data-m_id", this.m_id);
+			$("#tblDriver tbody").append(tr);
 			
 		}); // $.each(rData, function() {})
 		
@@ -100,38 +99,61 @@ $(document).ready(function() {
 	});
 	 */
 	 
-	 function showModalMap() {
-		 var modalMapContainer = document.getElementById('mapInModal') // 지도를 표시할 div
-		 modalMapOption = {
-			    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-			    level: 3 // 지도의 확대 레벨
-			};  
-		// 지도를 생성합니다    
-		var modalMap = new kakao.maps.Map(modalMapContainer, modalMapOption);
+	 function showModalMap(driverName, driverAddr, driverDept) {
+		 /* 
+		 console.log("driverName:" + driverName);
+		 console.log("driverAddr:" + driverAddr);
+		 console.log("driverDept:" + driverDept);
+		  */
+		  $("#driverName").text(driverName);
+		  $("#driverDept").text(driverDept);
+		  $("#driverLoct").text(driverAddr);
+		  var modalMapContainer = document.getElementById('mapInModal') // 지도를 표시할 div
+			 modalMapOption = {
+				    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+				    level: 3 // 지도의 확대 레벨
+				};  
+			// 지도를 생성합니다    
+			var modalMap = new kakao.maps.Map(modalMapContainer, modalMapOption);
+			
+			// 주소-좌표 변환 객체를 생성합니다
+			var modalGeocoder = new kakao.maps.services.Geocoder();
+			
+			// 주소로 좌표를 검색합니다
+			modalGeocoder.addressSearch(driverAddr, function(result, status) {
 		
-		var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
-
-		// 마커를 생성합니다
-		var marker = new kakao.maps.Marker({
-		    position: markerPosition
-		});
-
-		// 마커가 지도 위에 표시되도록 설정합니다
-		marker.setMap(modalMap);
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
 		
+			        var modalCoords = new kakao.maps.LatLng(result[0].y, result[0].x);
 		
-		setTimeout(function(){ modalMap.relayout(); modalMap.setCenter(new kakao.maps.LatLng(33.450701, 126.570667)),  modalMap.setLevel(3); }, 250);
+			        // 결과값으로 받은 위치를 마커로 표시합니다
+			        var modalMarker = new kakao.maps.Marker({
+			        	modalMap: modalMap,
+			            position: coords
+			        });
+			
+			        // 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var modalInfowindow = new kakao.maps.InfoWindow({
+			            content: "<div style='width:150px;text-align:center;padding:2px 0;'>" + driverName + "</div>"
+			        });
+			        modalInfowindow.open(modalMap, modalMarker);
+		
+			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			        modalMap.setCenter(modalCoords);
+			        setTimeout(function(){ modalMap.relayout(); }, 250);
+			    } // if (status === kakao.maps.services.Status.OK)
+			});
 	 }
 	 
-	 // 탑승 신청버튼 클릭
+	 // 탑승 신청버튼 클릭 (JSON사용)
 	 $("#tblDriver").on("click", ".btnBoard", function() {
-		 showModalMap();
+		 var m_id = $(this).attr("data-m_id");
+		 var url = "/board/driverInfo?m_id=" + m_id;
+		 $.get(url, function(rData) {
+			 showModalMap(rData.m_name, rData.m_address, rData.m_dept);
+		 });
 	 }); //  $("#tblDriver").on("click", ".btnBoard", function() {})
-	 
-	 $("#modal-899906").on("show.bs.modal", function () {
-		  console.log("check");
-	});
-	 
 	 
 }); // $(document).ready(function() {})
 </script>
@@ -158,11 +180,11 @@ $(document).ready(function() {
 				</div>
 				<div class="modal-body">
 					<label> 이름 : </label> 
-					<label> 홍길동 </label><br>
+					<label id="driverName"> 홍길동 </label><br>
 					<label> 부서 : </label>
-					<label> 인사부 </label><br>
+					<label id="driverDept"> 인사부 </label><br>
 					<label> 출발 위치 : </label>
-					<label> 어딘가 </label>
+					<label id="driverLoct"> 어딘가 </label>
 					<div id="mapInModal" style="height: 300px; width: 100%;"></div>
 				</div>
 				<div class="modal-footer">
@@ -222,17 +244,21 @@ $(document).ready(function() {
 					<td></td>
 					<td></td>
 					<td></td>
-					<td><a href="#modal-container-899906" role="button" class="btn btn-info btn-sm btnBoard" data-toggle="modal">탑승신청</a></td>
+					<td class="tds"><a href="#modal-container-899906" role="button" class="btn btn-info btn-sm btnBoard" data-toggle="modal">탑승신청</a></td>
 				</tr>
 			</table>
 			<table class="table" id="tblDriver" class="table">
-				<tr>
-					<th>#</th>
-					<th>운전자</th>
-					<th>부서</th>
-					<th>주소</th>
-					<th>탑승신청</th>
-				</tr>
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>운전자</th>
+						<th>부서</th>
+						<th>주소</th>
+						<th>탑승신청</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
 			</table>
 		</div>
 	</div>

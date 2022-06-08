@@ -60,4 +60,8 @@
 		update event set event_is_finish = 'Y'
 		where event_seq=#{event_seq}
 	</update>
+	
+	<select id="getContent" resultType="string">
+	select event_content from event where event_seq= #{event_seq}
+	</select>
 </mapper>

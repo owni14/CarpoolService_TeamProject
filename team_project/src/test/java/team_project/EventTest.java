@@ -49,5 +49,10 @@ public class EventTest {
 		System.out.println("EventTest testEventBySeq result "+eventDao.getEventByEseq(2));
 		
 	}
+	@Test
+	public void testEventGetContent() {
+		System.out.println("EventTest testEventGetContent result "+eventDao.getContent(2));
+		
+	}
 
 }

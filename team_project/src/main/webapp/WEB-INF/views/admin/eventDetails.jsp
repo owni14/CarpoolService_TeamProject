@@ -1,11 +1,12 @@
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 
 <script>
+
 	var event_seq="${eventVo.event_seq}";
 
 	let oEditors = [];
@@ -27,6 +28,11 @@
 		  let content = document.getElementById("editorTxt").value;
 			var event_name=document.getElementById("eventName").value;
 			var event_enddate=document.getElementById("select_date").value;
+			
+			if(event_enddate =="" || event_enddate.length <=0){
+				alert('날짜를 골라주세요');
+				return;
+			}
 			var event_startdate="${eventVo.event_startdate}";
 		  if(content == '') {
 		    alert("내용을 입력해주세요.");
@@ -60,8 +66,10 @@
 		  }
 	
 	}
+	
 	$(document).ready(function() {
 		smartEditor();
+		
 		//날짜계산
 		var item=$("#select_date").find("option:gt(0)");
 		$.each(item,function(index){	
@@ -80,14 +88,9 @@
 			item.eq(index).val(fnldate);
 			item.eq(index).text(fnldate);
 			
-		})
-			
+		});
 		
-		
-		
-		
-		
-	})
+	});
 </script>
 
 
@@ -99,34 +102,29 @@
 		<div class="page-wrapper">
 			<!-- Page-header start -->
 			<div class="page-header card">
-			이벤트 시작일: ${eventVo.event_startdate}
-					<select id="select_date" style="margin-top: 15px; margin-bottom: 1.5px">
-					
-					<option selected="selected" disabled="disabled" >이벤트 끝날 날짜를 입력해주세요</option>
+				이벤트 시작일: ${eventVo.event_startdate} <select id="select_date"
+					style="margin-top: 15px; margin-bottom: 1.5px">
+
+					<option selected="selected" disabled="disabled" value="">이벤트
+						끝날 날짜를 입력해주세요</option>
 					<c:forEach begin="1" end="30" var="i" step="1">
-					<option>
-					
-
-
-</option>
+						<option></option>
 					</c:forEach>
-					</select>
+				</select>
 				<div class="row align-items-end">
 					<div class="col-lg-8">
-					<input type="text" class="form-control form-control-bold form-control-lg" id="eventName"
-									value="${eventVo.event_name}">
-						
+						<input type="text"
+							class="form-control form-control-bold form-control-lg"
+							id="eventName" value="${eventVo.event_name}">
+
 						<div class="page-header-title">
-							
-							
-							<div class="d-inline">
-								
-					
-							</div>
+
+
+							<div class="d-inline"></div>
 						</div>
 					</div>
 					<div class="col-lg-4">
-					
+
 						<div class="page-header-breadcrumb">
 							<ul class="breadcrumb-title">
 								<li class="breadcrumb-item"><a href="/admin/home"><i
@@ -134,7 +132,7 @@
 								<li class="breadcrumb-item"><a href="#!">이벤트</a></li>
 								<li class="breadcrumb-item"><a href="#!">이벤트 목록</a></li>
 							</ul>
-						
+
 						</div>
 					</div>
 				</div>
@@ -156,12 +154,12 @@
 									${eventVo.event_content}
 									</textarea>
 							</div>
-							<button class="btn btn-success" id="btnUpdateEvent"type="button"
+							<button class="btn btn-success" id="btnUpdateEvent" type="button"
 								onclick="submitPost();">
 								<i class="icofont icofont-check-circled"></i>작성완료
 							</button>
 						</form>
-						
+
 					</div>
 				</div>
 			</div>

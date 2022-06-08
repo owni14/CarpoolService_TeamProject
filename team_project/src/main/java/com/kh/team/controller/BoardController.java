@@ -1,12 +1,12 @@
 package com.kh.team.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,11 +38,19 @@ public class BoardController {
 	}
 	
 	// 운전자 리스트 (비동기 방식)
-	@RequestMapping(value = "/driverList", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/driverList", method = RequestMethod.GET)
 	public List<MemberVo> passengerReservationList() {
 		List<MemberVo> memberList = memberService.getMemberList();
 		return memberList;
+	}
+	
+	// 탑승하기 클릭시 운전자 정보 가져오는 메서드 (비동기)
+	@ResponseBody
+	@RequestMapping(value = "/driverInfo", method = RequestMethod.GET)
+	public MemberVo driverInformation(String m_id) {
+		MemberVo driverInfo = memberService.getMemberById(m_id);
+		return driverInfo;
 	}
 	
 }

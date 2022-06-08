@@ -51,4 +51,10 @@ public class MemberDaoImpl implements MemberDao {
 		return count;
 	}
 
+	@Override
+	public MemberVo getMemberPointById(String m_id) {
+		MemberVo memberVo = sqlSession.selectOne(NAMESPACE + "getMemberPointById");
+		return memberVo;
+	}
+
 }

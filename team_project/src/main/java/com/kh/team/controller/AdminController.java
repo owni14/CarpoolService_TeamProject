@@ -114,6 +114,8 @@ public class AdminController {
 		String contentStr=eventVo.getEvent_content();
 		List<String> contentFileList=FileUploadHelper.eventFilnameExtraction(contentStr, SERVERIP);
 		List<String> db_contentFileList=FileUploadHelper.eventFilnameExtraction(db_event_content, SERVERIP);
+		int dbContentSize=db_contentFileList.size();
+		int contentSize=contentFileList.size();
 //		String[] arrSplitStr=contentStr.split("<img");
 //		//list 파일 목록 담을거
 //		List<String> contentFileList=new ArrayList<String>();
@@ -131,12 +133,27 @@ public class AdminController {
 		System.out.println(db_contentFileList);
 //		System.out.println("eventUpdate EventVo"+eventVo);
 		//디비에 저장된게 더크다는건 파일이 삭제 되었다는것
-		if(db_contentFileList.size() > contentFileList.size()) {
-			
-		}
-		boolean result = eventService.updateEvent(eventVo);
 		
-		return String.valueOf(result);
+		boolean dbUpdate_result = eventService.updateEvent(eventVo);
+		boolean fileUpdate_result=false;
+		if (dbContentSize >= contentSize) {
+			//db에서 컨텐트 지우기
+			db_contentFileList.removeAll(contentFileList);
+			//크기가 0은 삭제할 파일이 없다 다같은 내용
+			System.out.println(db_contentFileList);
+			if(dbContentSize>0) {
+				for(String strFile:db_contentFileList) {
+					fileUpdate_result=FileUploadHelper.deleteFile(strFile);
+				}
+			}
+			else if(contentSize <=0) {
+				//content내에 사진이 없다 폴더에서 삭제해야함
+			}
+		}
+		if(dbUpdate_result && fileUpdate_result ) {
+			return "true";
+		}
+		return "false";
 	}
 
 	@RequestMapping(value="/event_filesAttach", method= RequestMethod.POST)

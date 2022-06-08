@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kh.team.mappers.point">
+
+	<insert id="insertPointCode">
+		insert into point_code (pc_code, pc_desc, pc_point) values (#{pc_code}, #{pc_desc}, #{pc_point})
+	</insert>
+	<insert id="insertPointHistory">
+		insert into point_history (m_id, pc_code) values (#{m_id}, #{pc_code})
+	</insert>
+	
+	<select id="getPointHistoryById" resultType="PointHistoryVo">
+		select * from point_history
+		where m_id = #{m_id}
+	</select>
+</mapper>

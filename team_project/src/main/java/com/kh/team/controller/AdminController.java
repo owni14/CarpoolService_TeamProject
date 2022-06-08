@@ -117,6 +117,7 @@ public class AdminController {
 		System.out.println(contentFileList);
 		System.out.println(db_contentFileList);
 //		System.out.println("eventUpdate EventVo"+eventVo);
+		//디비에 저장된게 더크다는건 파일이 삭제 되었다는것
 		if(db_contentFileList.size() > contentFileList.size()) {
 			
 		}

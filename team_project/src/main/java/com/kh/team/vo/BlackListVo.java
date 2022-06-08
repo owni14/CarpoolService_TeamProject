@@ -14,6 +14,16 @@ public class BlackListVo {
 		super();
 	}
 
+	
+	public BlackListVo(String m_id, String black_m_id, String black_content) {
+		super();
+		this.m_id = m_id;
+		this.black_m_id = black_m_id;
+		this.black_content = black_content;
+	}
+
+
+
 	public BlackListVo(int blacklist_seq, String m_id, String black_m_id, String black_content,
 			String black_is_processed, Date black_regdate) {
 		super();

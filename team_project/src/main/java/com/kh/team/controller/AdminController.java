@@ -118,12 +118,21 @@ public class AdminController {
 		System.out.println(db_contentFileList);
 //		System.out.println("eventUpdate EventVo"+eventVo);
 		//디비에 저장된게 더크다는건 파일이 삭제 되었다는것
-		if(db_contentFileList.size() > contentFileList.size()) {
-			
-		}
-		boolean result = eventService.updateEvent(eventVo);
 		
-		return String.valueOf(result);
+		boolean dbUpdate_result = eventService.updateEvent(eventVo);
+		boolean fileUpdate_result=false;
+		if (db_contentFileList.size() > contentFileList.size()) {
+			//db에서 컨텐트 지우기
+			db_contentFileList.removeAll(contentFileList);
+			System.out.println(db_contentFileList);
+			for(String strFile:db_contentFileList) {
+				fileUpdate_result=FileUploadHelper.deleteFile(strFile);
+			}
+		}
+		if(dbUpdate_result && fileUpdate_result ) {
+			return "true";
+		}
+		return "false";
 	}
 
 	@RequestMapping(value="/event_filesAttach", method= RequestMethod.POST)

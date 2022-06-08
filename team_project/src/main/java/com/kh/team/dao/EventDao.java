@@ -14,7 +14,7 @@ public interface EventDao {
 	public boolean deleteEvent(int event_seq);
 	public List<EventVo> isEndEventList(String event_is_finish);
 	public EventVo getEventByEseq(int event_seq);
-	public int getCountEvent(PagingDto pagingDto);
+	public int getCountEvent();
 	public List<EventVo> getEventMainList(PagingDto pagingDto);
 	public void updateEventFinish(int event_seq);
 	public String getContent(int event_seq); 

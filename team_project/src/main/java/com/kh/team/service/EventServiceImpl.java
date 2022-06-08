@@ -45,8 +45,8 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public int getCountEvent(PagingDto pagingDto) {
-		return eventDao.getCountEvent(pagingDto);
+	public int getCountEvent() {
+		return eventDao.getCountEvent();
 	}
 
 	@Override

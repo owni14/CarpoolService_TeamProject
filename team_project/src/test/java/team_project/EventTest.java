@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.team.dao.EventDao;
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.PagingDto;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/**/*.xml")
 public class EventTest {
@@ -48,4 +49,5 @@ public class EventTest {
 		System.out.println("EventTest testEventBySeq result "+eventDao.getEventByEseq(2));
 		
 	}
+
 }

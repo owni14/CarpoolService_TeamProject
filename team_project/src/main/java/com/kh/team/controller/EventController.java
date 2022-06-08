@@ -26,8 +26,6 @@ public class EventController {
 	// 현재 진행중인 이벤트로 이동
 	@RequestMapping(value = "/now", method = RequestMethod.GET)
 	public String now(Model model, PagingDto pagingDto) {
-		
-		
 		pagingDto.setCount(eventService.getCountEvent(pagingDto));
 		pagingDto.setPerPage(3); // 한 페이지에 나오는 이벤트 개수
 		pagingDto.setPage(pagingDto.getPage());

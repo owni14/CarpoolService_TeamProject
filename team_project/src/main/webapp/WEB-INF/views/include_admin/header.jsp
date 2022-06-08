@@ -381,7 +381,7 @@ var nav = $('.fixed-button');
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="bs-basic-table.html">
+                                    <a href="/admin/report_management">
                                         <span class="pcoded-micon"><i class="ti-alert"></i><b>FC</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.form-components.main">신고 회원 관리</span>
                                         <span class="pcoded-mcaret"></span>

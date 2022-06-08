@@ -50,7 +50,6 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/member_management", method = RequestMethod.GET)
-
 	public String memberManagement(Model model, PagingDto pagingDto) {
 		System.out.println("AdminController int count : " + memberService.adminGetCount(pagingDto));
 		pagingDto.setCount(memberService.adminGetCount(pagingDto));
@@ -60,6 +59,11 @@ public class AdminController {
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pagingDto", pagingDto);
 		return "admin/memberManagement";
+	}
+	
+	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
+	public String reportManagement() {
+		return "admin/reportManagement";
 	}
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)

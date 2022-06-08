@@ -13,11 +13,16 @@ public class PointHistoryVo {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PointHistoryVo(String m_id, String pc_code) {
+	
+
+	public PointHistoryVo(int p_seq, String m_id, String pc_code) {
 		super();
+		this.p_seq = p_seq;
 		this.m_id = m_id;
 		this.pc_code = pc_code;
 	}
+
+
 
 	public PointHistoryVo(int p_seq, String m_id, String pc_code, Date p_date) {
 		super();

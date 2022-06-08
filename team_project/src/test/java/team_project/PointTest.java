@@ -31,15 +31,15 @@ public class PointTest {
 	@Test
 	public void insertPointHistory() {
 		for (int i=1; i <= 10; i++) {
-			PointHistoryVo pointHistoryVo = new PointHistoryVo("hong@naver.com", "9999");
+			PointHistoryVo pointHistoryVo = new PointHistoryVo(i, "hong@naver.com", "9999");
 			pointDao.insertPointHistory(pointHistoryVo);
 		}
 	}
 	
 	@Test
 	public void getPointHistoryById() {
-		PointHistoryVo pointHistoryVo = pointDao.getPointHistoryById("hong@naver.com");
-		System.out.println("PointTest, getPointHistoryById, pointHistoryVo: " + pointHistoryVo);
+		List<PointHistoryVo> pointHistoryList = pointDao.getPointHistoryById("hong@naver.com");
+		System.out.println("PointTest, getPointHistoryById, pointHistoryList: " + pointHistoryList);
 	}
 	
 }

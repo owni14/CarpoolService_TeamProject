@@ -27,6 +27,8 @@
 		  oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", []);
 		  let content = document.getElementById("editorTxt").value;
 			var event_name=document.getElementById("eventName").value;
+			var event_enddate=document.getElementById("select_date").value;
+			
 		  if(content == '') {
 		    alert("내용을 입력해주세요.");
 		    oEditors.getById["editorTxt"].exec("FOCUS");
@@ -37,7 +39,7 @@
 		    	"event_seq": event_seq,
       			 "event_content": content,
       			 "event_name":event_name,
-      			 "event_enddate":"${eventVo.event_enddate}",
+      			 "event_enddate":event_enddate,
       			 "event_is_finish":"${eventVo.event_is_finish}",
       			 "event_max_count":"${eventVo.event_max_count}",
       			 "event_point":"${eventVo.event_point}"

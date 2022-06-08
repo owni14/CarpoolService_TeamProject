@@ -73,38 +73,14 @@ $(document).ready(function() {
 		
 	}); // $.get(url, function(rData) {})
 	
-	/* 카카오 Api 예시 : 주소로 좌표를 검색합니다
-	geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
-
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === kakao.maps.services.Status.OK) {
-
-	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new kakao.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-
-	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;">출발 위치</div>'
-	        });
-	        infowindow.open(map, marker);
-
-	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        map.setCenter(coords);
-	    } 
-	});
-	 */
-	 
 	 function showModalMap(driverName, driverAddr, driverDept) {
+		 
 		 /* 
 		 console.log("driverName:" + driverName);
 		 console.log("driverAddr:" + driverAddr);
 		 console.log("driverDept:" + driverDept);
 		  */
+		  
 		  $("#driverName").text(driverName);
 		  $("#driverDept").text(driverDept);
 		  $("#driverLoct").text(driverAddr);
@@ -130,30 +106,43 @@ $(document).ready(function() {
 			        // 결과값으로 받은 위치를 마커로 표시합니다
 			        var modalMarker = new kakao.maps.Marker({
 			        	modalMap: modalMap,
-			            position: coords
+			            position: modalCoords
 			        });
 			
 			        // 인포윈도우로 장소에 대한 설명을 표시합니다
 			        var modalInfowindow = new kakao.maps.InfoWindow({
-			            content: "<div style='width:150px;text-align:center;padding:2px 0;'>" + driverName + "</div>"
+			            content: "<div style='width:150px; text-align:center;'>" + driverName + "</div>"
 			        });
+			        
+			        // >>>>>>>>>>>>>>>>>> !!!!!! 마커 위치가 위로 조금 올라와 있음. 추후 한번 확인해서 수정해야함  !!!!!! <<<<<<<<<<<<<<<<<<<<
 			        modalInfowindow.open(modalMap, modalMarker);
-		
-			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			        modalMap.setCenter(modalCoords);
-			        setTimeout(function(){ modalMap.relayout(); }, 250);
+			        modalMap.setDraggable(false);  
+			        setTimeout(function(){ modalMap.relayout();  modalMap.setCenter(modalCoords), modalMap.setLevel(3);}, 100);
 			    } // if (status === kakao.maps.services.Status.OK)
-			});
-	 }
+			    	
+			}); // modalGeocoder.addressSearch(driverAddr, function(result, status) {})
+			
+	 } // function showModalMap(driverName, driverAddr, driverDept) {})
 	 
-	 // 탑승 신청버튼 클릭 (JSON사용)
+	 // 탑승 신청버튼 클릭
 	 $("#tblDriver").on("click", ".btnBoard", function() {
+		 
+		 // 멤버 아이디 가져옵니다.
 		 var m_id = $(this).attr("data-m_id");
+		 
 		 var url = "/board/driverInfo?m_id=" + m_id;
+		 
+		 // 비동기형식으로 데이터 보내고 받아와서 showModalMap함수 실행
 		 $.get(url, function(rData) {
 			 showModalMap(rData.m_name, rData.m_address, rData.m_dept);
 		 });
+		 
 	 }); //  $("#tblDriver").on("click", ".btnBoard", function() {})
+	 
+	 // 모달창에서 버튼 클릭
+	 $("#btnApply").click(function() {
+		 console.log("clicked");
+	 });
 	 
 }); // $(document).ready(function() {})
 </script>
@@ -179,16 +168,13 @@ $(document).ready(function() {
 					</h5>
 				</div>
 				<div class="modal-body">
-					<label> 이름 : </label> 
-					<label id="driverName"> 홍길동 </label><br>
-					<label> 부서 : </label>
-					<label id="driverDept"> 인사부 </label><br>
-					<label> 출발 위치 : </label>
-					<label id="driverLoct"> 어딘가 </label>
+					<div style="font-weight: bold; "> 이름 : <span id="driverName"></span></div> 
+					<div style="font-weight: bold; "> 부서 : <span id="driverDept"></span></div> 
+					<div style="font-weight: bold; "> 출발 위치 : <span id="driverLoct"></span></div> 
 					<div id="mapInModal" style="height: 300px; width: 100%;"></div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success">
+					<button type="button" id="btnApply" class="btn btn-success">
 						신청하기
 					</button> 
 					<button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -262,6 +248,32 @@ $(document).ready(function() {
 			</table>
 		</div>
 	</div>
+	<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>> 페이지 작업 해야함 (하나도 안되어 있음) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+		<nav>
+			<ul class="pagination justify-content-center">
+				<li class="page-item">
+					<a class="page-link" href="#">Previous</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">1</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">2</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">3</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">4</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">5</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">Next</a>
+				</li>
+			</ul>
+		</nav>
 	</div>
 	<div class="col-md-2"></div>
 </div>

@@ -8,6 +8,9 @@
 		
 	});
 </script>
+${nNotifyList}//
+${yNotifyList}//
+${dayNotifyList}
 <%-- <%@ include file="/WEB-INF/views/include/frmPaging.jsp" %> --%>
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
@@ -59,25 +62,41 @@
 							new Chart(document.getElementById("canvas"), {
 							    type: 'bar',
 							    data: {
-							        labels: ['완료', '미완료', '10일 경과'],
+							        labels: [''],
 							        datasets: [{
-							            label: '신고 완료 처리',
+							            label: '완료',
 							            data: [
-							                10,
-							                23,
-							                2
+							                10
 							            ],
 							            backgroundColor: [
 							            	"rgba(54, 162, 235, 0.2)",
-							            	"rgba(255, 205, 86, 0.2)",
-							            	"rgba(255, 99, 132, 0.2)"
 							            	],
 							            borderColor: [
 							            	"rgba(54, 162, 235, 1)",
-							            	"rgba(255, 205, 86, 1)",
-							            	"rgba(255, 99, 132, 1)"
 							            	],
 							            fill: true,
+							        }, {
+							        	label: '미완료',
+							            data: [
+							                23
+							            ],
+							            backgroundColor: [
+							            	"rgba(255, 205, 86, 0.2)"
+							            	],
+							            borderColor: [
+							            	"rgba(255, 205, 86, 1)"
+							            	]
+							        }, {
+							        	label: '10일 경과',
+							            data: [
+							                5
+							            ],
+							            backgroundColor: [
+							            	"rgba(255, 99, 132, 0.2)"
+							            	],
+							            borderColor: [
+							            	"rgba(255, 99, 132, 1)"
+							            	]
 							        }]
 							    },
 							    options: {
@@ -143,21 +162,17 @@
 									</tr>
 								</thead>
 								<tbody>
-<%-- 									<c:forEach var="memberVo" items="${memberList}" varStatus="status"> --%>
-<!-- 									<tr>	 -->
-<%-- 										<th scope="row">${status.count}</th> --%>
-<%-- 										<td>${memberVo.m_id}</td> --%>
-<%-- 										<td>${memberVo.m_name}</td> --%>
-<%-- 										<td>${memberVo.gender}</td> --%>
-<%-- 										<td>${memberVo.m_company}</td> --%>
-<%-- 										<td>${memberVo.m_address}</td> --%>
-<%-- 										<td>${memberVo.m_cellphone}</td> --%>
-<%-- 										<td>${memberVo.m_point}</td> --%>
-<%-- 										<td>${memberVo.m_evl}</td> --%>
-<%-- 										<td>${memberVo.m_blackpoint}</td> --%>
-<%-- 										<td>${memberVo.m_is_drop}</td> --%>
-<!-- 									</tr> -->
-<%-- 									</c:forEach> --%>
+									<c:forEach var="blackListVo" items="${nNotifyList}" varStatus="status"> 
+								<tr>	 
+										<th scope="row">${status.count}</th>
+										<td>${blackListVo.m_id}</td>
+										<td>${blackListVo.black_m_id}</td>
+										<td>${blackListVo.black_content}</td>
+										<td><span style="color:red">${blackListVo.black_is_processed}</span></td>
+										<td>${blackListVo.black_regdate}</td>
+										
+							</tr>
+ 									</c:forEach> 
 								</tbody>
 							</table>
 						</div>
@@ -168,6 +183,37 @@
 				<!-- end pagination  -->
 				<!-- Basic table card end -->
 						</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 col-xl-12" style="margin-left: 20px; padding-right : 140px">
+								<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>신고자 아이디</th>
+											<th>신고 받은 회원 아이디</th>
+											<th>신고 내용</th>
+											<th>처리 결과</th>
+											<th>등록 일자</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="blackListVo" items="${yNotifyList}" varStatus="status"> 
+									<tr>	 
+											<th scope="row">${status.count}</th>
+											<td>${blackListVo.m_id}</td>
+											<td>${blackListVo.black_m_id}</td>
+											<td>${blackListVo.black_content}</td>
+											<td><span style="color:blue">${blackListVo.black_is_processed}</span></td>
+											<td>${blackListVo.black_regdate}</td>
+											
+								</tr>
+	 									</c:forEach> 
+									</tbody>
+								</table>
+							</div>
+							</div>
 						</div>
 						</div>
 					</div>

@@ -28,9 +28,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
+import com.kh.team.service.NotifyService;
 import com.kh.team.util.FileUploadHelper;
+import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
@@ -42,6 +45,8 @@ public class AdminController {
 	EventService eventService;
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	NotifyService notifyService;
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin() {
@@ -81,7 +86,15 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
-	public String reportManagement() {
+	public String reportManagement(Model model) {
+		List<BlackListVo> notifyList = notifyService.notifyList();
+		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
+		List<BlackListVo> yNotifyList = notifyService.yNotifyList();
+		List<BlackListVo> dayNotifyList = notifyService.dayNotifyList();
+		model.addAttribute("notifyList", notifyList);
+		model.addAttribute("nNotifyList", nNotifyList);
+		model.addAttribute("yNotifyList", yNotifyList);
+		model.addAttribute("dayNotifyList", dayNotifyList);
 		return "admin/reportManagement";
 	}
 
@@ -101,6 +114,8 @@ public class AdminController {
 		String contentStr=eventVo.getEvent_content();
 		List<String> contentFileList=FileUploadHelper.eventFilnameExtraction(contentStr, SERVERIP);
 		List<String> db_contentFileList=FileUploadHelper.eventFilnameExtraction(db_event_content, SERVERIP);
+		int dbContentSize=db_contentFileList.size();
+		int contentSize=contentFileList.size();
 //		String[] arrSplitStr=contentStr.split("<img");
 //		//list 파일 목록 담을거
 //		List<String> contentFileList=new ArrayList<String>();
@@ -121,12 +136,18 @@ public class AdminController {
 		
 		boolean dbUpdate_result = eventService.updateEvent(eventVo);
 		boolean fileUpdate_result=false;
-		if (db_contentFileList.size() > contentFileList.size()) {
+		if (dbContentSize >= contentSize) {
 			//db에서 컨텐트 지우기
 			db_contentFileList.removeAll(contentFileList);
+			//크기가 0은 삭제할 파일이 없다 다같은 내용
 			System.out.println(db_contentFileList);
-			for(String strFile:db_contentFileList) {
-				fileUpdate_result=FileUploadHelper.deleteFile(strFile);
+			if(dbContentSize>0) {
+				for(String strFile:db_contentFileList) {
+					fileUpdate_result=FileUploadHelper.deleteFile(strFile);
+				}
+			}
+			else if(contentSize <=0) {
+				//content내에 사진이 없다 폴더에서 삭제해야함
 			}
 		}
 		if(dbUpdate_result && fileUpdate_result ) {

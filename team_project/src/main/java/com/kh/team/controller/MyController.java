@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MyController {
 
 	// 탑승 내역 페이지로 이동
-	@RequestMapping(value = "/history", method = RequestMethod.GET)
+	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
 	public String boardedHistory() {
-		return "my/history";
+		return "my/boardedHistory";
 	}
 	
 	// 탑승 내역 페이지로 이동
-	@RequestMapping(value = "/point", method = RequestMethod.GET)
+	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
 	public String pointHistory() {
-		return "my/point";
+		return "my/pointHistory";
 	}
 	
 	// 충전하기 페이지로 이동
@@ -27,7 +27,7 @@ public class MyController {
 	}
 	
 	// 운전자 등록 페이지로 이동
-	@RequestMapping(value = "/rgstDriver", method = RequestMethod.GET)
+	@RequestMapping(value = "/registerDriver", method = RequestMethod.GET)
 	public String registerDriver() {
 		return "my/registerDriver";
 	}

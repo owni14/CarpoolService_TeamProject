@@ -47,4 +47,9 @@ public class MemberTest {
 		int count = memberDao.adminGetCount(pagingDto);
 		System.out.println("count : " + count);
 	}
+	
+	@Test
+	public void testgetMember() {
+	System.out.println(memberDao.getMemberById("user0187@gmail.com"));	
+	}
 }

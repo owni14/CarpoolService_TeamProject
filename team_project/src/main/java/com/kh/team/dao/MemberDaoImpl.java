@@ -51,4 +51,11 @@ public class MemberDaoImpl implements MemberDao {
 		return count;
 	}
 
+	@Override
+	public MemberVo getMemberById(String m_id) {
+		MemberVo driverInfo = sqlSession.selectOne(NAMESPACE + "getMemberById", m_id);
+//		System.out.println("driverInfo:" + driverInfo);
+		return driverInfo;
+	}
+
 }

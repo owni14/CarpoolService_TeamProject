@@ -62,4 +62,10 @@
 			</choose>
 		</if>
 	</sql>
+	
+	<select id="getMemberById" resultType="MemberVo">
+		select * from member
+		where m_id = #{m_id}
+	</select>
+	
 </mapper>

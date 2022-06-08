@@ -55,4 +55,9 @@
 				order by event_is_finish asc, event_seq desc) a)
 		where rnum between #{startRow} and #{endRow}
 	</select>
+	
+	<update id="updateEventFinish">
+		update event set event_is_finish = 'Y'
+		where event_seq=#{event_seq}
+	</update>
 </mapper>

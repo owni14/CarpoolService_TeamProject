@@ -11,7 +11,6 @@
 	let oEditors = [];
 
 	smartEditor = function() {
-		console.log("Naver SmartEditor")
 		nhn.husky.EZCreator.createInIFrame({
 			oAppRef : oEditors,
 			elPlaceHolder : "editorTxt",
@@ -28,13 +27,12 @@
 		  let content = document.getElementById("editorTxt").value;
 			var event_name=document.getElementById("eventName").value;
 			var event_enddate=document.getElementById("select_date").value;
-			
+			var event_startdate="${eventVo.event_startdate}";
 		  if(content == '') {
 		    alert("내용을 입력해주세요.");
 		    oEditors.getById["editorTxt"].exec("FOCUS");
 		    return
 		  } else {
-		    console.log(content);
 		    let post = {
 		    	"event_seq": event_seq,
       			 "event_content": content,
@@ -91,7 +89,7 @@
 		
 	})
 </script>
-${eventVo.event_startdate}
+
 
 <!-- start Event inner header -->
 <!-- <img src="/admin/displayImage?filename=//192.168.0.232/ServerFolder/editor/multiupload/202206071905312924d017-f20d-49e2-bfda-8a2184b78627.jpg"> -->
@@ -101,8 +99,8 @@ ${eventVo.event_startdate}
 		<div class="page-wrapper">
 			<!-- Page-header start -->
 			<div class="page-header card">
-			
-					<select id="select_date">
+			이벤트 시작일: ${eventVo.event_startdate}
+					<select id="select_date" style="margin-top: 15px; margin-bottom: 1.5px">
 					
 					<option selected="selected" disabled="disabled" >이벤트 끝날 날짜를 입력해주세요</option>
 					<c:forEach begin="1" end="30" var="i" step="1">

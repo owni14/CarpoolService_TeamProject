@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
@@ -45,6 +46,19 @@ public class AdminController {
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
 	public String eventList(Model model) {
 		List<EventVo> eventList = eventService.getEventList();
+		Date today=new Date(System.currentTimeMillis());
+		for(EventVo eventVo:eventList) {
+			if(eventVo.getEvent_enddate() ==null) {
+				continue;
+			}
+			int dateCompartResult=eventVo.getEvent_enddate().compareTo(today);
+			System.out.println("dateResult "+dateCompartResult);
+			if(dateCompartResult <0) {
+				//이벤트 종료 됨을 업데이트
+				eventService.updateEventFinish(eventVo.getEvent_seq());
+				eventVo.setEvent_is_finish("Y");
+			}
+		}
 		model.addAttribute("eventList", eventList);
 		return "admin/eventManagement";
 	}

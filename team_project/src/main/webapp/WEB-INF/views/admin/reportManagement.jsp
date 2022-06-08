@@ -19,7 +19,7 @@
 					<div class="row align-items-end">
 						<div class="col-lg-8">
 							<div class="page-header-title">
-								<i class="icofont icofont-table bg-c-blue"></i>
+								<i class="icofont icofont-warning bg-c-pink"></i>
 								<div class="d-inline">
 									<h4>신고 회원 테이블</h4>
 									<span></span>
@@ -46,13 +46,13 @@
 				<!-- Basic table card start -->
 				<div class="card">
 					<div class="card-header">
-						<i class="icofont icofont-ui-user"></i>
-						<h5>회원 테이블</h5>
+						<i class="icofont icofont-sand-clock"></i>
+						<h5>날짜 별 신고 현황</h5>
 					</div>
 					<div class="card-block table-border-style">
 						<div class="table-responsive">
 <!-- 							<table class="table"> -->
-								<h1>신고 회원 관리 페이지</h1>
+								
 <!-- 							</table> -->
 						</div>
 					</div>

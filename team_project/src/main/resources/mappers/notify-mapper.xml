@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kh.team.mappers.notify">
+	<insert id="insertNotification">
+		insert into blacklist (blacklist_seq, m_id, black_m_id, black_content)
+		values (seq_blacklist.nextval,#{m_id},#{black_m_id},#{black_content})
+	</insert>
+</mapper>

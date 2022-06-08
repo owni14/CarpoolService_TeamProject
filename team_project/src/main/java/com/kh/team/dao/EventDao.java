@@ -16,4 +16,5 @@ public interface EventDao {
 	public EventVo getEventByEseq(int event_seq);
 	public int getCountEvent(PagingDto pagingDto);
 	public List<EventVo> getEventMainList(PagingDto pagingDto);
+	public void updateEventFinish(int event_seq);
 }

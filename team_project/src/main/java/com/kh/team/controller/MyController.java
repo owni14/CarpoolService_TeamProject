@@ -1,12 +1,26 @@
 package com.kh.team.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.kh.team.service.PointService;
+import com.kh.team.service.PointServiceImpl;
+import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.PointHistoryVo;
+
 @Controller
 @RequestMapping("/my")
 public class MyController {
+	
+	@Autowired
+	private PointService pointService;
 
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
@@ -16,7 +30,12 @@ public class MyController {
 	
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
-	public String pointHistory() {
+	public String pointHistory(HttpSession session) {
+		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
+		System.out.println("loginVo :" + loginVo);
+		List<Map<String, Object>> pointList = pointService.getPointListById(loginVo.getM_id());
+		System.out.println("pointList : " + pointList);
+		session.setAttribute("pointList", pointList);
 		return "my/pointHistory";
 	}
 	

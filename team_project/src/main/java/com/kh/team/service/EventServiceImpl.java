@@ -54,4 +54,9 @@ public class EventServiceImpl implements EventService {
 		return eventDao.getEventMainList(pagingDto);
 	}
 
+	@Override
+	public void updateEventFinish(int event_seq) {
+			eventDao.updateEventFinish(event_seq);
+	}
+
 }

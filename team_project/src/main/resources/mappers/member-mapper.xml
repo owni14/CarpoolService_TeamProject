@@ -19,8 +19,10 @@
 	
 	<select id="admingetMemberList" resultType="MemberVo">
 		select * from
-		(select rownum rnum,a.* from
-		(select * from member order by m_id desc) a)
+			(select rownum rnum,a.* from
+				(select * from member 
+				<include refid="search"></include>
+				order by m_id desc) a)
 		where rnum between #{startRow} and #{endRow}
 	</select>
 	
@@ -30,13 +32,32 @@
 	
 	<select id="adminGetCount" resultType="int">
 		select count(*) from member
+		<include refid="search"></include>
 	</select>
 	
 	<sql id="search">
 		<if test = "searchType != null and keyword != null">
 			<choose>
-				<when test='searchType == i'>
+				<when test='searchType == "i"'>
 					where m_id like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "n"'>
+					where m_name like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "g"'>
+					where gender like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "c"'>
+					where m_company like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "a"'>
+					where m_address like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "t"'>
+					where m_cellphone like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "w"'>
+					where m_is_drop like '%' || #{keyword} || '%'
 				</when>
 			</choose>
 		</if>

@@ -39,8 +39,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int adminGetCount() {
-		int count = memberDao.adminGetCount();
+	public int adminGetCount(PagingDto pagingDto) {
+		int count = memberDao.adminGetCount(pagingDto);
 		return count;
 	}
 

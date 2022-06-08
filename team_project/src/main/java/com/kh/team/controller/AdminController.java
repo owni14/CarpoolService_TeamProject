@@ -52,8 +52,8 @@ public class AdminController {
 	@RequestMapping(value = "/member_management", method = RequestMethod.GET)
 
 	public String memberManagement(Model model, PagingDto pagingDto) {
-//		System.out.println("AdminController int page : " + pagingDto);
-		pagingDto.setCount(memberService.adminGetCount());
+		System.out.println("AdminController int count : " + memberService.adminGetCount(pagingDto));
+		pagingDto.setCount(memberService.adminGetCount(pagingDto));
 		pagingDto.setPage(pagingDto.getPage());
 //		System.out.println("AdminController int pagingDto : " + pagingDto);
 		List<MemberVo> memberList =  memberService.admingetMemberList(pagingDto);

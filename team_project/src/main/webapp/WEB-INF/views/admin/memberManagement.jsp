@@ -33,6 +33,7 @@
 			searchType.val(searchTypeValue);
 			var keyword = frmPaging.find("input[name=keyword]");
 			keyword.val(keywordValue);
+			frmPaging.find("input[name=page]").val(1);
 			frmPaging.attr("action","/admin/member_management");
 			frmPaging.attr("method","get");
 			frmPaging.submit();
@@ -82,13 +83,41 @@
 						<h5>회원 테이블</h5>
 						<h5>
 							<select id="searchTypeSelector" name="searchTypeSelector" style="height:25px">
-								<option value="i">회원 아이디</option>
-								<option value="n">이름</option>
-								<option value="g">성별</option>
-								<option value="c">회사</option>
-								<option value="a">주소</option>
-								<option value="t">연락처</option>
-								<option value="w">회사 탈퇴 여부</option>
+								<option value="i"
+									<c:if test="${pagingDto.searchType == 'i'}">
+										selected
+									</c:if>
+								>회원 아이디</option>
+								<option value="n"
+									<c:if test="${pagingDto.searchType == 'n'}">
+										selected
+									</c:if>
+								>이름</option>
+								<option value="g"
+									<c:if test="${pagingDto.searchType == 'g'}">
+										selected
+									</c:if>
+								>성별</option>
+								<option value="c"
+									<c:if test="${pagingDto.searchType == 'c'}">
+										selected
+									</c:if>
+								>회사</option>
+								<option value="a"
+									<c:if test="${pagingDto.searchType == 'a'}">
+										selected
+									</c:if>
+								>주소</option>
+								<option value="t"
+									<c:if test="${pagingDto.searchType == 't'}">
+										selected
+									</c:if>
+								>연락처</option>
+								<option value="w"
+									<c:if test="${pagingDto.searchType == 'w'}">
+										selected
+									</c:if>
+								>회사 탈퇴 여부</option>
 							</select>
 						
 							<input type="text" id="adminKeyword" name="adminKeyword" style="height:25px">

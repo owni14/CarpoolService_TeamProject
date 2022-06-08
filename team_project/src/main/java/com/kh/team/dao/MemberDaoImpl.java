@@ -46,8 +46,8 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public int adminGetCount() {
-		int count = (int)sqlSession.selectOne(NAMESPACE + "adminGetCount"); 
+	public int adminGetCount(PagingDto pagingDto) {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "adminGetCount", pagingDto); 
 		return count;
 	}
 

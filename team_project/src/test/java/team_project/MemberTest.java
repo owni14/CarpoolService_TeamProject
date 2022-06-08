@@ -1,7 +1,5 @@
 package team_project;
 
-
-
 import java.util.List;
 
 import org.junit.Test;
@@ -41,7 +39,10 @@ public class MemberTest {
 	
 	@Test
 	public void getCount() {
-		int count = memberDao.adminGetCount();
+		PagingDto pagingDto = new PagingDto();
+		pagingDto.setSearchType("c");
+		pagingDto.setKeyword("sam");
+		int count = memberDao.adminGetCount(pagingDto);
 		System.out.println("count : " + count);
 	}
 	
@@ -51,3 +52,5 @@ public class MemberTest {
 		System.out.println("MemverTest, MemberVo : " + memberVo);
 	}
 }
+
+

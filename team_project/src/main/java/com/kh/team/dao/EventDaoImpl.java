@@ -61,7 +61,7 @@ public class EventDaoImpl implements EventDao{
 	}
 
 	@Override
-	public int getCountEvent(PagingDto pagingDto) {
+	public int getCountEvent() {
 		int count = (int)sqlSession.selectOne(NAMESPACE + "getCountEvent"); 
 		return count;
 	}

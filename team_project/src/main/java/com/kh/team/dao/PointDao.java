@@ -11,6 +11,6 @@ public interface PointDao {
 	public void insertPointCode(PointCodeVo pointCodeVo);
 	public void insertPointHistory(PointHistoryVo pointHistoryVo);
 	public List<PointHistoryVo> getPointHistoryById(String m_id);
-	public List<Map<String, Object>> getPointListById(String m_id, PagingDto pagingDto);
-	public int getCountPointById(PagingDto pagingDto);
+	public List<Map<String, Object>> getPointListById(String m_id, int startRow, int endRow);
+	public int getCountPointById(String m_id);
 }

@@ -28,12 +28,14 @@
 				</tr>
 			</thead>
 			<tbody>
+				<c:forEach var="pointVo" items="${pointList}" >
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>${pointVo.P_SEQ}</td>
+					<td>${pointVo.PC_DESC}</td>
+					<td>${pointVo.PC_POINT}</td>
+					<td>${pointVo.P_DATE}</td>
 				</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>

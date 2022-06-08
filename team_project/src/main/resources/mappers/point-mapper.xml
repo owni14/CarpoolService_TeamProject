@@ -16,4 +16,11 @@
 		select * from point_history
 		where m_id = #{m_id}
 	</select>
+	
+	<select id="getPointListById" resultType="Map">
+		select c.pc_desc, c.pc_point, h.p_seq, h.m_id, h.pc_code, h.p_date
+		from point_code c, point_history h
+		where c.pc_code = h.pc_code
+		and h.m_id = #{m_id}
+	</select>
 </mapper>

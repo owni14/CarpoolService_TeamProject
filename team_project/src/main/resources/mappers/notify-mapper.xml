@@ -8,4 +8,17 @@
 		insert into blacklist (blacklist_seq, m_id, black_m_id, black_content)
 		values (seq_blacklist.nextval,#{m_id},#{black_m_id},#{black_content})
 	</insert>
+	<select id="notifyList" resultType="BlackListVo">
+		select * from blacklist
+		order by black_is_processed asc, black_regdate desc
+	</select>
+	<select id="notifyCount" resultType="int">
+		select count(*) from blacklist
+		where black_is_processed = 'N'
+	</select>
+	
+	<select id="totalNotifyCount" resultType="int">
+		select count(*) from blacklist
+		
+	</select>
 </mapper>

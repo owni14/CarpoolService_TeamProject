@@ -377,6 +377,7 @@
     }
     
     function makeArrayFromString(sResString){
+    	
     	var	aTemp = [],
     		aSubTemp = [],
     		htTemp = {}
@@ -387,13 +388,20 @@
  	    		return ;
  	    	}
  			aTemp = sResString.split("&");
+ 			
 	    	for (var i = 0; i < aTemp.length ; i++){
 	    		if( !!aTemp[i] && aTemp[i] != "" && aTemp[i].indexOf("=") > 0){
 	    			aSubTemp = aTemp[i].split("=");
+	    			if (aSubTemp.length > 2) {
+	    				aSubTemp[1] += "=" + aSubTemp[2];
+	    			}
 	    			htTemp[aSubTemp[0]] = aSubTemp[1];
 	    		}
 	 		}
- 		}catch(e){}
+	    	
+ 		}catch(e){
+ 			
+ 		}
  		
  		aResultleng = aResult.length;
     	aResult[aResultleng] = htTemp;
@@ -401,7 +409,7 @@
     	if(aResult.length == nImageFileCount){
     		setPhotoToEditor(aResult); 
     		aResult = null;
-    		window.close();
+//    		window.close();
     	}
     }
     

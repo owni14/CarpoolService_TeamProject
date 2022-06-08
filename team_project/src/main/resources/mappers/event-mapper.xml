@@ -43,4 +43,16 @@
 	<select id="getEventByEseq" resultType="EventVo">
 	select * from event where event_seq=#{event_seq}
 	</select>
+	
+	<select id="getCountEvent" resultType="int">
+		select count(*) from event
+	</select>
+	
+	<select id="getEventMainList" resultType="EventVo">
+		select * from
+			(select rownum rnum, a.* from
+				(select * from event 
+				order by event_is_finish asc, event_seq desc) a)
+		where rnum between #{startRow} and #{endRow}
+	</select>
 </mapper>

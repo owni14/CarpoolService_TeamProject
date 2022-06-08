@@ -2,6 +2,7 @@
 package com.kh.team.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -13,6 +14,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,12 +51,10 @@ public class AdminController {
 
 	@RequestMapping(value = "/member_management", method = RequestMethod.GET)
 
-	public String memberManagement(Model model, int page) {
-//		System.out.println("AdminController int page : " + page);
-		int count = memberService.adminGetCount();
-		PagingDto pagingDto = new PagingDto();
-		pagingDto.setCount(count);
-		pagingDto.setPage(page);
+	public String memberManagement(Model model, PagingDto pagingDto) {
+		System.out.println("AdminController int count : " + memberService.adminGetCount(pagingDto));
+		pagingDto.setCount(memberService.adminGetCount(pagingDto));
+		pagingDto.setPage(pagingDto.getPage());
 //		System.out.println("AdminController int pagingDto : " + pagingDto);
 		List<MemberVo> memberList =  memberService.admingetMemberList(pagingDto);
 		model.addAttribute("memberList", memberList);
@@ -111,7 +111,8 @@ public class AdminController {
 			 //파일 기본경로
 			 String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 			 //파일 기본경로 _ 상세경로
-			 String filePath = dftFilePath + "resources" + File.separator + "editor" + File.separator +"multiupload" + File.separator;
+//			 String filePath = dftFilePath + "resources" + File.separator + "editor" + File.separator +"multiupload" + File.separator;
+			 String filePath = "//192.168.0.232/ServerFolder/editor/multiupload/";
 			 File file = new File(filePath);
 			 if(!file.exists()) {
 			 	file.mkdirs();
@@ -140,7 +141,8 @@ public class AdminController {
 			 sFileInfo += "&bNewLine=true";
 			 // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			 sFileInfo += "&sFileName="+ filename;;
-			 sFileInfo += "&sFileURL="+"/resources/editor/multiupload/"+realFileNm;
+			 sFileInfo += "&sFileURL=/admin/displayImage?filename="+rlFileNm;
+			 System.out.println(sFileInfo);
 			 PrintWriter print = response.getWriter();
 			 print.print(sFileInfo);
 			 print.flush();
@@ -151,6 +153,17 @@ public class AdminController {
 		}
 
 
-		}
+	}
+	
+	@RequestMapping(value = "/displayImage", method = RequestMethod.GET)
+	@ResponseBody
+	public byte[] displayImage(String filename) throws Exception {
+		FileInputStream fis = null;
+		fis = new FileInputStream(filename);
+		byte[] data = IOUtils.toByteArray(fis);
+		fis.close();
+		return data;
+
+	}
 
 }

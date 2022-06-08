@@ -3,7 +3,45 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
-${pagingDto}
+<script>
+	$(document).ready(function () {
+		var frmPaging = $("#frmPaging"); 
+		$("#perPageSelector").change(function () {
+			var perPageValue = $(this).val();
+			var perPage = frmPaging.find("input[name=perPage]");
+			perPage.val(perPageValue);
+			frmPaging.attr("action","/admin/member_management");
+			frmPaging.attr("method","get");
+			frmPaging.submit();
+		});
+		
+		$("a.page-link").click(function (e) {
+			e.preventDefault();
+			var pageValue = $(this).attr("href");
+			var page = frmPaging.find("input[name=page]");
+			page.val(pageValue);
+			frmPaging.attr("action","/admin/member_management");
+			frmPaging.attr("method","get");
+			frmPaging.submit();
+		});
+		
+		$("#btnSearch").click(function () {
+			var searchTypeValue = $("#searchTypeSelector").val();
+			var keywordValue = $("#adminKeyword").val();
+			
+			var searchType = frmPaging.find("input[name=searchType]");
+			searchType.val(searchTypeValue);
+			var keyword = frmPaging.find("input[name=keyword]");
+			keyword.val(keywordValue);
+			frmPaging.find("input[name=page]").val(1);
+			frmPaging.attr("action","/admin/member_management");
+			frmPaging.attr("method","get");
+			frmPaging.submit();
+		});
+		
+	});
+</script>
+<%@ include file="/WEB-INF/views/include/frmPaging.jsp" %>
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -27,8 +65,8 @@ ${pagingDto}
 								<li class="breadcrumb-item">
 								<a href="/admin/home"><i class="icofont icofont-home"></i></a>
 								</li>
-								<li class="breadcrumb-item"><a href="#!">회원관리</a></li>
-								<li class="breadcrumb-item"><a href="#!">회원테이블</a></li>
+								<li class="breadcrumb-item"><a href="#!">회원 관리</a></li>
+								<li class="breadcrumb-item"><a href="#!">회원 테이블</a></li>
 							</ul>
 						</div>
 					</div>
@@ -43,15 +81,63 @@ ${pagingDto}
 					<div class="card-header">
 						<i class="icofont icofont-ui-user"></i>
 						<h5>회원 테이블</h5>
+						<h5>
+							<select id="searchTypeSelector" name="searchTypeSelector" style="height:25px">
+								<option value="i"
+									<c:if test="${pagingDto.searchType == 'i'}">
+										selected
+									</c:if>
+								>회원 아이디</option>
+								<option value="n"
+									<c:if test="${pagingDto.searchType == 'n'}">
+										selected
+									</c:if>
+								>이름</option>
+								<option value="g"
+									<c:if test="${pagingDto.searchType == 'g'}">
+										selected
+									</c:if>
+								>성별</option>
+								<option value="c"
+									<c:if test="${pagingDto.searchType == 'c'}">
+										selected
+									</c:if>
+								>회사</option>
+								<option value="a"
+									<c:if test="${pagingDto.searchType == 'a'}">
+										selected
+									</c:if>
+								>주소</option>
+								<option value="t"
+									<c:if test="${pagingDto.searchType == 't'}">
+										selected
+									</c:if>
+								>연락처</option>
+								<option value="w"
+									<c:if test="${pagingDto.searchType == 'w'}">
+										selected
+									</c:if>
+								>회사 탈퇴 여부</option>
+							</select>
+						
+							<input type="text" id="adminKeyword" name="adminKeyword" style="height:25px">
+							<button id="btnSearch" style="background-color:white; border-color: #d2d2d2">검색&nbsp;&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
+						</h5>
 						<div class="card-header-right">
 							<ul class="list-unstyled card-option">
 								<li><i class="icofont icofont-simple-left "></i></li>
 								<li>
-									<select name="perPage" id="perPage" style="height:20px; display:inline-block;">
-										<option>5줄 보기</option>
-										<option>10줄 보기</option>
-										<option>15줄 보기</option>
-										<option>20줄 보기</option>
+									<select name="perPageSelector" id="perPageSelector" style="height:20px; display:inline-block;">
+										<c:forEach var="v" begin="5" end="25" step="5">
+										<option value="${v}"
+											<c:choose>
+												<c:when test="${v == 10}">
+													selected
+												</c:when>
+											</c:choose>
+										>
+										${v}줄 보기</option>
+										</c:forEach>
 									</select>
 								</li>
 <!-- 								<li> -->
@@ -117,7 +203,7 @@ ${pagingDto}
 							<ul class="pagination justify-content-center" >
 								<c:if test="${pagingDto.startPage != 1}">
 								<li class="page-item">
-									<a class="page-link" href="/admin/member_management?page=${pagingDto.startPage - 1}">이전</a>
+									<a class="page-link" href="${pagingDto.startPage - 1}">이전</a>
 								</li>
 								</c:if>
 								<c:forEach var="v" begin="${pagingDto.startPage}" end="${pagingDto.endPage}">
@@ -131,12 +217,12 @@ ${pagingDto}
 										</c:otherwise>
 									</c:choose>
 								>
-									<a class="page-link" href="/admin/member_management?page=${v}">${v}</a>
+									<a class="page-link" href="${v}">${v}</a>
 								</li>
 								</c:forEach>
 								<c:if test="${pagingDto.endPage != pagingDto.totalPage}">
 								<li class="page-item">
-									<a class="page-link" href="/admin/member_management?page=${pagingDto.endPage + 1}">다음</a>
+									<a class="page-link" href="${pagingDto.endPage + 1}">다음</a>
 								</li>
 								</c:if>
 							</ul>

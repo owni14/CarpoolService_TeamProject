@@ -65,7 +65,7 @@
 </script>
 
 <!-- start Event inner header -->
-<img src="file://192.168.0.232/ServerFolder/editor/multiupload/202206071905312924d017-f20d-49e2-bfda-8a2184b78627.jpg">
+<img src="/admin/displayImage?filename=//192.168.0.232/ServerFolder/editor/multiupload/202206071905312924d017-f20d-49e2-bfda-8a2184b78627.jpg">
 <div class="pcoded-inner-content">
 	<!-- Main-body start -->
 	<div class="main-body">

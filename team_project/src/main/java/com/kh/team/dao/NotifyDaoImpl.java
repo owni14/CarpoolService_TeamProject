@@ -22,20 +22,20 @@ public class NotifyDaoImpl implements NotifyDao{
 
 	@Override
 	public List<BlackListVo> notifyList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<BlackListVo> list = sqlSession.selectList(NAMESPACE + "notifyList");
+		return list;
 	}
 
 	@Override
 	public int notifyCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = (int)sqlSession.selectOne(NAMESPACE + "notifyCount");
+		return count;
 	}
 
 	@Override
 	public int totalNotifyCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalCount = (int)sqlSession.selectOne(NAMESPACE + "totalNotifyCount");
+		return totalCount;
 	}
 
 }

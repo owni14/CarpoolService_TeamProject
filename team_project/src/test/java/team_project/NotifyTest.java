@@ -24,9 +24,30 @@ public class NotifyTest {
 	NotifyDao notifyDao;
 	
 	@Test
-	public void insertMember() {
+	public void insertNotification() {
 		BlackListVo blackListVo = new BlackListVo("user04@gmail.com", "user09@gmail.com", "차 운전을 난 폭하게 함");
 		notifyDao.insertNotification(blackListVo);
+	}
+	// test ok, 
+	
+	@Test
+	public void notifyList() {
+		List<BlackListVo> list = notifyDao.notifyList();
+		System.out.println("NotifyTest List : " + list);
+	}
+	// test ok, 
+	
+	@Test
+	public void notifyCount() {
+		int count = notifyDao.notifyCount();
+		System.out.println("NotifyTest count : " + count);
+	}
+	// test ok, 
+	
+	@Test
+	public void totalNotifyCount() {
+		int totalCount = notifyDao.totalNotifyCount();
+		System.out.println("NotifyTest totalCount : " + totalCount);
 	}
 	// test ok, 
 	

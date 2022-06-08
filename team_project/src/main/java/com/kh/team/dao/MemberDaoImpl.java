@@ -45,4 +45,10 @@ public class MemberDaoImpl implements MemberDao {
 		return memberList;
 	}
 
+	@Override
+	public int adminGetCount() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "adminGetCount"); 
+		return count;
+	}
+
 }

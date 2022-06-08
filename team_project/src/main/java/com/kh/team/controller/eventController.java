@@ -9,22 +9,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.team.service.MemberService;
-import com.kh.team.vo.MemberVo;
+import com.kh.team.service.EventService;
+import com.kh.team.vo.EventVo;
 
 @Controller
 @RequestMapping("/event")
 public class eventController {
 	
 	@Autowired
-	private MemberService memberService;
+	private EventService eventService;
 	
 	// 이벤트 & 혜택 페이지로 이동
 	// 현재 진행중인 이벤트로 이동
 	@RequestMapping(value = "/now", method = RequestMethod.GET)
-	public String now() {
+	public String now(Model model) {
+		List<EventVo> eventList = eventService.getEventList();
+		model.addAttribute("eventList", eventList);
 		return "event/now";
 	}
 	

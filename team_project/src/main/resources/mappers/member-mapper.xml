@@ -31,4 +31,14 @@
 	<select id="adminGetCount" resultType="int">
 		select count(*) from member
 	</select>
+	
+	<sql id="search">
+		<if test = "searchType != null and keyword != null">
+			<choose>
+				<when test='searchType == i'>
+					where m_id like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</sql>
 </mapper>

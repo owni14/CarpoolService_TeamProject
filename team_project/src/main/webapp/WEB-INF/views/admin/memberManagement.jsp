@@ -25,6 +25,18 @@
 			frmPaging.submit();
 		});
 		
+		$("#btnSearch").click(function () {
+			var searchTypeValue = $("#searchTypeSelector").val();
+			var keywordValue = $("#adminKeyword").val();
+			
+			var searchType = frmPaging.find("input[name=searchType]");
+			searchType.val(searchTypeValue);
+			var keyword = frmPaging.find("input[name=keyword]");
+			keyword.val(keywordValue);
+			frmPaging.attr("action","/admin/member_management");
+			frmPaging.attr("method","get");
+			frmPaging.submit();
+		});
 		
 	});
 </script>
@@ -52,8 +64,8 @@
 								<li class="breadcrumb-item">
 								<a href="/admin/home"><i class="icofont icofont-home"></i></a>
 								</li>
-								<li class="breadcrumb-item"><a href="#!">회원관리</a></li>
-								<li class="breadcrumb-item"><a href="#!">회원테이블</a></li>
+								<li class="breadcrumb-item"><a href="#!">회원 관리</a></li>
+								<li class="breadcrumb-item"><a href="#!">회원 테이블</a></li>
 							</ul>
 						</div>
 					</div>
@@ -68,6 +80,20 @@
 					<div class="card-header">
 						<i class="icofont icofont-ui-user"></i>
 						<h5>회원 테이블</h5>
+						<h5>
+							<select id="searchTypeSelector" name="searchTypeSelector" style="height:25px">
+								<option value="i">회원 아이디</option>
+								<option value="n">이름</option>
+								<option value="g">성별</option>
+								<option value="c">회사</option>
+								<option value="a">주소</option>
+								<option value="t">연락처</option>
+								<option value="w">회사 탈퇴 여부</option>
+							</select>
+						
+							<input type="text" id="adminKeyword" name="adminKeyword" style="height:25px">
+							<button id="btnSearch" style="background-color:white; border-color: #d2d2d2">검색&nbsp;&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
+						</h5>
 						<div class="card-header-right">
 							<ul class="list-unstyled card-option">
 								<li><i class="icofont icofont-simple-left "></i></li>

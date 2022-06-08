@@ -7,13 +7,17 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.Array;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
+import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
@@ -37,7 +42,7 @@ public class AdminController {
 	EventService eventService;
 	@Autowired
 	MemberService memberService;
-
+	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin() {
 		return "admin/home_admin";
@@ -52,7 +57,7 @@ public class AdminController {
 				continue;
 			}
 			int dateCompartResult=eventVo.getEvent_enddate().compareTo(today);
-			System.out.println("dateResult "+dateCompartResult);
+			//System.out.println("dateResult "+dateCompartResult);
 			if(dateCompartResult <0) {
 				//이벤트 종료 됨을 업데이트
 				eventService.updateEventFinish(eventVo.getEvent_seq());
@@ -81,22 +86,47 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)
-	public String eventGetBySeq(int event_seq, Model model) {
+	public String eventGetBySeq(int event_seq, Model model,HttpSession session) {
 		EventVo eventVo = eventService.getEventByEseq(event_seq);
 		model.addAttribute("eventVo", eventVo);
+		session.setAttribute("event_seq", event_seq);
 		return "admin/eventDetails";
 	}
 
 	@RequestMapping(value = "/event_update", method = RequestMethod.POST)
 	@ResponseBody
-	public String eventUpdate(EventVo eventVo) {
-		System.out.println("eventUpdate EventVo"+eventVo);
+	public String eventUpdate(EventVo eventVo,HttpSession session) {
+		String db_event_content=eventService.getContent((int)session.getAttribute("event_seq"));
+		System.out.println("eventUpdate db_event_Content" +db_event_content);
+		String contentStr=eventVo.getEvent_content();
+		List<String> contentFileList=FileUploadHelper.eventFilnameExtraction(contentStr, SERVERIP);
+		List<String> db_contentFileList=FileUploadHelper.eventFilnameExtraction(db_event_content, SERVERIP);
+//		String[] arrSplitStr=contentStr.split("<img");
+//		//list 파일 목록 담을거
+//		List<String> contentFileList=new ArrayList<String>();
+//		for(String strFile:arrSplitStr) {
+//			//이미지 서버꺼인지 검정
+//			if(strFile.contains(SERVERIP)) {
+////				System.out.println(strFile);
+//				int strFileIndex=strFile.indexOf("192");
+//				int dblSlashIndex=strFileIndex-2;
+//				int endFileExtIndex=strFile.indexOf("\"",strFileIndex );
+//				contentFileList.add(strFile.substring(dblSlashIndex,endFileExtIndex));
+//			}
+//		}
+		System.out.println(contentFileList);
+		System.out.println(db_contentFileList);
+//		System.out.println("eventUpdate EventVo"+eventVo);
+		if(db_contentFileList.size() > contentFileList.size()) {
+			
+		}
 		boolean result = eventService.updateEvent(eventVo);
+		
 		return String.valueOf(result);
 	}
 
 	@RequestMapping(value="/event_filesAttach", method= RequestMethod.POST)
-	public void eventFiles(HttpServletRequest request, HttpServletResponse response ) {
+	public void eventFiles(HttpServletRequest request, HttpServletResponse response,HttpSession session ) {
 		System.out.println(request.getHeader("file-name"));
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 		String today= formatter.format(new java.util.Date());
@@ -135,7 +165,7 @@ public class AdminController {
 			 //파일 기본경로
 //			 String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 			 //파일 기본경로 _ 상세경로
-			 String filePath = "//192.168.0.232/ServerFolder/"+year+"/"+month+"/"+day+"/";
+			 String filePath = "//192.168.0.232/ServerFolder/"+year+"/"+month+"/"+day+"/"+"event_seq!!"+session.getAttribute("event_seq")+"/";
 			 File file = new File(filePath);
 			 if(!file.exists()) {
 			 	file.mkdirs();
@@ -187,5 +217,5 @@ public class AdminController {
 		return data;
 
 	}
-
+	
 }

@@ -59,4 +59,9 @@ public class EventServiceImpl implements EventService {
 			eventDao.updateEventFinish(event_seq);
 	}
 
+	@Override
+	public String getContent(int event_seq) {
+		return eventDao.getContent(event_seq);
+	}
+
 }

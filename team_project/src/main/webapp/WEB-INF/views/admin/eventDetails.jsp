@@ -27,6 +27,11 @@
 		  let content = document.getElementById("editorTxt").value;
 			var event_name=document.getElementById("eventName").value;
 			var event_enddate=document.getElementById("select_date").value;
+			
+			if(event_enddate =="" || event_enddate.length <=0){
+				alert('날짜를 골라주세요');
+				return;
+			}
 			var event_startdate="${eventVo.event_startdate}";
 		  if(content == '') {
 		    alert("내용을 입력해주세요.");
@@ -81,11 +86,6 @@
 			item.eq(index).text(fnldate);
 			
 		})
-			
-		
-		
-		
-		
 		
 	})
 </script>
@@ -102,13 +102,10 @@
 			이벤트 시작일: ${eventVo.event_startdate}
 					<select id="select_date" style="margin-top: 15px; margin-bottom: 1.5px">
 					
-					<option selected="selected" disabled="disabled" >이벤트 끝날 날짜를 입력해주세요</option>
+					<option selected="selected" disabled="disabled" value="" >이벤트 끝날 날짜를 입력해주세요</option>
 					<c:forEach begin="1" end="30" var="i" step="1">
 					<option>
-					
-
-
-</option>
+					</option>
 					</c:forEach>
 					</select>
 				<div class="row align-items-end">

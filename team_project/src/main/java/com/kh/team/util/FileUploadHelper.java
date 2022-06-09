@@ -37,11 +37,17 @@ public class FileUploadHelper {
 	
 	//파일 리스트에서 파일 다지우기
 	public static void deleteFileS(String fileDirPath) {
+		System.out.println("fileDirPath"+fileDirPath);
 		File f= new File(fileDirPath);
-		String[] arrfiles=f.list();
+		if(f.exists()) {
+			String[] arrfiles=f.list();
 			for(String strFile:arrfiles) {
-				System.out.println("deleteFileS"+strFile);
+//				System.out.println("deleteFileS"+strFile);
+				File delFile=new File(fileDirPath+"/"+strFile);
+				delFile.delete();
 			}
+		}
+		
 		}
 	
 	//이벤트 파일 비교
@@ -62,7 +68,7 @@ public class FileUploadHelper {
 		return contentFileList;
 	}
 	
-	// 이벤트 저장 디렉토리 획득
+	// 파일 저장 디렉토리 획득
 	public static String getEventFileSaveFath(String serverip) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 		String today= formatter.format(new java.util.Date());

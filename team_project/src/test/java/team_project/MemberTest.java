@@ -53,7 +53,7 @@ public class MemberTest {
 	
 	@Test
 	public void testgetMember() {
-	System.out.println(memberDao.getMemberById("user0187@gmail.com"));	
+	System.out.println(memberDao.getDriverList("user0187@gmail.com"));	
 	}
 }
 

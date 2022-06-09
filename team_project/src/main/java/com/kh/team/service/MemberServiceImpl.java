@@ -47,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVo getDriverById(String m_id) {
-		MemberVo driverInfo = memberDao.getMemberById(m_id);
+		MemberVo driverInfo = memberDao.getDriverById(m_id);
 		return driverInfo;
 	}
 

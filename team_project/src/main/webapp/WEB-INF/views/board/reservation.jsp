@@ -137,7 +137,7 @@ $(document).ready(function() {
         geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
     }
 	
-	 function showModalMap(driverName, driverAddr, driverDept, mBoardLoct) {
+	 function showModalMap(driverName, driverAddr, driverDept, driverStartTime, mBoardLoct) {
 		 
 		 /* 
 		 console.log("driverName:" + driverName);
@@ -148,6 +148,7 @@ $(document).ready(function() {
 		  $("#driverName").text(driverName);
 		  $("#driverDept").text(driverDept);
 		  $("#driverLoct").text(driverAddr);
+		  $("#driverStartTime").text(driverStartTime);
 		  $("#mBoardLoct").text(mBoardLoct);
 		  var modalMapContainer = document.getElementById('mapInModal') // 지도를 표시할 div
 			 modalMapOption = {
@@ -201,7 +202,7 @@ $(document).ready(function() {
 		 
 		 // 비동기형식으로 데이터 보내고 받아와서 showModalMap함수 실행
 		 $.get(url, function(rData) {
-			 showModalMap(rData.m_name, rData.m_address, rData.m_dept, mBoardLoct);
+			 showModalMap(rData.m_name, rData.m_address, rData.m_dept, rData.driverStartTime, mBoardLoct);
 		 });
 		 
 	 }); //  $("#tblDriver").on("click", ".btnBoard", function() {})
@@ -238,6 +239,7 @@ $(document).ready(function() {
 					<div style="font-weight: bold; "> 이름 : <span id="driverName"></span></div> 
 					<div style="font-weight: bold; "> 부서 : <span id="driverDept"></span></div> 
 					<div style="font-weight: bold; "> 출발 위치 : <span id="driverLoct"></span></div> 
+					<div style="font-weight: bold; "> 출발 시간 : <span id="driverStartTime"></span></div> 
 					<div style="font-weight: bold; "> 내 위치 : <span id="mBoardLoct"></span></div>
 					<hr>
 					<div style="font-weight: bold; text-align: center; color: green;"> 운전자 위치 </div> 

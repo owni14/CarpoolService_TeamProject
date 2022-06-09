@@ -38,5 +38,29 @@ public class NotifyDaoImpl implements NotifyDao{
 		return totalCount;
 	}
 
+	@Override
+	public List<BlackListVo> yNotifyList() {
+		List<BlackListVo> yNotifyList = sqlSession.selectList(NAMESPACE + "yNotifyList");
+		return yNotifyList;
+	}
+
+	@Override
+	public List<BlackListVo> nNotifyList() {
+		List<BlackListVo> nNotifyList = sqlSession.selectList(NAMESPACE + "nNotifyList");
+		return nNotifyList;
+	}
+
+	@Override
+	public List<BlackListVo> dayNotifyList() {
+		List<BlackListVo> dayNotifyList = sqlSession.selectList(NAMESPACE + "dayNotifyList");
+		return dayNotifyList;
+	}
+
+	@Override
+	public int dayNotifyCount() {
+		int dayNotifyCount = (int)sqlSession.selectOne(NAMESPACE + "dayNotifyCount");
+		return dayNotifyCount;
+	}
+
 }
 

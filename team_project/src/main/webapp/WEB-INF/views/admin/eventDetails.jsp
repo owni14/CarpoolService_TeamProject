@@ -67,9 +67,11 @@
 	
 	}
 	
+	
 	$(document).ready(function() {
 		smartEditor();
 		
+	
 		//날짜계산
 		var item=$("#select_date").find("option:gt(0)");
 		$.each(item,function(index){	

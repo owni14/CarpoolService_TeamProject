@@ -15,26 +15,50 @@ public class NotifyServiceImpl implements NotifyService{
 	
 	@Override
 	public void insertNotification(BlackListVo blackListVo) {
-		// TODO Auto-generated method stub
+		notifyDao.insertNotification(blackListVo);
 		
 	}
 
 	@Override
 	public List<BlackListVo> notifyList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<BlackListVo> notifyList = notifyDao.notifyList();
+		return notifyList;
 	}
 
 	@Override
 	public int notifyCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int nNotifyCount = notifyDao.notifyCount();
+		return nNotifyCount;
 	}
 
 	@Override
 	public int totalNotifyCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalNotifyCount = notifyDao.totalNotifyCount();
+		return totalNotifyCount;
+	}
+
+	@Override
+	public List<BlackListVo> yNotifyList() {
+		List<BlackListVo> yNotifyList = notifyDao.yNotifyList();
+		return yNotifyList;
+	}
+
+	@Override
+	public List<BlackListVo> nNotifyList() {
+		List<BlackListVo> nNotifyList = notifyDao.nNotifyList();
+		return nNotifyList;
+	}
+
+	@Override
+	public List<BlackListVo> dayNotifyList() {
+		List<BlackListVo> dayNotifyList = notifyDao.dayNotifyList();
+		return dayNotifyList;
+	}
+
+	@Override
+	public int dayNotifyCount() {
+		int dayNotifyCount = notifyDao.dayNotifyCount();
+		return dayNotifyCount;
 	}
 
 }

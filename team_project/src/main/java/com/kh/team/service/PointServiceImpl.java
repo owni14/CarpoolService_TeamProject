@@ -17,14 +17,14 @@ public class PointServiceImpl implements PointService {
 	private PointDao pointDao;
 	
 	@Override
-	public List<Map<String, Object>> getPointListById(String m_id, PagingDto pagingDto) {
-		List<Map<String, Object>> pointList = pointDao.getPointListById(m_id, pagingDto);
+	public List<Map<String, Object>> getPointListById(String m_id, int startRow, int endRow) {
+		List<Map<String, Object>> pointList = pointDao.getPointListById(m_id, startRow, endRow);
 		return pointList;
 	}
 
 	@Override
-	public int getCountPointById(PagingDto pagingDto) {
-		int count = pointDao.getCountPointById(pagingDto);
+	public int getCountPointById(String m_id) {
+		int count = pointDao.getCountPointById(m_id);
 		return count;
 	}
 

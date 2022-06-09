@@ -18,17 +18,18 @@
 	</select>
 	
 	<select id="getPointListById" resultType="Map">
-		select c.pc_desc, c.pc_point, h.p_seq, h.m_id, h.pc_code, h.p_date from 
-			(select rownum rnum, a.* from
-				(point_code c, point_history h
-				where c.pc_code = h.pc_code
-				and h.m_id = #{m_id}
-				order by h.p_date desc, h.p_seq desc) a)
+		select * from 
+		    (select rownum rnum, a.* from
+		        (select c.pc_desc, c.pc_point, h.p_seq, h.m_id, h.pc_code, h.p_date 
+		        from point_code c, point_history h
+		        where c.pc_code = h.pc_code
+		        and h.m_id = #{m_id}
+		        order by h.p_date desc, h.p_seq desc) a)
 		where rnum between #{startRow} and #{endRow}
 	</select>
 	
 	<select id="getCountPointById" resultType="int">
 		select count(*) from point_history
-		where 
+		where m_id = #{m_id}
 	</select>
 </mapper>

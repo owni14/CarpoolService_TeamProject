@@ -4,11 +4,15 @@
 
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 <script>
-	$(document).ready(function () {
-		
+	$(document).ready(function (e) {
+		$("a.dropdown-item").click(function (e) {
+			e.preventDefault();
+			console.log("click");
+			
+		});
 	});
 </script>
-<%-- <%@ include file="/WEB-INF/views/include/frmPaging.jsp" %> --%>
+<%@ include file="/WEB-INF/views/include_admin/frmApproveNotify.jsp" %>
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -63,7 +67,7 @@
 							        datasets: [{
 							            label: '완료',
 							            data: [
-							                ${totalNotifyCount - nNotifyCount}
+							                "${totalNotifyCount - nNotifyCount}"
 							            ],
 							            backgroundColor: [
 							            	"rgba(54, 162, 235, 0.2)",
@@ -75,7 +79,7 @@
 							        }, {
 							        	label: '미완료',
 							            data: [
-							                ${nNotifyCount}
+							                "${nNotifyCount}"
 							            ],
 							            backgroundColor: [
 							            	"rgba(255, 205, 86, 0.2)"
@@ -86,7 +90,7 @@
 							        }, {
 							        	label: '10일 경과',
 							            data: [
-							            	${dayNotifyCount}
+							            	"${dayNotifyCount}"
 							            ],
 							            backgroundColor: [
 							            	"rgba(255, 99, 132, 0.2)"
@@ -166,7 +170,16 @@
 										<td>${blackListVo.m_id}</td>
 										<td>${blackListVo.black_m_id}</td>
 										<td>${blackListVo.black_content}</td>
-										<td><span style="color:red">${blackListVo.black_is_processed}</span></td>
+										<td>
+											<!-- dropdown start -->
+											<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:red"
+												id="dropdownMenuButton1" data-toggle="dropdown">
+												${blackListVo.black_is_processed}</button>
+											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												<a class="dropdown-item" href="#">승인</a> 
+											</div> 
+											<!-- dropdown end -->
+										</td>
 										<td>${blackListVo.black_regdate}</td>
 										
 							</tr>
@@ -204,7 +217,16 @@
 											<td>${blackListVo.m_id}</td>
 											<td>${blackListVo.black_m_id}</td>
 											<td>${blackListVo.black_content}</td>
-											<td>${blackListVo.black_is_processed}</td>
+											<td>
+											<!-- dropdown start -->
+											<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:red"
+												id="dropdownMenuButton2" data-toggle="dropdown">
+												${blackListVo.black_is_processed}</button>
+											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo}">승인</a> 
+											</div> 
+											<!-- dropdown end -->
+											</td>
 											<td><span style="color:red">${blackListVo.black_regdate}</span></td>
 											
 								</tr>

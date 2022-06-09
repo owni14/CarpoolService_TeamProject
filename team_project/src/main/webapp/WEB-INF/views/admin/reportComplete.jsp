@@ -12,18 +12,12 @@
 			var admin_checkValue = $(this).attr("data-value");
 			var blackScoreValue = $(this).attr("data-bScore");
 			var black_m_id = $(this).attr("data-blackid");
-			console.log(admin_checkValue); // 반려 : C, 반려 취소 : N, 승인 : Y
 			frmApproveNotify.find("input[name=blacklist_seq]").val(blacklist_seqValue);
 			frmApproveNotify.find("input[name=admin_check]").val(admin_checkValue);
-			if (admin_checkValue == "N" || admin_checkValue == "C") {
-				frmApproveNotify.attr("action","/admin/report_management");
-				frmApproveNotify.attr("method","get");
-			} else if (admin_checkValue == "Y") {
-				frmApproveNotify.find("input[name=black_m_id]").val(black_m_id);
-				frmApproveNotify.find("input[name=black_score]").val(blackScoreValue);
-				frmApproveNotify.attr("action","/admin/report_complete_management");
-				frmApproveNotify.attr("method","get");
-			}
+			frmApproveNotify.find("input[name=black_m_id]").val(black_m_id);
+			frmApproveNotify.find("input[name=black_score]").val(-1*blackScoreValue);
+			frmApproveNotify.attr("action","/admin/report_management");
+			frmApproveNotify.attr("method","get");
 			frmApproveNotify.submit();
 		});
 	});
@@ -39,9 +33,9 @@
 					<div class="row align-items-end">
 						<div class="col-lg-8">
 							<div class="page-header-title">
-								<i class="icofont icofont-warning bg-c-pink"></i>
+								<i class="icofont icofont-close bg-c-pink"></i>
 								<div class="d-inline">
-									<h4>신고 회원 테이블</h4>
+									<h4>신고 반려 리스트</h4>
 									<span></span>
 								</div>
 							</div>
@@ -53,7 +47,7 @@
 								<a href="/admin/home"><i class="icofont icofont-home"></i></a>
 								</li>
 								<li class="breadcrumb-item"><a href="#!">신고 회원 관리</a></li>
-								<li class="breadcrumb-item"><a href="#!">신고 회원 테이블</a></li>
+								<li class="breadcrumb-item"><a href="#!">신고 반려 리스트</a></li>
 							</ul>
 						</div>
 					</div>
@@ -72,7 +66,7 @@
 					<div class="card-block table-border-style">
 						<div class="table-responsive"> 
 						<div class="row">
-						<div class="col-md-12 col-xl-3" style="margin-left:20px">
+						<div class="col-md-12 col-xl-4" style="margin-left:20px">
 							<!-- chart Start -->
 							<canvas id="canvas" height="300"></canvas>
 							<script>
@@ -174,62 +168,14 @@
 							</script>
 							<!-- chart Ends -->
 						</div>
-						<div class="col-md-12 col-xl-8" style="margin-top:10px">
-						<!-- Basic table card start -->
-<!-- 					<div class="card"> -->
-<!-- 					<div class="card-block table-border-style"> -->
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr style="background-color:rgba(255, 205, 86, 0.2)">
-										<th>#</th>
-										<th>신고자 아이디</th>
-										<th>신고 받은 회원 아이디</th>
-										<th>신고 내용</th>
-										<th>처리 결과</th>
-										<th>등록 일자</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="blackListVo" items="${nNotifyList}" varStatus="status"> 
-								<tr>	 
-										<th scope="row">${status.count}</th>
-										<td>${blackListVo.m_id}</td>
-										<td>${blackListVo.black_m_id}</td>
-										<td>${blackListVo.black_content}</td>
-										<td>
-											<!-- dropdown start -->
-											<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:red"
-												id="dropdownMenuButton1" data-toggle="dropdown">
-												${blackListVo.black_is_processed}</button>
-											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-bScore="${blackListVo.black_score}" data-blackid="${blackListVo.black_m_id}">승인</a> 
-												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a>
-											</div> 
-											<!-- dropdown end -->
-										</td>
-										<td>${blackListVo.black_regdate}</td>
-										
-							</tr>
- 									</c:forEach> 
-								</tbody>
-							</table>
-						</div>
-<!-- 					</div> -->
-<!-- 				</div> -->
-				<!-- start pagination -->
-
-				<!-- end pagination  -->
-				<!-- Basic table card end -->
-						</div>
-						</div>
-				<!-- 10일 경과 table start -->
+					</div>
+				<!-- 처리 결과 Y table start -->
 						<div class="row" style="padding-top:35px">
 							<div class="col-md-12 col-xl-12" style="margin-left: 20px; padding-right : 140px">
 								<div class="table-responsive">
 								<table class="table">
 									<thead>
-										<tr style="background-color:rgba(255, 99, 132, 0.2)">
+										<tr style="background-color:rgba(54, 162, 235, 0.2)">
 											<th>#</th>
 											<th style="width:10%">신고자 아이디</th>
 											<th style="width:10%">신고 받은 회원 아이디</th>
@@ -239,50 +185,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="blackListVo" items="${dayNotifyList}" varStatus="status"> 
-									<tr>	 
-											<th scope="row">${status.count}</th>
-											<td>${blackListVo.m_id}</td>
-											<td>${blackListVo.black_m_id}</td>
-											<td>${blackListVo.black_content}</td>
-											<td>
-											<!-- dropdown start -->
-											<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:red"
-												id="dropdownMenuButton2" data-toggle="dropdown">
-												${blackListVo.black_is_processed}</button>
-											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-bScore="${blackListVo.black_score}">승인</a> 
-												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a> 
-											</div> 
-											<!-- dropdown end -->
-											</td>
-											<td><span style="color:red">${blackListVo.black_regdate}</span></td>
-											
-								</tr>
-	 									</c:forEach> 
-									</tbody>
-								</table>
-							</div>
-							</div>
-						</div>
-				<!-- 10일 경과 table end -->
-				<!-- 반려 table start -->
-						<div class="row" style="padding-top:35px">
-							<div class="col-md-12 col-xl-12" style="margin-left: 20px; padding-right : 140px">
-								<div class="table-responsive">
-								<table class="table">
-									<thead>
-										<tr style="background-color:rgba(201, 203, 207, 0.2)">
-											<th>#</th>
-											<th style="width:10%">신고자 아이디</th>
-											<th style="width:10%">신고 받은 회원 아이디</th>
-											<th style="width:55%">신고 내용</th>
-											<th style="width:10%">처리 결과</th>
-											<th style="width:15%">등록 일자</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="blackListVo" items="${cNotifyList}" varStatus="status"> 
+										<c:forEach var="blackListVo" items="${yNotifyList}" varStatus="status"> 
 									<tr>	 
 											<th scope="row">${status.count}</th>
 											<td>${blackListVo.m_id}</td>
@@ -290,11 +193,11 @@
 											<td>${blackListVo.black_content}</td>
 											<td>
 												<!-- dropdown start -->
-												<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:rgba(201, 203, 207,10)"
+												<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:blue"
 													id="dropdownMenuButton3" data-toggle="dropdown">
 													${blackListVo.black_is_processed}</button>
 												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="N">반려 취소</a> 
+													<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="N" data-bScore="${blackListVo.black_score}" data-blackid="${blackListVo.black_m_id}">승인취소</a> 
 												</div> 
 												<!-- dropdown end -->
 											</td>
@@ -307,7 +210,7 @@
 							</div>
 							</div>
 						</div>
-				<!-- 반려 table end -->
+				<!-- 처리 결과 Y table end -->
 						</div>
 					</div>
 				</div>
@@ -317,3 +220,5 @@
 	</div>
 </div>
 <!-- end inner header -->
+				
+<%@ include file="/WEB-INF/views/include_admin/footer.jsp"%>

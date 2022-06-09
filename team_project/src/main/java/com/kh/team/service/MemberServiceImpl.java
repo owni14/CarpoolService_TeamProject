@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.team.dao.MemberDao;
+import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -34,8 +35,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getDriverList() {
-		List<Map<String, Object>> driverList = memberDao.getDriverList();
+	public List<Map<String, Object>> getDriverList(String m_company) {
+		List<Map<String, Object>> driverList = memberDao.getDriverList(m_company);
 		return driverList;
 	}
 
@@ -57,5 +58,7 @@ public class MemberServiceImpl implements MemberService {
 		boolean result = memberDao.insertDriverLicense(m_id, ad_license_img);
 		return result;
 	}
+
+
 
 }

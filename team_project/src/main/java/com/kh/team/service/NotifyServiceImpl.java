@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.team.dao.MemberDao;
 import com.kh.team.dao.NotifyDao;
 import com.kh.team.vo.BlackListVo;
 
@@ -12,6 +14,8 @@ import com.kh.team.vo.BlackListVo;
 public class NotifyServiceImpl implements NotifyService{
 	@Autowired
 	NotifyDao notifyDao;
+	@Autowired
+	MemberDao memberDao;
 	
 	@Override
 	public void insertNotification(BlackListVo blackListVo) {
@@ -61,9 +65,25 @@ public class NotifyServiceImpl implements NotifyService{
 		return dayNotifyCount;
 	}
 
+	@Transactional
 	@Override
 	public void modifyApprovement(BlackListVo blackListVo) {
+		memberDao.adminupdateBlackScore(blackListVo);
 		notifyDao.modifyApprovement(blackListVo);
+		
+	}
+
+	@Override
+	public List<BlackListVo> cNotifyList() {
+		List<BlackListVo> cNotifyList = notifyDao.cNotifyList();
+		return cNotifyList;
+	}
+
+	@Override
+	public int cNotifyCount() {
+		int cNotifyCount = notifyDao.cNotifyCount();
+		return cNotifyCount;
 	}
 
 }
+

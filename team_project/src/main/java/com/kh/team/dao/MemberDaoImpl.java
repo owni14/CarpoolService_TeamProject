@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -40,8 +41,8 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> getDriverList() {
-		List<Map<String, Object>> driverList = sqlSession.selectList(NAMESPACE + "getDriverList");
+	public List<Map<String, Object>> getDriverList(String m_company) {
+		List<Map<String, Object>> driverList = sqlSession.selectList(NAMESPACE + "getDriverList", m_company);
 		return driverList;
 	}
 
@@ -75,6 +76,12 @@ public class MemberDaoImpl implements MemberDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void adminupdateBlackScore(BlackListVo blackListVo) {
+		sqlSession.update(NAMESPACE + "adminupdateBlackScore", blackListVo);
+		
 	}
 
 }

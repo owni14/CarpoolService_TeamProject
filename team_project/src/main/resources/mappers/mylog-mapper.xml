@@ -39,12 +39,10 @@
 		where rnum between #{startRow} and #{endRow}
 	</select>
 	
-	<select id="driver_passengerlogListById" resultType="Map">
-		select d.driver_seq, d.m_id driver_id, d.driver_depart_location, d.driver_is_smoke, d.driver_comment, d.driver_depart_time, p.passenger_seq, p.m_id passenger_id ,p.passenger_depart_location ,p.passenger_depart_time
-        from driver d, passenger p
-        where d.driver_seq = p.driver_seq
-        and d.m_id = #{m_id}
-        order by p.passenger_depart_time desc
+	<select id="driver_passengerlogListBySeq" resultType="passengerVo">
+		select * from passenger
+        where driver_seq = #{driver_seq}
+        order by passenger_depart_time
 	</select>
 	
 	

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +33,10 @@ public class BoardController {
 	
 	// 예약하기 페이지로 이동
 	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
-	public String passengerReservation(Model model) {
-		List<Map<String, Object>> driverList = memberService.getDriverList();
+	public String passengerReservation(Model model, HttpSession session) {
+		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
+		String m_company = loginVo.getM_company();
+		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
 		if (driverList != null) {
 			model.addAttribute("driverList", driverList);
 		}
@@ -41,8 +46,10 @@ public class BoardController {
 	// 운전자 리스트 (비동기 방식)
 	@ResponseBody
 	@RequestMapping(value = "/driverList", method = RequestMethod.GET)
-	public List<Map<String, Object>> passengerReservationList() {
-		List<Map<String, Object>> driverList = memberService.getDriverList();
+	public List<Map<String, Object>> passengerReservationList(HttpSession session) {
+		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
+		String m_company = loginVo.getM_company();
+		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
 		return driverList;
 	}
 	

@@ -49,5 +49,23 @@
 		
 	</select>
 	
+	<update id="modifyApprovement">
+		update blacklist 
+		<if test="admin_check !=null">
+			<choose>
+				<when test='admin_check == "Y"'>
+				 	set black_is_processed = 'Y'
+				</when>
+				<when test='admin_check == "N"'>
+					set black_is_processed = 'N'
+				</when>
+				<when test='admin_check == "C"'>
+					set black_is_processed = 'C'
+				</when>
+			</choose>
+		</if>
+		where blacklist_seq = #{blacklist_seq}
+	</update>
+	
 	
 </mapper>

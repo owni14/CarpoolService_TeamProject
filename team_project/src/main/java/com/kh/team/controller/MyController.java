@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
 import com.kh.team.util.FileUploadHelper;
@@ -24,6 +26,8 @@ public class MyController {
 	
 	@Autowired
 	private PointService pointService;
+	@Autowired
+	private MemberService memberService;
 	@Autowired
 	private MylogService mylogService;
 
@@ -76,7 +80,7 @@ public class MyController {
 	
 	// 운전자등록폼 처리
 	@RequestMapping(value = "/submitFile", method = RequestMethod.POST)
-	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session) throws Exception{
+	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session, RedirectAttributes rttr) throws Exception{
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
 		String ext = driverLicense.getOriginalFilename();
 		int dot = ext.lastIndexOf(".");
@@ -87,18 +91,20 @@ public class MyController {
 //		System.out.println("imageExtension:" + imageExt);
 		
 		String company = memberVo.getM_company();
-		String name = memberVo.getM_name();
+		String saveName = memberVo.getM_id() + "'s_driver_license";
 		byte[] fileData = driverLicense.getBytes();
 		
 		// 파일 경로 및 파일 이름
-		String pathAndFilename = FileUploadHelper.uploadFile("//192.168.0.232/ServerFolder/DriverLicense/"+ company, (name + imageExt), fileData);
+		String saveFilename = FileUploadHelper.uploadFileForDriver("//192.168.0.232/ServerFolder/DriverLicense/"+ company, (saveName + imageExt), fileData);
 		
-		int slash = pathAndFilename.lastIndexOf("/");
+		if (saveFilename.equals("existence") || saveFilename == null) {
+			rttr.addFlashAttribute("isExistence", "true");
+			return "redirect:/";
+		}
 		
-		// uuid포함 파일 이름
-		String saveFilename = pathAndFilename.substring(slash + 1);
+		memberService.submitDriverLicense(memberVo.getM_id(), saveFilename);
 		
-		System.out.println("MyController, saveFilename:" + saveFilename);
+//		System.out.println("MyController, saveFilename:" + saveFilename);
 		return "redirect:/";
 	}
 }

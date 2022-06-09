@@ -33,33 +33,73 @@ $(document).ready(function() {
 		frmPaging.attr("action", "/my/boardedHistory");
 		frmPaging.attr("method", "get");
 		frmPaging.submit();
-		
 	});
+	
+	$(".tr_table").click(function() {
+		$("#modal-container-678121").modal('show');
+		var driver_seq = $(this).attr("data-seq");
+		var url = "/my/driver_passengerlog";
+		var sData = {
+				"driver_seq" : driver_seq
+		};
+		$.post(url, sData, function(rData) {
+			console.log(rData);
+				$("#modal_body tr").remove();
+				$.each(rData, function() {
+						var tr = $("#table_clone tr").clone();
+						var tds = tr.find("td");
+						tds.eq(0).text(this.m_id);
+						tds.eq(1).text(this.passenger_depart_location);
+						tds.eq(2).text(this.passenger_depart_time);
+						$("#modal_body").append(tr);
+				});
+			
+		});
+	});
+	
+	$("#modalClose").click(function() {
+		$("#modal-container-678121").modal('hide');
+	})
 });
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp"%>
 <div class="row">
-${driver_passengerlogList}
+
 	<!-- modal start -->
 	<div class="col-md-12">
-		<a id="modal-678121" href="#modal-container-678121" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
 		
 		<div class="modal fade" id="modal-container-678121" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="myModalLabel">
-							Modal title
-						</h5> 
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">×</span>
-						</button>
+							탑승자 상세 정보
+						</h5>
 					</div>
 					<div class="modal-body">
-						...
+						<table class="table">
+							<thead>
+								<tr>
+									<th>아이디</th>
+									<th>탑승 위치</th>
+									<th>탑승 시간</th>
+								</tr>
+							</thead>
+							<tbody id="modal_body">
+								
+							</tbody>
+						</table>
+						<table style="display:none;" id="table_clone">
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>				
+							</tr>
+						</table>
+						
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						<button type="button" id="modalClose" class="btn btn-secondary" data-dismiss="modal">
 							닫기
 						</button>
 					</div>
@@ -120,11 +160,13 @@ ${driver_passengerlogList}
 			</thead>
 			<tbody>
 				<c:forEach var="driverVo" items="${driverlogList}" >
-				<tr class="tr_table">
+				<tr class="tr_table" data-seq="${driverVo.driver_seq}"> 
+					
 					<td>${driverVo.driver_seq}</td>
 					<td>${driverVo.driver_depart_time}</td>
 					<td>${driverVo.driver_depart_location}</td>
 					<td>${driverVo.driver_comment}</td>
+					
 				</tr>
 				</c:forEach>
 			</tbody>

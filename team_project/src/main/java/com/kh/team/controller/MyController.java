@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,6 +20,7 @@ import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
+import com.kh.team.vo.PassengerVo;
 
 @Controller
 @RequestMapping("/my")
@@ -51,10 +53,10 @@ public class MyController {
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
 		pagingDto.setPage(pagingDto.getPage());
 		List<DriverVo> driverlogList = mylogService.driverlogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
-		List<Map<String, Object>> driver_passengerlogList = mylogService.driver_passengerlogListById(loginVo.getM_id());
+//		List<PassengerVo> driver_passengerlogList = mylogService.driver_passengerlogListById();
 //		System.out.println("myLogList : " + mylogList);
 		session.setAttribute("driverlogList", driverlogList);
-		session.setAttribute("driver_passengerlogList", driver_passengerlogList);
+//		session.setAttribute("driver_passengerlogList", driver_passengerlogList);
 		return "my/driveHistroy";
 	}
 		
@@ -106,5 +108,15 @@ public class MyController {
 		
 //		System.out.println("MyController, saveFilename:" + saveFilename);
 		return "redirect:/";
+	}
+	
+	// 운전내역 탑승객정보 상세보기
+	@RequestMapping(value = "/driver_passengerlog", method = RequestMethod.POST)
+	@ResponseBody
+	public List<PassengerVo> driver_passengerlog(int driver_seq) {
+		System.out.println(driver_seq);
+		List<PassengerVo> driver_passengerlogList = mylogService.driver_passengerlogListBySeq(driver_seq);
+		System.out.println(driver_passengerlogList);
+		return driver_passengerlogList;
 	}
 }

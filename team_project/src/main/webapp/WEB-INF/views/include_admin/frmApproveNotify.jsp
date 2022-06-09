@@ -4,4 +4,6 @@
 <form id="frmApproveNotify">
 	<input type="hidden" name="blacklist_seq"  value="">
 	<input type="hidden" name="admin_check"  value="">
+	<input type="hidden" name="black_score" value="">
+	<input type="hidden" name="black_m_id" value="">
 </form>

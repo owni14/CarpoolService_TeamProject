@@ -40,8 +40,8 @@ public class MylogDaoImpl implements MylogDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> driver_passengerlogListById(String m_id) {
-		List<Map<String, Object>> driver_passengerlogList = sqlSession.selectList(NAMESPACE + "driver_passengerlogListById", m_id);
+	public List<PassengerVo> driver_passengerlogListBySeq(int driver_seq) {
+		List<PassengerVo> driver_passengerlogList = sqlSession.selectList(NAMESPACE + "driver_passengerlogListBySeq", driver_seq);
 		return driver_passengerlogList;
 	}
 	

@@ -66,12 +66,27 @@ public class NotifyTest {
 	// test ok, 
 	
 	@Test
+	public void cNotifyCount() {
+		int cNotifyCount = notifyDao.cNotifyCount();
+		System.out.println("NotifyTest cNotifyCount : " + cNotifyCount);
+	}
+	// test ok, 
+	
+	@Test
 	public void modifyApprovement() {
 		BlackListVo blackListVo = new BlackListVo();
 		blackListVo.setBlacklist_seq(1);
 		notifyDao.modifyApprovement(blackListVo);
 	}
+	// test ok, 
+	@Test
+	public void cNotifyList() {
+		List<BlackListVo> list = notifyDao.cNotifyList();
+		System.out.println("list : " + list );
+	}
+	// test ok,
 	
 	
 }
+
 

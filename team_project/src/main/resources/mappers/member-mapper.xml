@@ -38,6 +38,12 @@
 		<include refid="search"></include>
 	</select>
 	
+	<update id="adminupdateBlackScore">
+		update member set 
+		m_blackpoint = m_blackpoint + #{black_score}
+		where m_id = #{black_m_id}
+	</update>
+	
 	<sql id="search">
 		<if test = "searchType != null and keyword != null">
 			<choose>

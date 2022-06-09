@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.team.dao.MemberDao;
+import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -54,6 +55,15 @@ public class MemberTest {
 	@Test
 	public void testgetMember() {
 	System.out.println(memberDao.getDriverList("user0187@gmail.com"));	
+	}
+	
+	@Test
+	public void adminupdateBlackScore() {
+		BlackListVo blackListVo = new BlackListVo();
+		blackListVo.setBlack_score(5);
+		blackListVo.setBlack_m_id("hong@naver.com");
+		System.out.println("blackListVo" + blackListVo);
+		memberDao.adminupdateBlackScore(blackListVo);
 	}
 }
 

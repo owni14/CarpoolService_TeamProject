@@ -34,8 +34,11 @@ public class MyController {
 	public String pointHistory(HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
 		System.out.println("loginVo :" + loginVo);
-		pagingDto.setCount(pointService.getCountPointById(pagingDto));
-		List<Map<String, Object>> pointList = pointService.getPointListById(loginVo.getM_id(), pagingDto);
+		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
+		// startRow , endRow : 0 으로 나옴 고쳐야됨
+		System.out.println("startRow" + pagingDto.getStartRow());
+		System.out.println("endRow" + pagingDto.getEndRow());
+		List<Map<String, Object>> pointList = pointService.getPointListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
 		System.out.println("pointList : " + pointList);
 		session.setAttribute("pointList", pointList);
 		return "my/pointHistory";

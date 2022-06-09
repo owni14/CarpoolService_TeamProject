@@ -28,9 +28,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
+import com.kh.team.service.NotifyService;
 import com.kh.team.util.FileUploadHelper;
+import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
@@ -42,6 +45,8 @@ public class AdminController {
 	EventService eventService;
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	NotifyService notifyService;
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin() {
@@ -81,7 +86,15 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
-	public String reportManagement() {
+	public String reportManagement(Model model) {
+		List<BlackListVo> notifyList = notifyService.notifyList();
+		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
+		List<BlackListVo> yNotifyList = notifyService.yNotifyList();
+		List<BlackListVo> dayNotifyList = notifyService.dayNotifyList();
+		model.addAttribute("notifyList", notifyList);
+		model.addAttribute("nNotifyList", nNotifyList);
+		model.addAttribute("yNotifyList", yNotifyList);
+		model.addAttribute("dayNotifyList", dayNotifyList);
 		return "admin/reportManagement";
 	}
 

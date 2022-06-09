@@ -51,6 +51,13 @@ public class NotifyTest {
 	}
 	// test ok, 
 	
+	@Test
+	public void dayNotifyList() {
+		List<BlackListVo> dayNotifyList = notifyDao.dayNotifyList();
+		System.out.println("NotifyTest dayNotifyList : " + dayNotifyList);
+	}
+	// test ok, 
+	
 	
 }
 

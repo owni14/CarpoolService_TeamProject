@@ -7,6 +7,6 @@ import com.kh.team.vo.PagingDto;
 import com.kh.team.vo.PointHistoryVo;
 
 public interface PointService {
-	public List<Map<String, Object>> getPointListById(String m_id, PagingDto pagingDto);
-	public int getCountPointById(PagingDto pagingDto);
+	public List<Map<String, Object>> getPointListById(String m_id, int startRow, int endRow);
+	public int getCountPointById(String m_id);
 }

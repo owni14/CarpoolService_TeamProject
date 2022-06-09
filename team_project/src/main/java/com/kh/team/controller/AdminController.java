@@ -91,10 +91,16 @@ public class AdminController {
 		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
 		List<BlackListVo> yNotifyList = notifyService.yNotifyList();
 		List<BlackListVo> dayNotifyList = notifyService.dayNotifyList();
+		int dayNotifyCount = notifyService.dayNotifyCount();
+		int nNotifyCount = notifyService.notifyCount();
+		int totalNotifyCount = notifyService.totalNotifyCount();
 		model.addAttribute("notifyList", notifyList);
 		model.addAttribute("nNotifyList", nNotifyList);
 		model.addAttribute("yNotifyList", yNotifyList);
 		model.addAttribute("dayNotifyList", dayNotifyList);
+		model.addAttribute("dayNotifyCount", dayNotifyCount);
+		model.addAttribute("nNotifyCount", nNotifyCount);
+		model.addAttribute("totalNotifyCount", totalNotifyCount);
 		return "admin/reportManagement";
 	}
 
@@ -109,7 +115,12 @@ public class AdminController {
 	@RequestMapping(value = "/event_update", method = RequestMethod.POST)
 	@ResponseBody
 	public String eventUpdate(EventVo eventVo,HttpSession session) {
-		String db_event_content=eventService.getContent((int)session.getAttribute("event_seq"));
+		//session 내 널 값 체크
+		Object objSession=session.getAttribute("event_seq");
+		if(objSession ==null) {
+			objSession=eventVo.getEvent_seq();
+		}
+		String db_event_content=eventService.getContent((int)objSession);
 		System.out.println("eventUpdate db_event_Content" +db_event_content);
 		String contentStr=eventVo.getEvent_content();
 		List<String> contentFileList=FileUploadHelper.eventFilnameExtraction(contentStr, SERVERIP);
@@ -129,8 +140,8 @@ public class AdminController {
 //				contentFileList.add(strFile.substring(dblSlashIndex,endFileExtIndex));
 //			}
 //		}
-		System.out.println(contentFileList);
-		System.out.println(db_contentFileList);
+		System.out.println("contentFileList "+contentFileList);
+		System.out.println("db_contentFileList "+db_contentFileList);
 //		System.out.println("eventUpdate EventVo"+eventVo);
 		//디비에 저장된게 더크다는건 파일이 삭제 되었다는것
 		
@@ -139,15 +150,20 @@ public class AdminController {
 		if (dbContentSize >= contentSize) {
 			//db에서 컨텐트 지우기
 			db_contentFileList.removeAll(contentFileList);
+			System.out.println("db_contentFileList removeall "+db_contentFileList);
+			//리스트의 변경으로 인한 리사이징
+			// lt 0 컨텐트에서 파일이 추가
+			// gt 0 컨텐트에서 파일이 삭제
+			dbContentSize=db_contentFileList.size();
 			//크기가 0은 삭제할 파일이 없다 다같은 내용
-			System.out.println(db_contentFileList);
 			if(dbContentSize>0) {
 				for(String strFile:db_contentFileList) {
 					fileUpdate_result=FileUploadHelper.deleteFile(strFile);
 				}
 			}
-			else if(contentSize <=0) {
-				//content내에 사진이 없다 폴더에서 삭제해야함
+			else if(contentSize <=0 && dbContentSize <=0) {
+				//content와 db에 파일이 없다 폴더에서 삭제해야함
+//				FileUp
 			}
 		}
 		if(dbUpdate_result && fileUpdate_result ) {
@@ -155,7 +171,7 @@ public class AdminController {
 		}
 		return "false";
 	}
-
+	
 	@RequestMapping(value="/event_filesAttach", method= RequestMethod.POST)
 	public void eventFiles(HttpServletRequest request, HttpServletResponse response,HttpSession session ) {
 		System.out.println(request.getHeader("file-name"));
@@ -248,5 +264,4 @@ public class AdminController {
 		return data;
 
 	}
-	
 }

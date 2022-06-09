@@ -20,18 +20,18 @@ public class MylogTest {
 	// 테스트용 드라이버 로그 생성
 	@Test
 	public void insertDriver () {
-		for (int i = 24; i < 51; i++) {
-			DriverVo driverVo = new DriverVo(i, "user0" + i + "@gmail.com", "울산 북구 아진로 75", "N", "담배 거절", "07:30");
+		for (int i = 1; i < 4; i++) {
+			DriverVo driverVo = new DriverVo(10+i, "hong@naver.com", "울산 북구 아진로 75", "N", "담배 거절", "2022-06-0"+ i + " 07:30");
 			mylogDao.insertDriver(driverVo);
 		}
 	}
 	
 	// 테스트용 탑승자 로그 생성
-		@Test
-		public void insertPassenger() {
-			for (int i = 1; i < 10; i++) {
-				PassengerVo passengerVo = new PassengerVo(i+10, "hong@naver.com", "울산 북구 달천로 50", "7:4"+ i, 1);
-				mylogDao.insertPassenger(passengerVo);
-			}
+	@Test
+	public void insertPassenger() {
+		for (int i = 1; i < 4; i++) {
+			PassengerVo passengerVo = new PassengerVo(i+30, "user0"+ i +"@gmail.com", "울산 북구 달천로 50", "7:4"+ i, 11);
+			mylogDao.insertPassenger(passengerVo);
 		}
+	}
 }

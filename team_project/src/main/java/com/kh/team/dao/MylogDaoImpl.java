@@ -30,13 +30,29 @@ public class MylogDaoImpl implements MylogDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> mylogListById(String m_id, int startRow, int endRow) {
+	public List<Map<String, Object>> passengerlogListById(String m_id, int startRow, int endRow) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("m_id", m_id);
 		map.put("startRow", String.valueOf(startRow));
 		map.put("endRow", String.valueOf(endRow));
-		List<Map<String, Object>> mylogList = sqlSession.selectList(NAMESPACE + "mylogListById",map);
-		return mylogList;
+		List<Map<String, Object>> passengerlogList = sqlSession.selectList(NAMESPACE + "passengerlogListById", map);
+		return passengerlogList;
+	}
+
+	@Override
+	public List<Map<String, Object>> driver_passengerlogListById(String m_id) {
+		List<Map<String, Object>> driver_passengerlogList = sqlSession.selectList(NAMESPACE + "driver_passengerlogListById", m_id);
+		return driver_passengerlogList;
+	}
+	
+	@Override
+	public List<DriverVo> driverlogListById(String m_id, int startRow, int endRow) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("startRow", String.valueOf(startRow));
+		map.put("endRow", String.valueOf(endRow));
+		List<DriverVo> driverlogList = sqlSession.selectList(NAMESPACE + "driverlogListById", map);
+		return driverlogList;
 	}
 
 

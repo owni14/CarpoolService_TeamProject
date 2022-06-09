@@ -13,7 +13,7 @@ public class FileUploadHelper {
 	// 파일 업로드
 	public static String uploadFile(String uploadPath, String originalFilename, byte[] fileData) {
 		UUID uuid=UUID.randomUUID();
-		String saveFilename= uploadPath+"/"+uuid+"_"+originalFilename;
+		String saveFilename = uploadPath+"/"+uuid+"_"+originalFilename;
 		System.out.println("save saveFilename :"+saveFilename);
 		
 		File ftarget=new File(saveFilename);
@@ -78,6 +78,24 @@ public class FileUploadHelper {
 		 String filePath = 
 		"//"+serverip+"/ServerFolder/"+year+"/"+month+"/"+day+"/";
 		return filePath;
+	}
+	
+	// 운전면허증 파일 업로드
+	public static String uploadFileForDriver(String uploadPath, String originalFilename, byte[] fileData) {
+		String saveFilename = uploadPath + "/" + originalFilename;
+		File ftarget = new File(saveFilename);
+		boolean isExistence = ftarget.exists();
+		
+		if (isExistence) {
+			return "existence";
+		}
+		
+		try {
+			FileCopyUtils.copy(fileData, ftarget);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return saveFilename;
 	}
 	
 }

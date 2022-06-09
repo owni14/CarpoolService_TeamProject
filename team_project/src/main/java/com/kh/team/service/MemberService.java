@@ -2,6 +2,7 @@ package com.kh.team.service;
 
 import java.util.List;
 
+import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 

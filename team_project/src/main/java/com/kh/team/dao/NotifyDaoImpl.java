@@ -67,5 +67,17 @@ public class NotifyDaoImpl implements NotifyDao{
 		sqlSession.update(NAMESPACE + "modifyApprovement", blackListVo);
 	}
 
+	@Override
+	public List<BlackListVo> cNotifyList() {
+		List<BlackListVo> cNotifyList = sqlSession.selectList(NAMESPACE + "cNotifyList");
+		return cNotifyList;
+	}
+
+	@Override
+	public int cNotifyCount() {
+		int cNotifyCount = (int)sqlSession.selectOne(NAMESPACE + "cNotifyCount");
+		return cNotifyCount;
+	}
+
 }
 

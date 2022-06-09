@@ -25,7 +25,11 @@ public class MyController {
 
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
-	public String boardedHistory() {
+	public String boardedHistory(HttpSession session, PagingDto pagingDto) {
+		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
+//		System.out.println("loginVo :" + loginVo);
+		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
+		pagingDto.setPage(pagingDto.getPage());
 		return "my/boardedHistory";
 	}
 	
@@ -33,13 +37,11 @@ public class MyController {
 	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
 	public String pointHistory(HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
-		System.out.println("loginVo :" + loginVo);
+//		System.out.println("loginVo :" + loginVo);
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
-		// startRow , endRow : 0 으로 나옴 고쳐야됨
-		System.out.println("startRow" + pagingDto.getStartRow());
-		System.out.println("endRow" + pagingDto.getEndRow());
+		pagingDto.setPage(pagingDto.getPage());
 		List<Map<String, Object>> pointList = pointService.getPointListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
-		System.out.println("pointList : " + pointList);
+//		System.out.println("pointList : " + pointList);
 		session.setAttribute("pointList", pointList);
 		return "my/pointHistory";
 	}

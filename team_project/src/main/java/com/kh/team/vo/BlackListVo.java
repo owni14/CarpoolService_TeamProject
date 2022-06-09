@@ -9,6 +9,8 @@ public class BlackListVo {
 	private String black_content;
 	private String black_is_processed;
 	private Date black_regdate;
+	private int black_score;
+	private String admin_code;
 	
 	public BlackListVo() {
 		super();
@@ -34,6 +36,21 @@ public class BlackListVo {
 		this.black_is_processed = black_is_processed;
 		this.black_regdate = black_regdate;
 	}
+
+
+	public BlackListVo(int blacklist_seq, String m_id, String black_m_id, String black_content,
+			String black_is_processed, Date black_regdate, int black_score, String admin_code) {
+		super();
+		this.blacklist_seq = blacklist_seq;
+		this.m_id = m_id;
+		this.black_m_id = black_m_id;
+		this.black_content = black_content;
+		this.black_is_processed = black_is_processed;
+		this.black_regdate = black_regdate;
+		this.black_score = black_score;
+		this.admin_code = admin_code;
+	}
+
 
 	public int getBlacklist_seq() {
 		return blacklist_seq;
@@ -83,11 +100,33 @@ public class BlackListVo {
 		this.black_regdate = black_regdate;
 	}
 
+	
+	public int getBlack_score() {
+		return black_score;
+	}
+
+
+	public void setBlack_score(int black_score) {
+		this.black_score = black_score;
+	}
+
+
+	public String getAdmin_code() {
+		return admin_code;
+	}
+
+
+	public void setAdmin_code(String admin_code) {
+		this.admin_code = admin_code;
+	}
+
+
 	@Override
 	public String toString() {
 		return "BlackListVo [blacklist_seq=" + blacklist_seq + ", m_id=" + m_id + ", black_m_id=" + black_m_id
 				+ ", black_content=" + black_content + ", black_is_processed=" + black_is_processed + ", black_regdate="
-				+ black_regdate + "]";
+				+ black_regdate + ", black_score=" + black_score + ", admin_code=" + admin_code + "]";
 	}
+
 	
 }

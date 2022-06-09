@@ -91,10 +91,16 @@ public class AdminController {
 		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
 		List<BlackListVo> yNotifyList = notifyService.yNotifyList();
 		List<BlackListVo> dayNotifyList = notifyService.dayNotifyList();
+		int dayNotifyCount = notifyService.dayNotifyCount();
+		int nNotifyCount = notifyService.notifyCount();
+		int totalNotifyCount = notifyService.totalNotifyCount();
 		model.addAttribute("notifyList", notifyList);
 		model.addAttribute("nNotifyList", nNotifyList);
 		model.addAttribute("yNotifyList", yNotifyList);
 		model.addAttribute("dayNotifyList", dayNotifyList);
+		model.addAttribute("dayNotifyCount", dayNotifyCount);
+		model.addAttribute("nNotifyCount", nNotifyCount);
+		model.addAttribute("totalNotifyCount", totalNotifyCount);
 		return "admin/reportManagement";
 	}
 

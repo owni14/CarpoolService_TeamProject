@@ -55,4 +55,10 @@ public class NotifyServiceImpl implements NotifyService{
 		return dayNotifyList;
 	}
 
+	@Override
+	public int dayNotifyCount() {
+		int dayNotifyCount = notifyDao.dayNotifyCount();
+		return dayNotifyCount;
+	}
+
 }

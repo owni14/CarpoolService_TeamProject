@@ -8,9 +8,6 @@
 		
 	});
 </script>
-${nNotifyList}//
-${yNotifyList}//
-${dayNotifyList}
 <%-- <%@ include file="/WEB-INF/views/include/frmPaging.jsp" %> --%>
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
@@ -66,7 +63,7 @@ ${dayNotifyList}
 							        datasets: [{
 							            label: '완료',
 							            data: [
-							                10
+							                ${totalNotifyCount - nNotifyCount}
 							            ],
 							            backgroundColor: [
 							            	"rgba(54, 162, 235, 0.2)",
@@ -78,7 +75,7 @@ ${dayNotifyList}
 							        }, {
 							        	label: '미완료',
 							            data: [
-							                23
+							                ${nNotifyCount}
 							            ],
 							            backgroundColor: [
 							            	"rgba(255, 205, 86, 0.2)"
@@ -89,7 +86,7 @@ ${dayNotifyList}
 							        }, {
 							        	label: '10일 경과',
 							            data: [
-							                5
+							            	${dayNotifyCount}
 							            ],
 							            backgroundColor: [
 							            	"rgba(255, 99, 132, 0.2)"
@@ -103,7 +100,8 @@ ${dayNotifyList}
 							        responsive: true,
 							        title: {
 							            display: true,
-							            text: '신고 리스트 관리 현황'
+							            text: 
+							            	'신고 리스트 관리 현황'
 							        },
 							        tooltips: {
 							            mode: 'index',
@@ -122,8 +120,8 @@ ${dayNotifyList}
 							            xAxes: [{
 							                display: true,
 							                scaleLabel: {
-							                    display: false,
-							                    labelString: 'x축'
+							                    display: true,
+							                    labelString: '총 신고 리스트 갯수 : ${totalNotifyCount}건' 
 							                },
 							                ticks: {
 							                    autoSkip: false
@@ -152,7 +150,7 @@ ${dayNotifyList}
 						<div class="table-responsive">
 							<table class="table">
 								<thead>
-									<tr>
+									<tr style="background-color:rgba(255, 205, 86, 0.2)">
 										<th>#</th>
 										<th>신고자 아이디</th>
 										<th>신고 받은 회원 아이디</th>
@@ -184,18 +182,52 @@ ${dayNotifyList}
 				<!-- Basic table card end -->
 						</div>
 						</div>
-						<div class="row">
+				<!-- 10일 경과 table start -->
+						<div class="row" style="padding-top:35px">
 							<div class="col-md-12 col-xl-12" style="margin-left: 20px; padding-right : 140px">
 								<div class="table-responsive">
 								<table class="table">
 									<thead>
-										<tr>
+										<tr style="background-color:rgba(255, 99, 132, 0.2)">
 											<th>#</th>
-											<th>신고자 아이디</th>
-											<th>신고 받은 회원 아이디</th>
-											<th>신고 내용</th>
-											<th>처리 결과</th>
-											<th>등록 일자</th>
+											<th style="width:10%">신고자 아이디</th>
+											<th style="width:10%">신고 받은 회원 아이디</th>
+											<th style="width:55%">신고 내용</th>
+											<th style="width:10%">처리 결과</th>
+											<th style="width:15%">등록 일자</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="blackListVo" items="${dayNotifyList}" varStatus="status"> 
+									<tr>	 
+											<th scope="row">${status.count}</th>
+											<td>${blackListVo.m_id}</td>
+											<td>${blackListVo.black_m_id}</td>
+											<td>${blackListVo.black_content}</td>
+											<td>${blackListVo.black_is_processed}</td>
+											<td><span style="color:red">${blackListVo.black_regdate}</span></td>
+											
+								</tr>
+	 									</c:forEach> 
+									</tbody>
+								</table>
+							</div>
+							</div>
+						</div>
+				<!-- 10일 경과 table end -->
+				<!-- 처리 결과 Y table start -->
+						<div class="row" style="padding-top:35px">
+							<div class="col-md-12 col-xl-12" style="margin-left: 20px; padding-right : 140px">
+								<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr style="background-color:rgba(54, 162, 235, 0.2)">
+											<th>#</th>
+											<th style="width:10%">신고자 아이디</th>
+											<th style="width:10%">신고 받은 회원 아이디</th>
+											<th style="width:55%">신고 내용</th>
+											<th style="width:10%">처리 결과</th>
+											<th style="width:15%">등록 일자</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -215,6 +247,7 @@ ${dayNotifyList}
 							</div>
 							</div>
 						</div>
+				<!-- 처리 결과 Y table end -->
 						</div>
 					</div>
 				</div>

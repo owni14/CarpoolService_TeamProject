@@ -50,4 +50,11 @@ public class MemberServiceImpl implements MemberService {
 		return driverInfo;
 	}
 
+	// 운전자 등록하기 위한 메서드
+	@Override
+	public boolean submitDriverLicense(String m_id, String ad_license_img) {
+		boolean result = memberDao.insertDriverLicense(m_id, ad_license_img);
+		return result;
+	}
+
 }

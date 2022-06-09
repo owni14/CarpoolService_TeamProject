@@ -13,14 +13,7 @@ $(document).ready(function() {
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
 		<form role="form" action="/my/submitFile" method="post" enctype="multipart/form-data">
-			<div class="form-group">
-				<label for="name"> 이름 </label> 
-				<input type="text" class="form-control" id="name" placeholder="이름을 입력해주세요"/>
-			</div>
-			<div class="form-group">
-				<label for="bithday"> 생년월일 </label> 
-				<input type="text" class="form-control" id="bithday" placeholder="ex)990101"/>
-			</div>
+		<h3 style="text-align: center;">운전 면허증을 첨부해주세요</h3>
 			<div class="form-group">
 				<label for="driverLicense"> 운전면허증 </label> 
 				<input type="file" class="form-control-file" id="driverLicense" name="driverLicense" />

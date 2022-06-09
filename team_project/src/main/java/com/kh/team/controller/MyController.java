@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.MemberService;
+import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
 import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.MemberVo;
@@ -24,17 +25,20 @@ public class MyController {
 	
 	@Autowired
 	private PointService pointService;
-	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private MylogService mylogService;
 
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
 	public String boardedHistory(HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
-//		System.out.println("loginVo :" + loginVo);
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
 		pagingDto.setPage(pagingDto.getPage());
+		List<Map<String, Object>> mylogList = mylogService.mylogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
+		System.out.println("myLogList : " + mylogList);
+		session.setAttribute("mylogList", mylogList);
 		return "my/boardedHistory";
 	}
 	
@@ -42,7 +46,6 @@ public class MyController {
 	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
 	public String pointHistory(HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
-//		System.out.println("loginVo :" + loginVo);
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
 		pagingDto.setPage(pagingDto.getPage());
 		List<Map<String, Object>> pointList = pointService.getPointListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());

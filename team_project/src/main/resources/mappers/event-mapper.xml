@@ -11,12 +11,12 @@
 	<insert id="insertEvent">
 		insert into event
 		(event_seq, event_name, 
-		 event_content,event_is_finish,
-		event_img,event_max_count,event_point)
+		 event_content,
+		event_max_count,event_point)
 		values
 		(seq_event.nextval, #{event_name}, 
-		 #{event_content}, #{event_is_finish},
-		#{event_img, jdbcType=VARCHAR}, #{event_max_count}, #{event_point})
+		 #{event_content},
+		#{event_max_count}, #{event_point})
 	</insert>
 	
 	<update id="updateEvent">

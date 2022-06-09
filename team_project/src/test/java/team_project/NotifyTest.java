@@ -65,6 +65,13 @@ public class NotifyTest {
 	}
 	// test ok, 
 	
+	@Test
+	public void modifyApprovement() {
+		BlackListVo blackListVo = new BlackListVo();
+		blackListVo.setBlacklist_seq(1);
+		notifyDao.modifyApprovement(blackListVo);
+	}
+	
 	
 }
 

@@ -60,7 +60,7 @@ $("#select").selectpicker();
 							<option value="lg">LG</option>
 							<option value="kt">KT</option>
 							<option value="hanwha">한화</option>
-							<option value="dusan">두산</option>
+							<option value="doosan">두산</option>
 						</select>
 					</div>
 					<div class="form-group">

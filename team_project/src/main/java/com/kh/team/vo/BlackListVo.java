@@ -11,6 +11,7 @@ public class BlackListVo {
 	private Date black_regdate;
 	private int black_score;
 	private String admin_code;
+	private String admin_check; // 관리자 페이지에서 신고 리스트 승인, 반려 정하는 경우
 	
 	public BlackListVo() {
 		super();
@@ -121,12 +122,21 @@ public class BlackListVo {
 	}
 
 
+	public String getAdmin_check() {
+		return admin_check;
+	}
+
+
+	public void setAdmin_check(String admin_check) {
+		this.admin_check = admin_check;
+	}
+
 	@Override
 	public String toString() {
 		return "BlackListVo [blacklist_seq=" + blacklist_seq + ", m_id=" + m_id + ", black_m_id=" + black_m_id
 				+ ", black_content=" + black_content + ", black_is_processed=" + black_is_processed + ", black_regdate="
-				+ black_regdate + ", black_score=" + black_score + ", admin_code=" + admin_code + "]";
+				+ black_regdate + ", black_score=" + black_score + ", admin_code=" + admin_code + ", admin_check="
+				+ admin_check + "]";
 	}
 
-	
 }

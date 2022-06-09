@@ -10,10 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
 import com.kh.team.util.FileUploadHelper;
+import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -24,6 +27,8 @@ public class MyController {
 	@Autowired
 	private PointService pointService;
 	@Autowired
+	private MemberService memberService;
+	@Autowired
 	private MylogService mylogService;
 
 	// 탑승 내역 페이지로 이동
@@ -32,13 +37,29 @@ public class MyController {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
 		pagingDto.setPage(pagingDto.getPage());
-		List<Map<String, Object>> mylogList = mylogService.mylogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
-		System.out.println("myLogList : " + mylogList);
-		session.setAttribute("mylogList", mylogList);
+		List<Map<String, Object>> passengerlogList = mylogService.passengerlogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
+//		System.out.println("myLogList : " + mylogList);
+		session.setAttribute("passengerlogList", passengerlogList);
 		return "my/boardedHistory";
 	}
 	
-	// 탑승 내역 페이지로 이동
+	
+	// 운전내역 페이지로 이동
+	@RequestMapping(value = "/driveHistory", method = RequestMethod.GET)
+	public String driveHistroy(HttpSession session, PagingDto pagingDto) {
+		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
+		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
+		pagingDto.setPage(pagingDto.getPage());
+		List<DriverVo> driverlogList = mylogService.driverlogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
+		List<Map<String, Object>> driver_passengerlogList = mylogService.driver_passengerlogListById(loginVo.getM_id());
+//		System.out.println("myLogList : " + mylogList);
+		session.setAttribute("driverlogList", driverlogList);
+		session.setAttribute("driver_passengerlogList", driver_passengerlogList);
+		return "my/driveHistroy";
+	}
+		
+	
+	// 포인트 페이지로 이동
 	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
 	public String pointHistory(HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
@@ -50,11 +71,6 @@ public class MyController {
 		return "my/pointHistory";
 	}
 	
-	// 충전하기 페이지로 이동
-	@RequestMapping(value = "/purchasePoint", method = RequestMethod.GET)
-	public String purchasePoint() {
-		return "my/purchasePoint";
-	}
 	
 	// 운전자 등록 페이지로 이동
 	@RequestMapping(value = "/registerDriver", method = RequestMethod.GET)
@@ -64,7 +80,7 @@ public class MyController {
 	
 	// 운전자등록폼 처리
 	@RequestMapping(value = "/submitFile", method = RequestMethod.POST)
-	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session) throws Exception{
+	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session, RedirectAttributes rttr) throws Exception{
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
 		String ext = driverLicense.getOriginalFilename();
 		int dot = ext.lastIndexOf(".");
@@ -75,18 +91,20 @@ public class MyController {
 //		System.out.println("imageExtension:" + imageExt);
 		
 		String company = memberVo.getM_company();
-		String name = memberVo.getM_name();
+		String saveName = memberVo.getM_id() + "'s_driver_license";
 		byte[] fileData = driverLicense.getBytes();
 		
 		// 파일 경로 및 파일 이름
-		String pathAndFilename = FileUploadHelper.uploadFile("//192.168.0.232/ServerFolder/DriverLicense/"+ company, (name + imageExt), fileData);
+		String saveFilename = FileUploadHelper.uploadFileForDriver("//192.168.0.232/ServerFolder/DriverLicense/"+ company, (saveName + imageExt), fileData);
 		
-		int slash = pathAndFilename.lastIndexOf("/");
+		if (saveFilename.equals("existence") || saveFilename == null) {
+			rttr.addFlashAttribute("isExistence", "true");
+			return "redirect:/";
+		}
 		
-		// uuid포함 파일 이름
-		String saveFilename = pathAndFilename.substring(slash + 1);
+		memberService.submitDriverLicense(memberVo.getM_id(), saveFilename);
 		
-		System.out.println("MyController, saveFilename:" + saveFilename);
+//		System.out.println("MyController, saveFilename:" + saveFilename);
 		return "redirect:/";
 	}
 }

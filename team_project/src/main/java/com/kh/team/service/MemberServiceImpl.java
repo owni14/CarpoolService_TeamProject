@@ -1,6 +1,7 @@
 package com.kh.team.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MemberVo> getMemberList() {
-		List<MemberVo> memberList = memberDao.getMemberList();
-		return memberList;
+	public List<Map<String, Object>> getDriverList() {
+		List<Map<String, Object>> driverList = memberDao.getDriverList();
+		return driverList;
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberVo getMemberById(String m_id) {
+	public MemberVo getDriverById(String m_id) {
 		MemberVo driverInfo = memberDao.getMemberById(m_id);
 		return driverInfo;
 	}

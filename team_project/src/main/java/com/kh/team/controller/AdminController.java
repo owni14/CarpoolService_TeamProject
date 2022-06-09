@@ -163,7 +163,9 @@ public class AdminController {
 			}
 			else if(contentSize <=0 && dbContentSize <=0) {
 				//content와 db에 파일이 없다 폴더에서 삭제해야함
-//				FileUp
+				String dirPathTmp=FileUploadHelper.getEventFileSaveFath(SERVERIP);
+				dirPathTmp +="event_seq!!"+eventVo.getEvent_seq();
+				FileUploadHelper.deleteFileS(dirPathTmp);
 			}
 		}
 		if(dbUpdate_result && fileUpdate_result ) {

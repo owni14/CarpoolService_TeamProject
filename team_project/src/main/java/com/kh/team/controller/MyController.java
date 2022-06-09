@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
-import com.kh.team.service.PointServiceImpl;
+import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
-import com.kh.team.vo.PointHistoryVo;
 
 @Controller
 @RequestMapping("/my")
@@ -62,4 +62,31 @@ public class MyController {
 		return "my/registerDriver";
 	}
 	
+	// 운전자등록폼 처리
+	@RequestMapping(value = "/submitFile", method = RequestMethod.POST)
+	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session) throws Exception{
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
+		String ext = driverLicense.getOriginalFilename();
+		int dot = ext.lastIndexOf(".");
+		
+		// 기본파일 확장자 얻기
+		String imageExt = ext.substring(dot);
+		
+//		System.out.println("imageExtension:" + imageExt);
+		
+		String company = memberVo.getM_company();
+		String name = memberVo.getM_name();
+		byte[] fileData = driverLicense.getBytes();
+		
+		// 파일 경로 및 파일 이름
+		String pathAndFilename = FileUploadHelper.uploadFile("//192.168.0.232/ServerFolder/DriverLicense/"+ company, (name + imageExt), fileData);
+		
+		int slash = pathAndFilename.lastIndexOf("/");
+		
+		// uuid포함 파일 이름
+		String saveFilename = pathAndFilename.substring(slash + 1);
+		
+		System.out.println("MyController, saveFilename:" + saveFilename);
+		return "redirect:/";
+	}
 }

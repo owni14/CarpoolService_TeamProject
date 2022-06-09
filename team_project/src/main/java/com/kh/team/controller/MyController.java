@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.team.service.PointService;
 import com.kh.team.service.PointServiceImpl;
@@ -25,7 +29,11 @@ public class MyController {
 
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
-	public String boardedHistory() {
+	public String boardedHistory(HttpSession session, PagingDto pagingDto) {
+		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
+//		System.out.println("loginVo :" + loginVo);
+		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
+		pagingDto.setPage(pagingDto.getPage());
 		return "my/boardedHistory";
 	}
 	
@@ -33,13 +41,11 @@ public class MyController {
 	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
 	public String pointHistory(HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
-		System.out.println("loginVo :" + loginVo);
+//		System.out.println("loginVo :" + loginVo);
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
-		// startRow , endRow : 0 으로 나옴 고쳐야됨
-		System.out.println("startRow" + pagingDto.getStartRow());
-		System.out.println("endRow" + pagingDto.getEndRow());
+		pagingDto.setPage(pagingDto.getPage());
 		List<Map<String, Object>> pointList = pointService.getPointListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
-		System.out.println("pointList : " + pointList);
+//		System.out.println("pointList : " + pointList);
 		session.setAttribute("pointList", pointList);
 		return "my/pointHistory";
 	}
@@ -56,4 +62,12 @@ public class MyController {
 		return "my/registerDriver";
 	}
 	
+	// 운전자등록폼 처리
+	@RequestMapping(value = "/submitFile", method = RequestMethod.POST)
+	public String submitLicenseFile(MultipartFile driverLicense) throws Exception{
+//		String originalFileName = driverLicense.getOriginalFilename();
+		System.out.println(driverLicense);
+//		System.out.println("originalFileName:" + originalFileName);
+		return "redirect:/";
+	}
 }

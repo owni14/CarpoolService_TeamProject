@@ -23,6 +23,7 @@ public class FileUploadHelper {
 		}
 		return saveFilename;
 	}
+	
 	//파일 지우기
 	public static boolean deleteFile(String filename) {
 		File f= new File(filename);
@@ -32,6 +33,7 @@ public class FileUploadHelper {
 		}
 		return false;
 	}
+	
 	//파일 리스트에서 파일 다지우기
 	public static void deleteFileS(String fileDirPath) {
 		System.out.println("fileDirPath"+fileDirPath);

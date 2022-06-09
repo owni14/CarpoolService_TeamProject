@@ -56,5 +56,11 @@ public class NotifyDaoImpl implements NotifyDao{
 		return dayNotifyList;
 	}
 
+	@Override
+	public int dayNotifyCount() {
+		int dayNotifyCount = (int)sqlSession.selectOne(NAMESPACE + "dayNotifyCount");
+		return dayNotifyCount;
+	}
+
 }
 

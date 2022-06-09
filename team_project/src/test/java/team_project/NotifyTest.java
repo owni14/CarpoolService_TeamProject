@@ -58,6 +58,13 @@ public class NotifyTest {
 	}
 	// test ok, 
 	
+	@Test
+	public void dayNotifyCount() {
+		int dayNotifyCount = notifyDao.dayNotifyCount();
+		System.out.println("NotifyTest dayNotifyCount : " + dayNotifyCount);
+	}
+	// test ok, 
+	
 	
 }
 

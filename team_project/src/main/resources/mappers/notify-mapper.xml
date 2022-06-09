@@ -21,12 +21,13 @@
 	<select id="nNotifyList" resultType="BlackListVo">
 		select * from blacklist
 		where black_is_processed = 'N'
+		order by black_regdate asc
 	</select>
 	
 	<select id="dayNotifyList" resultType="BlackListVo">
 		select * from blacklist
 		<![CDATA[
-        where black_regdate < sysdate - 10
+        where black_regdate < sysdate - 10 and black_is_processed = 'N'
         ]]>
 	</select>
 	
@@ -39,4 +40,14 @@
 		select count(*) from blacklist
 		
 	</select>
+
+	<select id="dayNotifyCount" resultType="int">
+		select count(*) from blacklist
+		<![CDATA[
+        where black_regdate < sysdate - 10 and black_is_processed = 'N'
+        ]]>
+		
+	</select>
+	
+	
 </mapper>

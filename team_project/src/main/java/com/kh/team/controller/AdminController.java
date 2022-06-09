@@ -81,7 +81,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
-	public String reportManagement(Model model) {
+	public String reportManagement(Model model, BlackListVo blackListVo) {
+		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
+			notifyService.modifyApprovement(blackListVo);			
+		}
 		List<BlackListVo> notifyList = notifyService.notifyList();
 		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
 		List<BlackListVo> yNotifyList = notifyService.yNotifyList();

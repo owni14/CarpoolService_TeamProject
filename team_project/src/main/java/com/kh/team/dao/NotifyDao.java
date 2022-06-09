@@ -13,4 +13,5 @@ public interface NotifyDao {
 	public int dayNotifyCount(); // 10일 지난 미처리 리스트 갯수 확인
 	public int notifyCount(); // 미처리 신고 갯수 확인
 	public int totalNotifyCount(); // 전체 신고 갯수 확인
+	public void modifyApprovement(BlackListVo blackListVo); // 미승인 리스트 승인으로 바꾸기
 }

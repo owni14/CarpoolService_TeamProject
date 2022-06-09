@@ -61,4 +61,9 @@ public class NotifyServiceImpl implements NotifyService{
 		return dayNotifyCount;
 	}
 
+	@Override
+	public void modifyApprovement(BlackListVo blackListVo) {
+		notifyDao.modifyApprovement(blackListVo);
+	}
+
 }

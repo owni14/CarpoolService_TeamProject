@@ -62,5 +62,10 @@ public class NotifyDaoImpl implements NotifyDao{
 		return dayNotifyCount;
 	}
 
+	@Override
+	public void modifyApprovement(BlackListVo blackListVo) {
+		sqlSession.update(NAMESPACE + "modifyApprovement", blackListVo);
+	}
+
 }
 

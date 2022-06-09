@@ -116,8 +116,9 @@ $(document).ready(function() {
 			        
 			        // >>>>>>>>>>>>>>>>>> !!!!!! 마커 위치가 위로 조금 올라와 있음. 추후 한번 확인해서 수정해야함  !!!!!! <<<<<<<<<<<<<<<<<<<<
 			        modalInfowindow.open(modalMap, modalMarker);
-			        modalMap.setDraggable(false);  
-			        setTimeout(function(){ modalMap.relayout();  modalMap.setCenter(modalCoords), modalMap.setLevel(3);}, 100);
+			        modalMap.setDraggable(false);
+			        modalMap.setZoomable(false);
+			        setTimeout(function(){ modalMap.relayout();  modalMap.setCenter(modalCoords), modalMap.setLevel(4);}, 100);
 			    } // if (status === kakao.maps.services.Status.OK)
 			    	
 			}); // modalGeocoder.addressSearch(driverAddr, function(result, status) {})

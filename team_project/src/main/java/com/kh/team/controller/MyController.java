@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.team.service.PointService;
 import com.kh.team.service.PointServiceImpl;
@@ -53,4 +57,12 @@ public class MyController {
 		return "my/registerDriver";
 	}
 	
+	// 운전자등록폼 처리
+	@RequestMapping(value = "/submitFile", method = RequestMethod.POST)
+	public String submitLicenseFile(MultipartFile driverLicense) throws Exception{
+//		String originalFileName = driverLicense.getOriginalFilename();
+		System.out.println(driverLicense);
+//		System.out.println("originalFileName:" + originalFileName);
+		return "redirect:/";
+	}
 }

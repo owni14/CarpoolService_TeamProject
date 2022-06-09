@@ -22,6 +22,7 @@ public class FileUploadHelper {
 		}
 		return saveFilename;
 	}
+	
 	public static boolean deleteFile(String filename) {
 		File f= new File(filename);
 		if(f.exists()) {
@@ -30,6 +31,7 @@ public class FileUploadHelper {
 		}
 		return false;
 	}
+	
 	//이벤트 파일 비교
 	public static List<String> eventFilnameExtraction(String event_content,String serverIp){
 		String[] arrSplitStr=event_content.split("<img");

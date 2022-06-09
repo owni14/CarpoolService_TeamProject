@@ -269,4 +269,10 @@ public class AdminController {
 		return data;
 
 	}
+	@RequestMapping(value = "/event_insertForm", method = RequestMethod.GET)
+	
+	public String eventInsertForm(){
+		return "admin/eventInsertForm";
+
+	}
 }

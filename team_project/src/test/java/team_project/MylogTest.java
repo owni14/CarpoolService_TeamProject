@@ -30,7 +30,7 @@ public class MylogTest {
 		@Test
 		public void insertPassenger() {
 			for (int i = 1; i < 10; i++) {
-				PassengerVo passengerVo = new PassengerVo(i, "user01" + i + "@gmail.com", "울산 북구 달천로 50", "7:45", i);
+				PassengerVo passengerVo = new PassengerVo(i+10, "hong@naver.com", "울산 북구 달천로 50", "7:4"+ i, 1);
 				mylogDao.insertPassenger(passengerVo);
 			}
 		}

@@ -21,12 +21,12 @@
 	
 	<select id="mylogListById" resultType="Map">
 		select * from 
-		    (select rownum rnum, a.* from
-		        (select d.*, p.*
+		   (select rownum rnum, a.* from
+		        (select d.driver_seq, d.m_id driver_id, d.driver_depart_location, d.driver_is_smoke, d.driver_comment, d.driver_depart_time, p.passenger_seq, p.m_id passenger_id ,p.passenger_depart_location ,p.passenger_depart_time
 		        from driver d, passenger p
 		        where d.driver_seq = p.driver_seq
 		        and p.m_id = #{m_id}
-		        order by passenger_depart_time desc) a)
+		        order by p.passenger_depart_time desc) a)
 		where rnum between #{startRow} and #{endRow}
 	</select>
 </mapper>

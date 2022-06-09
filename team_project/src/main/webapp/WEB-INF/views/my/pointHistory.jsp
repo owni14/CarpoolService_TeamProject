@@ -45,6 +45,9 @@ $(document).ready(function() {
 					<a class="nav-link" href="/my/boardedHistory">탑승 내역</a>
 				</li>
 				<li class="nav-item">
+					<a class="nav-link" href="/my/driveHistory">운전 내역</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link active" href="#">포인트 내역</a>
 				</li>
 			</ul>

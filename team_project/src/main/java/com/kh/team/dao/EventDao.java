@@ -18,4 +18,5 @@ public interface EventDao {
 	public List<EventVo> getEventMainList(PagingDto pagingDto);
 	public void updateEventFinish(int event_seq);
 	public String getContent(int event_seq); 
+	
 }

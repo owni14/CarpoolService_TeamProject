@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
@@ -279,24 +280,30 @@ public class AdminController {
 
 	}
 	@RequestMapping(value = "/eventInsertRun", method = RequestMethod.POST)
-	public String insertRun(HttpServletRequest request, HttpServletResponse response,
-			HttpSession session,EventVo eventVo) {
+	public String insertRun(HttpSession session,EventVo eventVo,RedirectAttributes rttr) {
 		session.removeAttribute("event_seq");
+		
 		System.out.println("어드민 컨트롤 insertRun eventVo"+eventVo);
 		List<String> insertImgList=FileUploadHelper.eventFilnameExtraction(eventVo.getEvent_content(), SERVERIP);
 		System.out.println("어드민 컨트롤 insertRun insertImgList"+insertImgList);
-		//eventService.insertEvent(eventVo);
+		if(insertImgList.size()>0) {
+			eventVo.setEvent_img(insertImgList.get(0));
+		}
 		for(String sourceFileStr:insertImgList ) {
 			String[] tempPathStrs=sourceFileStr.split("tmpImages");
+			//정상적인 저장
 			if(tempPathStrs.length==2) {
 				String destFileStr=tempPathStrs[0]+"event_seq!!"+tempPathStrs[1];
 				System.out.println("어드민 컨트롤 insertRun destFileStr"+destFileStr);
-				boolean copy_result=FileUploadHelper.copyEventFiles(destFileStr,sourceFileStr);
+				FileUploadHelper.copyEventFiles(destFileStr,sourceFileStr);
+				
 			}
 			else {
 				System.out.println("잘못된 저장형식");
 			}
 		}
-		return "redirect:/admin/event_insertForm";
+		boolean insert_result=eventService.insertEvent(eventVo);
+		rttr.addFlashAttribute("insert_result",String.valueOf(insert_result));
+		return "redirect:/admin/event";
 	}
 }

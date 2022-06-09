@@ -413,7 +413,9 @@ var nav = $('.fixed-button');
                                          <li class="more-details">
                                             <a href="/admin/event_insertForm"><i class="icofont icofont-plus-square"></i> &nbsp; 이벤트 추가하기</a>
                                         </li>
-                                         
+                                         <li class="more-details">
+                                            <a href="/admin/event"><i class="icofont icofont-plus-square"></i> &nbsp; 이벤트 추가하기</a>
+                                        </li>
                                   
                                       
                                             </ul>

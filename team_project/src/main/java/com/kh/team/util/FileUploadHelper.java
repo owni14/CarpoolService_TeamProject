@@ -69,7 +69,7 @@ public class FileUploadHelper {
 	}
 	
 	// 파일 저장 디렉토리 획득
-	public static String getEventFileSaveFath(String serverip) {
+	public static String getFileSaveFath(String serverip) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 		String today= formatter.format(new java.util.Date());
 		String year=today.substring(0,4);

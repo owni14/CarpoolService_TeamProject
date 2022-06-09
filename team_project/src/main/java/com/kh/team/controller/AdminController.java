@@ -162,20 +162,21 @@ public class AdminController {
 			else if(contentSize <=0 && dbContentSize <=0) {
 				//content와 db에 파일이 없다 폴더에서 삭제해야함
 				String dirPathTmp=FileUploadHelper.getFileSaveFath(SERVERIP);
-				dirPathTmp +="event_seq!!"+eventVo.getEvent_seq();
-				FileUploadHelper.deleteFileS(dirPathTmp);
+				dirPathTmp +="event_seq!!";
+				fileUpdate_result=FileUploadHelper.deleteFileS(dirPathTmp);
 			}
 		}
 		if(dbUpdate_result && fileUpdate_result ) {
-			return "true";
+			return "dbUP&FileDEl";
 		}
-		return "false";
+		return "dbUP";
 	}
 	
 	@RequestMapping(value="/event_filesAttach", method= RequestMethod.POST)
 	public void eventFiles(HttpServletRequest request, HttpServletResponse response,HttpSession session ) {
 		System.out.println(request.getHeader("file-name"));
 		Object objEventSeq=session.getAttribute("event_seq");
+		System.out.println("eventFiles attach session event_seq"+objEventSeq);
 		try {
 			 //파일정보
 			 String sFileInfo = "";
@@ -216,7 +217,7 @@ public class AdminController {
 				 //수정폼 접근
 				 else {
 					 
-					 filePath=FileUploadHelper.getFileSaveFath(SERVERIP)+"event_seq!!"+(int)objEventSeq+"/";
+					 filePath=FileUploadHelper.getFileSaveFath(SERVERIP)+"event_seq!!"+"/";
 				 }	 
 			  
 			
@@ -278,8 +279,24 @@ public class AdminController {
 
 	}
 	@RequestMapping(value = "/eventInsertRun", method = RequestMethod.POST)
-	public String insertRun(EventVo eventVo) {
+	public String insertRun(HttpServletRequest request, HttpServletResponse response,
+			HttpSession session,EventVo eventVo) {
+		session.removeAttribute("event_seq");
 		System.out.println("어드민 컨트롤 insertRun eventVo"+eventVo);
+		List<String> insertImgList=FileUploadHelper.eventFilnameExtraction(eventVo.getEvent_content(), SERVERIP);
+		System.out.println("어드민 컨트롤 insertRun insertImgList"+insertImgList);
+		//eventService.insertEvent(eventVo);
+		for(String sourceFileStr:insertImgList ) {
+			String[] tempPathStrs=sourceFileStr.split("tmpImages");
+			if(tempPathStrs.length==2) {
+				String destFileStr=tempPathStrs[0]+"event_seq!!"+tempPathStrs[1];
+				System.out.println("어드민 컨트롤 insertRun destFileStr"+destFileStr);
+				boolean copy_result=FileUploadHelper.copyEventFiles(destFileStr,sourceFileStr);
+			}
+			else {
+				System.out.println("잘못된 저장형식");
+			}
+		}
 		return "redirect:/admin/event_insertForm";
 	}
 }

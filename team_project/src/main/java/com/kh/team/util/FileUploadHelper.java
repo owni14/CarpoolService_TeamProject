@@ -1,12 +1,21 @@
 package com.kh.team.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.util.FileCopyUtils;
 
 public class FileUploadHelper {
@@ -36,18 +45,22 @@ public class FileUploadHelper {
 	}
 	
 	//파일 리스트에서 파일 다지우기
-	public static void deleteFileS(String fileDirPath) {
+	public static boolean deleteFileS(String fileDirPath) {
 		System.out.println("fileDirPath"+fileDirPath);
 		File f= new File(fileDirPath);
 		if(f.exists()) {
 			String[] arrfiles=f.list();
-			for(String strFile:arrfiles) {
-//				System.out.println("deleteFileS"+strFile);
-				File delFile=new File(fileDirPath+"/"+strFile);
-				delFile.delete();
+			if(arrfiles.length>0) {
+				for(String strFile:arrfiles) {
+//					System.out.println("deleteFileS"+strFile);
+					File delFile=new File(fileDirPath+"/"+strFile);
+					delFile.delete();
+				}
+				return true;
 			}
+			
 		}
-		
+		return false;
 		}
 	
 	//이벤트 파일 비교
@@ -80,4 +93,33 @@ public class FileUploadHelper {
 		return filePath;
 	}
 	
+	public static boolean copyEventFiles(String targetFileName,String soureFileName) {
+		 InputStream is;
+		 OutputStream os;
+		 File targetFile=new File(soureFileName);
+		try {
+			is = new FileInputStream(targetFile);
+			
+			os=new FileOutputStream(targetFileName);
+			 int numRead;
+//			 System.out.println("targetFile.length() "+targetFile.length());
+			 byte b[] = new byte[(int) targetFile.length()];
+			 System.out.println(b.length);
+			 while((numRead = is.read(b,0,b.length)) != -1){
+//				 System.out.println("count---");
+			 	os.write(b,0,numRead);
+			 }
+			 if(is != null) {
+			 	is.close();
+			 }
+			 os.flush();
+			 os.close();
+			 return true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		return false;
+	}
 }

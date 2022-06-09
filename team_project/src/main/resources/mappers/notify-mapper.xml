@@ -31,9 +31,19 @@
         ]]>
 	</select>
 	
+	<select id="cNotifyList" resultType="BlackListVo">
+		select * from blacklist
+		where black_is_processed = 'C'
+	</select>
+	
 	<select id="notifyCount" resultType="int">
 		select count(*) from blacklist
 		where black_is_processed = 'N'
+	</select>
+	
+	<select id="cNotifyCount" resultType="int">
+		select count(*) from blacklist
+		where black_is_processed = 'C'
 	</select>
 	
 	<select id="totalNotifyCount" resultType="int">

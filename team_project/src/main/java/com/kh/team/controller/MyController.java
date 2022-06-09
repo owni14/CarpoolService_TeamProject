@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
 import com.kh.team.util.FileUploadHelper;
+import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -32,13 +33,29 @@ public class MyController {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
 		pagingDto.setPage(pagingDto.getPage());
-		List<Map<String, Object>> mylogList = mylogService.mylogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
-		System.out.println("myLogList : " + mylogList);
-		session.setAttribute("mylogList", mylogList);
+		List<Map<String, Object>> passengerlogList = mylogService.passengerlogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
+//		System.out.println("myLogList : " + mylogList);
+		session.setAttribute("passengerlogList", passengerlogList);
 		return "my/boardedHistory";
 	}
 	
-	// 탑승 내역 페이지로 이동
+	
+	// 운전내역 페이지로 이동
+	@RequestMapping(value = "/driveHistory", method = RequestMethod.GET)
+	public String driveHistroy(HttpSession session, PagingDto pagingDto) {
+		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
+		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
+		pagingDto.setPage(pagingDto.getPage());
+		List<DriverVo> driverlogList = mylogService.driverlogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
+		List<Map<String, Object>> driver_passengerlogList = mylogService.driver_passengerlogListById(loginVo.getM_id());
+//		System.out.println("myLogList : " + mylogList);
+		session.setAttribute("driverlogList", driverlogList);
+		session.setAttribute("driver_passengerlogList", driver_passengerlogList);
+		return "my/driveHistroy";
+	}
+		
+	
+	// 포인트 페이지로 이동
 	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
 	public String pointHistory(HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
@@ -50,11 +67,6 @@ public class MyController {
 		return "my/pointHistory";
 	}
 	
-	// 충전하기 페이지로 이동
-	@RequestMapping(value = "/purchasePoint", method = RequestMethod.GET)
-	public String purchasePoint() {
-		return "my/purchasePoint";
-	}
 	
 	// 운전자 등록 페이지로 이동
 	@RequestMapping(value = "/registerDriver", method = RequestMethod.GET)

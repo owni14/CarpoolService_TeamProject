@@ -20,7 +20,7 @@ public class MylogTest {
 	// 테스트용 드라이버 로그 생성
 	@Test
 	public void insertDriver () {
-		for (int i = 1; i < 10; i++) {
+		for (int i = 24; i < 51; i++) {
 			DriverVo driverVo = new DriverVo(i, "user0" + i + "@gmail.com", "울산 북구 아진로 75", "N", "담배 거절", "07:30");
 			mylogDao.insertDriver(driverVo);
 		}

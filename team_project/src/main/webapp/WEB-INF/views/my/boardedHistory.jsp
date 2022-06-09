@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <%@ include file="/WEB-INF/views/include/my_header.jsp"%>
-${mylogList}
+
 <script>
 $(document).ready(function() {
 	var frmPaging = $("#frmPaging");
@@ -40,6 +40,9 @@ $(document).ready(function() {
 					<a class="nav-link active" href="#">탑승 내역</a>
 				</li>
 				<li class="nav-item">
+					<a class="nav-link" href="/my/driveHistory">운전 내역</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link" href="/my/pointHistory">포인트 내역</a>
 				</li>
 			</ul>
@@ -71,18 +74,18 @@ $(document).ready(function() {
 				</tr>
 				<tr>
 					<th>#</th>
-					<th>운전자</th>
+					<th>운전자 아이디</th>
 					<th style="width: 600px;">탑승 위치</th>
 					<th>탑승 시간</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="pointVo" items="" >
+				<c:forEach var="mylogVo" items="${mylogList}" >
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>${mylogVo.PASSENGER_SEQ}</td>
+					<td>${mylogVo.DRIVER_ID}</td>
+					<td>${mylogVo.PASSENGER_DEPART_LOCATION}</td>
+					<td>${mylogVo.PASSENGER_DEPART_TIME}</td>
 				</tr>
 				</c:forEach>
 			</tbody>

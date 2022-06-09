@@ -13,7 +13,7 @@ $(document).ready(function() {
     };  
 	
 	// 지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	var map = new kakao.maps.Map(mapContainer, mapOption);
 	
 	// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
 	var mapTypeControl = new kakao.maps.MapTypeControl();
@@ -35,30 +35,63 @@ $(document).ready(function() {
 		$.each(rData, function() {
 			var that = this;
 			var loginId = "${loginVo.m_id}";
+			
+			// 지도에서 현재 탑승하려는 인원의 위치를 따로 나타내기 위해 if문 사용 
 			if (this.M_ID == loginId) {
+				// 최초의 탑승 위치 표시
+				$("#boardLoct").val(this.M_ADDRESS);
+				
+// 				console.log(this.M_ADDRESS);
 				// 주소로 좌표를 검색합니다
 				geocoder.addressSearch(this.DRIVER_DEPART_LOCATION, function(result, status) {
-			
+				
 				    // 정상적으로 검색이 완료됐으면 
 				     if (status === kakao.maps.services.Status.OK) {
 			
 				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 				        
 				        // 결과값으로 받은 위치를 마커로 표시합니다
-				        var marker = new kakao.maps.Marker({
+				        var myMarker = new kakao.maps.Marker({
 				            map: map,
 				            position: coords
 				        });
 				
 				        // 인포윈도우로 장소에 대한 설명을 표시합니다
-				        var infowindow = new kakao.maps.InfoWindow({
+				        var rvbmInfowindow = new kakao.maps.InfoWindow({
 				            content: "<div style='width:150px;text-align:center;padding:2px 0;'>내 위치</div>"
 				        });
-				        infowindow.open(map, marker);
+				        rvbmInfowindow.open(map, myMarker);
 			
 				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 				        map.setCenter(coords);
 				    } // if (status === kakao.maps.services.Status.OK)
+				    
+				    // 지도 클릭 시 발생하는 이벤트
+				    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+				    	
+				    	// 기존에 클릭되어 있던 인포윈도우 삭제
+				    	rvbmInfowindow.close();
+				    	
+					    // 클릭한 위도, 경도 정보를 가져옵니다 
+					    var latlng = mouseEvent.latLng;
+					    // 마커 위치를 클릭한 위치로 옮깁니다
+					    myMarker.setPosition(latlng);
+					    
+					 	// 인포윈도우로 장소에 대한 설명을 표시합니다
+				        var currentInfowindow = new kakao.maps.InfoWindow({
+				            content: "<div style='width:150px;text-align:center;padding:2px 0;'>내 위치</div>"
+				        });
+				        rvbmInfowindow = currentInfowindow;
+				        currentInfowindow.open(map, myMarker);
+				        
+				        // 지도에 클릭할때 마다 탑승위치 텍스트가 변경
+				        searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+				            if (status === kakao.maps.services.Status.OK) {
+				            	$("#boardLoct").val(result[0].road_address.address_name);
+				            }   
+				        }); // searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {})
+				        
+					});	// kakao.maps.event.addListener(map, 'click', function(mouseEvent) {})
 				    	
 				}); // geocoder.addressSearch(this.m_address, function(result, status){})
 			} else {
@@ -75,27 +108,24 @@ $(document).ready(function() {
 				            map: map,
 				            position: coords
 				        });
-				
+				        
 				        // 인포윈도우로 장소에 대한 설명을 표시합니다
 				        var infowindow = new kakao.maps.InfoWindow({
 				            content: "<div style='width:150px;text-align:center;padding:2px 0;'>" + that.M_NAME + "</div>"
 				        });
 				        infowindow.open(map, marker);
 			
-				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-				        map.setCenter(coords);
 				    } // if (status === kakao.maps.services.Status.OK)
 				    	
 				}); // geocoder.addressSearch(this.m_address, function(result, status){})
 			}
-			
 			
 			var tr = $("#tblDriverClone  tr").clone();
 			var tds = tr.find("td");
 			tds.eq(0).text(count++);
 			tds.eq(1).text(this.M_NAME);
 			tds.eq(2).text(this.M_DEPT);
-			tds.eq(3).text(this.M_ADDRESS);
+			tds.eq(3).text(this.DRIVER_DEPART_LOCATION);
 			tds.find(".btnBoard").attr("data-m_id", this.M_ID);
 			$("#tblDriver tbody").append(tr);
 			
@@ -103,7 +133,11 @@ $(document).ready(function() {
 		
 	}); // $.get(url, function(rData) {})
 	
-	 function showModalMap(driverName, driverAddr, driverDept) {
+	function searchDetailAddrFromCoords(coords, callback) {
+        geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+    }
+	
+	 function showModalMap(driverName, driverAddr, driverDept, mBoardLoct) {
 		 
 		 /* 
 		 console.log("driverName:" + driverName);
@@ -114,6 +148,7 @@ $(document).ready(function() {
 		  $("#driverName").text(driverName);
 		  $("#driverDept").text(driverDept);
 		  $("#driverLoct").text(driverAddr);
+		  $("#mBoardLoct").text(mBoardLoct);
 		  var modalMapContainer = document.getElementById('mapInModal') // 지도를 표시할 div
 			 modalMapOption = {
 				    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -160,17 +195,18 @@ $(document).ready(function() {
 		 
 		 // 멤버 아이디 가져옵니다.
 		 var m_id = $(this).attr("data-m_id");
-		 
 		 var url = "/board/driverInfo?m_id=" + m_id;
+		 
+		 var mBoardLoct = $("#boardLoct").val();
 		 
 		 // 비동기형식으로 데이터 보내고 받아와서 showModalMap함수 실행
 		 $.get(url, function(rData) {
-			 showModalMap(rData.m_name, rData.m_address, rData.m_dept);
+			 showModalMap(rData.m_name, rData.m_address, rData.m_dept, mBoardLoct);
 		 });
 		 
 	 }); //  $("#tblDriver").on("click", ".btnBoard", function() {})
 	 
-	 // 모달창에서 버튼 클릭
+	 // 모달창에서 버튼 클릭 (작업해야함)
 	 $("#btnApply").click(function() {
 		 console.log("clicked");
 	 });
@@ -202,6 +238,9 @@ $(document).ready(function() {
 					<div style="font-weight: bold; "> 이름 : <span id="driverName"></span></div> 
 					<div style="font-weight: bold; "> 부서 : <span id="driverDept"></span></div> 
 					<div style="font-weight: bold; "> 출발 위치 : <span id="driverLoct"></span></div> 
+					<div style="font-weight: bold; "> 내 위치 : <span id="mBoardLoct"></span></div>
+					<hr>
+					<div style="font-weight: bold; text-align: center; color: green;"> 운전자 위치 </div> 
 					<div id="mapInModal" style="height: 300px; width: 100%;"></div>
 				</div>
 				<div class="modal-footer">
@@ -223,9 +262,9 @@ $(document).ready(function() {
 	<div class="col-md-8">
 		<form role="form">
 			<div class="form-group" style="margin-bottom: 10px;">
-				<h3 style="text-align: center">운전자 위치를 확인해주세요</h3>
+				<h3 style="text-align: center">운전자 위치를 확인하시고, 탑승할 위치를 클릭해주세요.</h3>
 				<label for="startLocation"> 탑승 위치 </label> 
-				<input type="text" class="form-control" id="boardLoct" name="startLocation"/>
+				<input type="text" class="form-control" id="boardLoct" name="boardLoct" readonly="readonly"/>
 			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="startTime"> 탑승 시간 </label> 
@@ -270,7 +309,7 @@ $(document).ready(function() {
 						<th>#</th>
 						<th>운전자</th>
 						<th>부서</th>
-						<th>주소</th>
+						<th>출발위치</th>
 						<th>탑승신청</th>
 					</tr>
 				</thead>

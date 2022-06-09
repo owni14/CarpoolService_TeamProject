@@ -40,8 +40,8 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> getDriverList() {
-		List<Map<String, Object>> driverList = sqlSession.selectList(NAMESPACE + "getDriverList");
+	public List<Map<String, Object>> getDriverList(String m_company) {
+		List<Map<String, Object>> driverList = sqlSession.selectList(NAMESPACE + "getDriverList", m_company);
 		return driverList;
 	}
 

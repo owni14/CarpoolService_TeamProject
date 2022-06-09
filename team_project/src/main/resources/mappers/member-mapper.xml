@@ -27,9 +27,10 @@
 	</select>
 	
 	<select id="getDriverList" resultType="map">
-		select m.m_id, m.m_name, m.m_dept, d.driver_depart_location, d.driver_depart_time 
+		select m.m_id, m.m_address, m.m_company, m.m_name, m.m_dept, d.driver_depart_location, d.driver_depart_time 
 		from driver d, member m
 		where d.m_id = m.m_id
+		and m.m_company = #{m_company}
 	</select>
 	
 	<select id="adminGetCount" resultType="int">

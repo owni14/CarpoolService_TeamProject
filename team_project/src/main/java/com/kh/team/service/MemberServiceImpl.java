@@ -34,8 +34,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getDriverList() {
-		List<Map<String, Object>> driverList = memberDao.getDriverList();
+	public List<Map<String, Object>> getDriverList(String m_company) {
+		List<Map<String, Object>> driverList = memberDao.getDriverList(m_company);
 		return driverList;
 	}
 

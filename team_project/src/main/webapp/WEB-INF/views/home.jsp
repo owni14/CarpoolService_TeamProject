@@ -2,6 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
+<script>
+$(document).ready(function() {
+	var isExistenceFile = "${isExistence}";
+	console.log(isExistenceFile);
+	if (isExistenceFile == "true") {
+		alert("이미 등록된 면허증입니다.");
+	}
+});
+</script>
 
 <!-- Start Categories of The Month -->
 	<section class="container">

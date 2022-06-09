@@ -41,9 +41,9 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<MemberVo> getMemberList() {
-		List<MemberVo> memberList = sqlSession.selectList(NAMESPACE + "getMemberList");
-		return memberList;
+	public List<Map<String, Object>> getDriverList(String m_company) {
+		List<Map<String, Object>> driverList = sqlSession.selectList(NAMESPACE + "getDriverList", m_company);
+		return driverList;
 	}
 
 	@Override
@@ -68,7 +68,10 @@ public class MemberDaoImpl implements MemberDao {
 	// 운전자 등록을 위한 메서드
 	@Override
 	public boolean insertDriverLicense(String m_id, String ad_license_img) {
-		int result = sqlSession.insert(NAMESPACE + "insertDriverLicense", m_id);
+		Map<String, String> map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("ad_license_img", ad_license_img);
+		int result = sqlSession.insert(NAMESPACE + "insertDriverLicense", map);
 		if (result > 0) {
 			return true;
 		}

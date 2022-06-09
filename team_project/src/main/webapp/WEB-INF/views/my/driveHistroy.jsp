@@ -3,7 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <%@ include file="/WEB-INF/views/include/my_header.jsp"%>
+<style>
+tr.tr_table {
+	cursor: pointer;
+}
 
+tr.tr_table:hover {
+	background-color: aliceblue;
+}
+</style>
 <script>
 $(document).ready(function() {
 	var frmPaging = $("#frmPaging");
@@ -25,22 +33,91 @@ $(document).ready(function() {
 		frmPaging.attr("action", "/my/boardedHistory");
 		frmPaging.attr("method", "get");
 		frmPaging.submit();
-		
 	});
+	
+	$(".tr_table").click(function() {
+		$("#modal-container-678121").modal('show');
+		var driver_seq = $(this).attr("data-seq");
+		var url = "/my/driver_passengerlog";
+		var sData = {
+				"driver_seq" : driver_seq
+		};
+		$.post(url, sData, function(rData) {
+			console.log(rData);
+			$.each(rData, function() {
+				var tr = $("#table_clone tr").clone();
+				var tds = tr.find("td");
+				tds.eq(0).text(this.m_id);
+				tds.eq(1).text(this.passenger_depart_location);
+				tds.eq(2).text(this.passenger_depart_time);
+				$("#modal_body").append(tr);
+			});
+		});
+	});
+	
+	$("#modalClose").click(function() {
+		$("#modal-container-678121").modal('hide');
+	})
 });
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp"%>
 <div class="row">
+
+	<!-- modal start -->
+	<div class="col-md-12">
+		
+		<div class="modal fade" id="modal-container-678121" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">
+							탑승자 상세 정보
+						</h5>
+					</div>
+					<div class="modal-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>아이디</th>
+									<th>탑승 위치</th>
+									<th>탑승 시간</th>
+								</tr>
+							</thead>
+							<tbody id="modal_body">
+								
+							</tbody>
+						</table>
+						<table style="display:none;" id="table_clone">
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>				
+							</tr>
+						</table>
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="modalClose" class="btn btn-secondary" data-dismiss="modal">
+							닫기
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<!-- modal end -->
+	
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
 		<div class="tabbable" id="tabs-391804">
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a class="nav-link active" href="#">탑승 내역</a>
+					<a class="nav-link" href="/my/boardedHistory">탑승 내역</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/my/driveHistory">운전 내역</a>
+					<a class="nav-link active" href="#">운전 내역</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/my/pointHistory">포인트 내역</a>
@@ -74,18 +151,20 @@ $(document).ready(function() {
 				</tr>
 				<tr>
 					<th>#</th>
-					<th>운전자 아이디</th>
-					<th style="width: 600px;">탑승 위치</th>
-					<th>탑승 시간</th>
+					<th>출발 날짜/시간</th>
+					<th style="width: 600px;">출발 위치</th>
+					<th>요구사항</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="passengerlogVo" items="${passengerlogList}" >
-				<tr>
-					<td>${passengerlogVo.PASSENGER_SEQ}</td>
-					<td>${passengerlogVo.DRIVER_ID}</td>
-					<td>${passengerlogVo.PASSENGER_DEPART_LOCATION}</td>
-					<td>${passengerlogVo.PASSENGER_DEPART_TIME}</td>
+				<c:forEach var="driverVo" items="${driverlogList}" >
+				<tr class="tr_table" data-seq="${driverVo.driver_seq}"> 
+					
+					<td>${driverVo.driver_seq}</td>
+					<td>${driverVo.driver_depart_time}</td>
+					<td>${driverVo.driver_depart_location}</td>
+					<td>${driverVo.driver_comment}</td>
+					
 				</tr>
 				</c:forEach>
 			</tbody>
@@ -130,5 +209,4 @@ $(document).ready(function() {
 	<div class="col-md-2">
 	</div>
 </div>
-
 <%@ include file="/WEB-INF/views/include/footer.jsp"%>

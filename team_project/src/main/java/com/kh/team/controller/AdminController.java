@@ -7,11 +7,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.sql.Array;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,8 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
-
 
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
@@ -54,7 +48,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
-	public String eventList(Model model) {
+	public String eventList(Model model,HttpSession session) {
+		session.removeAttribute("event_seq");
 		List<EventVo> eventList = eventService.getEventList();
 		Date today=new Date(System.currentTimeMillis());
 		for(EventVo eventVo:eventList) {
@@ -187,25 +182,22 @@ public class AdminController {
 			}
 			else if(contentSize <=0 && dbContentSize <=0) {
 				//content와 db에 파일이 없다 폴더에서 삭제해야함
-				String dirPathTmp=FileUploadHelper.getEventFileSaveFath(SERVERIP);
-				dirPathTmp +="event_seq!!"+eventVo.getEvent_seq();
-				FileUploadHelper.deleteFileS(dirPathTmp);
+				String dirPathTmp=FileUploadHelper.getFileSaveFath(SERVERIP);
+				dirPathTmp +="event_seq!!";
+				fileUpdate_result=FileUploadHelper.deleteFileS(dirPathTmp);
 			}
 		}
 		if(dbUpdate_result && fileUpdate_result ) {
-			return "true";
+			return "dbUP&FileDEl";
 		}
-		return "false";
+		return "dbUP";
 	}
 	
 	@RequestMapping(value="/event_filesAttach", method= RequestMethod.POST)
 	public void eventFiles(HttpServletRequest request, HttpServletResponse response,HttpSession session ) {
 		System.out.println(request.getHeader("file-name"));
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-		String today= formatter.format(new java.util.Date());
-		String year=today.substring(0,4);
-		String month=today.substring(4,6);
-		String day=today.substring(6);
+		Object objEventSeq=session.getAttribute("event_seq");
+		System.out.println("eventFiles attach session event_seq"+objEventSeq);
 		try {
 			 //파일정보
 			 String sFileInfo = "";
@@ -238,7 +230,18 @@ public class AdminController {
 			 //파일 기본경로
 //			 String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 			 //파일 기본경로 _ 상세경로
-			 String filePath = "//192.168.0.232/ServerFolder/"+year+"/"+month+"/"+day+"/"+"event_seq!!"+session.getAttribute("event_seq")+"/";
+				 String filePath=null;
+				 //입력폼시 세션 값이 null
+				 if(objEventSeq ==null) {
+					 filePath=FileUploadHelper.getFileSaveFath(SERVERIP)+"tmpImages/";
+				 }
+				 //수정폼 접근
+				 else {
+					 
+					 filePath=FileUploadHelper.getFileSaveFath(SERVERIP)+"event_seq!!"+"/";
+				 }	 
+			  
+			
 			 File file = new File(filePath);
 			 if(!file.exists()) {
 			 	file.mkdirs();
@@ -295,5 +298,26 @@ public class AdminController {
 	public String eventInsertForm(){
 		return "admin/eventInsertForm";
 
+	}
+	@RequestMapping(value = "/eventInsertRun", method = RequestMethod.POST)
+	public String insertRun(HttpServletRequest request, HttpServletResponse response,
+			HttpSession session,EventVo eventVo) {
+		session.removeAttribute("event_seq");
+		System.out.println("어드민 컨트롤 insertRun eventVo"+eventVo);
+		List<String> insertImgList=FileUploadHelper.eventFilnameExtraction(eventVo.getEvent_content(), SERVERIP);
+		System.out.println("어드민 컨트롤 insertRun insertImgList"+insertImgList);
+		//eventService.insertEvent(eventVo);
+		for(String sourceFileStr:insertImgList ) {
+			String[] tempPathStrs=sourceFileStr.split("tmpImages");
+			if(tempPathStrs.length==2) {
+				String destFileStr=tempPathStrs[0]+"event_seq!!"+tempPathStrs[1];
+				System.out.println("어드민 컨트롤 insertRun destFileStr"+destFileStr);
+				boolean copy_result=FileUploadHelper.copyEventFiles(destFileStr,sourceFileStr);
+			}
+			else {
+				System.out.println("잘못된 저장형식");
+			}
+		}
+		return "redirect:/admin/event_insertForm";
 	}
 }

@@ -26,8 +26,11 @@
 		where rnum between #{startRow} and #{endRow}
 	</select>
 	
-	<select id="getMemberList" resultType="MemberVo">
-		select * from member
+	<select id="getDriverList" resultType="map">
+		select m.m_id, m.m_address, m.m_company, m.m_name, m.m_dept, d.driver_depart_location, d.driver_depart_time 
+		from driver d, member m
+		where d.m_id = m.m_id
+		and m.m_company = #{m_company}
 	</select>
 	
 	<select id="adminGetCount" resultType="int">
@@ -75,8 +78,8 @@
 	</select>
 	
 	<select id="insertDriverLicense">
-		insert into approve_driver(ad_seq, ad_license_img, m_id)
-		value (seq_approve_driver.nextval, #{ad_license_img}, #{m_id})
+		insert into approve_driver (ad_seq, ad_license_img, m_id)
+		values (seq_approve_driver.nextval, #{ad_license_img}, #{m_id})
 	</select>
 	
 </mapper>

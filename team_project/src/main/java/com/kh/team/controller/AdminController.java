@@ -157,7 +157,7 @@ public class AdminController {
 			}
 			else if(contentSize <=0 && dbContentSize <=0) {
 				//content와 db에 파일이 없다 폴더에서 삭제해야함
-				
+//				FileUp
 			}
 		}
 		if(dbUpdate_result && fileUpdate_result ) {
@@ -165,7 +165,7 @@ public class AdminController {
 		}
 		return "false";
 	}
-
+	
 	@RequestMapping(value="/event_filesAttach", method= RequestMethod.POST)
 	public void eventFiles(HttpServletRequest request, HttpServletResponse response,HttpSession session ) {
 		System.out.println(request.getHeader("file-name"));
@@ -258,5 +258,4 @@ public class AdminController {
 		return data;
 
 	}
-	
 }

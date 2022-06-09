@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.springframework.util.FileCopyUtils;
 
 public class FileUploadHelper {
+	// 파일 업로드
 	public static String uploadFile(String uploadPath, String originalFilename, byte[] fileData) {
 		UUID uuid=UUID.randomUUID();
 		String saveFilename= uploadPath+"/"+uuid+"_"+originalFilename;
@@ -66,6 +67,7 @@ public class FileUploadHelper {
 		}
 		return contentFileList;
 	}
+	
 	// 파일 저장 디렉토리 획득
 	public static String getEventFileSaveFath(String serverip) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
@@ -77,4 +79,5 @@ public class FileUploadHelper {
 		"//"+serverip+"/ServerFolder/"+year+"/"+month+"/"+day+"/";
 		return filePath;
 	}
+	
 }

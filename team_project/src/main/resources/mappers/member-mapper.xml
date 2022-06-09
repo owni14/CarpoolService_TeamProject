@@ -68,4 +68,9 @@
 		where m_id = #{m_id}
 	</select>
 	
+	<select id="insertDriverLicense">
+		insert into approve_driver(ad_seq, ad_license_img, m_id)
+		value (seq_approve_driver.nextval, #{ad_license_img}, #{m_id})
+	</select>
+	
 </mapper>

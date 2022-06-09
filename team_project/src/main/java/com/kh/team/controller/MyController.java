@@ -9,16 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
-import com.kh.team.service.PointServiceImpl;
+import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
-import com.kh.team.vo.PointHistoryVo;
 
 @Controller
 @RequestMapping("/my")
@@ -26,14 +23,18 @@ public class MyController {
 	
 	@Autowired
 	private PointService pointService;
+	@Autowired
+	private MylogService mylogService;
 
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
 	public String boardedHistory(HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
-//		System.out.println("loginVo :" + loginVo);
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
 		pagingDto.setPage(pagingDto.getPage());
+		List<Map<String, Object>> mylogList = mylogService.mylogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
+		System.out.println("myLogList : " + mylogList);
+		session.setAttribute("mylogList", mylogList);
 		return "my/boardedHistory";
 	}
 	
@@ -41,7 +42,6 @@ public class MyController {
 	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
 	public String pointHistory(HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
-//		System.out.println("loginVo :" + loginVo);
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
 		pagingDto.setPage(pagingDto.getPage());
 		List<Map<String, Object>> pointList = pointService.getPointListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
@@ -64,10 +64,29 @@ public class MyController {
 	
 	// 운전자등록폼 처리
 	@RequestMapping(value = "/submitFile", method = RequestMethod.POST)
-	public String submitLicenseFile(MultipartFile driverLicense) throws Exception{
-//		String originalFileName = driverLicense.getOriginalFilename();
-		System.out.println(driverLicense);
-//		System.out.println("originalFileName:" + originalFileName);
+	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session) throws Exception{
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
+		String ext = driverLicense.getOriginalFilename();
+		int dot = ext.lastIndexOf(".");
+		
+		// 기본파일 확장자 얻기
+		String imageExt = ext.substring(dot);
+		
+//		System.out.println("imageExtension:" + imageExt);
+		
+		String company = memberVo.getM_company();
+		String name = memberVo.getM_name();
+		byte[] fileData = driverLicense.getBytes();
+		
+		// 파일 경로 및 파일 이름
+		String pathAndFilename = FileUploadHelper.uploadFile("//192.168.0.232/ServerFolder/DriverLicense/"+ company, (name + imageExt), fileData);
+		
+		int slash = pathAndFilename.lastIndexOf("/");
+		
+		// uuid포함 파일 이름
+		String saveFilename = pathAndFilename.substring(slash + 1);
+		
+		System.out.println("MyController, saveFilename:" + saveFilename);
 		return "redirect:/";
 	}
 }

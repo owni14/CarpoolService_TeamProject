@@ -40,12 +40,12 @@ public class PointDaoImpl implements PointDao {
 	@Override
 	public List<Map<String, Object>> getPointListById(String m_id, int startRow, int endRow) {
 		Map<String, Object> map = new HashMap<>();
-		System.out.println("startRow" + startRow);
-		System.out.println("endRow" + endRow);
+//		System.out.println("startRow" + startRow);
+//		System.out.println("endRow" + endRow);
 		map.put("m_id", m_id);
 		map.put("startRow", String.valueOf(startRow));
 		map.put("endRow", String.valueOf(endRow));
-		System.out.println("map : " + map);
+//		System.out.println("map : " + map);
 		List<Map<String, Object>> pointList = sqlSession.selectList(NAMESPACE + "getPointListById",map);
 		return pointList;
 	}

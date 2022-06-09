@@ -64,4 +64,14 @@ public class MemberDaoImpl implements MemberDao {
 		return memberVo;
 	}
 
+	// 운전자 등록을 위한 메서드
+	@Override
+	public boolean insertDriverLicense(String m_id, String ad_license_img) {
+		int result = sqlSession.insert(NAMESPACE + "insertDriverLicense", m_id);
+		if (result > 0) {
+			return true;
+		}
+		return false;
+	}
+
 }

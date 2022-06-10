@@ -105,8 +105,28 @@ where rnum =1
 	
 	<!-- 이벤트 시퀀스로 이벤트 네임과 참가 테이블 조인 -->
 	<select id="getJoinEventData" resultType="map">
-	select e.event_name, ep${event_seq}.*
-from event e, event_participation_event_seq49 ep${event_seq}
+	select m.m_name, e.*, ep${event_seq}.*
+from event e, event_participation_event_seq${event_seq} ep${event_seq}
+,member m
 where e.event_seq=ep${event_seq}.event_seq
+	and m.m_id=ep${event_seq}.m_id
+	order by ep${event_seq}.ep_is_winner desc
+	</select>
+	
+	<select id="selectAllEventList" resultType="int">
+	select event_seq from event order by event_seq desc 
+	</select>
+	<!-- 유저이름 가져오기 -->
+	<select id="" resultType="map">
+	select m.m_name, m.m_id
+from member m, event_participation_event_seq${event_seq} ep${event_seq}
+where m.m_id=ep${event_seq}.m_id
+	
+	</select>
+	
+	<select id="selectEndEventList" resultType="int">
+	select event_seq from event 
+	where event_is_finish= 'Y'
+	order by event_seq desc 
 	</select>
 </mapper>

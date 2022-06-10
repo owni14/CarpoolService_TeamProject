@@ -68,7 +68,9 @@ public class NotifyServiceImpl implements NotifyService{
 	@Transactional
 	@Override
 	public void modifyApprovement(BlackListVo blackListVo) {
-		memberDao.adminupdateBlackScore(blackListVo);
+		if (blackListVo.getBlack_m_id() != null && blackListVo.getBlack_score() != 0) {
+			memberDao.adminupdateBlackScore(blackListVo);
+		}
 		notifyDao.modifyApprovement(blackListVo);
 		
 	}

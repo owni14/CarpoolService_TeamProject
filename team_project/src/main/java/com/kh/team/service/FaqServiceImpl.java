@@ -6,16 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.team.dao.FaqDao;
+import com.kh.team.vo.FaqVo;
 
 @Service
 public class FaqServiceImpl implements FaqService {
 	
 	@Autowired
-	private FaqService faqService;
+	private FaqDao faqDao;
 
 	@Override
-	public List<FaqDao> getFaqList() {
-		List<FaqDao> faqList = faqService.getFaqList();
+	public List<FaqVo> getFaqList() {
+		List<FaqVo> faqList = faqDao.getFaqList();
 		return faqList;
 	}
 }

@@ -33,5 +33,15 @@
 	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
+	<!-- 인터셉터 -->
+	<beans:bean class="com.kh.team.interceptor.AdminInterceptor"  id="adminInterceptor"></beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/**/*"/>
+ 			<exclude-mapping path="/admin/admin_login"/>
+			<beans:ref bean="adminInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

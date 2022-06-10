@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +25,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.team.service.AdminService;
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.NotifyService;
 import com.kh.team.util.FileUploadHelper;
+import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.MemberVo;
@@ -42,11 +45,30 @@ public class AdminController {
 	MemberService memberService;
 	@Autowired
 	NotifyService notifyService;
+	@Autowired
+	AdminService adminService;
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin() {
 		return "admin/home_admin";
 	}
+	
+	@RequestMapping(value="/admin_login", method=RequestMethod.GET)
+	public String adminLogin() {
+		return "admin/admin_login_form";
+	}
+	
+	@RequestMapping(value="/checkAdminLogin", method=RequestMethod.GET)
+	public String checkAdminLogin(AdminVo adminVo,HttpSession session) {
+		boolean result = adminService.checkAdminId(adminVo);
+		if (result == true) {
+			String admin_code = adminVo.getAdmin_code();
+			session.setAttribute("admin_code", admin_code);
+			return "/admin/home";
+		}
+		return "admin/admin_login_form";
+	}
+	
 
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
 	public String eventList(Model model,HttpSession session) {
@@ -335,8 +357,13 @@ public class AdminController {
 		return "redirect:/admin/event";
 	}
 	
-	@RequestMapping(value="/event_winnerForm", method=RequestMethod.GET)
-	public String eventWinnerForm() {
-		return "admin/eventWinnerForm";
+	@RequestMapping(value="/event_participation", method=RequestMethod.GET)
+	public String eventWinnerForm(Model model) {
+		int event_seq=eventService.getMaxNoFinishEventSeq();
+		List<Map<String,Object>> participationList=eventService.getJoinEventData(event_seq);		
+		System.out.println("participationList "+participationList);
+		model.addAttribute("participationList",participationList);
+		return "admin/eventParticipationForm";
+					
 	} 
 }

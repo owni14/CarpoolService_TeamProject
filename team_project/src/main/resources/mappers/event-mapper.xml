@@ -92,4 +92,21 @@
 	where m_id=#{m_id}
 	</update>
 	
+	<select id="getListParticipationByEventSeq" resultType="EventParticipationVo">
+	select * from event_participation_event_seq${event_seq}
+	</select>
+	
+	<select id="getMaxNoFinishEventSeq" resultType="int">
+	select event_seq from
+(select rownum rnum, a.* from 
+(select * from event where event_is_finish ='N' order by event_seq desc ) a)
+where rnum =1
+	</select>
+	
+	<!-- 이벤트 시퀀스로 이벤트 네임과 참가 테이블 조인 -->
+	<select id="getJoinEventData" resultType="map">
+	select e.event_name, ep${event_seq}.*
+from event e, event_participation_event_seq49 ep${event_seq}
+where e.event_seq=ep${event_seq}.event_seq
+	</select>
 </mapper>

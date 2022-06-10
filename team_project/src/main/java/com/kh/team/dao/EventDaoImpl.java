@@ -132,4 +132,26 @@ public class EventDaoImpl implements EventDao{
 		return false;
 	}
 
+	@Override
+	public List<EventParticipationVo> getListParticipationByEventSeq(int event_seq) {
+		Map<String,Object> sqlMap=new HashMap<>();
+		//넘길때 겟터가 있는 걸 넘겨야함
+		sqlMap.put("event_seq",event_seq);
+		List<EventParticipationVo> participationList=sqlSession.selectList(NAMESPACE+"getListParticipationByEventSeq",sqlMap);
+		return participationList;
+	}
+
+	@Override
+	public int getMaxNoFinishEventSeq() {
+		int max_seq=sqlSession.selectOne(NAMESPACE+"getMaxNoFinishEventSeq");
+		return max_seq;
+	}
+
+	@Override
+	public List<Map<String, Object>> getJoinEventData(int event_seq) {
+		Map<String,Object> sqlMap=new HashMap<>();
+		sqlMap.put("event_seq",event_seq);
+		return sqlSession.selectList(NAMESPACE+"getJoinEventData", sqlMap);
+	}
+
 }

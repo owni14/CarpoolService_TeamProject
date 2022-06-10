@@ -2,9 +2,11 @@ package com.kh.team.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.kh.team.vo.EventParticipationVo;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.PagingDto;
 
@@ -28,4 +30,11 @@ public interface EventService {
 	public boolean insertParticipation(String m_id, int event_seq);
 
 	public boolean updateParticipation(String m_id, int event_seq);
+	
+	public List<EventParticipationVo> getListParticipationByEventSeq(int event_seq);
+	
+	public int getMaxNoFinishEventSeq();
+	
+	public List<Map<String, Object>> getJoinEventData(int event_seq);
+	
 }

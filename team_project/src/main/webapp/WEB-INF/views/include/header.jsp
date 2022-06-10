@@ -8,7 +8,7 @@
 <head>
     <title>Zay Shop eCommerce HTML CSS Template</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--     <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
     <link rel="apple-touch-icon" href="/resources/assets/img/apple-icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/img/favicon.ico">
@@ -60,11 +60,17 @@ https://templatemo.com/tm-559-zay-shop
     $(function() {
     	var header = $("#header");
     	
-    	 $(".main_menu").mouseenter(function() {
+    	$(".main_menu").mouseenter(function() {
     		$(".smenu").hide();
     		var a = $(this).attr("id");
-    		header.stop().animate({height:'150px'}, 300);
-    		$("#s"+a).show();
+    		console.log(a);
+    		if (a != "menu_2") {
+		   		header.stop().animate({height:'150px'}, 300);
+		   		$("#s"+a).show();
+    		} else {
+    			$(".smenu").hide();
+    	    	header.stop().animate({height:'90px'}, 300);
+    		}
     	});
     	
     	 header.mouseleave(function() {
@@ -104,13 +110,13 @@ https://templatemo.com/tm-559-zay-shop
 //     	마우스 커서 위치에 따른 좌표 end
 
 //      서브 메뉴 위치 선정 start
-    	for (var v = 1; v < 4; v++) {
+    	for (var v = 1; v < 5; v++) {
     		 var left = $("#a_" + v).offset().left;
     		 $("#smenu_"+v).offset({left: left});
     	}
     	     
    	   	$(window).resize(function(e){
-   	   		for (var v = 1; v < 4; v++) {
+   	   		for (var v = 1; v < 5; v++) {
    	   			var left = $("#a_" + v).offset().left;
 	    		$("#smenu_"+v).offset({left: left});
    	   		}
@@ -146,6 +152,9 @@ https://templatemo.com/tm-559-zay-shop
                         </li>
                         <li class="nav-item main_menu"  id="menu_3">
                             <a class="nav-link" id="a_3" href="/event/now">이벤트 & 혜택</a>
+                        </li>
+                        <li class="nav-item main_menu"  id="menu_4">
+                            <a class="nav-link" id="a_4" href="/customer/faq">고객센터</a>
                         </li>
                     </ul>
                    
@@ -199,14 +208,16 @@ https://templatemo.com/tm-559-zay-shop
 	    	<a class="smenu_a" href="/my/pointHistory">포인트 내역</a>
 	    	<a class="smenu_a" href="/my/registerDriver">운전자 등록</a>
 	    </div>
-	    <div class="smenu" id="smenu_2">
-	    	<a class="smenu_a" href="/serviceInfo/method">예약 방법</a>
-	    	<a class="smenu_a" href="/serviceInfo/describe">포인트</a>
-	    </div>
+	    
 	    <div class="smenu" id="smenu_3">
 	   		<a class="smenu_a" href="/event/now">진행중인 이벤트</a>
 	    	<a class="smenu_a" href="/event/winner">당첨자 발표</a>
 	    	<a class="smenu_a" href="/event/info">등급별 혜택</a>
+	    </div>
+	    <div class="smenu" id="smenu_4">
+	   		<a class="smenu_a" href="/customer/faq">자주 묻는 질문</a>
+	    	<a class="smenu_a" href="/customer/counsel">1:1 문의하기</a>
+	    	<a class="smenu_a" href="/customer/report">신고하기</a>
 	    </div>
 	</nav>
     </header>

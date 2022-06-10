@@ -61,7 +61,8 @@
 		<script src="/resources/admin/assets/js/demo-12.js"></script>
 		
 		<script src="/resources/admin/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-
+		<!-- add fontawesome CDN -->
+		<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 		<!-- chartjs -->
 <!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 <!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.esm.js" integrity="sha512-YM18yiANXJFpbiOZjLzUrK/lNfTiBcwtTLeAntG4B8dJY+NdUDjxfPNGPEMuOdXlT7U/uT+zbIvbQYAEFog+MA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
@@ -442,7 +443,7 @@ var nav = $('.fixed-button');
                                             <a href="/admin/event_insertForm"><i class="icofont icofont-plus-square"></i> &nbsp; 이벤트 추가하기</a>
                                         </li>
                                          <li class="more-details">
-                                            <a href="/admin/event_winnerForm"><i class="icofont icofont-win-trophy"></i> &nbsp; 이벤트 당첨자 관리</a>
+                                            <a href="/admin/event_participation"><i class="icofont icofont-win-trophy"></i> &nbsp; 이벤트 참가자 관리</a>
                                         </li>
                                   
                                       

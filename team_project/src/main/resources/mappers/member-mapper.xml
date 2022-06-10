@@ -26,8 +26,9 @@
 		where rnum between #{startRow} and #{endRow}
 	</select>
 	
+	<!-- Driver List Query -->
 	<select id="getDriverList" resultType="map">
-		select m.m_id, m.m_address, m.m_company, m.m_name, m.m_dept, d.driver_depart_location, d.driver_depart_time 
+		select d.driver_seq, m.m_id, m.m_address, m.m_company, m.m_name, m.m_dept, d.driver_depart_location, d.driver_depart_time 
 		from driver d, member m
 		where d.m_id = m.m_id
 		and m.m_company = #{m_company}
@@ -72,14 +73,22 @@
 		</if>
 	</sql>
 	
-	<select id="getDriverById" resultType="MemberVo">
-		select * from member
-		where m_id = #{m_id}
+	<select id="getDriverById" resultType="map">
+		select m.m_id, m.m_name, m.gender, m.m_dept, d.driver_depart_location, d.driver_depart_time
+		from member m, driver d
+		where m.m_id = d.m_id
+		and m.m_company = #{m_company}
+		and m.m_id = #{m_id}
 	</select>
 	
 	<select id="insertDriverLicense">
 		insert into approve_driver (ad_seq, ad_license_img, m_id)
 		values (seq_approve_driver.nextval, #{ad_license_img}, #{m_id})
 	</select>
+	
+	<insert id="insertPassenger">
+		insert into passenger (passenger_seq, m_id, passenger_depart_location, passenger_depart_time, driver_seq)
+		values (seq_passenger.nextval, #{m_id}, #{boardLoct}, #{boardTime}, #{driver_seq})
+	</insert>
 	
 </mapper>

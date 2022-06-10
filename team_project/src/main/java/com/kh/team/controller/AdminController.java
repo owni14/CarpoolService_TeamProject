@@ -326,6 +326,11 @@ public class AdminController {
 			}
 		}
 		boolean insert_result=eventService.insertEvent(eventVo);
+//		System.out.println("insert후 시퀀스"+eventVo.getEvent_seq());
+		//boolean resultParticipation= eventService.createTableEvnet();
+		eventService.createTableEvnet(eventVo.getEvent_seq());
+		eventService.createSeqParticipation(eventVo.getEvent_seq());
+		System.out.println("시퀀스와 테이블 생성 성공");
 		rttr.addFlashAttribute("insert_result",String.valueOf(insert_result));
 		return "redirect:/admin/event";
 	}

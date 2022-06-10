@@ -8,13 +8,16 @@
 		select * from event order by event_is_finish desc, event_seq desc
 	</select>
 
-	<insert id="insertEvent">
+	<insert id="insertEvent" parameterType="EventVo">
+	<selectKey keyProperty="event_seq" resultType="int" order="BEFORE">
+	select seq_event.nextVal from dual
+	</selectKey>
 		insert into event
 		(event_seq, event_name, 
 		 event_content,event_img,
 		event_max_count,event_point)
 		values
-		(seq_event.nextval, #{event_name}, 
+		(#{event_seq}, #{event_name}, 
 		 #{event_content},#{event_img, jdbcType=VARCHAR},
 		#{event_max_count}, #{event_point})
 	</insert>

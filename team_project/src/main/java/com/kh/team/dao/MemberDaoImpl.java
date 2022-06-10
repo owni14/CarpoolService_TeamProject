@@ -53,10 +53,13 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public MemberVo getDriverById(String m_id) {
-		MemberVo driverInfo = sqlSession.selectOne(NAMESPACE + "getDriverById", m_id);
+	public Map<String, Object> getDriverById(String m_id, String m_company) {
+		Map<String, String> map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("m_company", m_company);
+		Map<String, Object> mapDriverInfo = sqlSession.selectOne(NAMESPACE + "getDriverById", map);
 //		System.out.println("driverInfo:" + driverInfo);
-		return driverInfo;
+		return mapDriverInfo;
 	}
 	
 	@Override
@@ -82,6 +85,17 @@ public class MemberDaoImpl implements MemberDao {
 	public void adminupdateBlackScore(BlackListVo blackListVo) {
 		sqlSession.update(NAMESPACE + "adminupdateBlackScore", blackListVo);
 		
+	}
+
+	// 탑승자 정보를 입력
+	@Override
+	public void insertPassenger(String m_id, String boardLoct, String boardTime, String driver_seq) {
+		Map<String, String> map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("boardLoct", boardLoct);
+		map.put("boardTime", boardTime);
+		map.put("driver_seq", driver_seq);
+		sqlSession.insert(NAMESPACE + "insertPassenger", map);
 	}
 
 }

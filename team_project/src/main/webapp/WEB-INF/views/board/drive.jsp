@@ -89,9 +89,9 @@
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="startTime"> 출발 시간 </label> 
 				<select id="startHour" name="startHour">
-					<option value="6">06:00
-					<option value="7">07:00
-					<option value="8">08:00
+					<option value="6">06
+					<option value="7">07
+					<option value="8">08
 				</select>
 				<select id="startMin" name="startMin">
 					<option value="00">00
@@ -122,7 +122,8 @@
 						<th>동승자</th>
 						<th>부서</th>
 						<th>주소</th>
-						<th>예약확인</th>
+						<th>승인</th>
+						<th>거부</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -131,7 +132,8 @@
 							<td>#</td>
 							<td>#</td>
 							<td>#</td>
-							<td><button class="btn btn-success btn-sm" class="checkResv">예약확인</button></td>
+							<td><button class="btn btn-success btn-sm" class="checkResv">승인</button></td>
+							<td><button class="btn btn-danger btn-sm" class="checkResv">거부</button></td>
 						</tr>	
 				</tbody>
 			</table>

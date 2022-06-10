@@ -442,7 +442,7 @@ var nav = $('.fixed-button');
                                             <a href="/admin/event_insertForm"><i class="icofont icofont-plus-square"></i> &nbsp; 이벤트 추가하기</a>
                                         </li>
                                          <li class="more-details">
-                                            <a href="/admin/event_winnerForm"><i class="icofont icofont-win-trophy"></i> &nbsp; 이벤트 당첨자 관리</a>
+                                            <a href="/admin/event_participation"><i class="icofont icofont-win-trophy"></i> &nbsp; 이벤트 참가자 관리</a>
                                         </li>
                                   
                                       

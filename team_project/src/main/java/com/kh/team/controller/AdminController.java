@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -335,8 +336,13 @@ public class AdminController {
 		return "redirect:/admin/event";
 	}
 	
-	@RequestMapping(value="/event_winnerForm", method=RequestMethod.GET)
-	public String eventWinnerForm() {
-		return "admin/eventWinnerForm";
+	@RequestMapping(value="/event_participation", method=RequestMethod.GET)
+	public String eventWinnerForm(Model model) {
+		int event_seq=eventService.getMaxNoFinishEventSeq();
+		List<Map<String,Object>> participationList=eventService.getJoinEventData(event_seq);		
+		System.out.println("participationList "+participationList);
+		model.addAttribute("participationList",participationList);
+		return "admin/eventParticipationForm";
+					
 	} 
 }

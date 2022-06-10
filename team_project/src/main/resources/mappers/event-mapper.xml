@@ -8,13 +8,16 @@
 		select * from event order by event_is_finish desc, event_seq desc
 	</select>
 
-	<insert id="insertEvent">
+	<insert id="insertEvent" parameterType="EventVo">
+	<selectKey keyProperty="event_seq" resultType="int" order="BEFORE">
+	select seq_event.nextVal from dual
+	</selectKey>
 		insert into event
 		(event_seq, event_name, 
 		 event_content,event_img,
 		event_max_count,event_point)
 		values
-		(seq_event.nextval, #{event_name}, 
+		(#{event_seq}, #{event_name}, 
 		 #{event_content},#{event_img, jdbcType=VARCHAR},
 		#{event_max_count}, #{event_point})
 	</insert>
@@ -89,4 +92,21 @@
 	where m_id=#{m_id}
 	</update>
 	
+	<select id="getListParticipationByEventSeq" resultType="EventParticipationVo">
+	select * from event_participation_event_seq${event_seq}
+	</select>
+	
+	<select id="getMaxNoFinishEventSeq" resultType="int">
+	select event_seq from
+(select rownum rnum, a.* from 
+(select * from event where event_is_finish ='N' order by event_seq desc ) a)
+where rnum =1
+	</select>
+	
+	<!-- 이벤트 시퀀스로 이벤트 네임과 참가 테이블 조인 -->
+	<select id="getJoinEventData" resultType="map">
+	select e.event_name, ep${event_seq}.*
+from event e, event_participation_event_seq49 ep${event_seq}
+where e.event_seq=ep${event_seq}.event_seq
+	</select>
 </mapper>

@@ -1,5 +1,6 @@
 package team_project;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,5 +66,14 @@ public class MemberTest {
 		System.out.println("blackListVo" + blackListVo);
 		memberDao.adminupdateBlackScore(blackListVo);
 	}
+	
+	@Test
+	public void getDriverInfo() {
+		String m_id = "user03@gmail.com";
+		String m_company = "KAKAO";
+		Map<String, Object> mapDriverInfo = memberDao.getDriverById(m_id, m_company);
+		System.out.println("mapDriverInfo:" + mapDriverInfo);
+	}
+	
 }
 

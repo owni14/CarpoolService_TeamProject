@@ -278,5 +278,4 @@
 	</div>
 </div>
 <!-- end inner header -->
-				
 <%@ include file="/WEB-INF/views/include_admin/footer.jsp"%>

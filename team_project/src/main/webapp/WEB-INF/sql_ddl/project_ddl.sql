@@ -125,6 +125,7 @@ ep_is_winner	char(1)	default 'N'
 
 );
 
+<<<<<<< HEAD
 -- 쪽지 
 create table message (
     message_seq number primary key,
@@ -135,6 +136,12 @@ create table message (
     content varchar2(2000) not null,
     senddate date default sysdate,
     opendate date null
+
+--faq
+create table faq (
+faq_seq number primary key,
+faq_title varchar2(500) not null,
+faq_content varchar2(4000) not null
 );
 
 --sequence
@@ -147,6 +154,10 @@ create sequence seq_event_winner;
 create sequence seq_approve_wait;
 create sequence seq_complain;
 create sequence seq_blacklist;
+
 create sequence seq_message;
+
+create sequence seq_faq;
+
 --동적 시퀀스
 create sequence seq_event_participation;

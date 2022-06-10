@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
@@ -126,6 +127,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)
 	public String eventGetBySeq(int event_seq, Model model,HttpSession session) {
+		System.out.println("접근 ");
 		EventVo eventVo = eventService.getEventByEseq(event_seq);
 		model.addAttribute("eventVo", eventVo);
 		session.setAttribute("event_seq", event_seq);
@@ -196,7 +198,7 @@ public class AdminController {
 	
 	@RequestMapping(value="/event_filesAttach", method= RequestMethod.POST)
 	public void eventFiles(HttpServletRequest request, HttpServletResponse response,HttpSession session ) {
-		System.out.println(request.getHeader("file-name"));
+//		System.out.println(request.getHeader("file-name"));
 		Object objEventSeq=session.getAttribute("event_seq");
 		System.out.println("eventFiles attach session event_seq"+objEventSeq);
 		try {
@@ -271,7 +273,7 @@ public class AdminController {
 			 // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			 sFileInfo += "&sFileName="+ filename;;
 			 sFileInfo += "&sFileURL=/admin/displayImage?filename="+targetFileName;
-			 System.out.println(sFileInfo);
+//			 System.out.println(sFileInfo);
 			 PrintWriter print = response.getWriter();
 			 print.print(sFileInfo);
 			 print.flush();
@@ -301,24 +303,35 @@ public class AdminController {
 
 	}
 	@RequestMapping(value = "/eventInsertRun", method = RequestMethod.POST)
-	public String insertRun(HttpServletRequest request, HttpServletResponse response,
-			HttpSession session,EventVo eventVo) {
+	public String insertRun(HttpSession session,EventVo eventVo,RedirectAttributes rttr) {
 		session.removeAttribute("event_seq");
-		System.out.println("어드민 컨트롤 insertRun eventVo"+eventVo);
+		
+//		System.out.println("어드민 컨트롤 insertRun eventVo"+eventVo);
 		List<String> insertImgList=FileUploadHelper.eventFilnameExtraction(eventVo.getEvent_content(), SERVERIP);
-		System.out.println("어드민 컨트롤 insertRun insertImgList"+insertImgList);
-		//eventService.insertEvent(eventVo);
+//		System.out.println("어드민 컨트롤 insertRun insertImgList"+insertImgList);
+		if(insertImgList.size()>0) {
+			eventVo.setEvent_img(insertImgList.get(0));
+		}
 		for(String sourceFileStr:insertImgList ) {
 			String[] tempPathStrs=sourceFileStr.split("tmpImages");
+			//정상적인 저장
 			if(tempPathStrs.length==2) {
 				String destFileStr=tempPathStrs[0]+"event_seq!!"+tempPathStrs[1];
-				System.out.println("어드민 컨트롤 insertRun destFileStr"+destFileStr);
-				boolean copy_result=FileUploadHelper.copyEventFiles(destFileStr,sourceFileStr);
+//				System.out.println("어드민 컨트롤 insertRun destFileStr"+destFileStr);
+				FileUploadHelper.copyEventFiles(destFileStr,sourceFileStr);
+				
 			}
 			else {
 				System.out.println("잘못된 저장형식");
 			}
 		}
-		return "redirect:/admin/event_insertForm";
+		boolean insert_result=eventService.insertEvent(eventVo);
+		rttr.addFlashAttribute("insert_result",String.valueOf(insert_result));
+		return "redirect:/admin/event";
 	}
+	
+	@RequestMapping(value="/event_winnerForm", method=RequestMethod.GET)
+	public String eventWinnerForm() {
+		return "admin/eventWinnerForm";
+	} 
 }

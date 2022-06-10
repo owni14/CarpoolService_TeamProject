@@ -9,7 +9,10 @@ cursor: pointer;
 }
 </style>
 <script>
-
+var insert_result="${insert_result}";
+if(insert_result){
+	alert("입력에 성공하셨습니다");
+}
 	$(document).ready(function() {
 		$("tr.eventListTr").click(function(e){
 			var event_seq=$(this).find("td").eq(0).attr("data-seq");

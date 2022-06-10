@@ -156,10 +156,10 @@ var nav = $('.fixed-button');
                 <div class="navbar-wrapper">
 
                     <div class="navbar-logo">
-                        <a class="mobile-menu" id="mobile-collapse" href="#!">
+                        <a class="mobile-menu" id="mobile-collapse">
                             <i class="ti-menu"></i>
                         </a>
-                        <a class="mobile-search morphsearch-search" href="#">
+                        <a class="mobile-search morphsearch-search" >
                             <i class="ti-search"></i>
                         </a>
                         <a href="/admin/home">
@@ -177,14 +177,14 @@ var nav = $('.fixed-button');
                             </li>
 
                             <li>
-                                <a href="#!" onclick="javascript:toggleFullScreen()">
+                                <a onclick="javascript:toggleFullScreen()">
                                     <i class="ti-fullscreen"></i>&nbsp &nbsp 전체화면
                                 </a>
                             </li>
                         </ul>
                         <ul class="nav-right">
                             <li class="header-notification">
-                                <a href="#!">
+                                <a>
                                     <i class="ti-bell"></i>
                                     <span class="badge bg-c-pink"></span>
                                 </a>
@@ -226,7 +226,7 @@ var nav = $('.fixed-button');
                                 </ul>
                             </li>
                             <li class="user-profile header-notification">
-                                <a href="#!">
+                                <a>
                                     <img src="#" class="img-radius" alt="프로필">
                                     <span>관리자#95225</span>
                                     <i class="ti-angle-down"></i>
@@ -238,12 +238,12 @@ var nav = $('.fixed-button');
 <!--                                         </a> -->
 <!--                                     </li> -->
                                     <li>
-                                        <a href="#">
+                                        <a >
                                             <i class="ti-user"></i> Profile
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a >
                                             <i class="ti-email"></i> My Messages
                                         </a>
 <!--                                     </li> -->
@@ -266,7 +266,7 @@ var nav = $('.fixed-button');
             <div class="pcoded-main-container">
                 <div class="pcoded-wrapper">
                     <nav class="pcoded-navbar">
-                        <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+                        <div class="sidebar_toggle"><a><i class="icon-close icons"></i></a></div>
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="">
                                 <div class="main-menu-header">
@@ -441,7 +441,9 @@ var nav = $('.fixed-button');
                                          <li class="more-details">
                                             <a href="/admin/event_insertForm"><i class="icofont icofont-plus-square"></i> &nbsp; 이벤트 추가하기</a>
                                         </li>
-                                         
+                                         <li class="more-details">
+                                            <a href="/admin/event_winnerForm"><i class="icofont icofont-win-trophy"></i> &nbsp; 이벤트 당첨자 관리</a>
+                                        </li>
                                   
                                       
                                             </ul>

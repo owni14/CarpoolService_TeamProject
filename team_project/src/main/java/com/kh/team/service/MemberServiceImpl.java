@@ -47,9 +47,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberVo getDriverById(String m_id) {
-		MemberVo driverInfo = memberDao.getDriverById(m_id);
-		return driverInfo;
+	public Map<String, Object> getDriverById(String m_id, String m_company) {
+		Map<String, Object> mapDriverInfo = memberDao.getDriverById(m_id, m_company);
+		return mapDriverInfo;
 	}
 
 	// 운전자 등록하기 위한 메서드
@@ -59,6 +59,9 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
-
+	@Override
+	public void addPassengerInfo(String m_id, String boardLoct, String boardTime, String driver_seq) {
+		memberDao.insertPassenger(m_id, boardLoct, boardTime, driver_seq);
+	}
 
 }

@@ -8,13 +8,16 @@
 		select * from event order by event_is_finish desc, event_seq desc
 	</select>
 
-	<insert id="insertEvent">
+	<insert id="insertEvent" parameterType="EventVo">
+	<selectKey keyProperty="event_seq" resultType="int" order="BEFORE">
+	select seq_event.nextVal from dual
+	</selectKey>
 		insert into event
 		(event_seq, event_name, 
 		 event_content,event_img,
 		event_max_count,event_point)
 		values
-		(seq_event.nextval, #{event_name}, 
+		(#{event_seq}, #{event_name}, 
 		 #{event_content},#{event_img, jdbcType=VARCHAR},
 		#{event_max_count}, #{event_point})
 	</insert>
@@ -65,5 +68,28 @@
 	select event_content from event where event_seq= #{event_seq}
 	</select>
 	
+	<select id="createTableEvnet" parameterType="HashMap">
+	${createTableStr}
+	</select>
+	
+	<select id="createSeqParticipation" parameterType="HashMap">
+	${createSeqStr}
+	</select>
+	
+	<insert id="insertParticipation">
+	insert into event_participation_event_seq${event_seq} 
+	(ep_seq, m_id, event_seq)
+	values(
+	seq_event_participation${event_seq}.nextval,
+	#{m_id},
+	#{event_seq}
+	)
+	</insert>
+	
+	<update id="updateParticipation">
+	update event_participation_event_seq${event_seq} set
+	ep_is_winner = 'Y'
+	where m_id=#{m_id}
+	</update>
 	
 </mapper>

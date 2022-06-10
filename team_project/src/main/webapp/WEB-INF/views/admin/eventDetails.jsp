@@ -131,8 +131,8 @@
 							<ul class="breadcrumb-title">
 								<li class="breadcrumb-item"><a href="/admin/home"><i
 										class="icofont icofont-home"></i></a></li>
-								<li class="breadcrumb-item"><a href="#!">이벤트</a></li>
-								<li class="breadcrumb-item"><a href="#!">이벤트 목록</a></li>
+								<li class="breadcrumb-item">이벤트</li>
+								<li class="breadcrumb-item"><a href="/admin/event">이벤트 목록</a></li>
 							</ul>
 
 						</div>

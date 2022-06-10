@@ -81,11 +81,12 @@ public class AdminController {
 		return "admin/memberManagement";
 	}
 	
-	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
+	@RequestMapping(value = "/report_management", method = RequestMethod.POST)
 	public String reportManagement(Model model, BlackListVo blackListVo) {
 		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
 			notifyService.modifyApprovement(blackListVo);			
 		}
+		System.out.println("blackListVo : " + blackListVo);
 		List<BlackListVo> notifyList = notifyService.notifyList();
 		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
 		List<BlackListVo> dayNotifyList = notifyService.dayNotifyList();
@@ -106,7 +107,7 @@ public class AdminController {
 		return "admin/reportManagement";
 	}
 	
-	@RequestMapping(value="/report_complete_management", method = RequestMethod.GET)
+	@RequestMapping(value="/report_complete_management", method = RequestMethod.POST)
 	public String report_complete_management (BlackListVo blackListVo,Model model) {
 		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
 			notifyService.modifyApprovement(blackListVo);			
@@ -126,6 +127,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)
 	public String eventGetBySeq(int event_seq, Model model,HttpSession session) {
+		System.out.println("접근 ");
 		EventVo eventVo = eventService.getEventByEseq(event_seq);
 		model.addAttribute("eventVo", eventVo);
 		session.setAttribute("event_seq", event_seq);
@@ -196,7 +198,7 @@ public class AdminController {
 	
 	@RequestMapping(value="/event_filesAttach", method= RequestMethod.POST)
 	public void eventFiles(HttpServletRequest request, HttpServletResponse response,HttpSession session ) {
-		System.out.println(request.getHeader("file-name"));
+//		System.out.println(request.getHeader("file-name"));
 		Object objEventSeq=session.getAttribute("event_seq");
 		System.out.println("eventFiles attach session event_seq"+objEventSeq);
 		try {
@@ -271,7 +273,7 @@ public class AdminController {
 			 // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			 sFileInfo += "&sFileName="+ filename;;
 			 sFileInfo += "&sFileURL=/admin/displayImage?filename="+targetFileName;
-			 System.out.println(sFileInfo);
+//			 System.out.println(sFileInfo);
 			 PrintWriter print = response.getWriter();
 			 print.print(sFileInfo);
 			 print.flush();
@@ -304,9 +306,9 @@ public class AdminController {
 	public String insertRun(HttpSession session,EventVo eventVo,RedirectAttributes rttr) {
 		session.removeAttribute("event_seq");
 		
-		System.out.println("어드민 컨트롤 insertRun eventVo"+eventVo);
+//		System.out.println("어드민 컨트롤 insertRun eventVo"+eventVo);
 		List<String> insertImgList=FileUploadHelper.eventFilnameExtraction(eventVo.getEvent_content(), SERVERIP);
-		System.out.println("어드민 컨트롤 insertRun insertImgList"+insertImgList);
+//		System.out.println("어드민 컨트롤 insertRun insertImgList"+insertImgList);
 		if(insertImgList.size()>0) {
 			eventVo.setEvent_img(insertImgList.get(0));
 		}
@@ -315,7 +317,7 @@ public class AdminController {
 			//정상적인 저장
 			if(tempPathStrs.length==2) {
 				String destFileStr=tempPathStrs[0]+"event_seq!!"+tempPathStrs[1];
-				System.out.println("어드민 컨트롤 insertRun destFileStr"+destFileStr);
+//				System.out.println("어드민 컨트롤 insertRun destFileStr"+destFileStr);
 				FileUploadHelper.copyEventFiles(destFileStr,sourceFileStr);
 				
 			}
@@ -324,7 +326,17 @@ public class AdminController {
 			}
 		}
 		boolean insert_result=eventService.insertEvent(eventVo);
+//		System.out.println("insert후 시퀀스"+eventVo.getEvent_seq());
+		//boolean resultParticipation= eventService.createTableEvnet();
+		eventService.createTableEvnet(eventVo.getEvent_seq());
+		eventService.createSeqParticipation(eventVo.getEvent_seq());
+		System.out.println("시퀀스와 테이블 생성 성공");
 		rttr.addFlashAttribute("insert_result",String.valueOf(insert_result));
 		return "redirect:/admin/event";
 	}
+	
+	@RequestMapping(value="/event_winnerForm", method=RequestMethod.GET)
+	public String eventWinnerForm() {
+		return "admin/eventWinnerForm";
+	} 
 }

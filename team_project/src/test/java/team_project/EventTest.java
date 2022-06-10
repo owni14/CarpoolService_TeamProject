@@ -64,5 +64,20 @@ public class EventTest {
 		eventDao.createSeqParticipation(21);
 		//testOk
 	}
+	
+	@Test
+	public void testinsertParticipaton() {
+		String m_id="user01@gmail.com";
+		int event_seq=21;
+		System.out.println(eventDao.insertParticipation(m_id, event_seq));
+		//testOk
+	}
+	@Test
+	public void testUpdateParticipaton() {
+		String m_id="user01@gmail.com";
+		int event_seq=21;
+		System.out.println(eventDao.updateParticipation(m_id, event_seq));
+		//testOk
+	}
 
 }

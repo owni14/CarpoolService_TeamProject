@@ -73,4 +73,20 @@
 	${createSeqStr}
 	</select>
 	
+	<insert id="insertParticipation">
+	insert into event_participation_event_seq${event_seq} 
+	(ep_seq, m_id, event_seq)
+	values(
+	seq_event_participation${event_seq}.nextval,
+	#{m_id},
+	#{event_seq}
+	)
+	</insert>
+	
+	<update id="updateParticipation">
+	update event_participation_event_seq${event_seq} set
+	ep_is_winner = 'Y'
+	where m_id=#{m_id}
+	</update>
+	
 </mapper>

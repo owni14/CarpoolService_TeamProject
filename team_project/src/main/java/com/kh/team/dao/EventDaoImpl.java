@@ -9,7 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.team.vo.EventParticipationVo;
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 @Repository
 public class EventDaoImpl implements EventDao{
@@ -84,7 +86,7 @@ public class EventDaoImpl implements EventDao{
 		String event_content=sqlSession.selectOne(NAMESPACE+"getContent",event_seq );
 		return event_content;
 	}
-
+//event participation
 	@Override
 	public void createTableEvnet(int event_seq) {
 		Map<String,String> sqlMap=new HashMap<>();
@@ -104,6 +106,30 @@ public class EventDaoImpl implements EventDao{
 		String createSeqStr="create sequence seq_event_participation"+event_seq;
 		sqlMap.put("createSeqStr", createSeqStr);
 		sqlSession.update(NAMESPACE+"createSeqParticipation",sqlMap);
+	}
+
+	@Override
+	public boolean insertParticipation(String m_id,int event_seq) {
+		Map<String,Object> sqlMap=new HashMap<>();
+		sqlMap.put("m_id",m_id);
+		sqlMap.put("event_seq", event_seq);
+		int count=sqlSession.insert(NAMESPACE+"insertParticipation", sqlMap);
+		if(count>0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateParticipation(String m_id,int event_seq) {
+		Map<String,Object> sqlMap=new HashMap<>();
+		sqlMap.put("m_id",m_id);
+		sqlMap.put("event_seq", event_seq);
+		int count=sqlSession.update(NAMESPACE+"updateParticipation",sqlMap);
+		if(count>0) {
+			return true;
+		}
+		return false;
 	}
 
 }

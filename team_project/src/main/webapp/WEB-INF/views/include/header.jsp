@@ -8,7 +8,7 @@
 <head>
     <title>Zay Shop eCommerce HTML CSS Template</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--     <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
     <link rel="apple-touch-icon" href="/resources/assets/img/apple-icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="/resources/assets/img/favicon.ico">

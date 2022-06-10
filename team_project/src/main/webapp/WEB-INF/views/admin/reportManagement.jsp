@@ -17,12 +17,13 @@
 			frmApproveNotify.find("input[name=admin_check]").val(admin_checkValue);
 			if (admin_checkValue == "N" || admin_checkValue == "C") {
 				frmApproveNotify.attr("action","/admin/report_management");
-				frmApproveNotify.attr("method","get");
+				frmApproveNotify.find("input[name=black_score]").val(0);
+				frmApproveNotify.attr("method","post");
 			} else if (admin_checkValue == "Y") {
 				frmApproveNotify.find("input[name=black_m_id]").val(black_m_id);
 				frmApproveNotify.find("input[name=black_score]").val(blackScoreValue);
 				frmApproveNotify.attr("action","/admin/report_complete_management");
-				frmApproveNotify.attr("method","get");
+				frmApproveNotify.attr("method","post");
 			}
 			frmApproveNotify.submit();
 		});

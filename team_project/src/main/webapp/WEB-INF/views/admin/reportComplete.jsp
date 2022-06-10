@@ -17,7 +17,7 @@
 			frmApproveNotify.find("input[name=black_m_id]").val(black_m_id);
 			frmApproveNotify.find("input[name=black_score]").val(-1*blackScoreValue);
 			frmApproveNotify.attr("action","/admin/report_management");
-			frmApproveNotify.attr("method","get");
+			frmApproveNotify.attr("method","post");
 			frmApproveNotify.submit();
 		});
 	});
@@ -33,7 +33,7 @@
 					<div class="row align-items-end">
 						<div class="col-lg-8">
 							<div class="page-header-title">
-								<i class="icofont icofont-close bg-c-pink"></i>
+								<i class="icofont icofont-check bg-c-blue"></i>
 								<div class="d-inline">
 									<h4>신고 반려 리스트</h4>
 									<span></span>
@@ -47,7 +47,7 @@
 								<a href="/admin/home"><i class="icofont icofont-home"></i></a>
 								</li>
 								<li class="breadcrumb-item"><a href="#!">신고 회원 관리</a></li>
-								<li class="breadcrumb-item"><a href="#!">신고 반려 리스트</a></li>
+								<li class="breadcrumb-item"><a href="#!">신고 완료 리스트</a></li>
 							</ul>
 						</div>
 					</div>

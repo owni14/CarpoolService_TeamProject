@@ -142,7 +142,7 @@ https://templatemo.com/tm-559-zay-shop
                             <a class="nav-link" id="a_1" href="/my/boardedHistory">마이 카풀</a>
                         </li> 
                         <li class="nav-item main_menu" id="menu_2">
-                            <a class="nav-link" id="a_2"  href="#">서비스 안내</a>
+                            <a class="nav-link" id="a_2"  href="/point/point">포인트</a>
                         </li>
                         <li class="nav-item main_menu"  id="menu_3">
                             <a class="nav-link" id="a_3" href="/event/now">이벤트 & 혜택</a>

@@ -11,6 +11,15 @@ public class CarInfoVo {
 	public CarInfoVo() {
 		super();
 	}
+	
+	public CarInfoVo(String ci_name, String ci_brand, String ci_brand_img, String ci_car_img, int ci_people_count) {
+		super();
+		this.ci_name = ci_name;
+		this.ci_brand = ci_brand;
+		this.ci_brand_img = ci_brand_img;
+		this.ci_car_img = ci_car_img;
+		this.ci_people_count = ci_people_count;
+	}
 
 	public CarInfoVo(String ci_code, String ci_name, String ci_brand, String ci_brand_img, String ci_car_img,
 			int ci_people_count) {

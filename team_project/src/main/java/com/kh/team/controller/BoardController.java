@@ -62,6 +62,7 @@ public class BoardController {
 		return mapDriverInfo;
 	}
 	
+	// 탑승자 정보 입력
 	@RequestMapping(value = "/addPasgInfo", method = RequestMethod.POST)
 	public String addPassengerInfo(String boardLoct, String boardHour, String boardMin, String m_id, String driver_seq) {
 		String boardTime = boardHour + boardMin;

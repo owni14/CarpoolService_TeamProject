@@ -137,3 +137,10 @@ create sequence seq_complain;
 create sequence seq_blacklist;
 --동적 시퀀스
 create sequence seq_event_participation;
+
+-- modify carinfo table
+alter table carinfo
+modify ci_people_count number check (ci_people_count between 1 and 4); 
+
+-- 자동차별 시작 코드번호 설정
+create sequence seq_car_code start with 1001; start with 1001;

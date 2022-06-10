@@ -1,11 +1,13 @@
 package com.kh.team.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.team.dao.EventDao;
+import com.kh.team.vo.EventParticipationVo;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.PagingDto;
 @Service
@@ -84,6 +86,21 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public boolean updateParticipation(String m_id, int event_seq) {
 		return eventDao.updateParticipation(m_id, event_seq);
+	}
+
+	@Override
+	public List<EventParticipationVo> getListParticipationByEventSeq(int event_seq) {
+		return eventDao.getListParticipationByEventSeq(event_seq);
+	}
+
+	@Override
+	public int getMaxNoFinishEventSeq() {
+		return eventDao.getMaxNoFinishEventSeq();
+	}
+
+	@Override
+	public List<Map<String, Object>> getJoinEventData(int event_seq) {
+		return eventDao.getJoinEventData(event_seq);
 	}
 
 }

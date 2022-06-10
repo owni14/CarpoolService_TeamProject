@@ -2,6 +2,7 @@ package com.kh.team.dao;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.kh.team.vo.EventParticipationVo;
 import com.kh.team.vo.EventVo;
@@ -25,6 +26,9 @@ public interface EventDao {
 	public void createSeqParticipation(int event_seq);
 	public boolean insertParticipation(String m_id,int event_seq);
 	public boolean updateParticipation(String m_id,int event_seq);
+	public List<EventParticipationVo> getListParticipationByEventSeq(int event_seq);
+	public int getMaxNoFinishEventSeq();
+	public List<Map<String, Object>> getJoinEventData(int event_seq);
 	
 	
 }

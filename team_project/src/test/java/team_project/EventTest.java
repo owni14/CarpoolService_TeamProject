@@ -1,6 +1,7 @@
 package team_project;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,38 +47,60 @@ public class EventTest {
 	
 	@Test
 	public void testEventBySeq() {
-		System.out.println("EventTest testEventBySeq result "+eventDao.getEventByEseq(2));
+		System.out.println("EventTest testEventBySeq result "+eventDao.getEventByEseq(49));
 		
 	}
 	@Test
 	public void testEventGetContent() {
-		System.out.println("EventTest testEventGetContent result "+eventDao.getContent(2));
+		System.out.println("EventTest testEventGetContent result "+eventDao.getContent(49));
 		
 	}
 	@Test
 	public void testEventParticipaton() {
-		eventDao.createTableEvnet(21);
+		eventDao.createTableEvnet(49);
 		//testOk
 	}
 	@Test
 	public void testSeqParticipaton() {
-		eventDao.createSeqParticipation(21);
+		eventDao.createSeqParticipation(49);
 		//testOk
 	}
 	
 	@Test
 	public void testinsertParticipaton() {
-		String m_id="user01@gmail.com";
-		int event_seq=21;
-		System.out.println(eventDao.insertParticipation(m_id, event_seq));
+		int event_seq=49;
+		for(int i=2; i<=40; i++) {
+			String m_id="user0"+i+"@gmail.com";	
+			
+			eventDao.insertParticipation(m_id, event_seq);
+		}
+//		System.out.println(eventDao.insertParticipation(m_id, event_seq));
 		//testOk
 	}
 	@Test
 	public void testUpdateParticipaton() {
-		String m_id="user01@gmail.com";
+		String m_id="user03@gmail.com";
 		int event_seq=21;
 		System.out.println(eventDao.updateParticipation(m_id, event_seq));
 		//testOk
 	}
-
+	@Test
+	public void testSelectParticipation() {
+		//int event_seq=eventDao.getMaxNoFinishEventSeq();
+		System.out.println(eventDao.getListParticipationByEventSeq(21));
+	}//testOk
+	
+	@Test
+	public void testSelectMaxNoFinishSeq() {
+		System.out.println(eventDao.getMaxNoFinishEventSeq());
+	}//testOk
+	
+	@Test
+	public void testSelectJoinEvent() {
+		int event_seq=eventDao.getMaxNoFinishEventSeq();
+		List<Map<String, Object>> eventAllList=eventDao.getJoinEventData(event_seq);
+		for(Map<String, Object> eventList:eventAllList) {
+			System.out.println(eventList.get("EVENT_NAME"));
+		}
+	}
 }

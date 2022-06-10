@@ -76,14 +76,14 @@
 		<!-- CDN chart.js -->
 <!-- naver smartEditor -->
 <script type="text/javascript" src="/resources/static/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
-<!-- 	<!-- bootstrap --> -->
+<!-- 	<!-- bootstrap -->
 <!--     <meta name="viewport" content="width=device-width, initial-scale=1">													 -->
 <!-- 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">													 -->
 <!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>													 -->
 <!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>													 -->
 <!-- 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>													 -->
 <!--     bootstrap 참조 끝 -->
-		<script>
+<script>
 var $window = $(window);
 var nav = $('.fixed-button');
     $window.scroll(function(){
@@ -94,7 +94,16 @@ var nav = $('.fixed-button');
          nav.removeClass('active');
      }
  });
-    
+	$(document).ready(function () {
+		$("#notifyList").click(function (e) {
+			e.preventDefault();
+			$("#frmReport").submit();
+		});
+		$("#notifyCompleteList").click(function (e) {
+			e.preventDefault();
+			$("#frmReportComplete").submit();
+		});
+	});
 </script>
   
   </head>
@@ -400,10 +409,14 @@ var nav = $('.fixed-button');
                                      <ul class="pcoded-submenu">
                                          
                                         <li class="more-details">
-                                            <a href="/admin/report_management"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a>
+<!--                                             <a href="/admin/report_management"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a> -->
+                                        		<form id="frmReport" action="/admin/report_management" method="post"></form>
+                                        		<a id="notifyList" href="#"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a>
                                         </li>
                                         <li class="more-details">
-                                            <a href="/admin/report_complete_management"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a>
+<!--                                             <a href="/admin/report_complete_management"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a> -->
+                                      			<form id="frmReportComplete" action="/admin/report_complete_management" method="post"></form>
+                                        		<a id="notifyCompleteList" href="#"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a>
                                         </li>
                                      </ul>
                                 	<!-- 아이콘 추가 0609  끝-->

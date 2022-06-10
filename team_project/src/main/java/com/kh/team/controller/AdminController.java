@@ -80,11 +80,12 @@ public class AdminController {
 		return "admin/memberManagement";
 	}
 	
-	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
+	@RequestMapping(value = "/report_management", method = RequestMethod.POST)
 	public String reportManagement(Model model, BlackListVo blackListVo) {
 		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
 			notifyService.modifyApprovement(blackListVo);			
 		}
+		System.out.println("blackListVo : " + blackListVo);
 		List<BlackListVo> notifyList = notifyService.notifyList();
 		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
 		List<BlackListVo> dayNotifyList = notifyService.dayNotifyList();
@@ -105,7 +106,7 @@ public class AdminController {
 		return "admin/reportManagement";
 	}
 	
-	@RequestMapping(value="/report_complete_management", method = RequestMethod.GET)
+	@RequestMapping(value="/report_complete_management", method = RequestMethod.POST)
 	public String report_complete_management (BlackListVo blackListVo,Model model) {
 		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
 			notifyService.modifyApprovement(blackListVo);			

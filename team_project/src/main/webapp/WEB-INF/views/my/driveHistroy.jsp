@@ -59,7 +59,7 @@ $(document).ready(function() {
 	
 	$("#modalClose").click(function() {
 		$("#modal-container-678121").modal('hide');
-	})
+	});
 });
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp"%>

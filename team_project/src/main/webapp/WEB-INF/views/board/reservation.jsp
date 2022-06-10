@@ -334,6 +334,7 @@ $(document).ready(function() {
 					<td></td>
 					<td></td>
 					<td></td>
+					<td></td>
 					<td class="tds"><a href="#modal-container-899906" role="button" class="btn btn-info btn-sm btnBoard" data-toggle="modal">탑승신청</a></td>
 				</tr>
 			</table>
@@ -344,6 +345,7 @@ $(document).ready(function() {
 						<th>운전자</th>
 						<th>부서</th>
 						<th>출발위치</th>
+						<th>탑승인원</th>
 						<th>탑승신청</th>
 					</tr>
 				</thead>

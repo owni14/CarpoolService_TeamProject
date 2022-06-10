@@ -125,6 +125,18 @@ ep_is_winner	char(1)	default 'N'
 
 );
 
+<<<<<<< HEAD
+-- 쪽지 
+create table message (
+    message_seq number primary key,
+    receiver_m_id varchar2(50) references member(m_id),
+    receiver_admin_code varchar2(300) references admin(admin_code),
+    sender_m_id varchar2(50) references member(m_id),
+    sender_admin_code varchar2(300) references admin(admin_code),
+    content varchar2(2000) not null,
+    senddate date default sysdate,
+    opendate date null
+
 --faq
 create table faq (
 faq_seq number primary key,
@@ -142,6 +154,17 @@ create sequence seq_event_winner;
 create sequence seq_approve_wait;
 create sequence seq_complain;
 create sequence seq_blacklist;
+
+create sequence seq_message;
+
 create sequence seq_faq;
+
 --동적 시퀀스
 create sequence seq_event_participation;
+
+-- modify carinfo table
+alter table carinfo
+modify ci_people_count number check (ci_people_count between 1 and 4); 
+
+-- 자동차별 시작 코드번호 설정
+create sequence seq_car_code start with 1001; start with 1001;

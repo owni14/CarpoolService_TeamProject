@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.team.dao.CarDao;
+import com.kh.team.service.CarService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
@@ -32,6 +34,8 @@ public class MyController {
 	private MemberService memberService;
 	@Autowired
 	private MylogService mylogService;
+	@Autowired
+	private CarService carService;
 
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
@@ -82,7 +86,7 @@ public class MyController {
 	
 	// 운전자등록폼 처리
 	@RequestMapping(value = "/submitFile", method = RequestMethod.POST)
-	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session, RedirectAttributes rttr) throws Exception{
+	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session, RedirectAttributes rttr, String ci_name) throws Exception{
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
 		String ext = driverLicense.getOriginalFilename();
 		int dot = ext.lastIndexOf(".");
@@ -90,7 +94,6 @@ public class MyController {
 		// 기본파일 확장자 얻기
 		String imageExt = ext.substring(dot);
 		
-//		System.out.println("imageExtension:" + imageExt);
 		
 		String company = memberVo.getM_company();
 		String saveName = memberVo.getM_id() + "'s_driver_license";
@@ -103,10 +106,10 @@ public class MyController {
 			rttr.addFlashAttribute("isExistence", "true");
 			return "redirect:/";
 		}
-		
+		String c_code = carService.getCarCode(ci_name);
+		System.out.println("c_code:" + c_code);
 		memberService.submitDriverLicense(memberVo.getM_id(), saveFilename);
 		
-//		System.out.println("MyController, saveFilename:" + saveFilename);
 		return "redirect:/";
 	}
 	

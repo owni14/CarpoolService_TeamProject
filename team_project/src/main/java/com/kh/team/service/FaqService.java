@@ -1,9 +1,9 @@
-package com.kh.team.dao;
+package com.kh.team.service;
 
 import java.util.List;
 
 import com.kh.team.vo.FaqVo;
 
-public interface FaqDao {
+public interface FaqService {
 	public List<FaqVo> getFaqList();
 }

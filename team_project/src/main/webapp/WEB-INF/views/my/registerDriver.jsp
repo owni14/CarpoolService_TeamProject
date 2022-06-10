@@ -10,10 +10,24 @@ $(document).ready(function() {
 });
 </script>
 <div class="row">
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
+	<div class="col-md-4"></div>
+	<div class="col-md-4">
 		<form role="form" action="/my/submitFile" method="post" enctype="multipart/form-data">
-		<h3 style="text-align: center;">운전 면허증을 첨부해주세요</h3>
+			<div class="form-group" style="text-align: center;">
+				<span style="font-size: 50px;">운전자 등록</span>
+			</div>
+			<div class="form-group">
+				<label>차 선택</label><br>
+				<select class="form-control btn" name="ci_name">
+					<option>차량을 선택해주세요</option>
+					<option value="GV80">GV80</option>
+					<option value="PALISADE">팰리세이드</option>
+					<option value="SORENTO">쏘렌토</option>
+					<option value="SPORTAGE">스포티지</option>
+					<option value="TUCSON">투싼</option>
+					<option value="AVANTE">아반떼</option>
+				</select>
+			</div>
 			<div class="form-group">
 				<label for="driverLicense"> 운전면허증 </label> 
 				<input type="file" class="form-control-file" id="driverLicense" name="driverLicense" />
@@ -21,6 +35,6 @@ $(document).ready(function() {
 			<button id="btnSubmit" type="submit" class="btn btn-primary" style="margin-bottom: 20px">등록하기</button>
 		</form>
 	</div>
-	<div class="col-md-2"></div>
+	<div class="col-md-4"></div>
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp"%>>

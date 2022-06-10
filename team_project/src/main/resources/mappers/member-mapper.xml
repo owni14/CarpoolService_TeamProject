@@ -33,7 +33,7 @@
 		where d.m_id = m.m_id
 		and m.m_company = #{m_company}
 	</select>
-	
+	 
 	<select id="adminGetCount" resultType="int">
 		select count(*) from member
 		<include refid="search"></include>
@@ -89,6 +89,11 @@
 	<insert id="insertPassenger">
 		insert into passenger (passenger_seq, m_id, passenger_depart_location, passenger_depart_time, driver_seq)
 		values (seq_passenger.nextval, #{m_id}, #{boardLoct}, #{boardTime}, #{driver_seq})
+	</insert>
+	
+	<insert id="insertCarInfo">
+		insert into carinfo
+		values (seq_hyundai.nextval, #{car_name}, #{car_brand}, #{car_brand_img}, #{car_img}, #{people_count});
 	</insert>
 	
 </mapper>

@@ -1,7 +1,9 @@
 package com.kh.team.dao;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +83,27 @@ public class EventDaoImpl implements EventDao{
 	public String getContent(int event_seq) {
 		String event_content=sqlSession.selectOne(NAMESPACE+"getContent",event_seq );
 		return event_content;
+	}
+
+	@Override
+	public void createTableEvnet(int event_seq) {
+		Map<String,String> sqlMap=new HashMap<>();
+		String createTableStr="create table event_participation_event_seq"+event_seq+"(" + 
+				"	ep_seq	number	primary key," + 
+				"	m_id varchar2(50)	references  member(m_id)," + 
+				"	event_seq	number	references  event(event_seq)," + 
+				"	ep_is_winner	char(1)	default 'N'" + ")";
+		sqlMap.put("createTableStr", createTableStr);
+		sqlSession.update(NAMESPACE+"createTableEvnet",sqlMap);
+		
+	}
+
+	@Override
+	public void createSeqParticipation(int event_seq) {
+		Map<String,String> sqlMap=new HashMap<>();
+		String createSeqStr="create sequence seq_event_participation"+event_seq;
+		sqlMap.put("createSeqStr", createSeqStr);
+		sqlSession.update(NAMESPACE+"createSeqParticipation",sqlMap);
 	}
 
 }

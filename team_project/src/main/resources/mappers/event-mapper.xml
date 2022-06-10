@@ -65,5 +65,12 @@
 	select event_content from event where event_seq= #{event_seq}
 	</select>
 	
+	<select id="createTableEvnet" parameterType="HashMap">
+	${createTableStr}
+	</select>
+	
+	<select id="createSeqParticipation" parameterType="HashMap">
+	${createSeqStr}
+	</select>
 	
 </mapper>

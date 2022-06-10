@@ -54,5 +54,15 @@ public class EventTest {
 		System.out.println("EventTest testEventGetContent result "+eventDao.getContent(2));
 		
 	}
+	@Test
+	public void testEventParticipaton() {
+		eventDao.createTableEvnet(21);
+		//testOk
+	}
+	@Test
+	public void testSeqParticipaton() {
+		eventDao.createSeqParticipation(21);
+		//testOk
+	}
 
 }

@@ -17,6 +17,9 @@ public interface EventDao {
 	public int getCountEvent();
 	public List<EventVo> getEventMainList(PagingDto pagingDto);
 	public void updateEventFinish(int event_seq);
-	public String getContent(int event_seq); 
+	public String getContent(int event_seq);
+	public void createTableEvnet(int event_seq);
+	public void createSeqParticipation(int event_seq);
+	
 	
 }

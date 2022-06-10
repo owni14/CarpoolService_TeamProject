@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.team.service.AdminService;
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.NotifyService;
 import com.kh.team.util.FileUploadHelper;
+import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.MemberVo;
@@ -42,11 +44,30 @@ public class AdminController {
 	MemberService memberService;
 	@Autowired
 	NotifyService notifyService;
+	@Autowired
+	AdminService adminService;
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin() {
 		return "admin/home_admin";
 	}
+	
+	@RequestMapping(value="/admin_login", method=RequestMethod.GET)
+	public String adminLogin() {
+		return "admin/admin_login_form";
+	}
+	
+	@RequestMapping(value="/checkAdminLogin", method=RequestMethod.GET)
+	public String checkAdminLogin(AdminVo adminVo,HttpSession session) {
+		boolean result = adminService.checkAdminId(adminVo);
+		if (result == true) {
+			String admin_code = adminVo.getAdmin_code();
+			session.setAttribute("admin_code", admin_code);
+			return "/admin/home";
+		}
+		return "admin/admin_login_form";
+	}
+	
 
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
 	public String eventList(Model model,HttpSession session) {

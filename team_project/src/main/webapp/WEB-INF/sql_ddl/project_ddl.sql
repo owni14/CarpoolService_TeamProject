@@ -125,6 +125,18 @@ ep_is_winner	char(1)	default 'N'
 
 );
 
+-- 쪽지 
+create table message (
+    message_seq number primary key,
+    receiver_m_id varchar2(50) references member(m_id),
+    receiver_admin_code varchar2(300) references admin(admin_code),
+    sender_m_id varchar2(50) references member(m_id),
+    sender_admin_code varchar2(300) references admin(admin_code),
+    content varchar2(2000) not null,
+    senddate date default sysdate,
+    opendate date null
+);
+
 --sequence
 
 create sequence seq_point_history;
@@ -135,5 +147,6 @@ create sequence seq_event_winner;
 create sequence seq_approve_wait;
 create sequence seq_complain;
 create sequence seq_blacklist;
+create sequence seq_message;
 --동적 시퀀스
 create sequence seq_event_participation;

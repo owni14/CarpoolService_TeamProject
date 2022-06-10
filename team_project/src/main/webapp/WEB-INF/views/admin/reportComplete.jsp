@@ -20,9 +20,65 @@
 			frmApproveNotify.attr("method","post");
 			frmApproveNotify.submit();
 		});
+		
+		$("#iMessage").click(function () {
+			$("#modal-97340").trigger("click");
+			var reporter = $(this).attr("data-reporter");
+			$("#thReporter").text(reporter);
+		});
+		
+		$("#btnModalSend").click(function () {
+			
+		});
 	});
 </script>
 <%@ include file="/WEB-INF/views/include_admin/frmApproveNotify.jsp" %>
+<!-- modal start -->
+<div class="row">
+		<div class="col-md-12">
+			 <a id="modal-97340" href="#modal-container-97340" role="button" class="btn" data-toggle="modal" style="display:none">Launch demo modal</a>
+			
+			<div class="modal fade" id="modal-container-97340" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">
+								신고 완료 알림 메세지
+							</h5> 
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<input type="text" class="form-control" value="신고 완료가 정상 처리 되었습니다.">
+							<table style="margin-top: 20px; float: right;">
+								<thead>
+								<tr>
+									<th>받는 사람</th>
+									<th id="thReporter" style="padding-left:10px"></th>
+								</tr>
+								</thead>
+							</table>
+						
+						</div>
+						<div class="modal-footer">
+							 
+							<button type="button" class="btn btn-primary" id="btnModalSend">
+								전송
+							</button> 
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								닫기
+							</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+<!-- modal end -->
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -181,7 +237,8 @@
 											<th style="width:10%">신고 받은 회원 아이디</th>
 											<th style="width:55%">신고 내용</th>
 											<th style="width:10%">처리 결과</th>
-											<th style="width:15%">등록 일자</th>
+											<th style="width:10%">등록 일자</th>
+											<th style="width:5%">완료 알림</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -202,6 +259,7 @@
 												<!-- dropdown end -->
 											</td>
 											<td>${blackListVo.black_regdate}</td>
+											<td style="text-align: center"><i id="iMessage" class="fa fa-paper-plane" data-reporter="${blackListVo.m_id}"></i></td>
 											
 								</tr>
 	 									</c:forEach> 

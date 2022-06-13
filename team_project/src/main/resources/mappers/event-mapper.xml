@@ -124,8 +124,8 @@ where m.m_id=ep${event_seq}.m_id
 	
 	</select>
 	
-	<select id="selectEndEventList" resultType="int">
-	select event_seq from event 
+	<select id="selectEndEventList" resultType="EventVo">
+	select event_is_bylot,event_seq from event 
 	where event_is_finish= 'Y'
 	order by event_seq desc 
 	</select>
@@ -164,5 +164,18 @@ where m.m_id=ep${event_seq}.m_id
 	values
 	(seq_point_history.nextval, #{m_id}, #{pc_code})
 	</insert>
+	
+	<insert id="insertEventWinnerTable">
+	insert into event_winner
+	(e_winner_seq,m_id,event_seq)
+	values
+	(seq_event_winner.nextvl,#{m_id},#{event_seq})
+	</insert>
+	
+	<select id="selectWinnerIsGet" resultType="EventWinnerVo">
+	select m_id,e_winner_is_get
+	from event_winner
+	where event_seq=#{event_seq}
+	</select>
 	
 </mapper>

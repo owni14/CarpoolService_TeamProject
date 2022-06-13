@@ -92,13 +92,38 @@ console.log("winnerNums" ,winnerNums);
 		$("#winnerSpan").text(strSpan);
 		frmEventWinner.submit();
 	});
-});
+	//미수령자 글자 만들기
+			var m_ids=new Array();
+			var targetIndexs=new Array();
+			$(".tdNames").each(function(index){
+				m_ids[index]=$(this).attr("data-name");
+				
+			});
+		console.log(m_ids);
+		var arrSize="${eventWinnerList.size()}";
+		var arrTmp="${eventWinnerList}";
+		var indexTmp=0;
+		for(var v=0; v<m_ids.length; v++){
+			console.log("out v",v);
+			for(var a=0; a<arrSize; a++){
+				if(m_ids[v] == (arrTmp[a].m_id)){
+					targetIndexs[indexTmp]=v;
+					indexTmp++;
+					break;
+				}
+			}
+			if(indexTmp >= arrSize-1){
+				break;
+			}
+		}
+});//jquery ENd
 	
 	
 	
 	
 </script>
 <%@ include file="/WEB-INF/views/include_admin/frmEvent.jsp" %>
+${eventWinnerList}
 <form id="frmEventWinner" action="/admin/event_winnerRun" method="post">
 <input type="hidden" name="event_seq" value="${param.event_seq}">
 </form>
@@ -131,11 +156,19 @@ console.log("winnerNums" ,winnerNums);
 							
 								<select id="select_endEvent_seq">
 							<option disabled="disabled" selected="selected" value="">종료된 이벤트 (번호를 골라주세요)</option>
-							<c:forEach items="${endEventList}" var="eventSeq">
-							<option value="${eventSeq}"
-							<c:if test="${eventSeq eq param.event_seq}">
+							<c:forEach items="${endEventList}" var="eventVo">
+							<option value="${eventVo.event_seq}"
+							<c:if test="${eventVo.event_seq eq param.event_seq}">
 							selected</c:if>
-							>${eventSeq}번(종료)</option>
+							>${eventVo.event_seq}번
+							<c:choose>
+							<c:when test="${eventVo.event_is_bylot eq 'Y' }">(추첨완료,종료된 이벤트)</c:when>
+							<c:otherwise>
+							(종료된 이벤트,추첨해주세요)
+							</c:otherwise>
+							</c:choose>
+							
+							</option>
 							</c:forEach>
 							</select>
 									<span></span>
@@ -174,7 +207,9 @@ console.log("winnerNums" ,winnerNums);
 				<div class="card">
 				
 					<div class="card-header">
+					<c:if test="${participationList.get(0).EVENT_IS_BYLOT eq 'N'}">
 					<button class="btn btn-success btn-round" id="buttonWinner" type="button">추첨하기</button>
+					</c:if>
 					<span id="winnerSpan"></span>
 						<table class="table table-hover">
 						<thead>
@@ -184,6 +219,10 @@ console.log("winnerNums" ,winnerNums);
 							<th>이벤트 이름</th>
 							<th>이벤트 참가자(id)</th>
 							<th>당첨여부</th>
+						<c:if test="${eventVo.event_is_bylot eq 'Y'}">
+							<th>이벤트 물품 수령 여부</th>
+							<th>미수령자 쪽지 보내기</th>
+						</c:if>	
 						</tr>
 						</thead>
 						<tbody>
@@ -202,6 +241,10 @@ console.log("winnerNums" ,winnerNums);
 						<c:when test="${eventParticipationVo.EP_IS_WINNER eq 'Y' }">당첨</c:when>
 						<c:otherwise>미당첨</c:otherwise>
 						</c:choose></td>
+						<c:if test="${eventVo.event_is_bylot eq 'Y'}">
+						<td class="tdIsByLot"></td>
+						<td class="tdMessageSend"></td>
+						</c:if>
 						</tr>
 						</c:forEach>
 						</tbody>

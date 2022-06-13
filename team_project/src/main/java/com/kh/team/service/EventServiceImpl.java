@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.team.dao.EventDao;
 import com.kh.team.vo.EventParticipationVo;
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.EventWinnerVo;
 import com.kh.team.vo.PagingDto;
 @Service
 public class EventServiceImpl implements EventService {
@@ -110,7 +111,7 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public List<Integer> selectEndEventList() {
+	public List<EventVo> selectEndEventList() {
 		return eventDao.selectEndEventList();
 	}
 
@@ -147,12 +148,19 @@ public class EventServiceImpl implements EventService {
 		boolean resultIsLot=updateIsLot(event_seq);
 		boolean resultWinner=updateEventWinnerToParticipation(event_seq, m_id);
 		boolean resultPoint=updateEventWinnerPoint(m_id, pc_code);
-		System.out.println("resultPoint "+resultPoint);
+		boolean resultWinnerTbl=insertEventWinnerTable(m_id, event_seq);
 		boolean resultHistory=insertEventWinnerPointHistory(m_id, pc_code);
-		if(resultIsLot &&resultWinner &&resultPoint &&resultHistory  ) {
+		if(resultIsLot &&resultWinner &&resultPoint &&resultHistory &&resultWinnerTbl  ) {
 			return true;
 		}
 		return false;
 	}
-
+	@Override
+	public boolean insertEventWinnerTable(String m_id, int event_seq) {
+		return eventDao.insertEventWinnerTable(m_id, event_seq);
+	}
+	@Override
+	public List<EventWinnerVo> selectWinnerIsGet(int event_seq) {
+		return eventDao.selectWinnerIsGet(event_seq);
+	}
 }

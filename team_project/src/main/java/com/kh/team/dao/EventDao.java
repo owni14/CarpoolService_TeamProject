@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.kh.team.vo.EventParticipationVo;
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.EventWinnerVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -31,14 +32,16 @@ public interface EventDao {
 	public List<Map<String, Object>> getJoinEventData(int event_seq);
 	//이벤트 테이블 관리
 	public List<Integer> selectAllEventList();
-	public List<Integer> selectEndEventList();
+	public List<EventVo> selectEndEventList();
 	public List<Integer> selectLiveEventList();
 	public int selectEventMaxCount(int event_seq);
 	public boolean updateIsLot(int event_seq);
 	public boolean updateEventWinnerToParticipation(int event_seq,String m_id);
 	public boolean updateEventWinnerPoint(String m_id,String pc_code);
 	public boolean insertEventWinnerPointHistory(String m_id,String pc_code);
-
+	public boolean insertEventWinnerTable(String m_id,int event_seq);
+	//이벤트 당첨자
+	public List<EventWinnerVo> selectWinnerIsGet(int event_seq);
 	
 	
 }

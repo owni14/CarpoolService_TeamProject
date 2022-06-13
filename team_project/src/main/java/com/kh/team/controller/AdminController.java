@@ -34,6 +34,7 @@ import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.EventWinnerVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -389,7 +390,7 @@ public class AdminController {
 		String participation_percentStr=
 				String.format("%.2f",participation_percent);
 		List<Integer> liveEventList=eventService.selectLiveEventList();
-		List<Integer> endEventList=eventService.selectEndEventList();
+		List<EventVo> endEventList=eventService.selectEndEventList();
 		
 		if(participationList.size()>0) {
 			model.addAttribute("participationList",participationList);
@@ -414,11 +415,13 @@ public class AdminController {
 		String participation_percentStr=
 				String.format("%.2f",participation_percent);
 		List<Integer> liveEventList=eventService.selectLiveEventList();
-		List<Integer> endEventList=eventService.selectEndEventList();
-		
+		List<EventVo> endEventList=eventService.selectEndEventList();
+		List<EventWinnerVo> eventWinnerList=eventService.selectWinnerIsGet(eventVo.getEvent_seq());
 		if(participationList.size()>0) {
 			model.addAttribute("participationList",participationList);
 		}		
+		model.addAttribute("eventVo",eventVo);
+		model.addAttribute("eventWinnerList",eventWinnerList);
 		model.addAttribute("liveEventList",liveEventList);
 		model.addAttribute("endEventList",endEventList);
 		model.addAttribute("participation_percentStr",participation_percentStr);

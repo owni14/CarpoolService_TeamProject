@@ -6,7 +6,37 @@
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 
 <script>
+//참가인원의 10퍼센트 당첨인원
+var listSize="${participationList.size()}";
+var winnerCount=parseInt(listSize/10);
+var numS=new Array();
 
+var winnerNums=new Array(); 
+
+for(var v=0; v<listSize; v++){
+	numS[v]=v+1;
+}
+for(var v=0; v<winnerCount; v++){
+	
+	var randomNum=(parseInt(Math.random()*listSize))+1;
+	console.log("for randomNum",randomNum);
+	if(numS[randomNum]==""){
+		console.log("if 진입",v);
+		while(true){
+			randomNum=(parseInt(Math.random()*listSize))+1;
+			if(! (numS[randomNum]=="") ){
+				console.log("while randomNum",randomNum);
+				break;
+			}
+		}
+	}
+	winnerNums[v]=randomNum;
+	numS[randomNum]="";
+
+}
+console.log("numS[v]" ,numS);
+console.log("winnerCount" ,winnerCount);
+console.log("winnerNums" ,winnerNums);
 	$(document).ready(function() {
 		$("#select_liveEvent_seq").change(function(){
 			
@@ -26,8 +56,25 @@
 				form.attr("action","/admin/event_end_participation?event_seq="
 				+ event_seq);
 				form.submit();
-						});
-			});
+		});
+	$("#buttonWinner").click(function(){
+		var strSpan="당첨 번호 :";
+		for(var v=0; v<winnerNums.length; v++){
+			if(v == winnerNums.length-1 ){
+				strSpan += winnerNums[v];
+				break;
+			}
+			strSpan += winnerNums[v]+" ,";
+			
+		}//end for
+		
+		$("#winnerSpan").text(strSpan);
+	});
+});
+	
+	
+	
+	
 </script>
 <%@ include file="/WEB-INF/views/include_admin/frmEvent.jsp" %>
 
@@ -103,7 +150,8 @@
 				<div class="card">
 				
 					<div class="card-header">
-					
+					<button class="btn btn-success btn-round" id="buttonWinner" type="button">추첨하기</button>
+					<span id="winnerSpan"></span>
 						<table class="table table-hover">
 						<thead>
 						<tr>

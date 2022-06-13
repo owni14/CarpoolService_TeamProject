@@ -33,6 +33,8 @@ public interface EventDao {
 	public List<Integer> selectAllEventList();
 	public List<Integer> selectEndEventList();
 	public List<Integer> selectLiveEventList();
+	public int selectEventMaxCount(int event_seq);
+
 	
 	
 }

@@ -358,23 +358,52 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/event_participation", method=RequestMethod.GET)
-	public String eventWinnerForm(Model model,EventVo eventVo) {
-		if(eventVo.getEvent_seq()<=0) {
-			int event_seq=eventService.getMaxNoFinishEventSeq();
+	public String eventForm(Model model,EventVo eventVo) {
+		int event_seq=eventVo.getEvent_seq();
+		if(event_seq<=0) {
+			event_seq=eventService.getMaxNoFinishEventSeq();
 			eventVo.setEvent_seq(event_seq);
 		}
 		List<Map<String,Object>> participationList=eventService.getJoinEventData(eventVo.getEvent_seq());
-		List<Integer> allEventList=eventService.selectAllEventList();
+		int event_max_count=eventService.selectEventMaxCount(event_seq);
+		int participation=participationList.size();
+		double participation_percent=( participation/(double)event_max_count) *100;
+		String participation_percentStr=
+				String.format("%.2f",participation_percent);
+		List<Integer> liveEventList=eventService.selectLiveEventList();
 		List<Integer> endEventList=eventService.selectEndEventList();
 		
 		if(participationList.size()>0) {
 			model.addAttribute("participationList",participationList);
 		}
-		System.out.println("participationList "+participationList);
+		System.out.println("liveEventList "+participationList);
 		
-		model.addAttribute("allEventList",allEventList);
+		model.addAttribute("liveEventList",liveEventList);
 		model.addAttribute("endEventList",endEventList);
+		model.addAttribute("participation_percentStr",participation_percentStr);
 		return "admin/eventParticipationForm";
+					
+	} 
+	
+	@RequestMapping(value="/event_end_participation", method=RequestMethod.GET)
+	public String eventEndForm(Model model,EventVo eventVo) {
+		
+		List<Map<String,Object>> participationList=eventService.getJoinEventData(eventVo.getEvent_seq());
+		int event_max_count=eventService.selectEventMaxCount(eventVo.getEvent_seq());
+		int participation=participationList.size();
+		double participation_percent=( participation/(double)event_max_count) *100;
+		String participation_percentStr=
+				String.format("%.2f",participation_percent);
+		List<Integer> liveEventList=eventService.selectLiveEventList();
+		List<Integer> endEventList=eventService.selectEndEventList();
+		
+		if(participationList.size()>0) {
+			model.addAttribute("participationList",participationList);
+		}		
+		model.addAttribute("liveEventList",liveEventList);
+		model.addAttribute("endEventList",endEventList);
+		model.addAttribute("participation_percentStr",participation_percentStr);
+		return "admin/eventEndForm";
 					
 	} 
 	

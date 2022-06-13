@@ -115,8 +115,12 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public List<Integer> selectLiveEventList() {
-		// TODO Auto-generated method stub
-		return null;
+		return eventDao.selectLiveEventList();
+	}
+
+	@Override
+	public int selectEventMaxCount(int event_seq) {
+		return eventDao.selectEventMaxCount(event_seq);
 	}
 
 }

@@ -129,4 +129,15 @@ where m.m_id=ep${event_seq}.m_id
 	where event_is_finish= 'Y'
 	order by event_seq desc 
 	</select>
+	
+	<select id="selectLiveEventList" resultType="int">
+	select event_seq from event 
+	where event_is_finish= 'N'
+	order by event_seq desc 
+	</select>
+	
+	<select id="selectEventMaxCount" resultType="int">
+	select event_max_count from event
+	where event_seq=#{event_seq}
+	</select>
 </mapper>

@@ -166,8 +166,12 @@ public class EventDaoImpl implements EventDao{
 
 	@Override
 	public List<Integer> selectLiveEventList() {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList(NAMESPACE+"selectLiveEventList");
+	}
+
+	@Override
+	public int selectEventMaxCount(int event_seq) {
+		return sqlSession.selectOne(NAMESPACE+"selectEventMaxCount",event_seq);
 	}
 
 }

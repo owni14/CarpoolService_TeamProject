@@ -43,5 +43,6 @@ public interface EventService {
 	public List<Integer> selectEndEventList();
 
 	public List<Integer> selectLiveEventList();
+	public int selectEventMaxCount(int event_seq);
 	
 }

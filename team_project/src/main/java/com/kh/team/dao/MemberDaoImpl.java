@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -96,6 +97,12 @@ public class MemberDaoImpl implements MemberDao {
 		map.put("boardTime", boardTime);
 		map.put("driver_seq", driver_seq);
 		sqlSession.insert(NAMESPACE + "insertPassenger", map);
+	}
+
+	@Override
+	public String getMemberLocation(String m_id) {
+		String memberLocation = sqlSession.selectOne(NAMESPACE + "getMemberLocation", m_id);
+		return memberLocation;
 	}
 
 }

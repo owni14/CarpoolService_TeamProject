@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -18,4 +19,5 @@ public interface MemberDao {
 	public boolean insertDriverLicense(String m_id, String ad_license_img); // 운전자 등록
 	public void adminupdateBlackScore(BlackListVo blackListVo); // 관리자 신고 회원 관리 블랙포인트 변경
 	public void insertPassenger(String m_id, String boardLoct, String boardTime, String driver_seq); // 탑승자 정보 추가
+	public String getMemberLocation(String m_id); // 회원 주소 얻어오기
 }

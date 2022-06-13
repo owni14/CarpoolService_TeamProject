@@ -64,4 +64,10 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.insertPassenger(m_id, boardLoct, boardTime, driver_seq);
 	}
 
+	@Override
+	public String getMemberLocation(String m_id) {
+		String memberLocation = memberDao.getMemberLocation(m_id);
+		return memberLocation;
+	}
+
 }

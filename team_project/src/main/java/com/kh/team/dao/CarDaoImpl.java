@@ -30,12 +30,16 @@ public class CarDaoImpl implements CarDao{
 	}
 
 	@Override
-	public void insertCar(String c_no, String c_code, String m_id) {
+	public boolean insertCar(String c_no, String c_code, String m_id) {
 		Map<String, String> map = new HashMap<>();
 		map.put("c_no", c_no);
 		map.put("c_code", c_code);
 		map.put("m_id", m_id);
-		sqlSession.insert(NAMESPACE + "insertCar", map);
+		int count = sqlSession.insert(NAMESPACE + "insertCar", map);
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

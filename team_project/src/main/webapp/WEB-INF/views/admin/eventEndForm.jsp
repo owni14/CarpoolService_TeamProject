@@ -7,6 +7,13 @@
 
 <script>
 //참가인원의 10퍼센트 당첨인원
+var transactionResult="${transactionResult}";
+if(transactionResult =="true"){
+	alert("작업성공");
+}
+else if(transactionResult="false"){
+	alert("작업실패");
+}
 var listSize="${participationList.size()}";
 var winnerCount=parseInt(listSize/10);
 var numS=new Array();

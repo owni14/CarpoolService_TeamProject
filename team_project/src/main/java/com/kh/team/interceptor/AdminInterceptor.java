@@ -12,9 +12,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		Object object = session.getAttribute("admin_code");
-		if (object == null) {
-			response.sendRedirect("/admin/admin_login");			
+		String admin_code = (String)session.getAttribute("admin_code");
+		if (admin_code == null || admin_code.equals("")) {
+			response.sendRedirect("/admin/admin_login");
+			return false;
 		}
 //			String uri = request.getRequestURI();
 //			String queryString = request.getQueryString();

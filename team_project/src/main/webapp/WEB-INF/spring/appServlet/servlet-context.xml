@@ -40,6 +40,7 @@
 		<interceptor>
 			<mapping path="/admin/**/*"/>
  			<exclude-mapping path="/admin/admin_login"/>
+ 			<exclude-mapping path="/admin/checkAdminLogin"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 	</interceptors>

@@ -164,7 +164,7 @@ var nav = $('.fixed-button');
                             <i class="ti-search"></i>
                         </a>
                         <a href="/admin/home">
-                            <img src="#" alt="Theme-Logo" />
+                            <img src="#" alt="얻어타다" />
                         </a>
                         <a class="mobile-options">
                             <i class="ti-more"></i>
@@ -229,7 +229,7 @@ var nav = $('.fixed-button');
                             <li class="user-profile header-notification">
                                 <a>
                                     <img src="#" class="img-radius" alt="프로필">
-                                    <span>관리자#95225</span>
+                                    <span>관리자 ${admin_code}</span>
                                     <i class="ti-angle-down"></i>
                                 </a>
                                 <ul class="show-notification profile-notification">
@@ -254,7 +254,7 @@ var nav = $('.fixed-button');
 <!--                                         </a> -->
 <!--                                     </li> -->
                                     <li>
-                                        <a href="auth-normal-sign-in.html">
+                                        <a href="/admin/logout">
                                             <i class="ti-layout-sidebar-left"></i> Logout
                                         </a>
                                     </li>
@@ -274,7 +274,7 @@ var nav = $('.fixed-button');
                                     <img class="img-40 img-radius" src="#" alt="User-Profile-Image">
                                     <div class="user-details">
                                         <span>관리자 </span>
-                                        <span id="more-details">#85138321
+                                        <span id="more-details">${admin_code}
 <!--                                      	   <i class="ti-angle-down"></i> -->
                                         </span>
                                     </div>

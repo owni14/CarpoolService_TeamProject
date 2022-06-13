@@ -70,6 +70,12 @@ public class AdminController {
 		return "admin/admin_login_form";
 	}
 	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.removeAttribute("admin_code");
+		return "redirect:/admin/admin_login";
+	}
+	
 
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
 	public String eventList(Model model,HttpSession session) {

@@ -172,3 +172,7 @@ create sequence seq_car_code start with 1001; start with 1001;
 -- car테이블 이름 변경
 alter table car
 rename column C_APPROVEDATE to c_regdate;
+
+-- car 테이블 컬럼 추가
+alter table car
+add c_people_count number default 1;

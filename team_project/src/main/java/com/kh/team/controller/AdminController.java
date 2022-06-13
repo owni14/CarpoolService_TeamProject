@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -25,10 +26,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.team.service.AdminService;
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.NotifyService;
 import com.kh.team.util.FileUploadHelper;
+import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.MemberVo;
@@ -43,11 +46,37 @@ public class AdminController {
 	MemberService memberService;
 	@Autowired
 	NotifyService notifyService;
+	@Autowired
+	AdminService adminService;
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin() {
 		return "admin/home_admin";
 	}
+	
+	@RequestMapping(value="/admin_login", method=RequestMethod.GET)
+	public String adminLogin() {
+		return "admin/admin_login_form";
+	}
+	
+	@RequestMapping(value="/checkAdminLogin", method=RequestMethod.GET)
+	public String checkAdminLogin(AdminVo adminVo,HttpSession session) {
+		boolean result = adminService.checkAdminId(adminVo);
+		if (result == true) {
+			String admin_code = adminVo.getAdmin_code();
+			session.setAttribute("admin_code", admin_code);
+//			System.out.println("checkAdminLogin, admin_code" + admin_code);
+			return "redirect:/admin/home";
+		}
+		return "admin/admin_login_form";
+	}
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.removeAttribute("admin_code");
+		return "redirect:/admin/admin_login";
+	}
+	
 
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
 	public String eventList(Model model,HttpSession session) {
@@ -82,11 +111,9 @@ public class AdminController {
 		return "admin/memberManagement";
 	}
 	
-	@RequestMapping(value = "/report_management", method = RequestMethod.POST)
+	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
 	public String reportManagement(Model model, BlackListVo blackListVo) {
-		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
-			notifyService.modifyApprovement(blackListVo);			
-		}
+		
 		System.out.println("blackListVo : " + blackListVo);
 		List<BlackListVo> notifyList = notifyService.notifyList();
 		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
@@ -108,11 +135,9 @@ public class AdminController {
 		return "admin/reportManagement";
 	}
 	
-	@RequestMapping(value="/report_complete_management", method = RequestMethod.POST)
+	@RequestMapping(value="/report_complete_management", method = RequestMethod.GET)
 	public String report_complete_management (BlackListVo blackListVo,Model model) {
-		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
-			notifyService.modifyApprovement(blackListVo);			
-		}
+		
 		List<BlackListVo> yNotifyList = notifyService.yNotifyList();
 		int dayNotifyCount = notifyService.dayNotifyCount();
 		int nNotifyCount = notifyService.notifyCount();
@@ -124,6 +149,20 @@ public class AdminController {
 		model.addAttribute("totalNotifyCount", totalNotifyCount);
 		model.addAttribute("cNotifyCount", cNotifyCount);
 		return "admin/reportComplete";
+	}
+	
+	@RequestMapping(value = "/modifyBlackPoint", method = RequestMethod.POST)
+	public String modifyBlackPoint(BlackListVo blackListVo) {
+		if (blackListVo.getBlacklist_seq() > 0 && 
+				blackListVo.getBlack_score() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
+				notifyService.modifyApprovement(blackListVo);			
+			return "redirect:/admin/report_management";
+		} else if (blackListVo.getBlacklist_seq() > 0 && 
+				blackListVo.getBlack_score() < 0) {
+				notifyService.modifyApprovement(blackListVo);			
+			return "redirect:/admin/report_complete_management";
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)
@@ -337,12 +376,64 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/event_participation", method=RequestMethod.GET)
-	public String eventWinnerForm(Model model) {
-		int event_seq=eventService.getMaxNoFinishEventSeq();
-		List<Map<String,Object>> participationList=eventService.getJoinEventData(event_seq);		
-		System.out.println("participationList "+participationList);
-		model.addAttribute("participationList",participationList);
+	public String eventForm(Model model,EventVo eventVo) {
+		int event_seq=eventVo.getEvent_seq();
+		if(event_seq<=0) {
+			event_seq=eventService.getMaxNoFinishEventSeq();
+			eventVo.setEvent_seq(event_seq);
+		}
+		List<Map<String,Object>> participationList=eventService.getJoinEventData(eventVo.getEvent_seq());
+		int event_max_count=eventService.selectEventMaxCount(event_seq);
+		int participation=participationList.size();
+		double participation_percent=( participation/(double)event_max_count) *100;
+		String participation_percentStr=
+				String.format("%.2f",participation_percent);
+		List<Integer> liveEventList=eventService.selectLiveEventList();
+		List<Integer> endEventList=eventService.selectEndEventList();
+		
+		if(participationList.size()>0) {
+			model.addAttribute("participationList",participationList);
+		}
+		System.out.println("liveEventList "+participationList);
+		
+		model.addAttribute("liveEventList",liveEventList);
+		model.addAttribute("endEventList",endEventList);
+		model.addAttribute("participation_percentStr",participation_percentStr);
 		return "admin/eventParticipationForm";
 					
 	} 
+	
+	@RequestMapping(value="/event_end_participation", method=RequestMethod.GET)
+	public String eventEndForm(Model model,EventVo eventVo) {
+		
+		List<Map<String,Object>> participationList=eventService.getJoinEventData(eventVo.getEvent_seq());
+		eventVo=eventService.getEventByEseq(eventVo.getEvent_seq());
+		int event_max_count=eventService.selectEventMaxCount(eventVo.getEvent_seq());
+		int participation=participationList.size();
+		double participation_percent=( participation/(double)event_max_count) *100;
+		String participation_percentStr=
+				String.format("%.2f",participation_percent);
+		List<Integer> liveEventList=eventService.selectLiveEventList();
+		List<Integer> endEventList=eventService.selectEndEventList();
+		
+		if(participationList.size()>0) {
+			model.addAttribute("participationList",participationList);
+		}		
+		model.addAttribute("liveEventList",liveEventList);
+		model.addAttribute("endEventList",endEventList);
+		model.addAttribute("participation_percentStr",participation_percentStr);
+		return "admin/eventEndForm";
+					
+	} 
+	
+	@RequestMapping(value="/event_winnerRun", method=RequestMethod.POST)
+	public String eventWinnerRun(EventVo eventVo, String[] memberList) {
+//		System.out.println("eventWinnerRun memberList"+memberList[0]);
+		int event_seq=eventVo.getEvent_seq();
+		
+		return "redirect:/admin/event_end_participation?event_seq="+eventVo.getEvent_seq();
+					
+	} 
+	
+	
 }

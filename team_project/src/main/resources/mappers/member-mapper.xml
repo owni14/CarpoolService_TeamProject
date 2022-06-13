@@ -28,12 +28,14 @@
 	
 	<!-- Driver List Query -->
 	<select id="getDriverList" resultType="map">
-		select d.driver_seq, m.m_id, m.m_address, m.m_company, m.m_name, m.m_dept, d.driver_depart_location, d.driver_depart_time 
-		from driver d, member m
+		select d.driver_seq, m.m_id, m.m_address, m.m_company, m.m_name, m.m_dept, d.driver_depart_location, d.driver_depart_time, a.ad_approve
+		from driver d, member m, approve_driver a
 		where d.m_id = m.m_id
+		and a.m_id = m.m_id
+		and a.ad_approve = 'Y'
 		and m.m_company = #{m_company}
 	</select>
-	
+	 
 	<select id="adminGetCount" resultType="int">
 		select count(*) from member
 		<include refid="search"></include>
@@ -90,5 +92,15 @@
 		insert into passenger (passenger_seq, m_id, passenger_depart_location, passenger_depart_time, driver_seq)
 		values (seq_passenger.nextval, #{m_id}, #{boardLoct}, #{boardTime}, #{driver_seq})
 	</insert>
+	
+	<insert id="insertCarInfo">
+		insert into carinfo
+		values (seq_hyundai.nextval, #{car_name}, #{car_brand}, #{car_brand_img}, #{car_img}, #{people_count});
+	</insert>
+	
+	<select id="getMemberLocation" resultType="string">
+		select m_address from member
+		where m_id = #{m_id}
+	</select>
 	
 </mapper>

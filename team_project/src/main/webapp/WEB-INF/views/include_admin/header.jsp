@@ -61,7 +61,8 @@
 		<script src="/resources/admin/assets/js/demo-12.js"></script>
 		
 		<script src="/resources/admin/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-
+		<!-- add fontawesome CDN -->
+		<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 		<!-- chartjs -->
 <!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 <!-- 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.esm.js" integrity="sha512-YM18yiANXJFpbiOZjLzUrK/lNfTiBcwtTLeAntG4B8dJY+NdUDjxfPNGPEMuOdXlT7U/uT+zbIvbQYAEFog+MA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
@@ -95,14 +96,14 @@ var nav = $('.fixed-button');
      }
  });
 	$(document).ready(function () {
-		$("#notifyList").click(function (e) {
-			e.preventDefault();
-			$("#frmReport").submit();
-		});
-		$("#notifyCompleteList").click(function (e) {
-			e.preventDefault();
-			$("#frmReportComplete").submit();
-		});
+// 		$("#notifyList").click(function (e) {
+// 			e.preventDefault();
+// 			$("#frmReport").submit();
+// 		});
+// 		$("#notifyCompleteList").click(function (e) {
+// 			e.preventDefault();
+// 			$("#frmReportComplete").submit();
+// 		});
 	});
 </script>
   
@@ -163,7 +164,7 @@ var nav = $('.fixed-button');
                             <i class="ti-search"></i>
                         </a>
                         <a href="/admin/home">
-                            <img src="#" alt="Theme-Logo" />
+                            <img src="#" alt="얻어타다" />
                         </a>
                         <a class="mobile-options">
                             <i class="ti-more"></i>
@@ -228,7 +229,7 @@ var nav = $('.fixed-button');
                             <li class="user-profile header-notification">
                                 <a>
                                     <img src="#" class="img-radius" alt="프로필">
-                                    <span>관리자#95225</span>
+                                    <span>관리자 ${admin_code}</span>
                                     <i class="ti-angle-down"></i>
                                 </a>
                                 <ul class="show-notification profile-notification">
@@ -253,7 +254,7 @@ var nav = $('.fixed-button');
 <!--                                         </a> -->
 <!--                                     </li> -->
                                     <li>
-                                        <a href="auth-normal-sign-in.html">
+                                        <a href="/admin/logout">
                                             <i class="ti-layout-sidebar-left"></i> Logout
                                         </a>
                                     </li>
@@ -273,7 +274,7 @@ var nav = $('.fixed-button');
                                     <img class="img-40 img-radius" src="#" alt="User-Profile-Image">
                                     <div class="user-details">
                                         <span>관리자 </span>
-                                        <span id="more-details">#85138321
+                                        <span id="more-details">${admin_code}
 <!--                                      	   <i class="ti-angle-down"></i> -->
                                         </span>
                                     </div>
@@ -409,14 +410,14 @@ var nav = $('.fixed-button');
                                      <ul class="pcoded-submenu">
                                          
                                         <li class="more-details">
-<!--                                             <a href="/admin/report_management"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a> -->
+<!--                                             <a id="notifyList" href="/admin/report_management"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a> -->
                                         		<form id="frmReport" action="/admin/report_management" method="post"></form>
-                                        		<a id="notifyList" href="#"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a>
+                                        		<a href="/admin/report_management"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a>
                                         </li>
                                         <li class="more-details">
-<!--                                             <a href="/admin/report_complete_management"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a> -->
+<!--                                             <a id="notifyCompleteList" href="/admin/report_complete_management"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a> -->
                                       			<form id="frmReportComplete" action="/admin/report_complete_management" method="post"></form>
-                                        		<a id="notifyCompleteList" href="#"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a>
+                                        		<a href="/admin/report_complete_management"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a>
                                         </li>
                                      </ul>
                                 	<!-- 아이콘 추가 0609  끝-->

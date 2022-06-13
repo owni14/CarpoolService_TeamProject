@@ -72,26 +72,26 @@
 <div class="row" style="margin-bottom: 20px;">
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
-		<form role="form">
+		<form role="form" action="/board/addDriver" method="post">
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="startLocation"> 출발 위치 </label> 
-				<input type="text" class="form-control" id="startLoct" name="startLocation" readonly="readonly" value="${loginVo.m_address}"/>
+				<input type="text" class="form-control" id="startLoct" name="startLoct" readonly="readonly" value="${loginVo.m_address}"/>
 			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="isSmoke"> 흡연 여부 </label><br>
-				<input type="radio" id="isSmoke" name="isSmoke" value="true"> 흡연
-				<input type="radio" id="isSmoke" name="isSmoke" value="false"> 비흡연
+				<input type="radio" id="isSmoke" name="isSmoke" value="Y"> 흡연
+				<input type="radio" id="isSmoke" name="isSmoke" value="N"> 비흡연
 			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
-				<label for="exampleInputEmail1"> 요구 사항 </label> 
-				<input type="email" class="form-control" id="exampleInputEmail1" />
+				<label for="requirements"> 요구 사항 </label> 
+				<input type="text" class="form-control" id="requirements" name="requirements"/>
 			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="startTime"> 출발 시간 </label> 
 				<select id="startHour" name="startHour">
-					<option value="6">06
-					<option value="7">07
-					<option value="8">08
+					<option value="06:">06
+					<option value="07:">07
+					<option value="08:">08
 				</select>
 				<select id="startMin" name="startMin">
 					<option value="00">00
@@ -102,7 +102,7 @@
 					<option value="50">50
 				</select>
 			</div>
-			<button id="btnCheck" type="button" class="btn btn-primary">확인</button>
+			<button id="btnCheck" type="submit" class="btn btn-primary">확인</button>
 		</form>
 	</div>
 	<div class="col-md-2"></div>

@@ -12,17 +12,109 @@
 			var admin_checkValue = $(this).attr("data-value");
 			var blackScoreValue = $(this).attr("data-bScore");
 			var black_m_id = $(this).attr("data-blackid");
+			frmApproveNotify.find("input[name=refresh]").val(1);
 			frmApproveNotify.find("input[name=blacklist_seq]").val(blacklist_seqValue);
 			frmApproveNotify.find("input[name=admin_check]").val(admin_checkValue);
 			frmApproveNotify.find("input[name=black_m_id]").val(black_m_id);
 			frmApproveNotify.find("input[name=black_score]").val(-1*blackScoreValue);
-			frmApproveNotify.attr("action","/admin/report_management");
+			frmApproveNotify.attr("action","/admin/modifyBlackPoint");
 			frmApproveNotify.attr("method","post");
 			frmApproveNotify.submit();
 		});
+		
+		$(".fa-paper-plane").click(function () {
+			$("#modal-97340").trigger("click");
+			var reporter = $(this).attr("data-reporter");
+			var blacklist_seq = $(this).attr("data-blacklistseq");
+			console.log(blacklist_seq);
+			$("#thReporter").text(reporter);
+			$("#btnModalSend").attr("data-blacklistseq",blacklist_seq);
+		});
+		
+		$("#btnModalSend").click(function () {
+			var content = $("#txtReportContent").val();
+			var receiver_m_id = $("#thReporter").text();
+			var sender_admin_code = "${admin_code}";
+			var blacklist_seq = $("#btnModalSend").attr("data-blacklistseq");
+			console.log(content);
+			console.log(receiver_m_id);
+			console.log(sender_admin_code);
+			var sData = {"receiver_m_id" : receiver_m_id,
+						 "sender_admin_code" : sender_admin_code,
+						 "content" : content,
+						 "blacklist_seq" : blacklist_seq};
+			var url = "/message/notifyComplete";
+			$.post(url,sData,function (rData) {
+				console.log(rData);
+			});
+		});
+		
+		function checkSended () {
+			var url = "/message/checkSendedMessage";
+			$.post(url, function (rData) {
+				console.log(rData);
+				for (var v = 0; v < $(".fa-paper-plane").length; v++) {
+					for (var w=0; w < rData.length; w++) {
+						console.log(rData[w]);
+						console.log("blacklistseq", $(".fa-paper-plane").eq(v).attr("data-blacklistseq"));
+ 						if (rData[w] == $(".fa-paper-plane").eq(v).attr("data-blacklistseq")) {}
+							$(".fa-paper-plane").eq(1).css("display","none");
+					}
+				}
+				
+			});
+		}
+		
+		checkSended();
 	});
 </script>
 <%@ include file="/WEB-INF/views/include_admin/frmApproveNotify.jsp" %>
+<!-- modal start -->
+<div class="row">
+		<div class="col-md-12">
+			 <a id="modal-97340" href="#modal-container-97340" role="button" class="btn" data-toggle="modal" style="display:none">Launch demo modal</a>
+			
+			<div class="modal fade" id="modal-container-97340" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">
+								신고 완료 알림 메세지
+							</h5> 
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<textarea id="txtReportContent" class="form-control">신고 완료가 정상 처리 되었습니다.</textarea>
+							<table style="margin-top: 20px; float: right;">
+								<thead>
+								<tr>
+									<th>받는 사람</th>
+									<th id="thReporter" style="padding-left:10px"></th>
+								</tr>
+								</thead>
+							</table>
+						
+						</div>
+						<div class="modal-footer">
+							 
+							<button type="button" class="btn btn-primary" id="btnModalSend" data-dismiss="modal">
+								전송
+							</button> 
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								닫기
+							</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+<!-- modal end -->
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -181,7 +273,8 @@
 											<th style="width:10%">신고 받은 회원 아이디</th>
 											<th style="width:55%">신고 내용</th>
 											<th style="width:10%">처리 결과</th>
-											<th style="width:15%">등록 일자</th>
+											<th style="width:10%">등록 일자</th>
+											<th style="width:5%">완료 알림</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -202,6 +295,7 @@
 												<!-- dropdown end -->
 											</td>
 											<td>${blackListVo.black_regdate}</td>
+											<td style="text-align: center"><i class="fa fa-paper-plane" data-reporter="${blackListVo.m_id}" data-blacklistseq="${blackListVo.blacklist_seq}"></i></td>
 											
 								</tr>
 	 									</c:forEach> 
@@ -220,5 +314,4 @@
 	</div>
 </div>
 <!-- end inner header -->
-				
 <%@ include file="/WEB-INF/views/include_admin/footer.jsp"%>

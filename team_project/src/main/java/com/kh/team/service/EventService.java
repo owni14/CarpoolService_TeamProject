@@ -37,4 +37,17 @@ public interface EventService {
 	
 	public List<Map<String, Object>> getJoinEventData(int event_seq);
 	
+	//이벤트 테이블 관리
+	public List<Integer> selectAllEventList();
+
+	public List<Integer> selectEndEventList();
+
+	public List<Integer> selectLiveEventList();
+	public int selectEventMaxCount(int event_seq);
+	public boolean updateIsLot(int event_seq);
+	public boolean updateEventWinnerToParticipation(int event_seq,String m_id);
+	public boolean updateEventWinnerPoint(String m_id,String pc_code);
+	public boolean insertEventWinnerPointHistory(String m_id,String pc_code);
+	public boolean transactionEventUpdate(int event_seq,String m_id, String pc_code);
+	
 }

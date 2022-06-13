@@ -68,8 +68,8 @@ public class EventTest {
 	
 	@Test
 	public void testinsertParticipaton() {
-		int event_seq=49;
-		for(int i=2; i<=40; i++) {
+		int event_seq=52;
+		for(int i=1; i<=40; i++) {
 			String m_id="user0"+i+"@gmail.com";	
 			
 			eventDao.insertParticipation(m_id, event_seq);
@@ -77,11 +77,15 @@ public class EventTest {
 //		System.out.println(eventDao.insertParticipation(m_id, event_seq));
 		//testOk
 	}
+	//당첨으로 바꾸기
 	@Test
 	public void testUpdateParticipaton() {
-		String m_id="user03@gmail.com";
-		int event_seq=21;
-		System.out.println(eventDao.updateParticipation(m_id, event_seq));
+//		String m_id="user03@gmail.com";
+		int event_seq=52;
+		for(int i=1; i<=8; i++) {
+			String m_id="user0"+i*5+"@gmail.com";	
+			eventDao.updateParticipation(m_id, event_seq);
+		}
 		//testOk
 	}
 	@Test

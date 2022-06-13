@@ -1,6 +1,7 @@
 package com.kh.team.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 public class MemberVo {
 	private String m_id;
@@ -72,6 +73,7 @@ public class MemberVo {
 		this.m_address = m_address;
 		this.m_cellphone = m_cellphone;
 	}
+
 
 	public String getM_id() {
 		return m_id;
@@ -185,6 +187,8 @@ public class MemberVo {
 		this.m_cellphone = m_cellphone;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "MemberVo [m_id=" + m_id + ", m_name=" + m_name + ", m_pw=" + m_pw + ", gender=" + gender
@@ -192,5 +196,11 @@ public class MemberVo {
 				+ m_point + ", m_evl=" + m_evl + ", m_blackpoint=" + m_blackpoint + ", m_joindate=" + m_joindate
 				+ ", m_is_smoke=" + m_is_smoke + ", m_address=" + m_address + ", m_cellphone=" + m_cellphone + "]";
 	}
+
+
+
+	
+
+	
 	
 }

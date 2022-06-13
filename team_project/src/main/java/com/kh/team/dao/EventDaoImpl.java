@@ -154,4 +154,66 @@ public class EventDaoImpl implements EventDao{
 		return sqlSession.selectList(NAMESPACE+"getJoinEventData", sqlMap);
 	}
 
+	@Override
+	public List<Integer> selectAllEventList() {
+		return sqlSession.selectList(NAMESPACE+"selectAllEventList");
+	}
+
+	@Override
+	public List<Integer> selectEndEventList() {
+		return sqlSession.selectList(NAMESPACE+"selectEndEventList");
+	}
+
+	@Override
+	public List<Integer> selectLiveEventList() {
+		return sqlSession.selectList(NAMESPACE+"selectLiveEventList");
+	}
+
+	@Override
+	public int selectEventMaxCount(int event_seq) {
+		return sqlSession.selectOne(NAMESPACE+"selectEventMaxCount",event_seq);
+	}
+
+	@Override
+	public boolean updateIsLot(int event_seq) {
+		int count=sqlSession.update(NAMESPACE+"updateIsLot",event_seq);
+		if(count>0) {
+			return true;
+		}
+		return false ;
+	}
+	@Override
+	public boolean updateEventWinnerToParticipation(int event_seq, String m_id) {
+		Map<String, Object> parameter =new HashMap<>();
+		parameter.put("event_seq", event_seq);
+		parameter.put("m_id", m_id);
+		int count=sqlSession.update(NAMESPACE+"updateEventWinnerToParticipation", parameter);
+		if(count>0) {
+			return true;
+		}
+		return false;
+	}
+	@Override
+	public boolean updateEventWinnerPoint(String m_id, String pc_code) {
+		Map<String, Object> parameter =new HashMap<>();
+		parameter.put("m_id", m_id);
+		parameter.put("pc_code", pc_code);
+		int count=sqlSession.update(NAMESPACE+"updateEventWinnerPoint", pc_code);
+		if(count>0) {
+			return true;
+		}
+		return false;
+	}
+	@Override
+	public boolean insertEventWinnerPointHistory(String m_id, String pc_code) {
+		Map<String, Object> parameter =new HashMap<>();
+		parameter.put("m_id", m_id);
+		parameter.put("pc_code", pc_code);
+		int count=sqlSession.insert(NAMESPACE+"insertEventWinnerPointHistory",parameter);
+		if(count>0) {
+			return true;
+		}
+		return false;
+	}
+
 }

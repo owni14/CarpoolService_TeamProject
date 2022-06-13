@@ -7,16 +7,23 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.kh.team.dao.CarDao;
+import com.kh.team.service.CarService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
 import com.kh.team.util.FileUploadHelper;
+import com.kh.team.vo.CarInfoVo;
 import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
@@ -32,6 +39,8 @@ public class MyController {
 	private MemberService memberService;
 	@Autowired
 	private MylogService mylogService;
+	@Autowired
+	private CarService carService;
 
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
@@ -76,37 +85,45 @@ public class MyController {
 	
 	// 운전자 등록 페이지로 이동
 	@RequestMapping(value = "/registerDriver", method = RequestMethod.GET)
-	public String registerDriver() {
+	public String registerDriver(Model model) {
 		return "my/registerDriver";
 	}
 	
 	// 운전자등록폼 처리
 	@RequestMapping(value = "/submitFile", method = RequestMethod.POST)
-	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session, RedirectAttributes rttr) throws Exception{
+	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session, RedirectAttributes rttr, String ci_name, String c_no) throws Exception{
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
+		String m_id = memberVo.getM_id();
 		String ext = driverLicense.getOriginalFilename();
 		int dot = ext.lastIndexOf(".");
 		
 		// 기본파일 확장자 얻기
 		String imageExt = ext.substring(dot);
 		
-//		System.out.println("imageExtension:" + imageExt);
-		
 		String company = memberVo.getM_company();
-		String saveName = memberVo.getM_id() + "'s_driver_license";
+		String saveName = m_id + "'s_driver_license";
 		byte[] fileData = driverLicense.getBytes();
 		
+		System.out.println("c_no:" + c_no);
 		// 파일 경로 및 파일 이름
 		String saveFilename = FileUploadHelper.uploadFileForDriver("//192.168.0.232/ServerFolder/DriverLicense/"+ company, (saveName + imageExt), fileData);
 		
 		if (saveFilename.equals("existence") || saveFilename == null) {
 			rttr.addFlashAttribute("isExistence", "true");
 			return "redirect:/";
+		} 
+		
+		// db로부터 자동차 코드 얻어오기
+		String c_code = carService.getCarCode(ci_name);
+		// db에 회원이 소유하고 있는 자동차 정보 등록
+		boolean result1 = carService.addCarByMember(c_no, c_code, m_id);
+		// db에 회원의 운전면허증 등록
+		boolean result2 = memberService.submitDriverLicense(memberVo.getM_id(), saveFilename);
+		
+		if (result1 && result2) {
+			rttr.addFlashAttribute("registerDriver", "true");
 		}
 		
-		memberService.submitDriverLicense(memberVo.getM_id(), saveFilename);
-		
-//		System.out.println("MyController, saveFilename:" + saveFilename);
 		return "redirect:/";
 	}
 	
@@ -119,4 +136,5 @@ public class MyController {
 		System.out.println(driver_passengerlogList);
 		return driver_passengerlogList;
 	}
+	
 }

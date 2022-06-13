@@ -417,10 +417,15 @@ public class AdminController {
 	} 
 	
 	@RequestMapping(value="/event_winnerRun", method=RequestMethod.POST)
-	public String eventWinnerRun(EventVo eventVo, String[] memberList) {
+	public String eventWinnerRun(EventVo eventVo, String[] memberList,RedirectAttributes rttr) {
 //		System.out.println("eventWinnerRun memberList"+memberList[0]);
 		int event_seq=eventVo.getEvent_seq();
-		
+		String pc_code="1001";
+		boolean result=false;
+		for(String m_id:memberList) {
+			result=eventService.transactionEventUpdate(event_seq, m_id, pc_code);	
+		}
+		rttr.addAttribute("transactionResult", String.valueOf(result));
 		return "redirect:/admin/event_end_participation?event_seq="+eventVo.getEvent_seq();
 					
 	} 

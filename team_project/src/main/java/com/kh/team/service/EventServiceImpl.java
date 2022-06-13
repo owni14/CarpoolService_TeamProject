@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.team.dao.EventDao;
 import com.kh.team.vo.EventParticipationVo;
@@ -121,6 +122,36 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public int selectEventMaxCount(int event_seq) {
 		return eventDao.selectEventMaxCount(event_seq);
+	}
+	@Override
+	public boolean updateIsLot(int event_seq) {
+		return eventDao.updateIsLot(event_seq);
+	}
+	
+	@Override
+	public boolean updateEventWinnerToParticipation(int event_seq, String m_id) {
+		return eventDao.updateEventWinnerToParticipation(event_seq, m_id);
+	}
+	@Override
+	public boolean updateEventWinnerPoint(String m_id, String pc_code) {
+		return eventDao.updateEventWinnerPoint(m_id, pc_code);
+	}
+	@Override
+	public boolean insertEventWinnerPointHistory(String m_id, String pc_code) {
+		return eventDao.insertEventWinnerPointHistory(m_id, pc_code);
+	}
+	
+	@Transactional
+	@Override
+	public boolean transactionEventUpdate(int event_seq,String m_id, String pc_code) {
+		boolean resultIsLot=updateIsLot(event_seq);
+		boolean resultWinner=updateEventWinnerToParticipation(event_seq, m_id);
+		boolean resultPoint=updateEventWinnerPoint(m_id, pc_code);
+		boolean resultHistory=insertEventWinnerPointHistory(m_id, pc_code);
+		if(resultIsLot &&resultWinner &&resultPoint &&resultHistory  ) {
+			return true;
+		}
+		return false;
 	}
 
 }

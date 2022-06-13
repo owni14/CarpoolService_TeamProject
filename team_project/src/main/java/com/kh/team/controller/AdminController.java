@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -396,6 +397,7 @@ public class AdminController {
 	public String eventEndForm(Model model,EventVo eventVo) {
 		
 		List<Map<String,Object>> participationList=eventService.getJoinEventData(eventVo.getEvent_seq());
+		eventVo=eventService.getEventByEseq(eventVo.getEvent_seq());
 		int event_max_count=eventService.selectEventMaxCount(eventVo.getEvent_seq());
 		int participation=participationList.size();
 		double participation_percent=( participation/(double)event_max_count) *100;
@@ -411,6 +413,15 @@ public class AdminController {
 		model.addAttribute("endEventList",endEventList);
 		model.addAttribute("participation_percentStr",participation_percentStr);
 		return "admin/eventEndForm";
+					
+	} 
+	
+	@RequestMapping(value="/event_winnerRun", method=RequestMethod.POST)
+	public String eventWinnerRun(EventVo eventVo, String[] memberList) {
+//		System.out.println("eventWinnerRun memberList"+memberList[0]);
+		int event_seq=eventVo.getEvent_seq();
+		
+		return "redirect:/admin/event_end_participation?event_seq="+eventVo.getEvent_seq();
 					
 	} 
 	

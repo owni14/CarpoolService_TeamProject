@@ -140,4 +140,30 @@ where m.m_id=ep${event_seq}.m_id
 	select event_max_count from event
 	where event_seq=#{event_seq}
 	</select>
+	<!-- 이벤트 당첨에 따른 변화  -->
+	<update id="updateIsLot">
+	update event set event_isByLot = 'Y'
+	where event_seq=#{event_seq}
+	</update>
+	
+	<update id="updateEventWinnerToParticipation">
+	update event_participation_event_seq${event_seq} 
+	set ep_is_winner = 'Y'
+	where m_id=#{m_id}
+	</update>
+	
+	<update id="updateEventWinnerPoint">
+	update member set m_point=
+		(select pc.pc_point from point_code pc, point_history ph
+		where pc.pc_code = ph.pc_code and pc.pc_code=#{pc_code})
+	where m_id=#{m_id}
+	</update>
+	
+	<insert id="insertEventWinnerPointHistory">
+	insert into point_history
+	(p_seq, m_id, pc_code)
+	values
+	(seq_point_history.nextval, #{m_id}, #{pc_code})
+	</insert>
+	
 </mapper>

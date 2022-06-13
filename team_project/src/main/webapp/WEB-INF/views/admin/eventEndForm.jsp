@@ -38,6 +38,7 @@ console.log("numS[v]" ,numS);
 console.log("winnerCount" ,winnerCount);
 console.log("winnerNums" ,winnerNums);
 	$(document).ready(function() {
+		var frmEventWinner=$("#frmEventWinner");
 		$("#select_liveEvent_seq").change(function(){
 			
 // 			console.log($(this).val());
@@ -59,7 +60,20 @@ console.log("winnerNums" ,winnerNums);
 		});
 	$("#buttonWinner").click(function(){
 		var strSpan="당첨 번호 :";
+		var strfrmNames;
+		var strfrmValues;
 		for(var v=0; v<winnerNums.length; v++){
+			var winnerName;
+			$(".tdCount").each(function(index){
+				var tdIndex=$(this).attr("data-count");
+				if(tdIndex == winnerNums[v] ){
+					winnerName=$(".tdNames").eq(winnerNums[v]-1).attr("data-name");
+					console.log("winnerName",winnerName);
+				}
+			});
+			strfrmNames="memberList";
+			strfrmValues=winnerName;
+			frmEventWinner.find("input[name=event_seq]").after("<input type='hidden' name='"+ strfrmNames+"' value='"+strfrmValues+"'>");
 			if(v == winnerNums.length-1 ){
 				strSpan += winnerNums[v];
 				break;
@@ -69,6 +83,7 @@ console.log("winnerNums" ,winnerNums);
 		}//end for
 		
 		$("#winnerSpan").text(strSpan);
+		frmEventWinner.submit();
 	});
 });
 	
@@ -77,7 +92,9 @@ console.log("winnerNums" ,winnerNums);
 	
 </script>
 <%@ include file="/WEB-INF/views/include_admin/frmEvent.jsp" %>
-
+<form id="frmEventWinner" action="/admin/event_winnerRun" method="post">
+<input type="hidden" name="event_seq" value="${param.event_seq}">
+</form>
 <!-- start Event inner header -->
 <!-- <img src="/admin/displayImage?filename=//192.168.0.232/ServerFolder/editor/multiupload/202206071905312924d017-f20d-49e2-bfda-8a2184b78627.jpg"> -->
 <div class="pcoded-inner-content">
@@ -166,14 +183,14 @@ console.log("winnerNums" ,winnerNums);
 						
 						<c:forEach items="${participationList}" var="eventParticipationVo" varStatus="i" >
 						<tr class=<c:choose>
-						<c:when test="${eventParticipationVo.EP_IS_WINNER eq 'Y' }">"table-success"</c:when>
-						<c:otherwise>"table-warning"</c:otherwise>
+						<c:when test="${eventParticipationVo.EP_IS_WINNER eq 'Y' }">"table-success trList"</c:when>
+						<c:otherwise>"table-warning trList"</c:otherwise>
 						</c:choose>
 						>
-						<td>${i.count}</td>
+						<td class="tdCount" data-count="${i.count}">${i.count}</td>
 						<td>${eventParticipationVo.EVENT_SEQ}</td>
 						<td>${eventParticipationVo.EVENT_NAME}</td>
-						<td>${ eventParticipationVo.M_NAME}(${eventParticipationVo.M_ID})</td>
+						<td class="tdNames" data-name="${eventParticipationVo.M_ID}">${ eventParticipationVo.M_NAME}(${eventParticipationVo.M_ID})</td>
 						<td><c:choose>
 						<c:when test="${eventParticipationVo.EP_IS_WINNER eq 'Y' }">당첨</c:when>
 						<c:otherwise>미당첨</c:otherwise>

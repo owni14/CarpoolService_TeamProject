@@ -78,6 +78,9 @@ event_is_finish	char(1)	default 'N',
 event_img	varchar2(500),
 event_max_count	number	default 10,
 event_point	number	default 500
+--0613 추가
+point_code char(4)references point_code(pc_code),  default '1002'
+
 );
 --이벤트 당첨자
 create table event_winner (

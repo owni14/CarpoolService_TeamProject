@@ -86,28 +86,33 @@ public class MyController {
 	
 	// 운전자등록폼 처리
 	@RequestMapping(value = "/submitFile", method = RequestMethod.POST)
-	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session, RedirectAttributes rttr, String ci_name) throws Exception{
+	public String submitLicenseFile(MultipartFile driverLicense, HttpSession session, RedirectAttributes rttr, String ci_name, String c_no) throws Exception{
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
+		String m_id = memberVo.getM_id();
 		String ext = driverLicense.getOriginalFilename();
 		int dot = ext.lastIndexOf(".");
 		
 		// 기본파일 확장자 얻기
 		String imageExt = ext.substring(dot);
 		
-		
 		String company = memberVo.getM_company();
-		String saveName = memberVo.getM_id() + "'s_driver_license";
+		String saveName = m_id + "'s_driver_license";
 		byte[] fileData = driverLicense.getBytes();
 		
+		System.out.println("c_no:" + c_no);
 		// 파일 경로 및 파일 이름
 		String saveFilename = FileUploadHelper.uploadFileForDriver("//192.168.0.232/ServerFolder/DriverLicense/"+ company, (saveName + imageExt), fileData);
 		
 		if (saveFilename.equals("existence") || saveFilename == null) {
 			rttr.addFlashAttribute("isExistence", "true");
 			return "redirect:/";
-		}
+		} 
+		
+		// db로부터 자동차 코드 얻어오기
 		String c_code = carService.getCarCode(ci_name);
-		System.out.println("c_code:" + c_code);
+		// db에 회원이 소유하고 있는 자동차 정보 등록
+		carService.addCarByMember(c_no, c_code, m_id);
+		// db에 회원의 운전면허증 등록
 		memberService.submitDriverLicense(memberVo.getM_id(), saveFilename);
 		
 		return "redirect:/";

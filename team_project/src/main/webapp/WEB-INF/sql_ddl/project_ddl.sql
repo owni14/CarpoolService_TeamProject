@@ -168,3 +168,7 @@ modify ci_people_count number check (ci_people_count between 1 and 4);
 
 -- 자동차별 시작 코드번호 설정
 create sequence seq_car_code start with 1001; start with 1001;
+
+-- car테이블 이름 변경
+alter table car
+rename column C_APPROVEDATE to c_regdate;

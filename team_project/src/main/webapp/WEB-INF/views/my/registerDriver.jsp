@@ -29,6 +29,13 @@ $(document).ready(function() {
 				</select>
 			</div>
 			<div class="form-group">
+				<img alt="" src="">
+			</div>
+			<div class="form-group">
+				<label for="c_no"> 차량번호 </label> 
+				<input type="text" class="form-control" name="c_no" placeholder="ex)001가0001">
+			</div>
+			<div class="form-group">
 				<label for="driverLicense"> 운전면허증 </label> 
 				<input type="file" class="form-control-file" id="driverLicense" name="driverLicense" />
 			</div>

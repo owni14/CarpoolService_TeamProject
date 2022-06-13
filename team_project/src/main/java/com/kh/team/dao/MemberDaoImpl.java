@@ -99,4 +99,10 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.insert(NAMESPACE + "insertPassenger", map);
 	}
 
+	@Override
+	public String getMemberLocation(String m_id) {
+		String memberLocation = sqlSession.selectOne(NAMESPACE + "getMemberLocation", m_id);
+		return memberLocation;
+	}
+
 }

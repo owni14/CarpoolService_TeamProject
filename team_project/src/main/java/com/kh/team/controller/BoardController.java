@@ -77,6 +77,7 @@ public class BoardController {
 		return "redirect:/";
 	}
 	
+	// 운전하기 등록
 	@RequestMapping(value = "/addDriver", method = RequestMethod.POST)
 	public String addDriver(HttpSession session, RedirectAttributes rttr, String startLoct, String isSmoke, String requirements, String startHour, String startMin) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
@@ -91,6 +92,14 @@ public class BoardController {
 //		System.out.println("MyController addDriver, stratTime:" + stratTime);
 		
 		return "redirect:/";
+	}
+	
+	// 회원의 위치정보 가져오는 메서드 (비동기)
+	@ResponseBody
+	@RequestMapping(value = "/member", method = RequestMethod.GET, produces = "text/plain; charset=utf8")
+	public String getMemberLocation(String m_id) {
+		String memberLocation = memberService.getMemberLocation(m_id);
+		return memberLocation;
 	}
 	
 }

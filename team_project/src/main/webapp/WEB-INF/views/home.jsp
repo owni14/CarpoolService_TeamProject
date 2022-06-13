@@ -7,7 +7,6 @@ $(document).ready(function() {
 	var isExistenceFile = "${isExistence}";
 	var driverResult = "${driverResult}";
 	var registerDriver = "${registerDriver}";
-	console.log(isExistenceFile);
 	if (isExistenceFile == "true") {
 		alert("이미 등록된 면허증입니다.");
 	}

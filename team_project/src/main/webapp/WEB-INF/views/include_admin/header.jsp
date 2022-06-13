@@ -96,14 +96,14 @@ var nav = $('.fixed-button');
      }
  });
 	$(document).ready(function () {
-		$("#notifyList").click(function (e) {
-			e.preventDefault();
-			$("#frmReport").submit();
-		});
-		$("#notifyCompleteList").click(function (e) {
-			e.preventDefault();
-			$("#frmReportComplete").submit();
-		});
+// 		$("#notifyList").click(function (e) {
+// 			e.preventDefault();
+// 			$("#frmReport").submit();
+// 		});
+// 		$("#notifyCompleteList").click(function (e) {
+// 			e.preventDefault();
+// 			$("#frmReportComplete").submit();
+// 		});
 	});
 </script>
   
@@ -410,14 +410,14 @@ var nav = $('.fixed-button');
                                      <ul class="pcoded-submenu">
                                          
                                         <li class="more-details">
-<!--                                             <a href="/admin/report_management"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a> -->
+<!--                                             <a id="notifyList" href="/admin/report_management"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a> -->
                                         		<form id="frmReport" action="/admin/report_management" method="post"></form>
-                                        		<a id="notifyList" href="#"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a>
+                                        		<a href="/admin/report_management"><i class="icofont icofont-not-allowed"></i> &nbsp; 신고 리스트 현황</a>
                                         </li>
                                         <li class="more-details">
-<!--                                             <a href="/admin/report_complete_management"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a> -->
+<!--                                             <a id="notifyCompleteList" href="/admin/report_complete_management"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a> -->
                                       			<form id="frmReportComplete" action="/admin/report_complete_management" method="post"></form>
-                                        		<a id="notifyCompleteList" href="#"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a>
+                                        		<a href="/admin/report_complete_management"><i class="icofont icofont-checked"></i> &nbsp; 신고 완료 리스트 현황</a>
                                         </li>
                                      </ul>
                                 	<!-- 아이콘 추가 0609  끝-->

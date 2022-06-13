@@ -12,7 +12,7 @@ public class BlackListVo {
 	private int black_score;
 	private String admin_code;
 	private String admin_check; // 관리자 페이지에서 신고 리스트 승인, 반려 정하는 경우
-	
+	private int refresh; // 새로 고침 했을 때 blacklist point가 중복 승인 되지 않게 하기 위해서 
 	public BlackListVo() {
 		super();
 	}
@@ -131,12 +131,23 @@ public class BlackListVo {
 		this.admin_check = admin_check;
 	}
 
+
+	public int getRefresh() {
+		return refresh;
+	}
+
+
+	public void setRefresh(int refresh) {
+		this.refresh = refresh;
+	}
+
+
 	@Override
 	public String toString() {
 		return "BlackListVo [blacklist_seq=" + blacklist_seq + ", m_id=" + m_id + ", black_m_id=" + black_m_id
 				+ ", black_content=" + black_content + ", black_is_processed=" + black_is_processed + ", black_regdate="
 				+ black_regdate + ", black_score=" + black_score + ", admin_code=" + admin_code + ", admin_check="
-				+ admin_check + "]";
+				+ admin_check + ", refresh=" + refresh + "]";
 	}
 
 }

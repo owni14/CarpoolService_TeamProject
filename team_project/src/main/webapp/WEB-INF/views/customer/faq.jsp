@@ -3,9 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
+<%@ include file="/WEB-INF/views/include/customer_header.jsp" %>
 <style>
-.jumbotron { background-color: rgba(54, 162, 235, 0.2);}
-.jumb_text { margin-left: 20%; }
 .card-body { margin: 20px; float:left; width: 200px; height: 180px; border-color: orange; }
 .card-body:hover { color:white; background-color: orange; cursor: pointer; box-shadow: 2px 2px gray;}
 </style>
@@ -40,14 +39,6 @@ $(document).ready(function() {
 });
 </script>
 
-<div class="affix row">
-	<div class="col-md-12">
-		<div class="jumbotron">
-			<h2 class="jumb_text">고객 센터</h2>
-			<p class="jumb_text">문의 사항을 처리해 드립니다.</p>
-		</div>
-	</div>
-</div>
 <div class="row" style="width:1924px">
 	<div class="col-md-2">
 	</div>

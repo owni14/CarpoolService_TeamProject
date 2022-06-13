@@ -9,6 +9,7 @@
 .tx-counsel { margin-bottom: 20px;}
 .btn-success { float: right;}
 </style>
+${finishList}
 <div class="row">
 	<div class="col-md-2">
 	</div>
@@ -44,31 +45,28 @@
 					<tr>
 						<td>
 						<!-- Accordion start -->
-							<div class="accordion" id="accordionExample">
+							<div class="accordion" id="notFinishList">
+							<c:forEach items="${notFinishList}" var="complainVo" varStatus="status">
 								<div class="accordion-item">
-									<h2 class="accordion-header" id="headingOne">
+									
+									<h2 class="accordion-header" id="notheading${status.count}">
 										<button class="accordion-button" type="button"
-											data-bs-toggle="collapse" data-bs-target="#collapseOne"
-											aria-expanded="true" aria-controls="collapseOne">
-											Accordion Item #1</button>
+											data-bs-toggle="collapse" data-bs-target="#notcollapse${status.count}"
+											aria-expanded="true" aria-controls="notcollapse${status.count}">
+											${complainVo.complain_content}</button>
 									</h2>
-									<div id="collapseOne" class="accordion-collapse collapse show"
-										aria-labelledby="headingOne"
-										data-bs-parent="#accordionExample">
+									<div id="notcollapse${status.count}" class="accordion-collapse collapse"
+										aria-labelledby="notheading${status.count}"
+										data-bs-parent="#notFinishList">
 										<div class="accordion-body">
-											<strong>This is the first item's accordion body.</strong> It
-											is shown by default, until the collapse plugin adds the
-											appropriate classes that we use to style each element. These
-											classes control the overall appearance, as well as the
-											showing and hiding via CSS transitions. You can modify any of
-											this with custom CSS or overriding our default variables.
-											It's also worth noting that just about any HTML can go within
-											the
-											<code>.accordion-body</code>
-											, though the transition does limit overflow.
+											<p>문의 날짜 : ${complainVo.complain_regdate}</p>
+											<p>분류 : ${complainVo.complain_classification}</p>
+											<p>상세 내용 : ${complainVo.complain_content}</p>
+											
 										</div>
 									</div>
 								</div>
+								</c:forEach>
 							</div>
 						<!-- Accordion ends -->
 						</td>
@@ -87,7 +85,30 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td></td>
+						<td>
+							<!-- Accordion start -->
+							<div class="accordion" id="finishList">
+							<c:forEach items="${finishList}" var="complainVo" varStatus="status">
+								<div class="accordion-item">
+									<h2 class="accordion-header" id="heading${status.count}">
+										<button class="accordion-button" type="button"
+											data-bs-toggle="collapse" data-bs-target="#collapse${status.count}"
+											aria-expanded="true" aria-controls="collapse${status.count}">
+											${complainVo.complain_content}</button>
+									</h2>
+									<div id="collapse${status.count}" class="accordion-collapse collapse"
+										aria-labelledby="heading${status.count}"
+										data-bs-parent="#finishList">
+										<div class="accordion-body">
+											<span>${complainVo.complain_regdate }</span>
+											${complainVo.complain_answer}
+										</div>
+									</div>
+								</div>
+								</c:forEach>
+							</div>
+						<!-- Accordion ends -->
+						</td>
 					</tr>
 				</tbody>
 			</table>

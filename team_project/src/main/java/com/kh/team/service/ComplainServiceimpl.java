@@ -15,14 +15,20 @@ public class ComplainServiceimpl implements ComplainService {
 	private ComplainDao complainDao;
 
 	@Override
-	public boolean insertComplain() {
-		boolean result = complainDao.insertComplain();
+	public boolean insertComplain(ComplainVo complainVo) {
+		boolean result = complainDao.insertComplain(complainVo);
 		return result;
 	}
 
 	@Override
-	public List<ComplainVo> getComplainList(String m_id) {
-		List<ComplainVo> complainList = complainDao.getComplainListById(m_id);
+	public List<ComplainVo> getFinishListById(String m_id) {
+		List<ComplainVo> complainList = complainDao.getFinishListById(m_id);
+		return complainList;
+	}
+	
+	@Override
+	public List<ComplainVo> getNotFinishListById(String m_id) {
+		List<ComplainVo> complainList = complainDao.getFinishListById(m_id);
 		return complainList;
 	}
 

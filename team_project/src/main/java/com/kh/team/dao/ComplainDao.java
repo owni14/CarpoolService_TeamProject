@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.team.vo.ComplainVo;
 
 public interface ComplainDao {
-	public boolean insertComplain();
-	public List<ComplainVo> getComplainListById(String m_id);
+	public boolean insertComplain(ComplainVo complainVo);
+	public List<ComplainVo> getFinishListById(String m_id);
+	public List<ComplainVo> getNotFinishListById(String m_id);
 }

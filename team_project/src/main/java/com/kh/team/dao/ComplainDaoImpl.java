@@ -16,8 +16,9 @@ public class ComplainDaoImpl implements ComplainDao {
 	private SqlSession sqlSession;
 
 	@Override
-	public boolean insertComplain() {
-		int count = sqlSession.insert(NAMESPACE + "insertComplain");
+	public boolean insertComplain(ComplainVo complainVo) {
+//		System.out.println("complainVo : " + complainVo);
+		int count = sqlSession.insert(NAMESPACE + "insertComplain", complainVo);
 		if (count > 0) {
 			return true;
 		}
@@ -25,8 +26,14 @@ public class ComplainDaoImpl implements ComplainDao {
 	}
 
 	@Override
-	public List<ComplainVo> getComplainListById(String m_id) {
-		List<ComplainVo> complainList = sqlSession.selectList(NAMESPACE + "getComplainListById", m_id);
+	public List<ComplainVo> getFinishListById(String m_id) {
+		List<ComplainVo> complainList = sqlSession.selectList(NAMESPACE + "getFinishListById", m_id);
+		return complainList;
+	}
+	
+	@Override
+	public List<ComplainVo> getNotFinishListById(String m_id) {
+		List<ComplainVo> complainList = sqlSession.selectList(NAMESPACE + "getFinishListById", m_id);
 		return complainList;
 	}
 

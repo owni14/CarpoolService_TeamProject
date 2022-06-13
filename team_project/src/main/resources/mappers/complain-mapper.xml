@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kh.team.mappers.complain">
+
+	<insert id="insertComplain">
+	insert into complain
+		(complain_seq, admin_code, m_id, complain_content, complain_group, complain_classification)
+	values
+		(seq_complain.nextval, #{admin_code}, #{m_id}, #{complain_content}, seq_complain.nextval, #{complain_classification})
+	</insert>
+	
+	<select id="getFinishListById" resultType="ComplainVo">
+	select * from complain
+	where m_id = #{m_id}
+	and complain_is_finish = 'Y'
+	order by complain_regdate
+	</select>
+	
+	<select id="getNotFinishListById" resultType="ComplainVo">
+	select * from complain
+	where m_id = #{m_id}
+	and complain_is_finish = 'N'
+	order by complain_regdate
+	</select>
+</mapper>

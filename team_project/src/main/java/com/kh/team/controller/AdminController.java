@@ -110,11 +110,9 @@ public class AdminController {
 		return "admin/memberManagement";
 	}
 	
-	@RequestMapping(value = "/report_management", method = RequestMethod.POST)
+	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
 	public String reportManagement(Model model, BlackListVo blackListVo) {
-		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
-			notifyService.modifyApprovement(blackListVo);			
-		}
+		
 		System.out.println("blackListVo : " + blackListVo);
 		List<BlackListVo> notifyList = notifyService.notifyList();
 		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
@@ -136,11 +134,9 @@ public class AdminController {
 		return "admin/reportManagement";
 	}
 	
-	@RequestMapping(value="/report_complete_management", method = RequestMethod.POST)
+	@RequestMapping(value="/report_complete_management", method = RequestMethod.GET)
 	public String report_complete_management (BlackListVo blackListVo,Model model) {
-		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
-			notifyService.modifyApprovement(blackListVo);			
-		}
+		
 		List<BlackListVo> yNotifyList = notifyService.yNotifyList();
 		int dayNotifyCount = notifyService.dayNotifyCount();
 		int nNotifyCount = notifyService.notifyCount();
@@ -152,6 +148,20 @@ public class AdminController {
 		model.addAttribute("totalNotifyCount", totalNotifyCount);
 		model.addAttribute("cNotifyCount", cNotifyCount);
 		return "admin/reportComplete";
+	}
+	
+	@RequestMapping(value = "/modifyBlackPoint", method = RequestMethod.POST)
+	public String modifyBlackPoint(BlackListVo blackListVo) {
+		if (blackListVo.getBlacklist_seq() > 0 && 
+				blackListVo.getBlack_score() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
+				notifyService.modifyApprovement(blackListVo);			
+			return "redirect:/admin/report_management";
+		} else if (blackListVo.getBlacklist_seq() > 0 && 
+				blackListVo.getBlack_score() < 0) {
+				notifyService.modifyApprovement(blackListVo);			
+			return "redirect:/admin/report_complete_management";
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)

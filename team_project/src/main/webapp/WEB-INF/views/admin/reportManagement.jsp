@@ -13,18 +13,18 @@
 			var blackScoreValue = $(this).attr("data-bScore");
 			var black_m_id = $(this).attr("data-blackid");
 			console.log(admin_checkValue); // 반려 : C, 반려 취소 : N, 승인 : Y
+			frmApproveNotify.find("input[name=refresh]").val(1);
 			frmApproveNotify.find("input[name=blacklist_seq]").val(blacklist_seqValue);
 			frmApproveNotify.find("input[name=admin_check]").val(admin_checkValue);
 			if (admin_checkValue == "N" || admin_checkValue == "C") {
-				frmApproveNotify.attr("action","/admin/report_management");
 				frmApproveNotify.find("input[name=black_score]").val(0);
-				frmApproveNotify.attr("method","post");
+				
 			} else if (admin_checkValue == "Y") {
 				frmApproveNotify.find("input[name=black_m_id]").val(black_m_id);
 				frmApproveNotify.find("input[name=black_score]").val(blackScoreValue);
-				frmApproveNotify.attr("action","/admin/report_complete_management");
-				frmApproveNotify.attr("method","post");
 			}
+				frmApproveNotify.attr("action","/admin/modifyBlackPoint");
+				frmApproveNotify.attr("method","post");
 			frmApproveNotify.submit();
 		});
 	});

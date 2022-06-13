@@ -64,9 +64,16 @@ public class AdminController {
 		if (result == true) {
 			String admin_code = adminVo.getAdmin_code();
 			session.setAttribute("admin_code", admin_code);
-			return "/admin/home";
+//			System.out.println("checkAdminLogin, admin_code" + admin_code);
+			return "redirect:/admin/home";
 		}
 		return "admin/admin_login_form";
+	}
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.removeAttribute("admin_code");
+		return "redirect:/admin/admin_login";
 	}
 	
 
@@ -358,12 +365,25 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/event_participation", method=RequestMethod.GET)
-	public String eventWinnerForm(Model model) {
-		int event_seq=eventService.getMaxNoFinishEventSeq();
-		List<Map<String,Object>> participationList=eventService.getJoinEventData(event_seq);		
+	public String eventWinnerForm(Model model,EventVo eventVo) {
+		if(eventVo.getEvent_seq()<=0) {
+			int event_seq=eventService.getMaxNoFinishEventSeq();
+			eventVo.setEvent_seq(event_seq);
+		}
+		List<Map<String,Object>> participationList=eventService.getJoinEventData(eventVo.getEvent_seq());
+		List<Integer> allEventList=eventService.selectAllEventList();
+		List<Integer> endEventList=eventService.selectEndEventList();
+		
+		if(participationList.size()>0) {
+			model.addAttribute("participationList",participationList);
+		}
 		System.out.println("participationList "+participationList);
-		model.addAttribute("participationList",participationList);
+		
+		model.addAttribute("allEventList",allEventList);
+		model.addAttribute("endEventList",endEventList);
 		return "admin/eventParticipationForm";
 					
 	} 
+	
+	
 }

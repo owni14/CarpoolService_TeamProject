@@ -13,4 +13,10 @@
 		select ci_code from carinfo
 		where ci_name = #{ci_name}
 	</select>
+	
+	<insert id="insertCar">
+		insert into car (c_no, c_code, m_id)
+		values (#{c_no}, #{c_code}, #{m_id})
+	</insert>
+
 </mapper>

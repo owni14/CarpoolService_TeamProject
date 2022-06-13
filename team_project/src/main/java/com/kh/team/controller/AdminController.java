@@ -64,9 +64,16 @@ public class AdminController {
 		if (result == true) {
 			String admin_code = adminVo.getAdmin_code();
 			session.setAttribute("admin_code", admin_code);
-			return "/admin/home";
+//			System.out.println("checkAdminLogin, admin_code" + admin_code);
+			return "redirect:/admin/home";
 		}
 		return "admin/admin_login_form";
+	}
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.removeAttribute("admin_code");
+		return "redirect:/admin/admin_login";
 	}
 	
 

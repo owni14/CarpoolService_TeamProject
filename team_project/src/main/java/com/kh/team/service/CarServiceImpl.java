@@ -1,5 +1,7 @@
 package com.kh.team.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +15,14 @@ public class CarServiceImpl implements CarService{
 	private CarDao carDao;
 	
 	@Override
-	public void insertCarInfoInMemberInfo(String m_id, String c_code) {
-		carDao.insertCarInfoInMemberInfo(m_id, c_code);
-		
-	}
-
-	@Override
 	public String getCarCode(String ci_name) {
 		String c_code = carDao.getCarCode(ci_name);
 		return c_code;
+	}
+
+	@Override
+	public void addCarByMember(String c_no, String c_code, String m_id) {
+		carDao.insertCar(c_no, c_code, m_id);
 	}
 
 }

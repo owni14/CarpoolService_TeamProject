@@ -78,6 +78,9 @@ event_is_finish	char(1)	default 'N',
 event_img	varchar2(500),
 event_max_count	number	default 10,
 event_point	number	default 500
+--0613 추가
+point_code char(4)references point_code(pc_code),  default '1002'
+
 );
 --이벤트 당첨자
 create table event_winner (
@@ -168,3 +171,7 @@ modify ci_people_count number check (ci_people_count between 1 and 4);
 
 -- 자동차별 시작 코드번호 설정
 create sequence seq_car_code start with 1001; start with 1001;
+
+-- car테이블 이름 변경
+alter table car
+rename column C_APPROVEDATE to c_regdate;

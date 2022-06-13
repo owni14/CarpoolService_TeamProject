@@ -6,19 +6,19 @@ public class CarInfoVo {
 	private String ci_brand;
 	private String ci_brand_img;
 	private String ci_car_img;
-	private int ci_people_count;
+	private int ci_max_people;
 	
 	public CarInfoVo() {
 		super();
 	}
 	
-	public CarInfoVo(String ci_name, String ci_brand, String ci_brand_img, String ci_car_img, int ci_people_count) {
+	public CarInfoVo(String ci_name, String ci_brand, String ci_brand_img, String ci_car_img, int ci_max_people) {
 		super();
 		this.ci_name = ci_name;
 		this.ci_brand = ci_brand;
 		this.ci_brand_img = ci_brand_img;
 		this.ci_car_img = ci_car_img;
-		this.ci_people_count = ci_people_count;
+		this.ci_max_people = ci_max_people;
 	}
 
 	public CarInfoVo(String ci_code, String ci_name, String ci_brand, String ci_brand_img, String ci_car_img,
@@ -29,7 +29,7 @@ public class CarInfoVo {
 		this.ci_brand = ci_brand;
 		this.ci_brand_img = ci_brand_img;
 		this.ci_car_img = ci_car_img;
-		this.ci_people_count = ci_people_count;
+		this.ci_max_people = ci_people_count;
 	}
 
 	public String getCi_code() {
@@ -72,18 +72,18 @@ public class CarInfoVo {
 		this.ci_car_img = ci_car_img;
 	}
 
-	public int getCi_people_count() {
-		return ci_people_count;
+	public int getCi_max_people() {
+		return ci_max_people;
 	}
 
-	public void setCi_people_count(int ci_people_count) {
-		this.ci_people_count = ci_people_count;
+	public void setCi_max_people(int ci_max_people) {
+		this.ci_max_people = ci_max_people;
 	}
 
 	@Override
 	public String toString() {
 		return "CarInfoVo [ci_code=" + ci_code + ", ci_name=" + ci_name + ", ci_brand=" + ci_brand + ", ci_brand_img="
-				+ ci_brand_img + ", ci_car_img=" + ci_car_img + ", ci_people_count=" + ci_people_count + "]";
+				+ ci_brand_img + ", ci_car_img=" + ci_car_img + ", ci_max_people=" + ci_max_people + "]";
 	}
 	
 }

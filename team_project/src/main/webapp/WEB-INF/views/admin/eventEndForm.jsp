@@ -6,8 +6,39 @@
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 
 <script>
+//참가인원의 10퍼센트 당첨인원
+var listSize="${participationList.size()}";
+var winnerCount=parseInt(listSize/10);
+var numS=new Array();
 
+var winnerNums=new Array(); 
+
+for(var v=0; v<listSize; v++){
+	numS[v]=v+1;
+}
+for(var v=0; v<winnerCount; v++){
+	
+	var randomNum=(parseInt(Math.random()*listSize))+1;
+	console.log("for randomNum",randomNum);
+	if(numS[randomNum]==""){
+		console.log("if 진입",v);
+		while(true){
+			randomNum=(parseInt(Math.random()*listSize))+1;
+			if(! (numS[randomNum]=="") ){
+				console.log("while randomNum",randomNum);
+				break;
+			}
+		}
+	}
+	winnerNums[v]=randomNum;
+	numS[randomNum]="";
+
+}
+console.log("numS[v]" ,numS);
+console.log("winnerCount" ,winnerCount);
+console.log("winnerNums" ,winnerNums);
 	$(document).ready(function() {
+		var frmEventWinner=$("#frmEventWinner");
 		$("#select_liveEvent_seq").change(function(){
 			
 // 			console.log($(this).val());
@@ -26,11 +57,44 @@
 				form.attr("action","/admin/event_end_participation?event_seq="
 				+ event_seq);
 				form.submit();
-						});
+		});
+	$("#buttonWinner").click(function(){
+		var strSpan="당첨 번호 :";
+		var strfrmNames;
+		var strfrmValues;
+		for(var v=0; v<winnerNums.length; v++){
+			var winnerName;
+			$(".tdCount").each(function(index){
+				var tdIndex=$(this).attr("data-count");
+				if(tdIndex == winnerNums[v] ){
+					winnerName=$(".tdNames").eq(winnerNums[v]-1).attr("data-name");
+					console.log("winnerName",winnerName);
+				}
 			});
+			strfrmNames="memberList";
+			strfrmValues=winnerName;
+			frmEventWinner.find("input[name=event_seq]").after("<input type='hidden' name='"+ strfrmNames+"' value='"+strfrmValues+"'>");
+			if(v == winnerNums.length-1 ){
+				strSpan += winnerNums[v];
+				break;
+			}
+			strSpan += winnerNums[v]+" ,";
+			
+		}//end for
+		
+		$("#winnerSpan").text(strSpan);
+		frmEventWinner.submit();
+	});
+});
+	
+	
+	
+	
 </script>
 <%@ include file="/WEB-INF/views/include_admin/frmEvent.jsp" %>
-
+<form id="frmEventWinner" action="/admin/event_winnerRun" method="post">
+<input type="hidden" name="event_seq" value="${param.event_seq}">
+</form>
 <!-- start Event inner header -->
 <!-- <img src="/admin/displayImage?filename=//192.168.0.232/ServerFolder/editor/multiupload/202206071905312924d017-f20d-49e2-bfda-8a2184b78627.jpg"> -->
 <div class="pcoded-inner-content">
@@ -103,7 +167,8 @@
 				<div class="card">
 				
 					<div class="card-header">
-					
+					<button class="btn btn-success btn-round" id="buttonWinner" type="button">추첨하기</button>
+					<span id="winnerSpan"></span>
 						<table class="table table-hover">
 						<thead>
 						<tr>
@@ -118,14 +183,14 @@
 						
 						<c:forEach items="${participationList}" var="eventParticipationVo" varStatus="i" >
 						<tr class=<c:choose>
-						<c:when test="${eventParticipationVo.EP_IS_WINNER eq 'Y' }">"table-success"</c:when>
-						<c:otherwise>"table-warning"</c:otherwise>
+						<c:when test="${eventParticipationVo.EP_IS_WINNER eq 'Y' }">"table-success trList"</c:when>
+						<c:otherwise>"table-warning trList"</c:otherwise>
 						</c:choose>
 						>
-						<td>${i.count}</td>
+						<td class="tdCount" data-count="${i.count}">${i.count}</td>
 						<td>${eventParticipationVo.EVENT_SEQ}</td>
 						<td>${eventParticipationVo.EVENT_NAME}</td>
-						<td>${ eventParticipationVo.M_NAME}(${eventParticipationVo.M_ID})</td>
+						<td class="tdNames" data-name="${eventParticipationVo.M_ID}">${ eventParticipationVo.M_NAME}(${eventParticipationVo.M_ID})</td>
 						<td><c:choose>
 						<c:when test="${eventParticipationVo.EP_IS_WINNER eq 'Y' }">당첨</c:when>
 						<c:otherwise>미당첨</c:otherwise>

@@ -4,8 +4,11 @@
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <script>
 $(document).ready(function() {
-	$("#btnSubmit").click(function() {
-		
+	var carImg = $("#carImg");
+	$("#ci_name").change(function() {
+		var car_name = $(this).val();
+		console.log(car_name);
+		carImg.attr("src", "/resources/images/carImage/" + car_name + ".png");
 	});
 });
 </script>
@@ -18,7 +21,7 @@ $(document).ready(function() {
 			</div>
 			<div class="form-group">
 				<label>차 선택</label><br>
-				<select class="form-control btn" name="ci_name">
+				<select class="form-control btn" id="ci_name" name="ci_name">
 					<option>차량을 선택해주세요</option>
 					<option value="GV80">GV80</option>
 					<option value="PALISADE">팰리세이드</option>
@@ -27,6 +30,13 @@ $(document).ready(function() {
 					<option value="TUCSON">투싼</option>
 					<option value="AVANTE">아반떼</option>
 				</select>
+			</div>
+			<div class="form-group">
+				<img id="carImg" alt="carImage" src="/resources/images/carImage/DEFAULT.png" width="614px" height="400px">
+			</div>
+			<div class="form-group">
+				<label for="c_no"> 차량번호 </label> 
+				<input type="text" class="form-control" name="c_no" placeholder="ex)001가0001">
 			</div>
 			<div class="form-group">
 				<label for="driverLicense"> 운전면허증 </label> 

@@ -5,9 +5,16 @@
 <script>
 $(document).ready(function() {
 	var isExistenceFile = "${isExistence}";
-	console.log(isExistenceFile);
+	var driverResult = "${driverResult}";
+	var registerDriver = "${registerDriver}";
 	if (isExistenceFile == "true") {
 		alert("이미 등록된 면허증입니다.");
+	}
+	if (driverResult == "true") {
+		alert("운전등록이 완료되었습니다.");
+	}
+	if (registerDriver == "true") {
+		alert("운전자등록신청이 정상적으로 제출되었습니다. \n승인까지 시간이 걸릴 수 있으니 양해 부탁드립니다.")
 	}
 });
 </script>

@@ -116,9 +116,13 @@ public class MyController {
 		// db로부터 자동차 코드 얻어오기
 		String c_code = carService.getCarCode(ci_name);
 		// db에 회원이 소유하고 있는 자동차 정보 등록
-		carService.addCarByMember(c_no, c_code, m_id);
+		boolean result1 = carService.addCarByMember(c_no, c_code, m_id);
 		// db에 회원의 운전면허증 등록
-		memberService.submitDriverLicense(memberVo.getM_id(), saveFilename);
+		boolean result2 = memberService.submitDriverLicense(memberVo.getM_id(), saveFilename);
+		
+		if (result1 && result2) {
+			rttr.addFlashAttribute("registerDriver", "true");
+		}
 		
 		return "redirect:/";
 	}
@@ -132,4 +136,5 @@ public class MyController {
 		System.out.println(driver_passengerlogList);
 		return driver_passengerlogList;
 	}
+	
 }

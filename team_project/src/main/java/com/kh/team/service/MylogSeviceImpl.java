@@ -33,4 +33,10 @@ public class MylogSeviceImpl implements MylogService {
 		List<PassengerVo> driver_passengerlogList = mylogDao.driver_passengerlogListBySeq(driver_seq);
 		return driver_passengerlogList;
 	}
+
+	@Override
+	public boolean addDriver(DriverVo driverVo) {
+		boolean result = mylogDao.insertDriver(driverVo);
+		return result;
+	}
 }

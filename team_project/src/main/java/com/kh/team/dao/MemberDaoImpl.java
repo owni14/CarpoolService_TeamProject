@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 

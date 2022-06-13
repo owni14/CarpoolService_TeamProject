@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.team.dao.MemberDao;
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 

@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.MemberService;
+import com.kh.team.service.MylogService;
+import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
 
 @Controller
@@ -24,6 +27,9 @@ public class BoardController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private MylogService myLogService;
 	
 	// 운전자 등록 페이지로 이동
 	@RequestMapping(value = "/drive", method = RequestMethod.GET)
@@ -68,6 +74,22 @@ public class BoardController {
 		String boardTime = boardHour + boardMin;
 		System.out.println("m_id:" + m_id);
 		memberService.addPassengerInfo(m_id, boardLoct, boardTime, driver_seq);
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/addDriver", method = RequestMethod.POST)
+	public String addDriver(HttpSession session, RedirectAttributes rttr, String startLoct, String isSmoke, String requirements, String startHour, String startMin) {
+		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
+		String m_id = loginVo.getM_id();
+		String driver_depart_time = startHour + startMin;
+		DriverVo driverVo = new DriverVo(m_id, startLoct, isSmoke, requirements, driver_depart_time);
+		boolean result = myLogService.addDriver(driverVo);
+		rttr.addFlashAttribute("driverResult", result);
+//		System.out.println("MyController addDriver, startLoct:" + startLoct);
+//		System.out.println("MyController addDriver, isSmoke:" + isSmoke);
+//		System.out.println("MyController addDriver, requirements:" + requirements);
+//		System.out.println("MyController addDriver, stratTime:" + stratTime);
+		
 		return "redirect:/";
 	}
 	

@@ -9,7 +9,7 @@
 		insert into driver 
 			(driver_seq, m_id, driver_depart_location, driver_is_smoke, driver_comment, driver_depart_time)
 		values
-			(#{driver_seq}, #{m_id}, #{driver_depart_location}, #{driver_is_smoke}, #{driver_comment}, #{driver_depart_time})
+			(seq_driver.nextval, #{m_id}, #{driver_depart_location}, #{driver_is_smoke}, #{driver_comment}, #{driver_depart_time})
 	</insert>
 	
 	<insert id="insertPassenger">

@@ -21,8 +21,9 @@ public class CarServiceImpl implements CarService{
 	}
 
 	@Override
-	public void addCarByMember(String c_no, String c_code, String m_id) {
-		carDao.insertCar(c_no, c_code, m_id);
+	public boolean addCarByMember(String c_no, String c_code, String m_id) {
+		boolean result = carDao.insertCar(c_no, c_code, m_id);
+		return result;
 	}
 
 }

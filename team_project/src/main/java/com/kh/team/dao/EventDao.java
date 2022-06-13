@@ -29,6 +29,10 @@ public interface EventDao {
 	public List<EventParticipationVo> getListParticipationByEventSeq(int event_seq);
 	public int getMaxNoFinishEventSeq();
 	public List<Map<String, Object>> getJoinEventData(int event_seq);
+	//이벤트 테이블 관리
+	public List<Integer> selectAllEventList();
+	public List<Integer> selectEndEventList();
+	public List<Integer> selectLiveEventList();
 	
 	
 }

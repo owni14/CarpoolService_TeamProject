@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kh.team.mappers.car">
+	<insert id="insertCarInfo">
+		insert into carinfo
+		values (seq_car_code.nextval, #{ci_name}, #{ci_brand}, #{ci_brand_img}, #{ci_car_img}, #{ci_people_count})
+	</insert>
+	
+	<select id="getCarCode" resultType="String">
+		select ci_code from carinfo
+		where ci_name = #{ci_name}
+	</select>
+</mapper>

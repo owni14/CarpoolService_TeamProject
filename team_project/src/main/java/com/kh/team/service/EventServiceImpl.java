@@ -103,4 +103,20 @@ public class EventServiceImpl implements EventService {
 		return eventDao.getJoinEventData(event_seq);
 	}
 
+	@Override
+	public List<Integer> selectAllEventList() {
+		return eventDao.selectAllEventList();
+	}
+
+	@Override
+	public List<Integer> selectEndEventList() {
+		return eventDao.selectEndEventList();
+	}
+
+	@Override
+	public List<Integer> selectLiveEventList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

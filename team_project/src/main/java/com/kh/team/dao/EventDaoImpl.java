@@ -154,4 +154,20 @@ public class EventDaoImpl implements EventDao{
 		return sqlSession.selectList(NAMESPACE+"getJoinEventData", sqlMap);
 	}
 
+	@Override
+	public List<Integer> selectAllEventList() {
+		return sqlSession.selectList(NAMESPACE+"selectAllEventList");
+	}
+
+	@Override
+	public List<Integer> selectEndEventList() {
+		return sqlSession.selectList(NAMESPACE+"selectEndEventList");
+	}
+
+	@Override
+	public List<Integer> selectLiveEventList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

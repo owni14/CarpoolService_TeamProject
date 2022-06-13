@@ -11,7 +11,7 @@ var transactionResult="${transactionResult}";
 if(transactionResult =="true"){
 	alert("작업성공");
 }
-else if(transactionResult="false"){
+else if(transactionResult=="false"){
 	alert("작업실패");
 }
 var listSize="${participationList.size()}";

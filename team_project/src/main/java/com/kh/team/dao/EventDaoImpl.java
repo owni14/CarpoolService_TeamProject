@@ -198,7 +198,7 @@ public class EventDaoImpl implements EventDao{
 		Map<String, Object> parameter =new HashMap<>();
 		parameter.put("m_id", m_id);
 		parameter.put("pc_code", pc_code);
-		int count=sqlSession.update(NAMESPACE+"updateEventWinnerPoint", pc_code);
+		int count=sqlSession.update(NAMESPACE+"updateEventWinnerPoint", parameter);
 		if(count>0) {
 			return true;
 		}

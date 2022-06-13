@@ -147,6 +147,7 @@ public class EventServiceImpl implements EventService {
 		boolean resultIsLot=updateIsLot(event_seq);
 		boolean resultWinner=updateEventWinnerToParticipation(event_seq, m_id);
 		boolean resultPoint=updateEventWinnerPoint(m_id, pc_code);
+		System.out.println("resultPoint "+resultPoint);
 		boolean resultHistory=insertEventWinnerPointHistory(m_id, pc_code);
 		if(resultIsLot &&resultWinner &&resultPoint &&resultHistory  ) {
 			return true;

@@ -107,4 +107,15 @@ public class EventTest {
 			System.out.println(eventList.get("EVENT_NAME"));
 		}
 	}
+	@Test
+	public void testEventIsWinnerByM_id() {
+		System.out.println(eventDao.updateEventWinnerToParticipation(52, "user021@gmail.com"));
+		
+	}
+	
+	@Test
+	public void testEventWinnerPoint() {
+		System.out.println(eventDao.updateEventWinnerPoint("user021@gmail.com", "1001"));
+		
+	}
 }

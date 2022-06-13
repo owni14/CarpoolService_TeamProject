@@ -57,8 +57,13 @@
 					for (var w=0; w < rData.length; w++) {
 						console.log(rData[w]);
 						console.log("blacklistseq", $(".fa-paper-plane").eq(v).attr("data-blacklistseq"));
- 						if (rData[w] == $(".fa-paper-plane").eq(v).attr("data-blacklistseq")) {}
-							$(".fa-paper-plane").eq(1).css("display","none");
+ 						if (rData[w] == $(".fa-paper-plane").eq(v).attr("data-blacklistseq")) {
+							console.log("v" + v);	
+ 							$(".fa-paper-plane").eq(v).css("display","none");
+ 							$(".fa-paper-plane").eq(v).parents("tr").find("button").css("display","none");
+ 							$(".fa-paper-plane").eq(v).parents("tr").find("td").eq(3).text("신고 처리 완료").css("color","blue");
+ 							$(".fa-paper-plane").eq(v).parents("tr").find("td").eq(5).text("신고 알림 완료").css("color","blue");
+ 						}
 					}
 				}
 				
@@ -284,7 +289,7 @@
 											<td>${blackListVo.m_id}</td>
 											<td>${blackListVo.black_m_id}</td>
 											<td>${blackListVo.black_content}</td>
-											<td>
+											<td style="text-align: center">
 												<!-- dropdown start -->
 												<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:blue"
 													id="dropdownMenuButton3" data-toggle="dropdown">

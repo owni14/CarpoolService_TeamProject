@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
+<style>
+	tbody > tr:hover {background-color: aliceblue;}
+</style>
 <script>
 	$(document).ready(function () {
 		var frmPaging = $("#frmPaging"); 
@@ -73,11 +76,50 @@
 				</div>
 			</div>
 			<!-- Page-header end -->
-			
 			<!-- Page-body start -->
 			<div class="page-body">
-				<!-- Basic table card start -->
-				<div class="card">
+			<!-- Basic table card start -->
+			<div class="card">
+			<!-- tab start -->
+			<div class="col-lg-12">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs md-tabs " role="tablist">
+					<li class="nav-item"><a class="nav-link active"
+						data-toggle="tab" href="#home7" role="tab"><i
+							class="icofont icofont-home"></i>Home</a>
+						<div class="slide"></div></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#profile7" role="tab"><i
+							class="icofont icofont-ui-user "></i>Profile</a>
+						<div class="slide"></div></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#messages7" role="tab"><i
+							class="icofont icofont-ui-message"></i>Messages</a>
+						<div class="slide"></div></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#settings7" role="tab"><i
+							class="icofont icofont-ui-settings"></i>Settings</a>
+						<div class="slide"></div></li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content card-block">
+					<div class="tab-pane active" id="home7" role="tabpanel">
+						1
+					</div>
+					<div class="tab-pane" id="profile7" role="tabpanel">
+						2
+					</div>
+					<div class="tab-pane" id="messages7" role="tabpanel">
+						3
+					</div>
+					<div class="tab-pane" id="settings7" role="tabpanel">
+						4
+					</div>
+				</div>
+			</div>
+			<!-- tab end -->
+			
+				
 					<div class="card-header">
 						<i class="icofont icofont-ui-user"></i>
 						<h5>회원 테이블</h5>
@@ -232,6 +274,7 @@
 				<!-- end pagination  -->
 				<!-- Basic table card end -->
 			</div>
+			<!-- Page-body end -->
 		</div>
 	</div>
 </div>

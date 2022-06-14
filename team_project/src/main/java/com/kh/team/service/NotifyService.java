@@ -5,7 +5,7 @@ import java.util.List;
 import com.kh.team.vo.BlackListVo;
 
 public interface NotifyService {
-	public void insertNotification(BlackListVo blackListVo); // 신고 회원 입력
+	public boolean insertNotification(BlackListVo blackListVo); // 신고 회원 입력
 	public List<BlackListVo> notifyList(); // 전체 신고 리스트 확인
 	public List<BlackListVo> yNotifyList(); // 신고 처리 완료 리스트 확인
 	public List<BlackListVo> nNotifyList(); // 신고 미처리 리스트 확인

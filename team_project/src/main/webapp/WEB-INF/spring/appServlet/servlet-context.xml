@@ -33,7 +33,7 @@
 	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
-	<!-- 인터셉터 -->
+	<!-- admin 인터셉터 start -->
 	<beans:bean class="com.kh.team.interceptor.AdminInterceptor"  id="adminInterceptor"></beans:bean>
 	
 	<interceptors>
@@ -45,6 +45,21 @@
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 	</interceptors>
+	<!-- admin 인터셉터 end -->
 	
+	<!-- main 인터셉터 start -->
+	<beans:bean class="com.kh.team.interceptor.MainInterceptor"  id="mainInterceptor"></beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/my/**/*"/>
+			<mapping path="/customer/counsel/**"/>
+			<mapping path="/customer/report/**"/>
+			<exclude-mapping path="/member/loginForm"/>
+			
+			<beans:ref bean="mainInterceptor"/>
+		</interceptor>
+	</interceptors>
+	<!-- main 인터셉터 end -->
 </beans:beans>
 

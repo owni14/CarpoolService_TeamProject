@@ -114,14 +114,25 @@ console.log("winnerNums" ,winnerNums);
 				console.log(rData);
 				if(rData =="true"){
 					alert("성공적으로 보냈습니다");
+					$("#tareaMsg").val("");
 				}
 				else{
 					alert("메세지 보내기에 실패했습니다");
+					$("#tareaMsg").val("");
 				}
 			});
 		});
-		
-		
+		$("#btnCancleMsg").click(function(){
+			$("#tareaMsg").val("");
+		});
+		//회원정보 수정하러가기
+		$(".btnSearch").click(function(e){
+			e.preventDefault();
+			var m_id=$(this).parents("td").parents().find(".tdNames").attr("data-name");
+			location.href="/admin/member_management?searchType=i&keyword="+m_id;
+					
+				
+		});
 });//jquery ENd
 	
 	
@@ -132,7 +143,7 @@ console.log("winnerNums" ,winnerNums);
 <!-- modal -->
 <div class="row">
 		<div class="col-md-12">
-			 <a id="modal-545116" href="#modal-container-545116" role="button" class="btn" data-toggle="modal"></a>
+			 <a id="modal-545116" href="#modal-container-545116" role="button" class="btn" data-toggle="modal" style="display:none;"></a>
 			
 			<div class="modal fade" id="modal-container-545116" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
@@ -153,7 +164,7 @@ console.log("winnerNums" ,winnerNums);
 							<button type="button" class="btn btn-primary" id="btnSendMsg" data-dismiss="modal">
 								쪽지 보내기
 							</button> 
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+							<button type="button" class="btn btn-secondary" id="btnCancleMsg" data-dismiss="modal">
 								닫기
 							</button>
 						</div>
@@ -264,7 +275,9 @@ console.log("winnerNums" ,winnerNums);
 						<c:if test="${eventVo.event_is_bylot eq 'Y'}">
 							<th>이벤트 물품 수령 여부</th>
 							<th>미수령자 쪽지 보내기</th>
+							
 						</c:if>	
+						<th>회원 정보 찾아가기</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -382,6 +395,7 @@ console.log("winnerNums" ,winnerNums);
 						</td>
 						
 						</c:if>
+						<td><a class="btn btn-info btnSearch" href="#">회원정보 조회하러가기</a></td>
 						</tr>
 						</c:forEach>
 						</tbody>

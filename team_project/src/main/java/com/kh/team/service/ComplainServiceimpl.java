@@ -33,4 +33,18 @@ public class ComplainServiceimpl implements ComplainService {
 		return complainList;
 	}
 
+	@Override
+	public List<ComplainVo> getAllNotFinishList() {
+		return complainDao.getAllNotFinishList();
+	}
+	@Override
+	public int getNotFinishCount() {
+		return complainDao.getNotFinishCount();
+	}
+
+	@Override
+	public boolean updateComplain(ComplainVo complainVo) {
+		return complainDao.updateComplain(complainVo);
+	}
+
 }

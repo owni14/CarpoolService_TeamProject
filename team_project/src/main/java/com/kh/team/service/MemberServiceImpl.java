@@ -86,6 +86,7 @@ public class MemberServiceImpl implements MemberService {
 		String ci_code = carDao.getCarCodeByM_Id(m_id);
 		String maxCount = carDao.getMaxPeopleCountOfCar(ci_code);
 		String currentCount = carDao.getCurrentCountOfCar(m_id);
+		String driver_seq = memberDao.getDriverSeq(m_id);
 		System.out.println("ci_code:" + ci_code);
 		System.out.println("maxCount:" + maxCount);
 		System.out.println("currentCount:" + currentCount);
@@ -108,6 +109,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+
 	@Transactional
 	public boolean adminUpdateMemberInfo(MemberVo memberVo, MemberUpdateVo memberUpdateVo) {
 		boolean result = false;
@@ -125,4 +127,18 @@ public class MemberServiceImpl implements MemberService {
 		return top5List;
 	}
 
+
+
+	public boolean isApplication(String m_id) {
+		boolean result = memberDao.isApplication(m_id);
+		return result;
+	}
+
+	@Override
+	public boolean getApplicationPassengerCount(String m_id) {
+		boolean result = memberDao.getApplicationPassengerCount(m_id);
+		return result;
+	}
+
 }
+

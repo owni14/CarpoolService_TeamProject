@@ -68,7 +68,7 @@ public class EventTest {
 	
 	@Test
 	public void testinsertParticipaton() {
-		int event_seq=52;
+		int event_seq=54;
 		for(int i=1; i<=40; i++) {
 			String m_id="user0"+i+"@gmail.com";	
 			

@@ -106,30 +106,23 @@
 					
 						<table class="table table-hover">
 						<thead>
-						<tr>
+						<tr class="table table-info">
 							<th>#</th>
 							<th>이벤트 번호</th>
 							<th>이벤트 이름</th>
 							<th>이벤트 참가자(id)</th>
-							<th>당첨여부</th>
+							
 						</tr>
 						</thead>
 						<tbody>
 						
 						<c:forEach items="${participationList}" var="eventParticipationVo" varStatus="i" >
-						<tr class=<c:choose>
-						<c:when test="${eventParticipationVo.EP_IS_WINNER eq 'Y' }">"table-success"</c:when>
-						<c:otherwise>"table-warning"</c:otherwise>
-						</c:choose>
-						>
+						<tr >
 						<td>${i.count}</td>
 						<td>${eventParticipationVo.EVENT_SEQ}</td>
 						<td>${eventParticipationVo.EVENT_NAME}</td>
 						<td>${ eventParticipationVo.M_NAME}(${eventParticipationVo.M_ID})</td>
-						<td><c:choose>
-						<c:when test="${eventParticipationVo.EP_IS_WINNER eq 'Y' }">당첨</c:when>
-						<c:otherwise>미당첨</c:otherwise>
-						</c:choose></td>
+						
 						</tr>
 						</c:forEach>
 						</tbody>

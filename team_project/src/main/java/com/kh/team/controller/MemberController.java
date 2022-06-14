@@ -28,9 +28,6 @@ public class MemberController {
 	
 	@RequestMapping(value = "/loginRun", method = RequestMethod.POST)
 	public String loginRun(String m_id, String m_pw, String saveId, HttpSession session, HttpServletResponse response) {
-		System.out.println("m_id: " + m_id);
-		System.out.println("m_pw: " + m_pw);
-		System.out.println("saveId: " + saveId);
 		MemberVo memberVo = memberService.getMemberByIdAndPw(m_id, m_pw);
 		if (memberVo == null) {
 			return "redirect:/member/loginForm";
@@ -49,7 +46,11 @@ public class MemberController {
 			cookie.setMaxAge(0); // 일주일
 			response.addCookie(cookie);
 		}
-		return "redirect:/";
+		String targetLocation = (String)session.getAttribute("targetLocation");
+		if (targetLocation == null || targetLocation.equals("")) {
+			return "redirect:/";
+		}
+		return "redirect:" + targetLocation;
 	}
 	
 	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
@@ -61,6 +62,12 @@ public class MemberController {
 	public String joinRun(MemberVo memberVo) {
 		System.out.println("MemberController, join_run, memberVo: " + memberVo);
 		memberService.insertMember(memberVo);
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginVo");
 		return "redirect:/";
 	}
 	

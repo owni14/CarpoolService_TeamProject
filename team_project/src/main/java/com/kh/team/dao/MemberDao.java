@@ -22,4 +22,6 @@ public interface MemberDao {
 	public String getMemberLocation(String m_id); // 회원 주소 얻어오기
 	public String getDriverSeq(String m_id); // 운전자 번호 얻어오기
 	public String getDriverId(String driver_seq); // 운전자 아이디 얻어오기
+	public boolean adminUpdateMemberInfo(MemberVo memberVo); // 관리자 페이지에서 회원 정보 수정 수정할 정보 1.주소 2.번호 3.회원탈퇴 여부
+	public List<MemberVo> getTop5EvlMembers (); // 관리자 페이지에서 평점 top5 회원 정보 가져오기 
 }

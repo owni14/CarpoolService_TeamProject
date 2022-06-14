@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.team.dao.CarDao;
 import com.kh.team.dao.MemberDao;
+import com.kh.team.dao.MemberUpdateDao;
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.MemberUpdateVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -21,6 +23,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao memberDao;
 	@Autowired
 	private CarDao carDao;
+	@Autowired
+	private MemberUpdateDao memberUpdateDao;
 
 	@Override
 	public void insertMember(MemberVo memberVo) {
@@ -101,6 +105,24 @@ public class MemberServiceImpl implements MemberService {
 	public String getDriverId(String driver_seq) {
 		String driverId = memberDao.getDriverId(driver_seq);
 		return driverId;
+	}
+
+	@Override
+	@Transactional
+	public boolean adminUpdateMemberInfo(MemberVo memberVo, MemberUpdateVo memberUpdateVo) {
+		boolean result = false;
+		boolean result1 = memberDao.adminUpdateMemberInfo(memberVo);
+		boolean result2 = memberUpdateDao.insertMemberUpdate(memberUpdateVo);
+		if (result1 == true && result2 == true) {
+			result = true;
+		}
+		return result;
+	}
+
+	@Override
+	public List<MemberVo> getTop5EvlMembers() {
+		List<MemberVo> top5List = memberDao.getTop5EvlMembers();
+		return top5List;
 	}
 
 }

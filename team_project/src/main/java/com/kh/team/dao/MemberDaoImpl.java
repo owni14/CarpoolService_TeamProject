@@ -120,5 +120,20 @@ public class MemberDaoImpl implements MemberDao {
 		String driverId = sqlSession.selectOne(NAMESPACE + "getDriverId", driver_seq);
 		return driverId;
 	}
+
+	@Override
+	public boolean adminUpdateMemberInfo(MemberVo memberVo) {
+		int count = sqlSession.update(NAMESPACE + "adminUpdateMemberInfo", memberVo);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public List<MemberVo> getTop5EvlMembers() {
+		List<MemberVo> top5EvlMembersList = sqlSession.selectList(NAMESPACE + "getTop5EvlMembers");
+		return top5EvlMembersList;
+	}
 	
 }

@@ -59,7 +59,18 @@ public class AdminController {
 	
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String homeAdmin() {
+	public String homeAdmin(Model model) {
+		List<MemberVo> top5List = memberService.getTop5EvlMembers();
+		int index = 1;
+		for (MemberVo memberVo : top5List) {
+			System.out.println("index : " + index);
+			System.out.println(memberVo.getM_id());
+			System.out.println(memberVo.getM_evl());
+			model.addAttribute("top" + index, memberVo.getM_id());
+			model.addAttribute("top" + index + "evl", memberVo.getM_evl());
+			index++;
+		}
+		model.addAttribute("top5List", top5List);
 		return "admin/home_admin";
 	}
 	
@@ -180,6 +191,13 @@ public class AdminController {
 		List<MemberUpdateVo> memberUpdateList = memberUpdateService.memberUpdateList();
 		return memberUpdateList;
 	} 
+	
+	@ResponseBody
+	@RequestMapping(value = "/memberInfoUpdate", method = RequestMethod.POST)
+	public String memberInfoUpdate(MemberVo memberVo, MemberUpdateVo memberUpdateVo) {
+		boolean result = memberService.adminUpdateMemberInfo(memberVo, memberUpdateVo);
+		return String.valueOf(result);
+	}
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)
 	public String eventGetBySeq(int event_seq, Model model,HttpSession session) {

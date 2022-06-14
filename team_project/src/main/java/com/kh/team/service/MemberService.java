@@ -18,4 +18,6 @@ public interface MemberService {
 	public boolean addPassengerInfo(String m_id, String boardLoct, String boardTime, String driver_seq); // 탑승자 정보 추가
 	public String getMemberLocation(String m_id); // 회원 주소 얻어오기
 	public Map<String, String> getCount(String m_id); // 차량 최대 탑승인원 및 현재 탑승인원 얻어오기
+	public String getDriverSeq(String m_id); // 운전자 번호 얻어오기 (회원이 탑승신청을 하였을 경우 신청상태를 '승인 대기'로 변경하기 위해)
+	public String getDriverId(String driver_seq); // 운전자 아이디 얻어오기
 }

@@ -20,4 +20,6 @@ public interface MemberDao {
 	public void adminupdateBlackScore(BlackListVo blackListVo); // 관리자 신고 회원 관리 블랙포인트 변경
 	public boolean insertPassenger(String m_id, String boardLoct, String boardTime, String driver_seq); // 탑승자 정보 추가
 	public String getMemberLocation(String m_id); // 회원 주소 얻어오기
+	public String getDriverSeq(String m_id); // 운전자 번호 얻어오기
+	public String getDriverId(String driver_seq); // 운전자 아이디 얻어오기
 }

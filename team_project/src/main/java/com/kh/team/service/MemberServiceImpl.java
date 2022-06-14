@@ -91,4 +91,16 @@ public class MemberServiceImpl implements MemberService {
 		return map;
 	}
 
+	@Override
+	public String getDriverSeq(String m_id) {
+		String driver_seq = memberDao.getDriverSeq(m_id);
+		return driver_seq;
+	}
+
+	@Override
+	public String getDriverId(String driver_seq) {
+		String driverId = memberDao.getDriverId(driver_seq);
+		return driverId;
+	}
+
 }

@@ -43,7 +43,7 @@ $(document).ready(function() {
 				"driver_seq" : driver_seq
 		};
 		$.post(url, sData, function(rData) {
-			console.log(rData);
+// 			console.log(rData);
 				$("#modal_body tr").remove();
 				$.each(rData, function() {
 						var tr = $("#table_clone tr").clone();

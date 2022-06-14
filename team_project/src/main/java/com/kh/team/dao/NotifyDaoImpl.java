@@ -16,8 +16,12 @@ public class NotifyDaoImpl implements NotifyDao{
 	SqlSession sqlSession;
 	
 	@Override
-	public void insertNotification(BlackListVo blackListVo) {
-		sqlSession.insert(NAMESPACE + "insertNotification", blackListVo);
+	public boolean insertNotification(BlackListVo blackListVo) {
+		int count = sqlSession.insert(NAMESPACE + "insertNotification", blackListVo);
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

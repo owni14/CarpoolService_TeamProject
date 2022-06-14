@@ -3,10 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <%@ include file="/WEB-INF/views/include/my_header.jsp"%>
-
+<style>
+#black_m_id { display: inline-block; width: 300px;}
+#black_content { margin-top: 20px; height: 100px;}
+</style>
 <script>
 $(document).ready(function() {
 	var frmPaging = $("#frmPaging");
+	var black_result = "${black_result}";
+	
+	if (black_result == "false") {
+		alert("신고처리가 정상적으로 되지 못했습니다.\n 다시 시도해 주세요.")
+	}
 	
 	$("a.page-link").click(function(e) {
 		e.preventDefault();
@@ -19,18 +27,58 @@ $(document).ready(function() {
 	
 	$("#perPage").change(function() {
 		var perPage = $(this).val();
-		
-// 		console.log(perpage);
 		frmPaging.find("input[name=perPage]").val(perPage);
 		frmPaging.attr("action", "/my/boardedHistory");
 		frmPaging.attr("method", "get");
 		frmPaging.submit();
-		
+	});
+	
+	$("#black").click(function(e) {
+		e.preventDefault();
+		$("#modal-container-678121").modal('show');
+		var driver_id = $("#driver_id").text();
+		console.log("driver_id: ", driver_id);
+		$("#black_m_id").val(driver_id.trim());
+	});
+	
+	$("#modalClose").click(function() {
+		$("#modal-container-678121").modal('hide');
 	});
 });
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp"%>
 <div class="row">
+
+	<!-- modal start -->
+	<form action="/customer/black_report" method="post">
+	<input type="hidden" name="m_id" value="${loginVo.m_id}">
+	<div class="col-md-12">
+		<div class="modal fade" id="modal-container-678121" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">
+							신고 하기
+						</h5>
+					</div>
+					<div class="modal-body">
+						신고 대상자 : <input type="text" class="form-control" id="black_m_id" name="black_m_id" readonly>
+						<textarea id="black_content" class="form-control" name="black_content" placeholder="신고내용을 입력해 주세요"></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-danger">신고하기</button>
+						<button type="button" id="modalClose" class="btn btn-secondary" data-dismiss="modal">
+							닫기
+						</button>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+	<!-- modal end -->
+	
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
@@ -83,7 +131,17 @@ $(document).ready(function() {
 				<c:forEach var="passengerlogVo" items="${passengerlogList}" >
 				<tr>
 					<td>${passengerlogVo.PASSENGER_SEQ}</td>
-					<td>${passengerlogVo.DRIVER_ID}</td>
+					<td>
+					<button class="btn dropdown-toggle" type="button" id="driver_id" data-toggle="dropdown">
+						${passengerlogVo.DRIVER_ID}
+					</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="#">쪽지보내기</a>
+						<a id="black" class="dropdown-item" href="#">신고하기</a>
+					</div>
+					
+					
+					</td>
 					<td>${passengerlogVo.PASSENGER_DEPART_LOCATION}</td>
 					<td>${passengerlogVo.PASSENGER_DEPART_TIME}</td>
 				</tr>

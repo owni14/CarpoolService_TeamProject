@@ -42,7 +42,7 @@ $(document).ready(function() {
 		$.each(rData, function() {
 			var that = this;
 			// 주소로 좌표를 검색합니다
-			geocoder.addressSearch(that.DRIVER_DEPART_LOCATION, function(result, status) {
+			geocoder.addressSearch(this.DRIVER_DEPART_LOCATION, function(result, status) {
 			
 			    // 정상적으로 검색이 완료됐으면 
 			     if (status === kakao.maps.services.Status.OK) {
@@ -65,15 +65,24 @@ $(document).ready(function() {
 		    	
 		}); // geocoder.addressSearch(this.m_address, function(result, status){})
 				
-		var tr = $("#tblDriverClone  tr").clone();
-		var tds = tr.find("td");
-		tds.eq(0).text(count++);
-		tds.eq(0).attr("data-driver_seq", this.DRIVER_SEQ);
-		tds.eq(1).text(this.M_NAME);
-		tds.eq(2).text(this.M_DEPT);
-		tds.eq(3).text(this.DRIVER_DEPART_LOCATION);
-		tds.find(".btnBoard").attr("data-m_id", this.M_ID);
-		$("#tblDriver tbody").append(tr);
+		// 차량 최대 탑승인원 및 현재 차량 탑승인원 얻어낼 url
+		var m_id = this.M_ID;
+		var url_count = "/board/count?m_id=" + m_id;
+		$.get(url_count, function(rData_count) {
+			var maxCount = rData_count.maxCount;
+			var currentCount = rData_count.currentCount;
+			var tr = $("#tblDriverClone  tr").clone();
+			var tds = tr.find("td");
+			tds.eq(0).text(count++);
+			tds.eq(0).attr("data-driver_seq", this.DRIVER_SEQ);
+			tds.eq(1).text(that.M_NAME);
+			tds.eq(2).text(that.M_DEPT);
+			tds.eq(3).text(that.DRIVER_DEPART_LOCATION);
+			tds.eq(4).text(currentCount + " / " + maxCount);
+			tds.find(".btnBoard").attr("data-m_id", that.M_ID);
+			$("#tblDriver tbody").append(tr);
+		});
+		
 			
 		}); // $.each(rData, function() {})
 		
@@ -81,6 +90,7 @@ $(document).ready(function() {
 	
 	// 비동기로 회원의 주소 가져오기
 	$.get(url_member, function(rData) {
+		$("#boardLoct").val(rData);
 		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch(rData, function(result, status) {
 		
@@ -90,10 +100,10 @@ $(document).ready(function() {
 		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 		        
 		     	// 마커 이미지의 이미지 주소입니다
-		        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+		        var imageSrc = "/resources/images/maker/home.png"; 
 		     	
 		     	// 마커 이미지의 이미지 크기 입니다
-		        var imageSize = new kakao.maps.Size(24, 35); 
+		        var imageSize = new kakao.maps.Size(35, 35); 
 		        
 		        // 마커 이미지를 생성합니다    
 		        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
@@ -225,6 +235,7 @@ $(document).ready(function() {
 		 // 버튼 클릭시 행에 있는 멤버 아이디 및 로그인된 회원의 회사 정보
 		 var m_id = $(this).attr("data-m_id");
 		 var m_company = "${loginVo.m_company}";
+		 $("#driver_id").val(m_id);
 		 
 		 var sData = {
 				 "m_id" : m_id,
@@ -305,6 +316,7 @@ $(document).ready(function() {
 		<form id="frmPassenger" role="form" method="post" action="/board/addPasgInfo">
 		<input hidden="true" name="m_id" value="${loginVo.m_id}">
 		<input hidden="true" id="driver_seq" name="driver_seq" value="">
+		<input hidden="true" id="driver_id" name="driver_id" value="">
 			<div class="form-group" style="margin-bottom: 10px;">
 				<h3 style="text-align: center">운전자 위치를 확인하시고, 탑승할 위치<span style="color: blue;">(도로명 주소기준)</span>를 클릭해주세요.</h3>
 				<label for="startLocation"> 탑승 위치 </label> 

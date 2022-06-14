@@ -12,9 +12,18 @@ $(document).ready(function() {
 	}
 	if (driverResult == "true") {
 		alert("운전등록이 완료되었습니다.");
+	} else {
+		alert("운전등록에 실패하였습니다. \n실패가 계속 될 경우 고객센터로 문의부탁드립니다.")
 	}
 	if (registerDriver == "true") {
 		alert("운전자등록신청이 정상적으로 제출되었습니다. \n승인까지 시간이 걸릴 수 있으니 양해 부탁드립니다.")
+	}else {
+		alert("운전자등록신청에 실패하였습니다. \n실패가 계속 될 경우 고객센터에 문의부탁드립니다.")
+	}
+	if (passengerResult == "true") {
+		alert("탑승신청이 완료되었습니다.");
+	} else (passengerResult == "false"){
+		alert("탑승신청에 실패하였습니다. \n실패가 계속 될 경우 고객센터로 문의부탁드립니다.");
 	}
 });
 </script>

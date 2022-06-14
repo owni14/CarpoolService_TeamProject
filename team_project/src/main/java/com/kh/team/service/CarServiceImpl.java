@@ -16,13 +16,19 @@ public class CarServiceImpl implements CarService{
 	
 	@Override
 	public String getCarCode(String ci_name) {
-		String c_code = carDao.getCarCode(ci_name);
+		String c_code = carDao.getCarCodeByCi_Name(ci_name);
 		return c_code;
 	}
 
 	@Override
 	public boolean addCarByMember(String c_no, String c_code, String m_id) {
 		boolean result = carDao.insertCar(c_no, c_code, m_id);
+		return result;
+	}
+
+	@Override
+	public boolean increaseCount(String m_id) {
+		boolean result = carDao.increaseCount(m_id);
 		return result;
 	}
 

@@ -90,13 +90,17 @@ public class MemberDaoImpl implements MemberDao {
 
 	// 탑승자 정보를 입력
 	@Override
-	public void insertPassenger(String m_id, String boardLoct, String boardTime, String driver_seq) {
+	public boolean insertPassenger(String m_id, String boardLoct, String boardTime, String driver_seq) {
 		Map<String, String> map = new HashMap<>();
 		map.put("m_id", m_id);
 		map.put("boardLoct", boardLoct);
 		map.put("boardTime", boardTime);
 		map.put("driver_seq", driver_seq);
-		sqlSession.insert(NAMESPACE + "insertPassenger", map);
+		int count = sqlSession.insert(NAMESPACE + "insertPassenger", map);
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -104,5 +108,5 @@ public class MemberDaoImpl implements MemberDao {
 		String memberLocation = sqlSession.selectOne(NAMESPACE + "getMemberLocation", m_id);
 		return memberLocation;
 	}
-
+	
 }

@@ -24,7 +24,7 @@ public class CarDaoImpl implements CarDao{
 	}
 	
 	@Override
-	public String getCarCode(String ci_name) {
+	public String getCarCodeByCi_Name(String ci_name) {
 		String ci_code = sqlSession.selectOne(NAMESPACE + "getCarCode", ci_name);
 		return ci_code;
 	}
@@ -40,6 +40,38 @@ public class CarDaoImpl implements CarDao{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void resetCount(String m_id) {
+		sqlSession.update(NAMESPACE + "resetCount", m_id);
+	}
+
+	@Override
+	public boolean increaseCount(String m_id) {
+		int count = sqlSession.update(NAMESPACE + "increaseCount", m_id);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public String getMaxPeopleCountOfCar(String ci_code) {
+		String count = sqlSession.selectOne(NAMESPACE + "getMaxPeopleCountOfCar", ci_code);
+		return count;
+	}
+
+	@Override
+	public String getCurrentCountOfCar(String m_id) {
+		String count = sqlSession.selectOne(NAMESPACE + "getCurrentCountOfCar", m_id);
+		return count;
+	}
+
+	@Override
+	public String getCarCodeByM_Id(String m_id) {
+		String ci_code = sqlSession.selectOne(NAMESPACE + "getCarCodeByM_Id", m_id);
+		return ci_code;
 	}
 
 }

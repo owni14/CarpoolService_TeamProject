@@ -122,6 +122,8 @@ public class MyController {
 		
 		if (result1 && result2) {
 			rttr.addFlashAttribute("registerDriver", "true");
+		} else {
+			rttr.addFlashAttribute("registerDriver", "false");
 		}
 		
 		return "redirect:/";

@@ -89,5 +89,12 @@ public class MemberTest {
 		String driverId = memberDao.getDriverId(driver_seq);
 		System.out.println("driverId:" + driverId);
 	}
+	
+	@Test
+	public void isApplication() {
+		String m_id = "hong@naver.com";
+		boolean result = memberDao.isApplication(m_id);
+		System.out.println("result: " + result);
+	}
 }
 

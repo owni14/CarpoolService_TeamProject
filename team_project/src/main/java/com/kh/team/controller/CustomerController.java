@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.ComplainService;
 import com.kh.team.service.FaqService;
+import com.kh.team.service.NotifyService;
+import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.FaqVo;
 import com.kh.team.vo.MemberVo;
@@ -27,6 +29,8 @@ public class CustomerController {
 	private FaqService faqService;
 	@Autowired
 	private ComplainService complainService;
+	@Autowired
+	private NotifyService notifyService;
 	
 	@RequestMapping(value = "/faq", method = RequestMethod.GET)
 	public String faq(HttpSession session) {
@@ -64,8 +68,25 @@ public class CustomerController {
 		rttr.addFlashAttribute("complain_submit", result);
 		return "redirect:/customer/counsel";
 	}
+	
 	@RequestMapping(value = "/report", method = RequestMethod.GET)
-	public String report() {
+	public String report(HttpSession session) {
+		List<BlackListVo> yBlackList = notifyService.yNotifyList();
+		List<BlackListVo> nBlackList = notifyService.nNotifyList();
+		session.setAttribute("yBlackList", yBlackList);
+		session.setAttribute("nBlackList", nBlackList);
 		return "customer/report";
+	}
+	
+	@RequestMapping(value = "/black_report", method= RequestMethod.POST)
+	public String black_report(BlackListVo blackListVo, RedirectAttributes rttr) {
+		boolean result = notifyService.insertNotification(blackListVo);
+		if (result) {
+			rttr.addFlashAttribute("black_result", true);
+			return "redirect:/customer/report";
+		} 
+		rttr.addFlashAttribute("black_result", false);
+		return "redirect:/my/boardedHistory";
+		
 	}
 }

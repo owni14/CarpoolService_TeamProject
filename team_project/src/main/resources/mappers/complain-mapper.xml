@@ -12,9 +12,11 @@
 		(seq_complain.nextval, #{admin_code}, #{m_id}, #{complain_content}, seq_complain.nextval, #{complain_classification})
 	</insert>
 	
-	<select id="getFinishListById" resultType="ComplainVo">
-	select * from complain
+	<select id="getFinishListById" resultType="Map">
+	select c.*, a.admin_work
+	from complain c, admin a
 	where m_id = #{m_id}
+	and c.admin_code = a.admin_code
 	and complain_is_finish = 'Y'
 	order by complain_regdate
 	</select>

@@ -1,6 +1,7 @@
 package com.kh.team.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,7 +35,7 @@ public class CustomerController {
 	@RequestMapping(value = "/counsel", method = RequestMethod.GET)
 	public String counsel(HttpSession session) {
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
-		List<ComplainVo> finishList = complainService.getFinishListById(loginVo.getM_id());
+		List<Map<String, Object>> finishList = complainService.getFinishListById(loginVo.getM_id());
 		List<ComplainVo> notFinishList = complainService.getNotFinishListById(loginVo.getM_id());
 		session.setAttribute("finishList", finishList);
 		session.setAttribute("notFinishList", notFinishList);

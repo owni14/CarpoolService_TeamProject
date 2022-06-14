@@ -9,7 +9,7 @@
 .tx-counsel { margin-bottom: 20px;}
 .btn-success { float: right;}
 </style>
-${finishList}
+
 <div class="row">
 	<div class="col-md-2">
 	</div>
@@ -45,14 +45,14 @@ ${finishList}
 					<tr>
 						<td>
 						<!-- Accordion start -->
-							<div class="accordion" id="notFinishList">
+							<div class="accordion accordion-flush" id="notFinishList">
 							<c:forEach items="${notFinishList}" var="complainVo" varStatus="status">
 								<div class="accordion-item">
 									
 									<h2 class="accordion-header" id="notheading${status.count}">
-										<button class="accordion-button" type="button"
+										<button class="accordion-button collapsed" type="button"
 											data-bs-toggle="collapse" data-bs-target="#notcollapse${status.count}"
-											aria-expanded="true" aria-controls="notcollapse${status.count}">
+											aria-expanded="false" aria-controls="notcollapse${status.count}">
 											${complainVo.complain_content}</button>
 									</h2>
 									<div id="notcollapse${status.count}" class="accordion-collapse collapse"
@@ -87,21 +87,22 @@ ${finishList}
 					<tr>
 						<td>
 							<!-- Accordion start -->
-							<div class="accordion" id="finishList">
+							<div class="accordion accordion-flush" id="finishList">
 							<c:forEach items="${finishList}" var="complainVo" varStatus="status">
 								<div class="accordion-item">
 									<h2 class="accordion-header" id="heading${status.count}">
-										<button class="accordion-button" type="button"
+										<button class="accordion-button collapsed" type="button"
 											data-bs-toggle="collapse" data-bs-target="#collapse${status.count}"
-											aria-expanded="true" aria-controls="collapse${status.count}">
-											${complainVo.complain_content}</button>
+											aria-expanded="false" aria-controls="collapse${status.count}">
+											${complainVo.COMPLAIN_CONTENT}</button>
 									</h2>
 									<div id="collapse${status.count}" class="accordion-collapse collapse"
 										aria-labelledby="heading${status.count}"
 										data-bs-parent="#finishList">
 										<div class="accordion-body">
-											<span>${complainVo.complain_regdate }</span>
-											${complainVo.complain_answer}
+											<p style="text-align: right;">답변시간 : ${complainVo.COMPLAIN_REGDATE}</p>
+											${complainVo.ADMIN_WORK} : ${complainVo.COMPLAIN_ANSWER}
+											
 										</div>
 									</div>
 								</div>

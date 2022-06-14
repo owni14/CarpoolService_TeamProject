@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.ComplainService;
 import com.kh.team.service.FaqService;
@@ -19,7 +20,9 @@ import com.kh.team.vo.MemberVo;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
-	
+	private final String GM = "1001";
+	private final String CS = "1002";
+	private final String EV = "1003";
 	@Autowired
 	private FaqService faqService;
 	@Autowired
@@ -42,6 +45,25 @@ public class CustomerController {
 		return "customer/counsel";
 	}
 	
+	@RequestMapping(value = "/complain_run", method = RequestMethod.POST)
+	public String complain_run(ComplainVo complainVo, RedirectAttributes rttr) {
+		String menu = complainVo.getComplain_classification();
+		String content = complainVo.getComplain_content();
+		if (menu.equals("분류를 선택해 주세요") || (content != null && content.equals(""))) {
+			rttr.addFlashAttribute("complain_error", true);
+			return "redirect:/customer/counsel";
+		}
+		if (menu.equals("시스템 이용문의") || menu.equals("기타")) {
+			complainVo.setAdmin_code(GM);
+		} else if (menu.equals("이벤트")) {
+			complainVo.setAdmin_code(EV);
+		} else {
+			complainVo.setAdmin_code(CS);
+		}
+		boolean result = complainService.insertComplain(complainVo);
+		rttr.addFlashAttribute("complain_submit", result);
+		return "redirect:/customer/counsel";
+	}
 	@RequestMapping(value = "/report", method = RequestMethod.GET)
 	public String report() {
 		return "customer/report";

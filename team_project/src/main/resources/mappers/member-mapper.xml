@@ -104,12 +104,6 @@
 		where m_id = #{m_id}
 	</select>
 	
-	<select id="getApplicationPassengerCount" resultType="_int">
-		select count(*) from passenger
-		where is_approve = 'W'
-		and m_id = #{m_id}
-	</select>
-	
 	<select id="getDriverSeq" resultType="string">
 		select driver_seq from passenger
 		where is_approve = 'W'
@@ -126,4 +120,13 @@
 		where is_approve = 'W'
 		and m_id = #{m_id}
 	</select>
+	
+	<select id="deletePassenger">
+		update passenger set
+		is_deletion = 'Y'
+		where m_id = #{m_id}
+		and driver_seq = #{driver_seq}
+		and is_approve = 'W';
+	</select>
+	
 </mapper>

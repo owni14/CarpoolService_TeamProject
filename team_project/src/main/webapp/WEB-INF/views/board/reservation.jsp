@@ -98,7 +98,14 @@ $(document).ready(function() {
 			
 			// 회원이 탑승신청한 운전자와 반복문을 돌면서 가져올 운전자와 같으면 승인 대기상태로 신청상태를 변경
 			if (driverId == that.M_ID) {
+				var btnCancel= tds.eq(6).children();
 				tds.eq(5).text("승인 대기");
+				tds.eq(5).attr("style", "color:blue; font-weight: bold;");
+				btnCancel.text("탑승취소");
+				btnCancel.attr("class", "btn btn-danger btn-sm btnBoard");
+				btnCancel.removeAttr("role");
+				btnCancel.removeAttr("data-toggle");
+				btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ);
 			}
 			
 			tds.find(".btnBoard").attr("data-m_id", that.M_ID);
@@ -258,6 +265,14 @@ $(document).ready(function() {
 		 // 보낼 url 설정
 		 var url = "/board/driverInfo";
 		 var driver_seq = $(this).parent().parent().find(".classTd").attr("data-driver_seq");
+		 var state = $(this).parent().parent().parent().find(".boardingState");
+		 console.log(state);
+		 
+// 		 if (boardingState == "승인 대기") {
+// 			 console.log("checked");
+// 		 }
+		 
+		 // 클릭한 버튼의 운전자에 대한 운전자 아이디 얻어오기
 		 url_getDriverId = "/board/getDriverId?driver_seq=" + driver_seq;
 		 $.post(url_getDriverId, function(rData) {
 			 $("#driver_id").val(rData);

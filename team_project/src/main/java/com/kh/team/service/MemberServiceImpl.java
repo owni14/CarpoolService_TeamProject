@@ -111,8 +111,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public boolean getApplicationPassengerCount(String m_id) {
-		boolean result = memberDao.getApplicationPassengerCount(m_id);
+	public boolean deletePassenger(String m_id, String driver_seq) {
+		boolean result = memberDao.deletePassenger(m_id, driver_seq);
 		return result;
 	}
 

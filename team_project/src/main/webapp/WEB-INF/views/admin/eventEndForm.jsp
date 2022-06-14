@@ -92,30 +92,36 @@ console.log("winnerNums" ,winnerNums);
 		$("#winnerSpan").text(strSpan);
 		frmEventWinner.submit();
 	});
-	//미수령자 글자 만들기
-			var m_ids=new Array();
-			var targetIndexs=new Array();
-			$(".tdNames").each(function(index){
-				m_ids[index]=$(this).attr("data-name");
-				
-			});
-		console.log(m_ids);
-		var arrSize="${eventWinnerList.size()}";
-		var arrTmp="${eventWinnerList}";
-		var indexTmp=0;
-		for(var v=0; v<m_ids.length; v++){
-			console.log("out v",v);
-			for(var a=0; a<arrSize; a++){
-				if(m_ids[v] == (arrTmp[a].m_id)){
-					targetIndexs[indexTmp]=v;
-					indexTmp++;
-					break;
+
+		//쪽지 보내기
+		var receiver_m_id;
+		$(".sendMsg").click(function(){
+			$("#modal-545116").trigger("click");
+			receiver_m_id=$(this).attr("data-mid");
+			
+		});
+		//쪽지보내기 완료 클릭
+		$("#btnSendMsg").click(function(){
+			var content=$("#tareaMsg").val();
+			var sender_admin_code = "${admin_code}";
+			var sData={
+					"receiver_m_id":receiver_m_id,
+					"content":content,
+					"sender_admin_code":sender_admin_code
+			};
+			var url="/message/EventIsNoGet";
+			$.post(url,sData,function(rData){
+				console.log(rData);
+				if(rData =="true"){
+					alert("성공적으로 보냈습니다");
 				}
-			}
-			if(indexTmp >= arrSize-1){
-				break;
-			}
-		}
+				else{
+					alert("메세지 보내기에 실패했습니다");
+				}
+			});
+		});
+		
+		
 });//jquery ENd
 	
 	
@@ -123,7 +129,43 @@ console.log("winnerNums" ,winnerNums);
 	
 </script>
 <%@ include file="/WEB-INF/views/include_admin/frmEvent.jsp" %>
-${eventWinnerList}
+<!-- modal -->
+<div class="row">
+		<div class="col-md-12">
+			 <a id="modal-545116" href="#modal-container-545116" role="button" class="btn" data-toggle="modal"></a>
+			
+			<div class="modal fade" id="modal-container-545116" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">
+								쪽지보내기
+							</h5> 
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+						<textarea class="form-control" id="tareaMsg"></textarea>
+						</div>
+						<div class="modal-footer">
+							 
+							<button type="button" class="btn btn-primary" id="btnSendMsg" data-dismiss="modal">
+								쪽지 보내기
+							</button> 
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								닫기
+							</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+<!-- modal -->
 <form id="frmEventWinner" action="/admin/event_winnerRun" method="post">
 <input type="hidden" name="event_seq" value="${param.event_seq}">
 </form>
@@ -242,8 +284,103 @@ ${eventWinnerList}
 						<c:otherwise>미당첨</c:otherwise>
 						</c:choose></td>
 						<c:if test="${eventVo.event_is_bylot eq 'Y'}">
-						<td class="tdIsByLot"></td>
-						<td class="tdMessageSend"></td>
+						<td class="tdIsByLot">
+						<c:forEach items="${eventWinnerList}" var="eventWinnerVo" varStatus="j">
+						<c:choose>
+						
+						<c:when test="${eventWinnerVo.m_id eq eventParticipationVo.M_ID }">
+						
+						<c:choose>
+							<c:when test="${eventWinnerVo.e_winner_is_get eq 'Y'}">
+							<c:set var="winnerGet" value="수령"/>
+							
+							</c:when>
+							<c:otherwise>
+							<c:set var="winnerNoGet" value="미수령"/>
+						
+							</c:otherwise>
+						</c:choose>
+						
+						</c:when>
+						<c:otherwise>
+							<c:set var="noApplicable" value="해당없음"/>
+							
+						</c:otherwise>
+						
+						</c:choose>
+						</c:forEach>
+						<c:choose>
+						<c:when test="${!empty winnerGet }">
+						${winnerGet}
+						<c:set var="winnerGet" value=""/>
+						<c:set var="winnerNoGet" value=""/>
+						<c:set var="noApplicable" value=""/>
+						</c:when>
+						
+						<c:when test="${!empty winnerNoGet}">
+						${winnerNoGet}
+						<c:set var="winnerGet" value=""/>
+						<c:set var="winnerNoGet" value=""/>
+						<c:set var="noApplicable" value=""/>
+						</c:when>
+						
+						<c:when test="${!empty noApplicable  && empty winnerNoGet && empty winnerGet }">
+						${noApplicable}
+						<c:set var="winnerGet" value=""/>
+						<c:set var="winnerNoGet" value=""/>
+						<c:set var="noApplicable" value=""/>
+						</c:when>
+						</c:choose>
+						</td>
+						<td class="tdMessageSend">
+						<c:forEach items="${eventWinnerList}" var="eventWinnerVo" varStatus="j">
+						<c:choose>
+						
+						<c:when test="${eventWinnerVo.m_id eq eventParticipationVo.M_ID }">
+						
+						<c:choose>
+							<c:when test="${eventWinnerVo.e_winner_is_get eq 'Y'}">
+							<c:set var="winnerGet" value="수령"/>
+							
+							</c:when>
+							<c:otherwise>
+							<c:set var="winnerNoGet" value="미수령"/>
+						
+							</c:otherwise>
+						</c:choose>
+						
+						</c:when>
+						<c:otherwise>
+							<c:set var="noApplicable" value="해당없음"/>
+							
+						</c:otherwise>
+						
+						</c:choose>
+						</c:forEach>
+						<c:choose>
+						<c:when test="${!empty winnerGet }">
+						<i class="fa fa-paper-plane sendMsg" data-mid="${eventParticipationVo.M_ID}"></i>
+						<c:set var="winnerGet" value=""/>
+						<c:set var="winnerNoGet" value=""/>
+						<c:set var="noApplicable" value=""/>
+						</c:when>
+						
+						<c:when test="${!empty winnerNoGet}">
+						<i class="fa fa-paper-plane sendMsg" data-mid="${eventParticipationVo.M_ID}"></i>
+						<c:set var="winnerGet" value=""/>
+						<c:set var="winnerNoGet" value=""/>
+						<c:set var="noApplicable" value=""/>
+						</c:when>
+						
+						<c:when test="${!empty noApplicable  && empty winnerNoGet && empty winnerGet }">
+						${noApplicable}
+						<c:set var="winnerGet" value=""/>
+						<c:set var="winnerNoGet" value=""/>
+						<c:set var="noApplicable" value=""/>
+						</c:when>
+						</c:choose>
+						</td>
+						
 						</c:if>
 						</tr>
 						</c:forEach>

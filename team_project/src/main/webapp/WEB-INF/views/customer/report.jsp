@@ -1,8 +1,113 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@ include file="/WEB-INF/views/include/header.jsp" %>
+<%@ include file="/WEB-INF/views/include/header.jsp"%>
+<%@ include file="/WEB-INF/views/include/customer_header.jsp"%>
+<style>
+.dropdown {
+	margin-bottom: 30px;
+}
 
-report page
-<%@ include file="/WEB-INF/views/include/footer.jsp" %>
+.tx-counsel {
+	margin-bottom: 20px;
+}
+
+.btn-success {
+	float: right;
+}
+</style>
+<div class="row">
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<div>
+			<table class="table">
+				<thead>
+					<tr style="text-align: center;">
+						<th>신고 내역</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<!-- Accordion start -->
+							<div class="accordion accordion-flush" id="notFinishList">
+								<c:forEach items="<%-- ${} --%>" var="blackListVo"
+									varStatus="status">
+									<div class="accordion-item">
+
+										<h2 class="accordion-header" id="notheading${status.count}">
+											<button class="accordion-button collapsed" type="button"
+												data-bs-toggle="collapse"
+												data-bs-target="#notcollapse${status.count}"
+												aria-expanded="false"
+												aria-controls="notcollapse${status.count}">
+												<%-- ${} --%></button>
+										</h2>
+										<div id="notcollapse${status.count}"
+											class="accordion-collapse collapse"
+											aria-labelledby="notheading${status.count}"
+											data-bs-parent="#notFinishList">
+											<div class="accordion-body">
+<%-- 												<p>문의 날짜 : ${}</p> --%>
+<%-- 												<p>분류 : ${}</p> --%>
+<%-- 												<p>상세 내용 : ${}</p> --%>
+
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+							</div> <!-- Accordion ends -->
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+		</div>
+		<div>
+			<table class="table">
+				<thead>
+					<tr style="text-align: center;">
+						<th>신고 받은 내역</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<!-- Accordion start -->
+							<div class="accordion accordion-flush" id="finishList">
+								<c:forEach items="<%-- ${} --%>" var="complainVo"
+									varStatus="status">
+									<div class="accordion-item">
+										<h2 class="accordion-header" id="heading${status.count}">
+											<button class="accordion-button collapsed" type="button"
+												data-bs-toggle="collapse"
+												data-bs-target="#collapse${status.count}"
+												aria-expanded="false"
+												aria-controls="collapse${status.count}">
+												<%-- ${} --%></button>
+										</h2>
+										<div id="collapse${status.count}"
+											class="accordion-collapse collapse"
+											aria-labelledby="heading${status.count}"
+											data-bs-parent="#finishList">
+											<div class="accordion-body">
+												<p style="text-align: right;"><%-- 답변시간 : ${} --%></p>
+<%-- 												${} : ${} --%>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+							</div>
+							<!-- Accordion ends -->
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+	</div>
+	<div class="col-md-2"></div>
+</div>
+<%@ include file="/WEB-INF/views/include/footer.jsp"%>

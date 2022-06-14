@@ -147,6 +147,17 @@ faq_title varchar2(500) not null,
 faq_content varchar2(4000) not null
 );
 
+-- 회원 정보 수정 테이블
+create table memberUpdate (
+    memberupdate_seq number primary key,
+    m_id varchar2(50) references member(m_id),
+    admin_code varchar2(300) references admin(admin_code),
+    update_date date default sysdate,
+    update_reason varchar2(60) not null
+);
+
+
+
 --sequence
 
 create sequence seq_point_history;
@@ -161,6 +172,7 @@ create sequence seq_blacklist;
 create sequence seq_message;
 
 create sequence seq_faq;
+create sequence seq_member_update;
 
 --동적 시퀀스
 create sequence seq_event_participation;

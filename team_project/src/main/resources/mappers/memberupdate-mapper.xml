@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.kh.team.mappers.memberUpdate">
+	<insert id="insertMemberUpdate">
+		insert into MemberUpdate (memberupdate_seq,m_id,admin_code,update_reason)
+		values (seq_member_update.nextval, #{m_id},#{admin_code},#{update_reason})
+	</insert>
+	
+	<select id="memberUpdateList" resultType="MemberUpdateVo">
+		select * from memberupdate
+	</select>
+	
+</mapper>

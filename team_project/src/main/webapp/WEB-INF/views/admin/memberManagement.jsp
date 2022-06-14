@@ -42,9 +42,180 @@
 			frmPaging.submit();
 		});
 		
+		$.get("/admin/getMemberUpdateList",function (rData) {
+			console.log(rData);
+			$.each(rData, function () {
+				var tr = $("#table_clone tr").clone();
+				var tds = tr.find("td");
+				tds.eq(0).text(this.m_id);
+				tds.eq(1).text(this.update_reason);
+				tds.eq(2).text(this.admin_code);
+				tds.eq(3).text(this.update_date);
+				$("#table_memberUpdate_list tbody").append(tr);
+			});
+		}); 
+		
+		var trs = $("#memberTable tbody").find("tr");
+		$(trs).click(function () {
+			$("#modal-113407").trigger("click");
+			var m_id = $(this).attr("data-mid");
+			var m_address = $(this).attr("data-mAddress");
+			var m_cellphone = $(this).attr("data-mCellphone");
+			var m_is_drop = $(this).attr("data-mIsDrop");
+			$("#tdMid").text(m_id);
+			$("#inputAddress").val(m_address);
+			$("#inputCellphone").val(m_cellphone);
+			$("#inputMisDrop").val(m_is_drop);
+			
+		});
+		
 	});
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp" %>
+<!-- modal start -->
+<div class="row" >
+	<div class="col-md-12">
+		<a id="modal-113407" href="#modal-container-113407" role="button"
+			class="btn" data-toggle="modal" style="display:none">Launch demo modal</a>
+
+		<div class="modal fade" id="modal-container-113407" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">회원 정보 수정</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<table style="width:100%">
+							<tr>
+								<td colspan="2" align="center">
+								<img height="200px" alt="user_folder_icon" src="/resources/images/memberimage/user_icon.jpg">
+								</td>	
+							</tr>
+							<tr>
+								<td colspan="2" align="center" id="tdMid"></td>
+							</tr>
+<!-- 							<tr> -->
+<!-- 								<td>주소</td> -->
+<!-- 								<td><input style="width: 80%"  id="inputAddress" type="text"></td> -->
+<!-- 							</tr> -->
+<!-- 							<tr>	 -->
+<!-- 								<td>휴대폰 번호</td> -->
+<!-- 								<td><input style="width: 80%" id="inputCellphone" type="text"></td> -->
+<!-- 							</tr> -->
+<!-- 							<tr>	 -->
+<!-- 								<td>회원 탈퇴 여부</td> -->
+<!-- 								<td><input style="width: 80%" id="inputMisDrop" type="text"></td> -->
+<!-- 							</tr> -->
+						</table>
+						<!-- multiple open accordion start -->
+						<div class="card">
+							<div class="card-header">
+								<h5 class="card-header-text">MULTIPLE OPEN ACCORDION</h5>
+							</div>
+							<div class="card-block accordion-block">
+								<div id="accordion" role="tablist" aria-multiselectable="true">
+									<div class="accordion-panel">
+										<div class="accordion-heading" role="tab" id="headingOne">
+											<h3 class="card-title accordion-title">
+												<a class="accordion-msg" data-toggle="collapse"
+													data-parent="#accordion" href="#collapseOne"
+													aria-expanded="true" aria-controls="collapseOne"> Lorem
+													Message 1 </a>
+											</h3>
+										</div>
+										<div id="collapseOne" class="panel-collapse collapse in"
+											role="tabpanel" aria-labelledby="headingOne">
+											<div class="accordion-content accordion-desc">
+												<p>Lorem Ipsum is simply dummy text of the printing and
+													typesetting industry. Lorem Ipsum has been the industry's
+													standard dummy text ever since the 1500s, when an unknown
+													printer took a galley of type and scrambled it to make a
+													type specimen book. It has survived not only five
+													centuries, but also the leap into electronic typesetting,
+													remaining essentially unchanged. It was popularised in the
+													1960s with the release of Letraset sheets containing Lorem
+													Ipsum passages, and more recently with desktop publishing
+													software like Aldus PageMaker including versions of Lorem
+													Ipsum.</p>
+											</div>
+										</div>
+									</div>
+									<div class="accordion-panel">
+										<div class="accordion-heading" role="tab" id="headingTwo">
+											<h3 class="card-title accordion-title">
+												<a class="accordion-msg" data-toggle="collapse"
+													data-parent="#accordion" href="#collapseTwo"
+													aria-expanded="false" aria-controls="collapseTwo">
+													Lorem Message 2 </a>
+											</h3>
+										</div>
+										<div id="collapseTwo" class="panel-collapse collapse"
+											role="tabpanel" aria-labelledby="headingTwo">
+											<div class="accordion-content accordion-desc">
+												<p>Lorem Ipsum is simply dummy text of the printing and
+													typesetting industry. Lorem Ipsum has been the industry's
+													standard dummy text ever since the 1500s, when an unknown
+													printer took a galley of type and scrambled it to make a
+													type specimen book. It has survived not only five
+													centuries, but also the leap into electronic typesetting,
+													remaining essentially unchanged. It was popularised in the
+													1960s with the release of Letraset sheets containing Lorem
+													Ipsum passages, and more recently with desktop publishing
+													software like Aldus PageMaker including versions of Lorem
+													Ipsum.</p>
+											</div>
+										</div>
+									</div>
+									<div class="accordion-panel">
+										<div class=" accordion-heading" role="tab" id="headingThree">
+											<h3 class="card-title accordion-title">
+												<a class="accordion-msg" data-toggle="collapse"
+													data-parent="#accordion" href="#collapseThree"
+													aria-expanded="false" aria-controls="collapseThree">
+													Lorem Message 3 </a>
+											</h3>
+										</div>
+										<div id="collapseThree" class="panel-collapse collapse show"
+											role="tabpanel" aria-labelledby="headingThree">
+											<div class="accordion-content accordion-desc">
+												<p>Lorem Ipsum is simply dummy text of the printing and
+													typesetting industry. Lorem Ipsum has been the industry's
+													standard dummy text ever since the 1500s, when an unknown
+													printer took a galley of type and scrambled it to make a
+													type specimen book. It has survived not only five
+													centuries, but also the leap into electronic typesetting,
+													remaining essentially unchanged. It was popularised in the
+													1960s with the release of Letraset sheets containing Lorem
+													Ipsum passages, and more recently with desktop publishing
+													software like Aldus PageMaker including versions of Lorem
+													Ipsum.</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- multiple open accordion end -->
+					</div>
+					<div class="modal-footer">
+
+						<button type="button" class="btn btn-primary">수정 완료</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">닫기</button>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+<!-- modal end -->
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -57,7 +228,7 @@
 							<div class="page-header-title">
 								<i class="icofont icofont-address-book bg-c-blue"></i>
 								<div class="d-inline">
-									<h4>회원 테이블</h4>
+									<h4>회원 관리</h4>
 									<span></span>
 								</div>
 							</div>
@@ -84,40 +255,17 @@
 			<div class="col-lg-12">
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs md-tabs " role="tablist">
-					<li class="nav-item"><a class="nav-link active"
-						data-toggle="tab" href="#home7" role="tab"><i
-							class="icofont icofont-home"></i>Home</a>
-						<div class="slide"></div></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#profile7" role="tab"><i
-							class="icofont icofont-ui-user "></i>Profile</a>
-						<div class="slide"></div></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#messages7" role="tab"><i
-							class="icofont icofont-ui-message"></i>Messages</a>
-						<div class="slide"></div></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#settings7" role="tab"><i
-							class="icofont icofont-ui-settings"></i>Settings</a>
-						<div class="slide"></div></li>
+					<li class="nav-item" style="width:50%"><a class="nav-link active"
+						data-toggle="tab" href="#home7" role="tab">회원 테이블</a>
+						<div class="slide" style="width:50%"></div></li>
+					<li class="nav-item" style="width:50%"><a class="nav-link" data-toggle="tab"
+						href="#profile7" role="tab">회원 정보 수정 내역</a>
+						<div class="slide" style="width:50%"></div></li>
 				</ul>
 				<!-- Tab panes -->
 				<div class="tab-content card-block">
 					<div class="tab-pane active" id="home7" role="tabpanel">
-						1
-					</div>
-					<div class="tab-pane" id="profile7" role="tabpanel">
-						2
-					</div>
-					<div class="tab-pane" id="messages7" role="tabpanel">
-						3
-					</div>
-					<div class="tab-pane" id="settings7" role="tabpanel">
-						4
-					</div>
-				</div>
-			</div>
-			<!-- tab end -->
+					
 			
 				
 					<div class="card-header">
@@ -201,7 +349,7 @@
 					</div>
 					<div class="card-block table-border-style">
 						<div class="table-responsive">
-							<table class="table">
+							<table class="table" id="memberTable">
 								<thead>
 									<tr>
 										<th>#</th>
@@ -219,7 +367,8 @@
 								</thead>
 								<tbody>
 									<c:forEach var="memberVo" items="${memberList}" varStatus="status">
-									<tr>	
+									<tr data-mid="${memberVo.m_id}" data-mAddress="${memberVo.m_address}"
+									data-mCellphone="${memberVo.m_cellphone}" data-mIsDrop="${memberVo.m_is_drop}">	
 										<th scope="row">${status.count}</th>
 										<td>${memberVo.m_id}</td>
 										<td>${memberVo.m_name}</td>
@@ -237,9 +386,9 @@
 							</table>
 						</div>
 					</div>
-				</div>
+				
 				<!-- start pagination -->
-				<div class="row">
+				<div class="row" style="padding-bottom: 25px; padding-top: 50px">
 					<div class="col-md-12">
 						<nav>
 							<ul class="pagination justify-content-center" >
@@ -272,7 +421,50 @@
 					</div>
 				</div>
 				<!-- end pagination  -->
+				</div>
+				<!-- tab 1page end -->
+				<!-- tab 2page start -->
+				<div class="tab-pane" id="profile7" role="tabpanel">
+					<div class="card-header">
+						<i class="icofont icofont-pencil-alt-2"></i>
+						<h5>회원 정보 수정 내역</h5>
+
+					</div>
+					<div class="card-block table-border-style">
+						<div class="table-responsive">
+							<table style="display:none" id="table_clone">
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							</table>
+							<table class="table" id="table_memberUpdate_list">
+								<thead>
+									<tr>
+										<th style="width:20%">회원 아이디</th>
+										<th style="width:20%">수정 사유</th>
+										<th style="width:20%">승인 관리자 코드</th>
+										<th style="width:20%">수정 일자</th>
+									</tr>
+								</thead>
+								<tbody>
+								
+								</tbody>
+							</table>
+						</div>
+					</div>
+						
+				</div>
+				<!-- tab 2page end -->
+				</div>
+			<!-- tab end -->
+			</div>
+				
+				</div>
 				<!-- Basic table card end -->
+				
 			</div>
 			<!-- Page-body end -->
 		</div>

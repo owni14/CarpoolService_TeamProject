@@ -20,7 +20,6 @@ public interface MemberDao {
 	public void adminupdateBlackScore(BlackListVo blackListVo); // 관리자 신고 회원 관리 블랙포인트 변경
 	public boolean insertPassenger(String m_id, String boardLoct, String boardTime, String driver_seq); // 탑승자 정보 추가
 	public String getMemberLocation(String m_id); // 회원 주소 얻어오기
-	public boolean getApplicationPassengerCount(String m_id); // 탑승신청하기가 되어 있는지 여부
 	public String getDriverSeq(String m_id); // 운전자 번호 얻어오기
 	public String getDriverId(String driver_seq); // 운전자 아이디 얻어오기
 
@@ -28,5 +27,7 @@ public interface MemberDao {
 	public List<MemberVo> getTop5EvlMembers (); // 관리자 페이지에서 평점 top5 회원 정보 가져오기 
 
 	public boolean isApplication(String m_id); // 회원이 탑승하기를 두번 이상 했을경우 기존에 탑승하기가 되어 있는지 확인하기 위한 메서드
+
+	public boolean deletePassenger(String m_id, String driver_seq); // 탑승객테이블의 is_deletion을 'Y'로 바꾸는 메서드
 
 }

@@ -145,8 +145,11 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public boolean getApplicationPassengerCount(String m_id) {
-		int count = sqlSession.selectOne(NAMESPACE + "getApplicationPassengerCount", m_id);
+	public boolean deletePassenger(String m_id, String driver_seq) {
+		Map<String, String> map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("driver_seq", driver_seq);
+		int count = sqlSession.update(NAMESPACE + "deletePassenger", map);
 		if (count > 0) {
 			return true;
 		}

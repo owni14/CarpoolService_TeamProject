@@ -199,6 +199,8 @@ alter table passenger
 add is_finish_boarding char(1)  default 'N';
 alter table passenger
 add apply_date date default sysdate;
+alter table passenger
+add is_deletion char(1) default 'N';
 
 -- passenger 테이블 칼럼 삭제
 alter table passenger

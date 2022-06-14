@@ -11,13 +11,24 @@ public class ComplainVo {
 	private int complain_group;
 	private String complain_attach_file;
 	private String complain_classification;
+	private String complain_is_finish;
+	private String complain_answer;
 	
 	public ComplainVo() {
 		super();
 	}
 
+	public ComplainVo(String admin_code, String m_id, String complain_content, String complain_classification) {
+		super();
+		this.admin_code = admin_code;
+		this.m_id = m_id;
+		this.complain_content = complain_content;
+		this.complain_classification = complain_classification;
+	}
+
 	public ComplainVo(int complain_seq, String admin_code, String m_id, String complain_content, Date complain_regdate,
-			int complain_group, String complain_attach_file, String complain_classification) {
+			int complain_group, String complain_attach_file, String complain_classification, String complain_is_finish,
+			String complain_answer) {
 		super();
 		this.complain_seq = complain_seq;
 		this.admin_code = admin_code;
@@ -27,6 +38,8 @@ public class ComplainVo {
 		this.complain_group = complain_group;
 		this.complain_attach_file = complain_attach_file;
 		this.complain_classification = complain_classification;
+		this.complain_is_finish = complain_is_finish;
+		this.complain_answer = complain_answer;
 	}
 
 	public int getComplain_seq() {
@@ -93,12 +106,30 @@ public class ComplainVo {
 		this.complain_classification = complain_classification;
 	}
 
+	public String getComplain_is_finish() {
+		return complain_is_finish;
+	}
+
+	public void setComplain_is_finish(String complain_is_finish) {
+		this.complain_is_finish = complain_is_finish;
+	}
+
+	public String getComplain_answer() {
+		return complain_answer;
+	}
+
+	public void setComplain_answer(String complain_answer) {
+		this.complain_answer = complain_answer;
+	}
+
 	@Override
 	public String toString() {
 		return "ComplainVo [complain_seq=" + complain_seq + ", admin_code=" + admin_code + ", m_id=" + m_id
 				+ ", complain_content=" + complain_content + ", complain_regdate=" + complain_regdate
 				+ ", complain_group=" + complain_group + ", complain_attach_file=" + complain_attach_file
-				+ ", complain_classification=" + complain_classification + "]";
+				+ ", complain_classification=" + complain_classification + ", complain_is_finish=" + complain_is_finish
+				+ ", complain_answer=" + complain_answer + "]";
 	}
 
+	
 }

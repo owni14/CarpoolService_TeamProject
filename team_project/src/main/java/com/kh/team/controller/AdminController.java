@@ -34,6 +34,7 @@ import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.EventWinnerVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -111,11 +112,9 @@ public class AdminController {
 		return "admin/memberManagement";
 	}
 	
-	@RequestMapping(value = "/report_management", method = RequestMethod.POST)
+	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
 	public String reportManagement(Model model, BlackListVo blackListVo) {
-		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
-			notifyService.modifyApprovement(blackListVo);			
-		}
+		
 		System.out.println("blackListVo : " + blackListVo);
 		List<BlackListVo> notifyList = notifyService.notifyList();
 		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
@@ -137,11 +136,9 @@ public class AdminController {
 		return "admin/reportManagement";
 	}
 	
-	@RequestMapping(value="/report_complete_management", method = RequestMethod.POST)
+	@RequestMapping(value="/report_complete_management", method = RequestMethod.GET)
 	public String report_complete_management (BlackListVo blackListVo,Model model) {
-		if (blackListVo.getBlacklist_seq() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
-			notifyService.modifyApprovement(blackListVo);			
-		}
+		
 		List<BlackListVo> yNotifyList = notifyService.yNotifyList();
 		int dayNotifyCount = notifyService.dayNotifyCount();
 		int nNotifyCount = notifyService.notifyCount();
@@ -153,6 +150,20 @@ public class AdminController {
 		model.addAttribute("totalNotifyCount", totalNotifyCount);
 		model.addAttribute("cNotifyCount", cNotifyCount);
 		return "admin/reportComplete";
+	}
+	
+	@RequestMapping(value = "/modifyBlackPoint", method = RequestMethod.POST)
+	public String modifyBlackPoint(BlackListVo blackListVo) {
+		if (blackListVo.getBlacklist_seq() > 0 && 
+				blackListVo.getBlack_score() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
+				notifyService.modifyApprovement(blackListVo);			
+			return "redirect:/admin/report_management";
+		} else if (blackListVo.getBlacklist_seq() > 0 && 
+				blackListVo.getBlack_score() < 0) {
+				notifyService.modifyApprovement(blackListVo);			
+			return "redirect:/admin/report_complete_management";
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)
@@ -379,7 +390,7 @@ public class AdminController {
 		String participation_percentStr=
 				String.format("%.2f",participation_percent);
 		List<Integer> liveEventList=eventService.selectLiveEventList();
-		List<Integer> endEventList=eventService.selectEndEventList();
+		List<EventVo> endEventList=eventService.selectEndEventList();
 		
 		if(participationList.size()>0) {
 			model.addAttribute("participationList",participationList);
@@ -404,11 +415,13 @@ public class AdminController {
 		String participation_percentStr=
 				String.format("%.2f",participation_percent);
 		List<Integer> liveEventList=eventService.selectLiveEventList();
-		List<Integer> endEventList=eventService.selectEndEventList();
-		
+		List<EventVo> endEventList=eventService.selectEndEventList();
+		List<EventWinnerVo> eventWinnerList=eventService.selectWinnerIsGet(eventVo.getEvent_seq());
 		if(participationList.size()>0) {
 			model.addAttribute("participationList",participationList);
 		}		
+		model.addAttribute("eventVo",eventVo);
+		model.addAttribute("eventWinnerList",eventWinnerList);
 		model.addAttribute("liveEventList",liveEventList);
 		model.addAttribute("endEventList",endEventList);
 		model.addAttribute("participation_percentStr",participation_percentStr);
@@ -417,10 +430,16 @@ public class AdminController {
 	} 
 	
 	@RequestMapping(value="/event_winnerRun", method=RequestMethod.POST)
-	public String eventWinnerRun(EventVo eventVo, String[] memberList) {
+	public String eventWinnerRun(EventVo eventVo, String[] memberList,RedirectAttributes rttr) {
 //		System.out.println("eventWinnerRun memberList"+memberList[0]);
 		int event_seq=eventVo.getEvent_seq();
-		
+		System.out.println("eventWinnerRun event_seq "+event_seq);
+		String pc_code="1001";
+		boolean result=false;
+		for(String m_id:memberList) {
+			result=eventService.transactionEventUpdate(event_seq, m_id, pc_code);	
+		}
+		rttr.addFlashAttribute("transactionResult", String.valueOf(result));
 		return "redirect:/admin/event_end_participation?event_seq="+eventVo.getEvent_seq();
 					
 	} 

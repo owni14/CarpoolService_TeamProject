@@ -12,24 +12,65 @@
 			var admin_checkValue = $(this).attr("data-value");
 			var blackScoreValue = $(this).attr("data-bScore");
 			var black_m_id = $(this).attr("data-blackid");
+			frmApproveNotify.find("input[name=refresh]").val(1);
 			frmApproveNotify.find("input[name=blacklist_seq]").val(blacklist_seqValue);
 			frmApproveNotify.find("input[name=admin_check]").val(admin_checkValue);
 			frmApproveNotify.find("input[name=black_m_id]").val(black_m_id);
 			frmApproveNotify.find("input[name=black_score]").val(-1*blackScoreValue);
-			frmApproveNotify.attr("action","/admin/report_management");
+			frmApproveNotify.attr("action","/admin/modifyBlackPoint");
 			frmApproveNotify.attr("method","post");
 			frmApproveNotify.submit();
 		});
 		
-		$("#iMessage").click(function () {
+		$(".fa-paper-plane").click(function () {
 			$("#modal-97340").trigger("click");
 			var reporter = $(this).attr("data-reporter");
+			var blacklist_seq = $(this).attr("data-blacklistseq");
+			console.log(blacklist_seq);
 			$("#thReporter").text(reporter);
+			$("#btnModalSend").attr("data-blacklistseq",blacklist_seq);
 		});
 		
 		$("#btnModalSend").click(function () {
-			
+			var content = $("#txtReportContent").val();
+			var receiver_m_id = $("#thReporter").text();
+			var sender_admin_code = "${admin_code}";
+			var blacklist_seq = $("#btnModalSend").attr("data-blacklistseq");
+			console.log(content);
+			console.log(receiver_m_id);
+			console.log(sender_admin_code);
+			var sData = {"receiver_m_id" : receiver_m_id,
+						 "sender_admin_code" : sender_admin_code,
+						 "content" : content,
+						 "blacklist_seq" : blacklist_seq};
+			var url = "/message/notifyComplete";
+			$.post(url,sData,function (rData) {
+				console.log(rData);
+			});
 		});
+		
+		function checkSended () {
+			var url = "/message/checkSendedMessage";
+			$.post(url, function (rData) {
+				console.log(rData);
+				for (var v = 0; v < $(".fa-paper-plane").length; v++) {
+					for (var w=0; w < rData.length; w++) {
+						console.log(rData[w]);
+						console.log("blacklistseq", $(".fa-paper-plane").eq(v).attr("data-blacklistseq"));
+ 						if (rData[w] == $(".fa-paper-plane").eq(v).attr("data-blacklistseq")) {
+							console.log("v" + v);	
+ 							$(".fa-paper-plane").eq(v).css("display","none");
+ 							$(".fa-paper-plane").eq(v).parents("tr").find("button").css("display","none");
+ 							$(".fa-paper-plane").eq(v).parents("tr").find("td").eq(3).text("신고 처리 완료").css("color","blue");
+ 							$(".fa-paper-plane").eq(v).parents("tr").find("td").eq(5).text("신고 알림 완료").css("color","blue");
+ 						}
+					}
+				}
+				
+			});
+		}
+		
+		checkSended();
 	});
 </script>
 <%@ include file="/WEB-INF/views/include_admin/frmApproveNotify.jsp" %>
@@ -50,7 +91,7 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<input type="text" class="form-control" value="신고 완료가 정상 처리 되었습니다.">
+							<textarea id="txtReportContent" class="form-control">신고 완료가 정상 처리 되었습니다.</textarea>
 							<table style="margin-top: 20px; float: right;">
 								<thead>
 								<tr>
@@ -63,7 +104,7 @@
 						</div>
 						<div class="modal-footer">
 							 
-							<button type="button" class="btn btn-primary" id="btnModalSend">
+							<button type="button" class="btn btn-primary" id="btnModalSend" data-dismiss="modal">
 								전송
 							</button> 
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -248,7 +289,7 @@
 											<td>${blackListVo.m_id}</td>
 											<td>${blackListVo.black_m_id}</td>
 											<td>${blackListVo.black_content}</td>
-											<td>
+											<td style="text-align: center">
 												<!-- dropdown start -->
 												<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:blue"
 													id="dropdownMenuButton3" data-toggle="dropdown">
@@ -259,7 +300,7 @@
 												<!-- dropdown end -->
 											</td>
 											<td>${blackListVo.black_regdate}</td>
-											<td style="text-align: center"><i id="iMessage" class="fa fa-paper-plane" data-reporter="${blackListVo.m_id}"></i></td>
+											<td style="text-align: center"><i class="fa fa-paper-plane" data-reporter="${blackListVo.m_id}" data-blacklistseq="${blackListVo.blacklist_seq}"></i></td>
 											
 								</tr>
 	 									</c:forEach> 

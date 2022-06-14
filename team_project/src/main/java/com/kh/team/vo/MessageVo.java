@@ -11,6 +11,7 @@ public class MessageVo {
 	private String content;
 	private Date senddate;
 	private Date opendate;
+	private int blacklist_seq;
 	
 	public MessageVo() {
 		super();
@@ -122,12 +123,22 @@ public class MessageVo {
 		this.opendate = opendate;
 	}
 
+	public int getBlacklist_seq() {
+		return blacklist_seq;
+	}
+
+
+	public void setBlacklist_seq(int blacklist_seq) {
+		this.blacklist_seq = blacklist_seq;
+	}
+
 
 	@Override
 	public String toString() {
 		return "MessageVo [message_seq=" + message_seq + ", receiver_m_id=" + receiver_m_id + ", receiver_admin_code="
 				+ receiver_admin_code + ", sender_m_id=" + sender_m_id + ", sender_admin_code=" + sender_admin_code
-				+ ", content=" + content + ", senddate=" + senddate + ", opendate=" + opendate + "]";
+				+ ", content=" + content + ", senddate=" + senddate + ", opendate=" + opendate + ", blacklist_seq="
+				+ blacklist_seq + "]";
 	}
 
 }

@@ -20,8 +20,20 @@ public class MessageServiceImpl implements MessageService {
 	private MessageDao messageDao;
 
 	@Override
-	public void insertMessage(MessageVo messageVo) {
-		messageDao.insertMessage(messageVo);
+	public boolean insertMessage(MessageVo messageVo) {
+		boolean result = messageDao.insertMessage(messageVo);
+		return result;
+	}
+
+	@Override
+	public List<Integer> adminCheckSendedMessage() {
+		List<Integer> list = messageDao.adminCheckSendedMessage();
+		return list;
+	}
+
+	@Override
+	public boolean insertNoBlackMessage(MessageVo messageVo) {
+		return messageDao.insertNoBlackMessage(messageVo);
 	}
 
 	

@@ -30,6 +30,12 @@ public class MessageTest {
 	}
 	// test ok
 	
+	@Test
+	public void adminCheckSendedMessage() {
+		List<Integer> list = messageDao.adminCheckSendedMessage();
+		System.out.println("list : " + list);
+	}
+	
 	
 }
 

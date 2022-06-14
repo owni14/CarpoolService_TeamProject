@@ -106,5 +106,20 @@ public class EventTest {
 		for(Map<String, Object> eventList:eventAllList) {
 			System.out.println(eventList.get("EVENT_NAME"));
 		}
-	}
+	}//testOk
+	@Test
+	public void testEventIsWinnerByM_id() {
+		System.out.println(eventDao.updateEventWinnerToParticipation(52, "user021@gmail.com"));
+		
+	}//testOk
+	
+	@Test
+	public void testEventWinnerPoint() {
+		System.out.println(eventDao.updateEventWinnerPoint("user021@gmail.com", "1001"));
+		
+	}//testOk
+	@Test 
+	public void testInsertWinnerTable() {
+		System.out.println(eventDao.insertEventWinnerTable("user021@gmail.com", 52));
+	}//testOK
 }

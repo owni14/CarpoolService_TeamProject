@@ -56,6 +56,11 @@ https://templatemo.com/tm-559-zay-shop
     <script src="/resources/assets/js/templatemo.js"></script>
     <script src="/resources/assets/js/custom.js"></script>
     <!-- End Script -->
+    
+    <!-- popovers start -->
+      
+    <!-- popovers end -->
+    
     <script>
     $(function() {
     	var header = $("#header");
@@ -77,6 +82,12 @@ https://templatemo.com/tm-559-zay-shop
     		 $(".smenu").hide();
     		header.stop().animate({height:'90px'}, 300);
     	});
+    	 
+// //     	popover start
+//  		$("#message").click(function(e) {
+//  			e.preventDefault();
+//  			$('[data-toggle="popover"]').popover();
+//  		});
     });
     </script>
     <style>
@@ -123,6 +134,8 @@ https://templatemo.com/tm-559-zay-shop
    	   	});	
 //      서브 메뉴 위치 선정 end
    	   	
+   	 $('[data-toggle="popover"]').popover();     
+	   	
 	   	 
     });
     </script>
@@ -189,8 +202,15 @@ https://templatemo.com/tm-559-zay-shop
 <!--                     </a> -->
                     <c:choose>
                     	<c:when test="${not empty loginVo}">
-                    		${loginVo.m_name}님 환영합니다.
-                    		<a href="/member/logout"><i class="icofont icofont-logout" style="font-size: 25px;"></i></a>
+                    		<div class="container">  
+							  <a href="#" data-toggle="dropdown" title="Popover Header" data-content="Some content inside the popover"> Toggle popover </a>  
+							  <!-- 드롭다운으로 만들어라 멍청아 -->
+							</div>  
+                    		
+                    		
+                    		<a href="#" id="message" title="Header" data-toggle="popover" data-content="hi" data-placement="top"><i class="bi bi-envelope" style="font-size: 25px; margin: 5px;"></i></a>
+                    		<a href="/member/logout"><i class="icofont icofont-logout" style="font-size: 25px; margin: 5px;"></i></a>
+                    		${loginVo.m_name}
                     	</c:when>
 	                    <c:otherwise>
 	                    	<a href="/member/loginForm"><i class="icofont icofont-login" style="font-size: 25px; margin-right: 10px;"></i></a>

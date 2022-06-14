@@ -63,4 +63,10 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginVo");
+		return "redirect:/";
+	}
+	
 }

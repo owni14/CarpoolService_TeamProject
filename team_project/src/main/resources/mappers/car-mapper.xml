@@ -9,7 +9,7 @@
 		values (seq_car_code.nextval, #{ci_name}, #{ci_brand}, #{ci_brand_img}, #{ci_car_img}, #{ci_people_count})
 	</insert>
 	
-	<select id="getCarCode" resultType="String">
+	<select id="getCarCodeByCi_Name" resultType="string">
 		select ci_code from carinfo
 		where ci_name = #{ci_name}
 	</select>
@@ -18,5 +18,32 @@
 		insert into car (c_no, c_code, m_id)
 		values (#{c_no}, #{c_code}, #{m_id})
 	</insert>
+	
+	<update id="resetCount">
+		update car set
+		c_people_count = 1
+		where m_id = #{m_id}
+	</update>
+	
+	<update id="increaseCount">
+		update car set
+		c_people_count = c_people_count + 1
+		where m_id = #{m_id}
+	</update>
+	
+	<select id="getMaxPeopleCountOfCar" resultType="string">
+		select ci_max_people from carinfo
+		where ci_code = #{ci_code}
+	</select>
+	
+	<select id="getCurrentCountOfCar" resultType="string">
+		select c_people_count from car
+		where m_id = #{m_id}
+	</select>
+	
+	<select id="getCarCodeByM_Id" resultType="string">
+		select c_code from car
+		where m_id = #{m_id}
+	</select>
 
 </mapper>

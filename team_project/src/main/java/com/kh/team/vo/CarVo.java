@@ -6,20 +6,20 @@ public class CarVo {
 	private String c_no;
 	private String c_code;
 	private String m_id;
-	private String c_is_driver;
-	private Date c_approvedate;
+	private Date c_regdate;
+	private int c_people_count;
 	
 	public CarVo() {
 		super();
 	}
 	
-	public CarVo(String c_no, String c_code, String m_id, String c_is_driver, Date c_approvedate) {
+	public CarVo(String c_no, String c_code, String m_id, Date c_regdate, int c_people_count) {
 		super();
 		this.c_no = c_no;
 		this.c_code = c_code;
 		this.m_id = m_id;
-		this.c_is_driver = c_is_driver;
-		this.c_approvedate = c_approvedate;
+		this.c_regdate = c_regdate;
+		this.c_people_count = c_people_count;
 	}
 
 	public String getC_no() {
@@ -46,26 +46,26 @@ public class CarVo {
 		this.m_id = m_id;
 	}
 
-	public String getC_is_driver() {
-		return c_is_driver;
+	public Date getC_regdate() {
+		return c_regdate;
 	}
 
-	public void setC_is_driver(String c_is_driver) {
-		this.c_is_driver = c_is_driver;
+	public void setC_regdate(Date c_regdate) {
+		this.c_regdate = c_regdate;
 	}
 
-	public Date getC_approvedate() {
-		return c_approvedate;
+	public int getC_people_count() {
+		return c_people_count;
 	}
 
-	public void setC_approvedate(Date c_approvedate) {
-		this.c_approvedate = c_approvedate;
+	public void setC_people_count(int c_people_count) {
+		this.c_people_count = c_people_count;
 	}
 
 	@Override
 	public String toString() {
-		return "CarVo [c_no=" + c_no + ", c_code=" + c_code + ", m_id=" + m_id + ", c_is_driver=" + c_is_driver
-				+ ", c_approvedate=" + c_approvedate + "]";
+		return "CarVo [c_no=" + c_no + ", c_code=" + c_code + ", m_id=" + m_id + ", c_regdate=" + c_regdate
+				+ ", c_people_count=" + c_people_count + "]";
 	}
-	
+
 }

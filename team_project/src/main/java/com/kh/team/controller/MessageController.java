@@ -34,4 +34,12 @@ public class MessageController {
 		System.out.println("list : " + list);
 		return list;
 	}
+	
+	//add event 메세지
+	@RequestMapping(value="/EventIsNoGet", method= RequestMethod.POST)
+	public String notifyEventIsNoGet(MessageVo messageVo) {
+		System.out.println("messageVo : " + messageVo);
+		boolean result = messageService.insertNoBlackMessage(messageVo);
+		return String.valueOf(result);
+	}
 }

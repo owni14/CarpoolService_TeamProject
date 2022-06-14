@@ -31,6 +31,11 @@ public class MessageServiceImpl implements MessageService {
 		return list;
 	}
 
+	@Override
+	public boolean insertNoBlackMessage(MessageVo messageVo) {
+		return messageDao.insertNoBlackMessage(messageVo);
+	}
+
 	
 
 

@@ -60,11 +60,11 @@
 							
 								<select id="select_endEvent_seq">
 							<option disabled="disabled" selected="selected" value="">종료된 이벤트 (번호를 골라주세요)</option>
-							<c:forEach items="${endEventList}" var="eventSeq">
-							<option value="${eventSeq}"
-							<c:if test="${eventSeq eq param.event_seq}">
+							<c:forEach items="${endEventList}" var="eventVo">
+							<option value="${eventVo.event_seq}"
+							<c:if test="${eventVo.event_seq eq param.event_seq}">
 							selected</c:if>
-							>${eventSeq}번(종료)</option>
+							>${eventVo.event_seq}번(종료)</option>
 							</c:forEach>
 							</select>
 									<span></span>

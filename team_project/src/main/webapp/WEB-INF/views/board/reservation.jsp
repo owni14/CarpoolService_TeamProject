@@ -76,13 +76,12 @@ $(document).ready(function() {
 			tds.eq(0).text(count++);
 			tds.eq(0).attr("data-driver_seq", this.DRIVER_SEQ);
 			tds.eq(1).text(that.M_NAME);
-			tds.eq(2).text(that.M_DEPT);
-			tds.eq(3).text(that.DRIVER_DEPART_LOCATION);
+			tds.eq(2).text(that.DRIVER_DEPART_LOCATION);
+			tds.eq(3).text(that.DRIVER_DEPART_TIME);
 			tds.eq(4).text(currentCount + " / " + maxCount);
 			tds.find(".btnBoard").attr("data-m_id", that.M_ID);
 			$("#tblDriver tbody").append(tr);
 		});
-		
 			
 		}); // $.each(rData, function() {})
 		
@@ -169,7 +168,7 @@ $(document).ready(function() {
 	} // function clickMap(map, rvbmInfowindow, myMarker) {} )
 	
 	// 모달창에서 지도를 보여줄 함수
-	function showModalMap(drvName, gender, drvDepartLocation, drvDept, drvDepartTime, mBoardLoct) {
+	function showModalMap(drvName, gender, drvDepartLocation, drvDept, drvDepartTime, mBoardLoct, driver_comment) {
 		 
 		 /* 
 		 console.log("driverName:" + driverName);
@@ -183,6 +182,13 @@ $(document).ready(function() {
 		  $("#driverLoct").text(drvDepartLocation);
 		  $("#driverStartTime").text(drvDepartTime);
 		  $("#mBoardLoct").text(mBoardLoct);
+		  var defaultComment = "없음";
+		  if (driver_comment == null) {
+			  $("#driverComment").text(defaultComment);
+		  } else {
+			  $("#driverComment").text(driver_comment);
+		  }
+		 
 		  
 		  var modalMapContainer = document.getElementById('mapInModal') // 지도를 표시할 div
 			 modalMapOption = {
@@ -253,7 +259,7 @@ $(document).ready(function() {
 			 } else {
 				 gender = "여자";
 			 }
-			 showModalMap(rData.M_NAME, gender, rData.DRIVER_DEPART_LOCATION, rData.M_DEPT, rData.DRIVER_DEPART_TIME, mBoardLoct);
+			 showModalMap(rData.M_NAME, gender, rData.DRIVER_DEPART_LOCATION, rData.M_DEPT, rData.DRIVER_DEPART_TIME, mBoardLoct, rData.DRIVER_COMMENT);
 		 });
 		 
 	 }); //  $("#tblDriver").on("click", ".btnBoard", function() {})
@@ -291,6 +297,7 @@ $(document).ready(function() {
 					<h6 style="font-weight: bold; "> 부서 : <span id="driverDept"></span></h6> 
 					<h6 style="font-weight: bold; "> 출발 위치 : <span id="driverLoct"></span></h6> 
 					<h6 style="font-weight: bold; "> 출발 시간 : <span id="driverStartTime"></span></h6> 
+					<h6 style="font-weight: bold; color: red;"> 요구 사항 : <span id="driverComment"></span></h6> 
 					<hr>
 					<h6 style="font-weight: bold; "> 내 위치 : <span id="mBoardLoct"></span></h6>
 					<div style="font-weight: bold; text-align: center; color: green;"> 운전자 위치 </div> 
@@ -364,8 +371,8 @@ $(document).ready(function() {
 					<tr>
 						<th>#</th>
 						<th>운전자</th>
-						<th>부서</th>
 						<th>출발위치</th>
+						<th>출발시간</th>
 						<th>탑승인원</th>
 						<th>탑승신청</th>
 					</tr>

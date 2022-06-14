@@ -51,7 +51,7 @@ $(document).ready(function() {
 
 	<!-- modal start -->
 	<form action="/customer/black_report" method="post">
-	<input type="hidden" name="m_id" value="${loginVo.m_id}">
+ 	<input type="hidden" name="m_id" value="${loginVo.m_id}">
 	<div class="col-md-12">
 		<div class="modal fade" id="modal-container-678121" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -128,22 +128,22 @@ $(document).ready(function() {
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="passengerlogVo" items="${passengerlogList}" >
-				<tr>
-					<td>${passengerlogVo.PASSENGER_SEQ}</td>
+				<c:forEach var="passengerlogVo" items="${passengerlogList}" > 
+				<tr> 
+				<td>${passengerlogVo.PASSENGER_SEQ}</td> 
 					<td>
 					<button class="btn dropdown-toggle" type="button" id="driver_id" data-toggle="dropdown">
 						${passengerlogVo.DRIVER_ID}
-					</button>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+ 					</button>
+ 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<a class="dropdown-item" href="#">쪽지보내기</a>
 						<a id="black" class="dropdown-item" href="#">신고하기</a>
 					</div>
 					
 					
 					</td>
-					<td>${passengerlogVo.PASSENGER_DEPART_LOCATION}</td>
-					<td>${passengerlogVo.PASSENGER_DEPART_TIME}</td>
+ 					<td>${passengerlogVo.PASSENGER_DEPART_LOCATION}</td>
+ 					<td>${passengerlogVo.PASSENGER_DEPART_TIME}</td>
 				</tr>
 				</c:forEach>
 			</tbody>

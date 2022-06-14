@@ -91,10 +91,15 @@ public class MemberTest {
 	}
 	
 	@Test
+	public void getTop5EvlMembers() {
+		List<MemberVo> list = memberDao.getTop5EvlMembers();
+		System.out.println("list:" + list);
+	}
 	public void isApplication() {
 		String m_id = "hong@naver.com";
 		boolean result = memberDao.isApplication(m_id);
 		System.out.println("result: " + result);
+
 	}
 }
 

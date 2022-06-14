@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.team.dao.CarDao;
 import com.kh.team.dao.MemberDao;
+import com.kh.team.dao.MemberUpdateDao;
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.MemberUpdateVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -21,6 +23,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao memberDao;
 	@Autowired
 	private CarDao carDao;
+	@Autowired
+	private MemberUpdateDao memberUpdateDao;
 
 	@Override
 	public void insertMember(MemberVo memberVo) {
@@ -105,15 +109,36 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+
+	@Transactional
+	public boolean adminUpdateMemberInfo(MemberVo memberVo, MemberUpdateVo memberUpdateVo) {
+		boolean result = false;
+		boolean result1 = memberDao.adminUpdateMemberInfo(memberVo);
+		boolean result2 = memberUpdateDao.insertMemberUpdate(memberUpdateVo);
+		if (result1 == true && result2 == true) {
+			result = true;
+		}
+		return result;
+	}
+
+	@Override
+	public List<MemberVo> getTop5EvlMembers() {
+		List<MemberVo> top5List = memberDao.getTop5EvlMembers();
+		return top5List;
+	}
+
+
+
 	public boolean isApplication(String m_id) {
 		boolean result = memberDao.isApplication(m_id);
 		return result;
 	}
 
 	@Override
-	public boolean getApplicationPassengerCount(String m_id) {
-		boolean result = memberDao.getApplicationPassengerCount(m_id);
+	public boolean deletePassenger(String m_id, String driver_seq) {
+		boolean result = memberDao.deletePassenger(m_id, driver_seq);
 		return result;
 	}
 
 }
+

@@ -69,6 +69,38 @@
 			
 		});
 		
+		$("#btnModifyMember").click(function () {
+			var m_id = $("#tdMid").text();
+			var m_address = $("#inputAddress").val();
+			var m_cellphone = $("#inputCellphone").val();
+			var m_is_drop = $("#inputMisDrop").val();
+			var update_reason = $("#inputReason").val();
+			var admin_code = "${sessionScope.admin_code}";
+// 			console.log(m_id);
+// 			console.log(m_address);
+// 			console.log(m_cellphone);
+// 			console.log(m_is_drop);
+// 			console.log(update_reason);
+// 			console.log(admin_code);
+			var url = "/admin/memberInfoUpdate";
+			var sData = {
+				"m_id" : m_id,
+				"m_address" : m_address,
+				"m_cellphone" : m_cellphone,
+				"m_is_drop" : m_is_drop,
+				"update_reason" : update_reason,
+				"admin_code" : admin_code
+			};
+			$.post(url, sData, function (rData) {
+				console.log(rData);
+				if (rData == "true") {
+					frmPaging.attr("action","/admin/member_management");
+					frmPaging.attr("method","get");
+					frmPaging.submit();
+				}
+			});
+		});
+		
 	});
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp" %>
@@ -98,50 +130,24 @@
 							<tr>
 								<td colspan="2" align="center" id="tdMid"></td>
 							</tr>
-<!-- 							<tr> -->
-<!-- 								<td>주소</td> -->
-<!-- 								<td><input style="width: 80%"  id="inputAddress" type="text"></td> -->
-<!-- 							</tr> -->
-<!-- 							<tr>	 -->
-<!-- 								<td>휴대폰 번호</td> -->
-<!-- 								<td><input style="width: 80%" id="inputCellphone" type="text"></td> -->
-<!-- 							</tr> -->
-<!-- 							<tr>	 -->
-<!-- 								<td>회원 탈퇴 여부</td> -->
-<!-- 								<td><input style="width: 80%" id="inputMisDrop" type="text"></td> -->
-<!-- 							</tr> -->
 						</table>
 						<!-- multiple open accordion start -->
-						<div class="card">
-							<div class="card-header">
-								<h5 class="card-header-text">MULTIPLE OPEN ACCORDION</h5>
-							</div>
-							<div class="card-block accordion-block">
+
+							<div class="card-block accordion-block" style="margin-top:10px">
 								<div id="accordion" role="tablist" aria-multiselectable="true">
 									<div class="accordion-panel">
 										<div class="accordion-heading" role="tab" id="headingOne">
 											<h3 class="card-title accordion-title">
 												<a class="accordion-msg" data-toggle="collapse"
 													data-parent="#accordion" href="#collapseOne"
-													aria-expanded="true" aria-controls="collapseOne"> Lorem
-													Message 1 </a>
+													aria-expanded="true" aria-controls="collapseOne">회원 주소</a>
 											</h3>
 										</div>
 										<div id="collapseOne" class="panel-collapse collapse in"
 											role="tabpanel" aria-labelledby="headingOne">
 											<div class="accordion-content accordion-desc">
-												<p>Lorem Ipsum is simply dummy text of the printing and
-													typesetting industry. Lorem Ipsum has been the industry's
-													standard dummy text ever since the 1500s, when an unknown
-													printer took a galley of type and scrambled it to make a
-													type specimen book. It has survived not only five
-													centuries, but also the leap into electronic typesetting,
-													remaining essentially unchanged. It was popularised in the
-													1960s with the release of Letraset sheets containing Lorem
-													Ipsum passages, and more recently with desktop publishing
-													software like Aldus PageMaker including versions of Lorem
-													Ipsum.</p>
-											</div>
+											<input type="text" class="form-control" id="inputAddress"/>
+										</div>
 										</div>
 									</div>
 									<div class="accordion-panel">
@@ -149,24 +155,13 @@
 											<h3 class="card-title accordion-title">
 												<a class="accordion-msg" data-toggle="collapse"
 													data-parent="#accordion" href="#collapseTwo"
-													aria-expanded="false" aria-controls="collapseTwo">
-													Lorem Message 2 </a>
+													aria-expanded="false" aria-controls="collapseTwo">휴대폰 번호</a>
 											</h3>
 										</div>
 										<div id="collapseTwo" class="panel-collapse collapse"
 											role="tabpanel" aria-labelledby="headingTwo">
 											<div class="accordion-content accordion-desc">
-												<p>Lorem Ipsum is simply dummy text of the printing and
-													typesetting industry. Lorem Ipsum has been the industry's
-													standard dummy text ever since the 1500s, when an unknown
-													printer took a galley of type and scrambled it to make a
-													type specimen book. It has survived not only five
-													centuries, but also the leap into electronic typesetting,
-													remaining essentially unchanged. It was popularised in the
-													1960s with the release of Letraset sheets containing Lorem
-													Ipsum passages, and more recently with desktop publishing
-													software like Aldus PageMaker including versions of Lorem
-													Ipsum.</p>
+												<input type="text" class="form-control" id="inputCellphone"/>
 											</div>
 										</div>
 									</div>
@@ -175,35 +170,40 @@
 											<h3 class="card-title accordion-title">
 												<a class="accordion-msg" data-toggle="collapse"
 													data-parent="#accordion" href="#collapseThree"
-													aria-expanded="false" aria-controls="collapseThree">
-													Lorem Message 3 </a>
+													aria-expanded="false" aria-controls="collapseThree">회원 탈퇴 여부</a>
 											</h3>
 										</div>
 										<div id="collapseThree" class="panel-collapse collapse show"
 											role="tabpanel" aria-labelledby="headingThree">
 											<div class="accordion-content accordion-desc">
-												<p>Lorem Ipsum is simply dummy text of the printing and
-													typesetting industry. Lorem Ipsum has been the industry's
-													standard dummy text ever since the 1500s, when an unknown
-													printer took a galley of type and scrambled it to make a
-													type specimen book. It has survived not only five
-													centuries, but also the leap into electronic typesetting,
-													remaining essentially unchanged. It was popularised in the
-													1960s with the release of Letraset sheets containing Lorem
-													Ipsum passages, and more recently with desktop publishing
-													software like Aldus PageMaker including versions of Lorem
-													Ipsum.</p>
+												<input type="text" class="form-control" id="inputMisDrop"/>
 											</div>
+										</div>
+									</div>
+									<div class="accordion-panel">
+										<div class="accordion-heading" role="tab" id="headingFour">
+											<h3 class="card-title accordion-title">
+												<a class="accordion-msg" data-toggle="collapse"
+													data-parent="#accordion" href="#collapseFour"
+													aria-expanded="false" aria-controls="collapseFour">수정 사유</a>
+											</h3>
+										</div>
+										<div id="collapseFour" class="panel-collapse collapse in"
+											role="tabpanel" aria-labelledby="headingFour">
+											<div class="accordion-content accordion-desc">
+											<input type="text" class="form-control" id="inputReason" 
+											placeholder="수정 사유를 작성해 주세요"/>
+										</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						
 						<!-- multiple open accordion end -->
 					</div>
 					<div class="modal-footer">
 
-						<button type="button" class="btn btn-primary">수정 완료</button>
+						<button id="btnModifyMember" type="button" class="btn btn-primary">수정 완료</button>
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">닫기</button>
 					</div>
@@ -424,7 +424,7 @@
 				</div>
 				<!-- tab 1page end -->
 				<!-- tab 2page start -->
-				<div class="tab-pane" id="profile7" role="tabpanel">
+				<div class="tab-pane" id="profile7" role="tabpanel" aria-expanded="false">
 					<div class="card-header">
 						<i class="icofont icofont-pencil-alt-2"></i>
 						<h5>회원 정보 수정 내역</h5>

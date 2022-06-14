@@ -1,6 +1,5 @@
 package com.kh.team.dao;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.team.vo.EventParticipationVo;
 import com.kh.team.vo.EventVo;
-import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.EventWinnerVo;
 import com.kh.team.vo.PagingDto;
 @Repository
 public class EventDaoImpl implements EventDao{
@@ -160,7 +159,7 @@ public class EventDaoImpl implements EventDao{
 	}
 
 	@Override
-	public List<Integer> selectEndEventList() {
+	public List<EventVo> selectEndEventList() {
 		return sqlSession.selectList(NAMESPACE+"selectEndEventList");
 	}
 
@@ -198,7 +197,7 @@ public class EventDaoImpl implements EventDao{
 		Map<String, Object> parameter =new HashMap<>();
 		parameter.put("m_id", m_id);
 		parameter.put("pc_code", pc_code);
-		int count=sqlSession.update(NAMESPACE+"updateEventWinnerPoint", pc_code);
+		int count=sqlSession.update(NAMESPACE+"updateEventWinnerPoint", parameter);
 		if(count>0) {
 			return true;
 		}
@@ -214,6 +213,21 @@ public class EventDaoImpl implements EventDao{
 			return true;
 		}
 		return false;
+	}
+	@Override
+	public boolean insertEventWinnerTable(String m_id, int event_seq) {
+		Map<String, Object> parameter =new HashMap<>();
+		parameter.put("m_id", m_id);
+		parameter.put("event_seq", event_seq);
+		int count=sqlSession.insert(NAMESPACE+"insertEventWinnerTable",parameter);
+		if(count>0) {
+			return true;
+		}
+		return false;
+	}
+	@Override
+	public List<EventWinnerVo> selectWinnerIsGet(int event_seq) {
+		return sqlSession.selectList(NAMESPACE+"selectWinnerIsGet",event_seq);
 	}
 
 }

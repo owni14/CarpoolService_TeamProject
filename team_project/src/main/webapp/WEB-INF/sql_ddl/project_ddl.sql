@@ -191,3 +191,11 @@ rename column C_APPROVEDATE to c_regdate;
 -- car 테이블 컬럼 추가
 alter table car
 add c_people_count number default 1;
+
+-- passenger 테이블 열 추가
+alter table passenger
+add is_approve char(1) default 'W';
+alter table passenger
+add is_finish_boarding char(1)  default 'N';
+alter table passenger
+add apply_date date default sysdate;

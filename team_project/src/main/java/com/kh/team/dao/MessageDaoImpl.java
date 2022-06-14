@@ -34,6 +34,16 @@ public class MessageDaoImpl implements MessageDao {
 		return list;
 	}
 
+	@Override
+	public boolean insertNoBlackMessage(MessageVo messageVo) {
+		System.out.println("dao message "+messageVo);
+		int count = sqlSession.insert(NAMESPACE + "insertNoBlackMessage", messageVo);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
 	
 
 }

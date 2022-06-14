@@ -22,4 +22,37 @@ public class CarInfoTest {
 		carDao.insertCarInfo(carInfoVo);
 	}
 	
+	@Test
+	public void increaseCount() {
+		String m_id = "hong@naver.com";
+		carDao.increaseCount(m_id);
+	}
+	
+	@Test
+	public void resetCount() {
+		String m_id = "hong@naver.com";
+		carDao.resetCount(m_id);
+	}
+	
+	@Test
+	public void getMaxCount() {
+		String ci_code = "1001";
+		String count = carDao.getMaxPeopleCountOfCar(ci_code);
+		System.out.println("max car count : " + count);
+	}
+	
+	@Test
+	public void getCurrentCount() {
+		String m_id = "hong@naver.com";
+		String count = carDao.getCurrentCountOfCar(m_id);
+		System.out.println("current count: " + count);
+	}
+	
+	@Test
+	public void getCarCode() {
+		String m_id = "hong@naver.com";
+		String ci_code = carDao.getCarCodeByM_Id(m_id);
+		System.out.println("ci_code:" + ci_code);
+	}
+	
 }

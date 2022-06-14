@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kh.team.vo.EventParticipationVo;
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.EventWinnerVo;
 import com.kh.team.vo.PagingDto;
 
 public interface EventService {
@@ -40,7 +41,7 @@ public interface EventService {
 	//이벤트 테이블 관리
 	public List<Integer> selectAllEventList();
 
-	public List<Integer> selectEndEventList();
+	public List<EventVo> selectEndEventList();
 
 	public List<Integer> selectLiveEventList();
 	public int selectEventMaxCount(int event_seq);
@@ -49,5 +50,7 @@ public interface EventService {
 	public boolean updateEventWinnerPoint(String m_id,String pc_code);
 	public boolean insertEventWinnerPointHistory(String m_id,String pc_code);
 	public boolean transactionEventUpdate(int event_seq,String m_id, String pc_code);
-	
+	//event 당첨자
+	public boolean insertEventWinnerTable(String m_id,int event_seq);
+	public List<EventWinnerVo> selectWinnerIsGet(int event_seq);
 }

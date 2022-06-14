@@ -34,6 +34,7 @@
 		and a.m_id = m.m_id
 		and a.ad_approve = 'Y'
 		and m.m_company = #{m_company}
+		order by d.driver_depart_time, driver_seq
 	</select>
 	 
 	<select id="adminGetCount" resultType="int">
@@ -76,7 +77,7 @@
 	</sql>
 	
 	<select id="getDriverById" resultType="map">
-		select m.m_id, m.m_name, m.gender, m.m_dept, d.driver_depart_location, d.driver_depart_time
+		select m.m_id, m.m_name, m.gender, m.m_dept, d.driver_depart_location, d.driver_depart_time, d.driver_comment
 		from member m, driver d
 		where m.m_id = d.m_id
 		and m.m_company = #{m_company}
@@ -103,4 +104,15 @@
 		where m_id = #{m_id}
 	</select>
 	
+	<select id="getDriverSeq" resultType="string">
+		select driver_seq from passenger
+		where is_approve = 'W'
+		and is_finish_boarding = 'N'
+		and m_id = #{m_id}
+	</select>
+	
+	<select id="getDriverId" resultType="string">
+		select m_id from driver
+		where driver_seq = #{driver_seq}
+	</select>
 </mapper>

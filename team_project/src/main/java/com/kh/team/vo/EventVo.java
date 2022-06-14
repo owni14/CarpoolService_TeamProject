@@ -12,6 +12,8 @@ public class EventVo {
 	private String event_img;
 	private int event_max_count;
 	private int event_point;
+	private String event_is_bylot;
+	private String pc_code;
 	
 	public EventVo() {
 		super();
@@ -29,6 +31,39 @@ public class EventVo {
 		this.event_img = event_img;
 		this.event_max_count = event_max_count;
 		this.event_point = event_point;
+	}
+
+	public EventVo(int event_seq, String event_name, Date event_startdate, Date event_enddate, String event_content,
+			String event_is_finish, String event_img, int event_max_count, int event_point, String event_is_bylot,
+			String pc_code) {
+		super();
+		this.event_seq = event_seq;
+		this.event_name = event_name;
+		this.event_startdate = event_startdate;
+		this.event_enddate = event_enddate;
+		this.event_content = event_content;
+		this.event_is_finish = event_is_finish;
+		this.event_img = event_img;
+		this.event_max_count = event_max_count;
+		this.event_point = event_point;
+		this.event_is_bylot = event_is_bylot;
+		this.pc_code = pc_code;
+	}
+
+	public String getEvent_is_bylot() {
+		return event_is_bylot;
+	}
+
+	public void setEvent_is_bylot(String event_is_bylot) {
+		this.event_is_bylot = event_is_bylot;
+	}
+
+	public String getPc_code() {
+		return pc_code;
+	}
+
+	public void setPc_code(String pc_code) {
+		this.pc_code = pc_code;
 	}
 
 	public int getEvent_seq() {
@@ -108,7 +143,8 @@ public class EventVo {
 		return "EventVo [event_seq=" + event_seq + ", event_name=" + event_name + ", event_startdate=" + event_startdate
 				+ ", event_enddate=" + event_enddate + ", event_content=" + event_content + ", event_is_finish="
 				+ event_is_finish + ", event_img=" + event_img + ", event_max_count=" + event_max_count
-				+ ", event_point=" + event_point + "]";
+				+ ", event_point=" + event_point + ", event_is_bylot=" + event_is_bylot + ", pc_code=" + pc_code + "]";
 	}
+
 	
 }

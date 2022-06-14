@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.team.service.CarService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.vo.DriverVo;
@@ -31,6 +32,9 @@ public class BoardController {
 	@Autowired
 	private MylogService myLogService;
 	
+	@Autowired
+	private CarService carService;
+	
 	// 운전자 등록 페이지로 이동
 	@RequestMapping(value = "/drive", method = RequestMethod.GET)
 	public String drive() {
@@ -42,10 +46,14 @@ public class BoardController {
 	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
 	public String passengerReservation(Model model, HttpSession session) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
+		String m_id = loginVo.getM_id();
 		String m_company = loginVo.getM_company();
 		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
+		String driver_seq = memberService.getDriverSeq(m_id);
+		String driverId = memberService.getDriverId(driver_seq);
 		if (driverList != null) {
 			model.addAttribute("driverList", driverList);
+			model.addAttribute("driverId", driverId);
 		}
 		return "board/reservation";
 	}
@@ -70,11 +78,16 @@ public class BoardController {
 	
 	// 탑승자 정보 입력
 	@RequestMapping(value = "/addPasgInfo", method = RequestMethod.POST)
-	public String addPassengerInfo(String boardLoct, String boardHour, String boardMin, String m_id, String driver_seq) {
+	public String addPassengerInfo(RedirectAttributes rttr, String boardLoct, String boardHour, String boardMin, String m_id, String driver_seq, String driver_id) {
 		String boardTime = boardHour + boardMin;
-		System.out.println("m_id:" + m_id);
-		memberService.addPassengerInfo(m_id, boardLoct, boardTime, driver_seq);
-		return "redirect:/";
+		boolean result_increase = carService.increaseCount(driver_id);
+		boolean result_insert = memberService.addPassengerInfo(m_id, boardLoct, boardTime, driver_seq);
+		if (result_increase && result_insert) {
+			rttr.addFlashAttribute("passengerResult", "true");
+		} else {
+			rttr.addAttribute("passengerResult", "false");
+		}
+		return "redirect:/board/reservation";
 	}
 	
 	// 운전하기 등록
@@ -85,7 +98,12 @@ public class BoardController {
 		String driver_depart_time = startHour + startMin;
 		DriverVo driverVo = new DriverVo(m_id, startLoct, isSmoke, requirements, driver_depart_time);
 		boolean result = myLogService.addDriver(driverVo);
-		rttr.addFlashAttribute("driverResult", result);
+		if (result) {
+			rttr.addFlashAttribute("driverResult", result);
+		} else {
+			rttr.addFlashAttribute("driverResult", "false");
+		}
+		
 //		System.out.println("MyController addDriver, startLoct:" + startLoct);
 //		System.out.println("MyController addDriver, isSmoke:" + isSmoke);
 //		System.out.println("MyController addDriver, requirements:" + requirements);
@@ -100,6 +118,14 @@ public class BoardController {
 	public String getMemberLocation(String m_id) {
 		String memberLocation = memberService.getMemberLocation(m_id);
 		return memberLocation;
+	}
+	
+	// 운전자 차량의 최대 탑승인원 및 현재 탑승인원 가져오는 메서드 (비동기)
+	@ResponseBody
+	@RequestMapping(value = "/count", method = RequestMethod.GET)
+	public Map<String, String> getCount(String m_id) {
+		Map<String, String> map = memberService.getCount(m_id);
+		return map;
 	}
 	
 }

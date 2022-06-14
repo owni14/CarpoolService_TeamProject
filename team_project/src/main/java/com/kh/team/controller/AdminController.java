@@ -35,7 +35,11 @@ import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.EventVo;
+
 import com.kh.team.vo.MemberUpdateVo;
+
+import com.kh.team.vo.EventWinnerVo;
+
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -401,7 +405,7 @@ public class AdminController {
 		String participation_percentStr=
 				String.format("%.2f",participation_percent);
 		List<Integer> liveEventList=eventService.selectLiveEventList();
-		List<Integer> endEventList=eventService.selectEndEventList();
+		List<EventVo> endEventList=eventService.selectEndEventList();
 		
 		if(participationList.size()>0) {
 			model.addAttribute("participationList",participationList);
@@ -426,11 +430,13 @@ public class AdminController {
 		String participation_percentStr=
 				String.format("%.2f",participation_percent);
 		List<Integer> liveEventList=eventService.selectLiveEventList();
-		List<Integer> endEventList=eventService.selectEndEventList();
-		
+		List<EventVo> endEventList=eventService.selectEndEventList();
+		List<EventWinnerVo> eventWinnerList=eventService.selectWinnerIsGet(eventVo.getEvent_seq());
 		if(participationList.size()>0) {
 			model.addAttribute("participationList",participationList);
 		}		
+		model.addAttribute("eventVo",eventVo);
+		model.addAttribute("eventWinnerList",eventWinnerList);
 		model.addAttribute("liveEventList",liveEventList);
 		model.addAttribute("endEventList",endEventList);
 		model.addAttribute("participation_percentStr",participation_percentStr);
@@ -442,12 +448,13 @@ public class AdminController {
 	public String eventWinnerRun(EventVo eventVo, String[] memberList,RedirectAttributes rttr) {
 //		System.out.println("eventWinnerRun memberList"+memberList[0]);
 		int event_seq=eventVo.getEvent_seq();
+		System.out.println("eventWinnerRun event_seq "+event_seq);
 		String pc_code="1001";
 		boolean result=false;
 		for(String m_id:memberList) {
 			result=eventService.transactionEventUpdate(event_seq, m_id, pc_code);	
 		}
-		rttr.addAttribute("transactionResult", String.valueOf(result));
+		rttr.addFlashAttribute("transactionResult", String.valueOf(result));
 		return "redirect:/admin/event_end_participation?event_seq="+eventVo.getEvent_seq();
 					
 	} 

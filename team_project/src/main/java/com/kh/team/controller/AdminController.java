@@ -465,12 +465,40 @@ public class AdminController {
 	} 
 	@RequestMapping(value="/complainForm", method=RequestMethod.GET)
 	public String complainForm(Model model) {
+		long dateTime=System.currentTimeMillis();
+		long agoSeven=dateTime-60*60*24*7*1000;
+		Date agoSevenDate = new Date(agoSeven);
+		
+		System.out.println(agoSevenDate);
 		int complain_count=complainService.getNotFinishCount();
 		List<ComplainVo> complainList=complainService.getAllNotFinishList();
+		int agoSevenCount=0;
+		for(ComplainVo complainVo:complainList) {
+			Date dbDate=complainVo.getComplain_regdate();
+			long dbTime=dbDate.getTime();
+			if(agoSeven>=dbTime) {
+				agoSevenCount++;
+			}
+		}
 		model.addAttribute("complainList",complainList);
 		model.addAttribute("complain_count",complain_count);
+		model.addAttribute("agoSevenCount",agoSevenCount);
 		
 		return "admin/complainMangement";
+					
+	} 
+	@RequestMapping(value="/complainAnswer", method=RequestMethod.POST)
+	public String complainAnswer(RedirectAttributes rttr,ComplainVo complainVo) {
+		
+		long dateTime=System.currentTimeMillis();
+		Date date = new Date(dateTime);
+		complainVo.setComplain_answer_date(date);
+		complainVo.setComplain_is_finish("Y");
+		System.out.println(date);
+		System.out.println("complainAnswer complainVo"+complainVo);
+		boolean result=complainService.updateComplain(complainVo);
+		rttr.addFlashAttribute("result",String.valueOf(result));
+		return "redirect:/admin/complainForm";
 					
 	} 
 	

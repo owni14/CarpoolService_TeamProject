@@ -125,7 +125,14 @@ console.log("winnerNums" ,winnerNums);
 		$("#btnCancleMsg").click(function(){
 			$("#tareaMsg").val("");
 		});
-		
+		//회원정보 수정하러가기
+		$(".btnSearch").click(function(e){
+			e.preventDefault();
+			var m_id=$(this).parents("td").parents().find(".tdNames").attr("data-name");
+			location.href="/admin/member_management?searchType=i&keyword="+m_id;
+					
+				
+		});
 });//jquery ENd
 	
 	
@@ -268,7 +275,9 @@ console.log("winnerNums" ,winnerNums);
 						<c:if test="${eventVo.event_is_bylot eq 'Y'}">
 							<th>이벤트 물품 수령 여부</th>
 							<th>미수령자 쪽지 보내기</th>
+							
 						</c:if>	
+						<th>회원 정보 찾아가기</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -386,6 +395,7 @@ console.log("winnerNums" ,winnerNums);
 						</td>
 						
 						</c:if>
+						<td><a class="btn btn-info btnSearch" href="#">회원정보 조회하러가기</a></td>
 						</tr>
 						</c:forEach>
 						</tbody>

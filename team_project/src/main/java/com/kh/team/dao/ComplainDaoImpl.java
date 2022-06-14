@@ -48,4 +48,14 @@ public class ComplainDaoImpl implements ComplainDao {
 		return sqlSession.selectOne(NAMESPACE+"getNotFinishCount");
 	}
 
+	@Override
+	public boolean updateComplain(ComplainVo complainVo) {
+		int count =sqlSession.update(NAMESPACE+"updateComplain",complainVo);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	
+	}
+
 }

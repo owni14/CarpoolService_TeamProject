@@ -34,7 +34,7 @@
 		and a.m_id = m.m_id
 		and a.ad_approve = 'Y'
 		and m.m_company = #{m_company}
-		order by d.driver_depart_time, driver_seq
+		order by d.driver_depart_time, driver_seq asc
 	</select>
 	 
 	<select id="adminGetCount" resultType="int">
@@ -104,15 +104,26 @@
 		where m_id = #{m_id}
 	</select>
 	
+	<select id="getApplicationPassengerCount" resultType="_int">
+		select count(*) from passenger
+		where is_approve = 'W'
+		and m_id = #{m_id}
+	</select>
+	
 	<select id="getDriverSeq" resultType="string">
 		select driver_seq from passenger
 		where is_approve = 'W'
-		and is_finish_boarding = 'N'
 		and m_id = #{m_id}
 	</select>
 	
 	<select id="getDriverId" resultType="string">
 		select m_id from driver
 		where driver_seq = #{driver_seq}
+	</select>
+	
+	<select id="isApplication" resultType="_int">
+		select count(*) from passenger
+		where is_approve = 'W'
+		and m_id = #{m_id}
 	</select>
 </mapper>

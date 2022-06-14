@@ -120,5 +120,23 @@ public class MemberDaoImpl implements MemberDao {
 		String driverId = sqlSession.selectOne(NAMESPACE + "getDriverId", driver_seq);
 		return driverId;
 	}
+
+	@Override
+	public boolean isApplication(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "isApplication", m_id);
+		if (count == 1)	 {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean getApplicationPassengerCount(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "getApplicationPassengerCount", m_id);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
 	
 }

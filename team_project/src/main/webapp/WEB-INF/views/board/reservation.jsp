@@ -4,6 +4,13 @@
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <script>
 $(document).ready(function() {
+	var passengerResult = "${passengerResult}";
+	if (passengerResult == "true") {
+		alert("탑승신청이 완료되었습니다.");
+	} else if (passengerResult == "false") {
+		alert("탑승신청에 실패하였습니다. \n실패가 계속 될 경우 고객센터로 문의부탁드립니다.");
+	}
+	
 	var count = 1;
 	var m_id = "${loginVo.m_id}";
 	
@@ -15,6 +22,12 @@ $(document).ready(function() {
 	
 	// 회원 주소를 얻어낼 url
 	var url_member = "/board/member?m_id=" + m_id;
+	
+	// 탑승신청여러번 체크할 url
+	var url_isApplication = "/board/isApplicaiton?m_id=" + m_id;
+	
+	// 운전자정보를 알아낼 url
+	var url_getDriverId;
 	
 	var mapContainer = document.getElementById('map') // 지도를 표시할 div
 	
@@ -77,7 +90,7 @@ $(document).ready(function() {
 			var tr = $("#tblDriverClone  tr").clone();
 			var tds = tr.find("td");
 			tds.eq(0).text(count++);
-			tds.eq(0).attr("data-driver_seq", this.DRIVER_SEQ);
+			tds.eq(0).attr("data-driver_seq", that.DRIVER_SEQ);
 			tds.eq(1).text(that.M_NAME);
 			tds.eq(2).text(that.DRIVER_DEPART_LOCATION);
 			tds.eq(3).text(that.DRIVER_DEPART_TIME);
@@ -245,11 +258,10 @@ $(document).ready(function() {
 		 // 보낼 url 설정
 		 var url = "/board/driverInfo";
 		 var driver_seq = $(this).parent().parent().find(".classTd").attr("data-driver_seq");
-		 var stateText = $(this).parent().parent().find(".boardingState").text();
-		 if (stateText == "승인 대기") {
-			 $("#btnApply").hide();
-			 $("#btnCancel").hide();
-		 }
+		 url_getDriverId = "/board/getDriverId?driver_seq=" + driver_seq;
+		 $.post(url_getDriverId, function(rData) {
+			 $("#driver_id").val(rData);
+		 });
 		 
 		 $("#driver_seq").val(driver_seq);
 		 
@@ -279,13 +291,20 @@ $(document).ready(function() {
 		 
 	 }); //  $("#tblDriver").on("click", ".btnBoard", function() {})
 	 
-	 // 모달창에서 버튼 클릭 (작업해야함)
+	 // 모달창에서 버튼 클릭
 	 $("#btnApply").click(function() {
-// 		 $("#frmPassenger").submit();
+		 $.get(url_isApplication, function(rData) {
+			 if (rData == "true") {
+				 alert("탑승신청은 한번만 가능합니다.");
+			 } else if (rData == "false") {
+				 $("#frmPassenger").submit();
+			 }
+		 });
 	 });
 	 
 }); // $(document).ready(function() {})
 </script>
+
 <!-- 카카오 지도 -->
 <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
 	<div class="col-md-2"></div>

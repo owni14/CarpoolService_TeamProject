@@ -1,6 +1,7 @@
 package com.kh.team.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,14 +22,14 @@ public class ComplainServiceimpl implements ComplainService {
 	}
 
 	@Override
-	public List<ComplainVo> getFinishListById(String m_id) {
-		List<ComplainVo> complainList = complainDao.getFinishListById(m_id);
+	public List<Map<String, Object>> getFinishListById(String m_id) {
+		List<Map<String, Object>> complainList = complainDao.getFinishListById(m_id);
 		return complainList;
 	}
 	
 	@Override
 	public List<ComplainVo> getNotFinishListById(String m_id) {
-		List<ComplainVo> complainList = complainDao.getFinishListById(m_id);
+		List<ComplainVo> complainList = complainDao.getNotFinishListById(m_id);
 		return complainList;
 	}
 

@@ -1,6 +1,7 @@
 package com.kh.team.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,14 @@ public class ComplainDaoImpl implements ComplainDao {
 	}
 
 	@Override
-	public List<ComplainVo> getFinishListById(String m_id) {
-		List<ComplainVo> complainList = sqlSession.selectList(NAMESPACE + "getFinishListById", m_id);
+	public List<Map<String, Object>> getFinishListById(String m_id) {
+		List<Map<String, Object>> complainList = sqlSession.selectList(NAMESPACE + "getFinishListById", m_id);
 		return complainList;
 	}
 	
 	@Override
 	public List<ComplainVo> getNotFinishListById(String m_id) {
-		List<ComplainVo> complainList = sqlSession.selectList(NAMESPACE + "getFinishListById", m_id);
+		List<ComplainVo> complainList = sqlSession.selectList(NAMESPACE + "getNotFinishListById", m_id);
 		return complainList;
 	}
 

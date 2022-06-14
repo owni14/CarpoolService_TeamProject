@@ -31,13 +31,18 @@ import com.kh.team.service.AdminService;
 import com.kh.team.service.ComplainService;
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
+import com.kh.team.service.MemberUpdateService;
 import com.kh.team.service.NotifyService;
 import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.EventVo;
+
+import com.kh.team.vo.MemberUpdateVo;
+
 import com.kh.team.vo.EventWinnerVo;
+
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -54,6 +59,9 @@ public class AdminController {
 	AdminService adminService;
 	@Autowired
 	ComplainService complainService;
+	@Autowired
+	MemberUpdateService memberUpdateService;
+
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin() {
@@ -170,6 +178,13 @@ public class AdminController {
 		}
 		return null;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getMemberUpdateList", method = RequestMethod.GET)
+	public List<MemberUpdateVo> getMemberUpdateList() {
+		List<MemberUpdateVo> memberUpdateList = memberUpdateService.memberUpdateList();
+		return memberUpdateList;
+	} 
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)
 	public String eventGetBySeq(int event_seq, Model model,HttpSession session) {

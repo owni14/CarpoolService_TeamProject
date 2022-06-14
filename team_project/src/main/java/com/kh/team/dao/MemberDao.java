@@ -18,6 +18,8 @@ public interface MemberDao {
 	public Map<String, Object> getDriverById(String m_id, String m_company); // 예약하기 페이지 - 운전자 정보 가져오기 위한 메서드 
 	public boolean insertDriverLicense(String m_id, String ad_license_img); // 운전자 등록
 	public void adminupdateBlackScore(BlackListVo blackListVo); // 관리자 신고 회원 관리 블랙포인트 변경
-	public void insertPassenger(String m_id, String boardLoct, String boardTime, String driver_seq); // 탑승자 정보 추가
+	public boolean insertPassenger(String m_id, String boardLoct, String boardTime, String driver_seq); // 탑승자 정보 추가
 	public String getMemberLocation(String m_id); // 회원 주소 얻어오기
+	public String getDriverSeq(String m_id); // 운전자 번호 얻어오기
+	public String getDriverId(String driver_seq); // 운전자 아이디 얻어오기
 }

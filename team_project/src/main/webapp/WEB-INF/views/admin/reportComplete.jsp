@@ -46,6 +46,9 @@
 			var url = "/message/notifyComplete";
 			$.post(url,sData,function (rData) {
 				console.log(rData);
+				if(rData == "true") {
+					checkSended();
+				}
 			});
 		});
 		
@@ -53,16 +56,17 @@
 			var url = "/message/checkSendedMessage";
 			$.post(url, function (rData) {
 				console.log(rData);
-				for (var v = 0; v < $(".fa-paper-plane").length; v++) {
+				for (var v = 0; v < $(".sendMessage").length; v++) {
 					for (var w=0; w < rData.length; w++) {
+						console.log("w = " + w);
 						console.log(rData[w]);
-						console.log("blacklistseq", $(".fa-paper-plane").eq(v).attr("data-blacklistseq"));
- 						if (rData[w] == $(".fa-paper-plane").eq(v).attr("data-blacklistseq")) {
-							console.log("v" + v);	
- 							$(".fa-paper-plane").eq(v).css("display","none");
- 							$(".fa-paper-plane").eq(v).parents("tr").find("button").css("display","none");
- 							$(".fa-paper-plane").eq(v).parents("tr").find("td").eq(3).text("신고 처리 완료").css("color","blue");
- 							$(".fa-paper-plane").eq(v).parents("tr").find("td").eq(5).text("신고 알림 완료").css("color","blue");
+						console.log("blacklistseq = ", $(".sendMessage").eq(v).attr("data-blacklistseq"));
+ 						if (rData[w] == $(".sendMessage").eq(v).attr("data-blacklistseq")) {
+							console.log("check 같은 값 v = " + v);	
+ 							$(".sendMessage").eq(v).attr("class","fa fa-check sendMessage");
+ 							$(".sendMessage").eq(v).parents("tr").find("button").css("visibility","hidden");
+ 							$(".sendMessage").eq(v).parents("tr").find("td").eq(3).text("신고 처리 완료").css("color","blue");
+//  							$(".fa-paper-plane").eq(v).parents("tr").find("td").eq(5).text("신고 알림 완료").css("color","blue");
  						}
 					}
 				}
@@ -300,7 +304,7 @@
 												<!-- dropdown end -->
 											</td>
 											<td>${blackListVo.black_regdate}</td>
-											<td style="text-align: center"><i class="fa fa-paper-plane" data-reporter="${blackListVo.m_id}" data-blacklistseq="${blackListVo.blacklist_seq}"></i></td>
+											<td style="text-align: center"><i class="fa fa-paper-plane sendMessage" data-reporter="${blackListVo.m_id}" data-blacklistseq="${blackListVo.blacklist_seq}"></i></td>
 											
 								</tr>
 	 									</c:forEach> 

@@ -37,4 +37,14 @@ public class ComplainDaoImpl implements ComplainDao {
 		return complainList;
 	}
 
+	@Override
+	public List<ComplainVo> getAllNotFinishList() {
+		return sqlSession.selectList(NAMESPACE+"getAllNotFinishList");
+	}
+
+	@Override
+	public int getNotFinishCount() {
+		return sqlSession.selectOne(NAMESPACE+"getNotFinishCount");
+	}
+
 }

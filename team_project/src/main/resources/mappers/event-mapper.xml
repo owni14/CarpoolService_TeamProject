@@ -169,7 +169,7 @@ where m.m_id=ep${event_seq}.m_id
 	insert into event_winner
 	(e_winner_seq,m_id,event_seq)
 	values
-	(seq_event_winner.nextvl,#{m_id},#{event_seq})
+	(seq_event_winner.nextval,#{m_id},#{event_seq})
 	</insert>
 	
 	<select id="selectWinnerIsGet" resultType="EventWinnerVo">

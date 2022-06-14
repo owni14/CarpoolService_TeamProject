@@ -108,5 +108,17 @@ public class MemberDaoImpl implements MemberDao {
 		String memberLocation = sqlSession.selectOne(NAMESPACE + "getMemberLocation", m_id);
 		return memberLocation;
 	}
+
+	@Override
+	public String getDriverSeq(String m_id) {
+		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeq", m_id);
+		return driver_seq;
+	}
+
+	@Override
+	public String getDriverId(String driver_seq) {
+		String driverId = sqlSession.selectOne(NAMESPACE + "getDriverId", driver_seq);
+		return driverId;
+	}
 	
 }

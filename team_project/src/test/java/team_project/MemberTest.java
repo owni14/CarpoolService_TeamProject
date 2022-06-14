@@ -76,5 +76,18 @@ public class MemberTest {
 		System.out.println("mapDriverInfo:" + mapDriverInfo);
 	}
 	
+	@Test
+	public void getDriverSeq() {
+		String m_id = "hong@naver.com";
+		String driver_seq = memberDao.getDriverSeq(m_id);
+		System.out.println("driver_seq: " + driver_seq);
+	}
+	
+	@Test
+	public void getDriverId() {
+		String driver_seq = "4";
+		String driverId = memberDao.getDriverId(driver_seq);
+		System.out.println("driverId:" + driverId);
+	}
 }
 

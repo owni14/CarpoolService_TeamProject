@@ -7,6 +7,9 @@ $(document).ready(function() {
 	var count = 1;
 	var m_id = "${loginVo.m_id}";
 	
+	// 회원이 탑승신청한 운전자 아이디
+	var driverId = "${driverId}";
+	
 	// 운전자목록을 얻어낼 url
 	var url_list = "/board/driverList";
 	
@@ -79,6 +82,12 @@ $(document).ready(function() {
 			tds.eq(2).text(that.DRIVER_DEPART_LOCATION);
 			tds.eq(3).text(that.DRIVER_DEPART_TIME);
 			tds.eq(4).text(currentCount + " / " + maxCount);
+			
+			// 회원이 탑승신청한 운전자와 반복문을 돌면서 가져올 운전자와 같으면 승인 대기상태로 신청상태를 변경
+			if (driverId == that.M_ID) {
+				tds.eq(5).text("승인 대기");
+			}
+			
 			tds.find(".btnBoard").attr("data-m_id", that.M_ID);
 			$("#tblDriver tbody").append(tr);
 		});
@@ -128,7 +137,7 @@ $(document).ready(function() {
 		    clickMap(map, rvbmInfowindow, myMarker);
 		    
 		}); // geocoder.addressSearch(this.m_address, function(result, status){})
-	});
+	}); // $.get(url_member, function(rData) {})
 	
 	// 지도 클릭시 클릭할때 마다 인포윈도우 위치 변경할 함수
 	function searchDetailAddrFromCoords(coords, callback) {
@@ -236,6 +245,12 @@ $(document).ready(function() {
 		 // 보낼 url 설정
 		 var url = "/board/driverInfo";
 		 var driver_seq = $(this).parent().parent().find(".classTd").attr("data-driver_seq");
+		 var stateText = $(this).parent().parent().find(".boardingState").text();
+		 if (stateText == "승인 대기") {
+			 $("#btnApply").hide();
+			 $("#btnCancel").hide();
+		 }
+		 
 		 $("#driver_seq").val(driver_seq);
 		 
 		 // 버튼 클릭시 행에 있는 멤버 아이디 및 로그인된 회원의 회사 정보
@@ -266,7 +281,7 @@ $(document).ready(function() {
 	 
 	 // 모달창에서 버튼 클릭 (작업해야함)
 	 $("#btnApply").click(function() {
-		 $("#frmPassenger").submit();
+// 		 $("#frmPassenger").submit();
 	 });
 	 
 }); // $(document).ready(function() {})
@@ -304,10 +319,10 @@ $(document).ready(function() {
 					<div id="mapInModal" style="height: 300px; width: 100%;"></div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" id="btnApply" class="btn btn-success">
+					<button type="button" id="btnApply" class="btn btn-success" >
 						신청하기
 					</button> 
-					<button type="button" class="btn btn-danger" data-dismiss="modal">
+					<button type="button" id="btnCancel" class="btn btn-danger" data-dismiss="modal">
 						취소
 					</button>
 				</div>
@@ -326,7 +341,7 @@ $(document).ready(function() {
 		<input hidden="true" id="driver_id" name="driver_id" value="">
 			<div class="form-group" style="margin-bottom: 10px;">
 				<h3 style="text-align: center">운전자 위치를 확인하시고, 탑승할 위치<span style="color: blue;">(도로명 주소기준)</span>를 클릭해주세요.</h3>
-				<label for="startLocation"> 탑승 위치 </label> 
+					<label for="startLocation"> 탑승 위치 </label> 
 				<input type="text" class="form-control" id="boardLoct" name="boardLoct" readonly="readonly"/>
 			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
@@ -363,6 +378,7 @@ $(document).ready(function() {
 					<td></td>
 					<td></td>
 					<td></td>
+					<td class="boardingState" style="color: red; font-weight: bold;">미신청</td>
 					<td class="tds"><a href="#modal-container-899906" role="button" class="btn btn-info btn-sm btnBoard" data-toggle="modal">탑승신청</a></td>
 				</tr>
 			</table>
@@ -374,6 +390,7 @@ $(document).ready(function() {
 						<th>출발위치</th>
 						<th>출발시간</th>
 						<th>탑승인원</th>
+						<th>신청상태</th>
 						<th>탑승신청</th>
 					</tr>
 				</thead>

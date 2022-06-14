@@ -9,4 +9,6 @@ public interface ComplainDao {
 	public boolean insertComplain(ComplainVo complainVo);
 	public List<Map<String, Object>> getFinishListById(String m_id);
 	public List<ComplainVo> getNotFinishListById(String m_id);
+	public List<ComplainVo> getAllNotFinishList();
+	public int getNotFinishCount();
 }

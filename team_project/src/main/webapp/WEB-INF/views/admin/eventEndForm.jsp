@@ -114,13 +114,17 @@ console.log("winnerNums" ,winnerNums);
 				console.log(rData);
 				if(rData =="true"){
 					alert("성공적으로 보냈습니다");
+					$("#tareaMsg").val("");
 				}
 				else{
 					alert("메세지 보내기에 실패했습니다");
+					$("#tareaMsg").val("");
 				}
 			});
 		});
-		
+		$("#btnCancleMsg").click(function(){
+			$("#tareaMsg").val("");
+		});
 		
 });//jquery ENd
 	
@@ -132,7 +136,7 @@ console.log("winnerNums" ,winnerNums);
 <!-- modal -->
 <div class="row">
 		<div class="col-md-12">
-			 <a id="modal-545116" href="#modal-container-545116" role="button" class="btn" data-toggle="modal"></a>
+			 <a id="modal-545116" href="#modal-container-545116" role="button" class="btn" data-toggle="modal" style="display:none;"></a>
 			
 			<div class="modal fade" id="modal-container-545116" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
@@ -153,7 +157,7 @@ console.log("winnerNums" ,winnerNums);
 							<button type="button" class="btn btn-primary" id="btnSendMsg" data-dismiss="modal">
 								쪽지 보내기
 							</button> 
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+							<button type="button" class="btn btn-secondary" id="btnCancleMsg" data-dismiss="modal">
 								닫기
 							</button>
 						</div>

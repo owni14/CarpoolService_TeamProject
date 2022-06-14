@@ -21,20 +21,28 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.AdminService;
+import com.kh.team.service.ComplainService;
 import com.kh.team.service.EventService;
 import com.kh.team.service.MemberService;
+import com.kh.team.service.MemberUpdateService;
 import com.kh.team.service.NotifyService;
 import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.EventVo;
+
+import com.kh.team.vo.MemberUpdateVo;
+
 import com.kh.team.vo.EventWinnerVo;
+
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -49,6 +57,11 @@ public class AdminController {
 	NotifyService notifyService;
 	@Autowired
 	AdminService adminService;
+	@Autowired
+	ComplainService complainService;
+	@Autowired
+	MemberUpdateService memberUpdateService;
+
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin() {
@@ -165,6 +178,13 @@ public class AdminController {
 		}
 		return null;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getMemberUpdateList", method = RequestMethod.GET)
+	public List<MemberUpdateVo> getMemberUpdateList() {
+		List<MemberUpdateVo> memberUpdateList = memberUpdateService.memberUpdateList();
+		return memberUpdateList;
+	} 
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)
 	public String eventGetBySeq(int event_seq, Model model,HttpSession session) {
@@ -441,6 +461,16 @@ public class AdminController {
 		}
 		rttr.addFlashAttribute("transactionResult", String.valueOf(result));
 		return "redirect:/admin/event_end_participation?event_seq="+eventVo.getEvent_seq();
+					
+	} 
+	@RequestMapping(value="/complainForm", method=RequestMethod.GET)
+	public String complainForm(Model model) {
+		int complain_count=complainService.getNotFinishCount();
+		List<ComplainVo> complainList=complainService.getAllNotFinishList();
+		model.addAttribute("complainList",complainList);
+		model.addAttribute("complain_count",complain_count);
+		
+		return "admin/complainMangement";
 					
 	} 
 	

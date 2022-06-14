@@ -104,4 +104,15 @@
 		where m_id = #{m_id}
 	</select>
 	
+	<select id="getDriverSeq" resultType="string">
+		select driver_seq from passenger
+		where is_approve = 'W'
+		and is_finish_boarding = 'N'
+		and m_id = #{m_id}
+	</select>
+	
+	<select id="getDriverId" resultType="string">
+		select m_id from driver
+		where driver_seq = #{driver_seq}
+	</select>
 </mapper>

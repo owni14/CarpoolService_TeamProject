@@ -46,10 +46,14 @@ public class BoardController {
 	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
 	public String passengerReservation(Model model, HttpSession session) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
+		String m_id = loginVo.getM_id();
 		String m_company = loginVo.getM_company();
 		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
+		String driver_seq = memberService.getDriverSeq(m_id);
+		String driverId = memberService.getDriverId(driver_seq);
 		if (driverList != null) {
 			model.addAttribute("driverList", driverList);
+			model.addAttribute("driverId", driverId);
 		}
 		return "board/reservation";
 	}
@@ -83,7 +87,7 @@ public class BoardController {
 		} else {
 			rttr.addAttribute("passengerResult", "false");
 		}
-		return "redirect:/";
+		return "redirect:/board/reservation";
 	}
 	
 	// 운전하기 등록

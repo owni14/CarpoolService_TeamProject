@@ -38,4 +38,12 @@
 	select count(*) from complain
 	where complain_is_finish = 'N'
 	</select>
+	
+	<update id="updateComplain">
+	update complain set
+	complain_is_finish = 'Y',
+	complain_answer=#{complain_answer},
+	complain_answer_date =#{complain_answer_date}
+	where complain_seq=#{complain_seq}
+	</update>
 </mapper>

@@ -539,7 +539,7 @@ var nav = $('.fixed-button');
  <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">서비스</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li>
-                                    <a href="chart.html">
+                                    <a href="/admin/complainForm">
                                         <span class="pcoded-micon" style="background-color:#54BD54"><i class="ti-help-alt"></i><b>FC</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.form-components.main">답변관리</span>
                                         <span class="pcoded-mcaret"></span>

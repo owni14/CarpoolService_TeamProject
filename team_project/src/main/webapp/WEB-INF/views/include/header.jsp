@@ -189,7 +189,8 @@ https://templatemo.com/tm-559-zay-shop
 <!--                     </a> -->
                     <c:choose>
                     	<c:when test="${not empty loginVo}">
-                    		<p>${loginVo.m_name}님 환영합니다.</p>
+                    		${loginVo.m_name}님 환영합니다.
+                    		<a href="/member/logout"><i class="icofont icofont-logout" style="font-size: 25px;"></i></a>
                     	</c:when>
 	                    <c:otherwise>
 	                    	<a href="/member/loginForm"><i class="icofont icofont-login" style="font-size: 25px; margin-right: 10px;"></i></a>
@@ -217,7 +218,7 @@ https://templatemo.com/tm-559-zay-shop
 	    <div class="smenu" id="smenu_4">
 	   		<a class="smenu_a" href="/customer/faq">자주 묻는 질문</a>
 	    	<a class="smenu_a" href="/customer/counsel">1:1 문의하기</a>
-	    	<a class="smenu_a" href="/customer/report">신고하기</a>
+	    	<a class="smenu_a" href="/customer/report">신고내역</a>
 	    </div>
 	</nav>
     </header>

@@ -27,4 +27,15 @@
 	and complain_is_finish = 'N'
 	order by complain_regdate
 	</select>
+	
+	<select id="getAllNotFinishList" resultType="ComplainVo">
+	select * from complain
+	where complain_is_finish = 'N'
+	order by complain_regdate
+	</select>
+	
+	<select id="getNotFinishCount" resultType="int">
+	select count(*) from complain
+	where complain_is_finish = 'N'
+	</select>
 </mapper>

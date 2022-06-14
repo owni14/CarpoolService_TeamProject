@@ -18,9 +18,9 @@ public class NotifyServiceImpl implements NotifyService{
 	MemberDao memberDao;
 	
 	@Override
-	public void insertNotification(BlackListVo blackListVo) {
-		notifyDao.insertNotification(blackListVo);
-		
+	public boolean insertNotification(BlackListVo blackListVo) {
+		boolean result = notifyDao.insertNotification(blackListVo);
+		return result;
 	}
 
 	@Override

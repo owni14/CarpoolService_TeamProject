@@ -34,7 +34,7 @@
 		and a.m_id = m.m_id
 		and a.ad_approve = 'Y'
 		and m.m_company = #{m_company}
-		order by d.driver_depart_time, driver_seq
+		order by d.driver_depart_time, driver_seq asc
 	</select>
 	 
 	<select id="adminGetCount" resultType="int">
@@ -107,7 +107,6 @@
 	<select id="getDriverSeq" resultType="string">
 		select driver_seq from passenger
 		where is_approve = 'W'
-		and is_finish_boarding = 'N'
 		and m_id = #{m_id}
 	</select>
 	
@@ -115,4 +114,39 @@
 		select m_id from driver
 		where driver_seq = #{driver_seq}
 	</select>
+	
+
+	<update id="adminUpdateMemberInfo">
+		update member set
+		m_address = #{m_address},
+		m_cellphone = #{m_cellphone},
+		m_is_drop = #{m_is_drop}
+		where m_id = #{m_id}
+	</update>
+	
+	<select id="getTop5EvlMembers" resultType="MemberVo">
+		select m_id, m_evl from
+			(select rownum rnum, a.* from
+				(select * from member
+				order by m_evl desc)a)
+		<![CDATA[
+		where rnum <= 5
+		]]>
+	</select>
+
+	<select id="isApplication" resultType="_int">
+		select count(*) from passenger
+		where is_approve = 'W'
+		and m_id = #{m_id}
+
+	</select>
+	
+	<select id="deletePassenger">
+		update passenger set
+		is_deletion = 'Y'
+		where m_id = #{m_id}
+		and driver_seq = #{driver_seq}
+		and is_approve = 'W';
+	</select>
+	
 </mapper>

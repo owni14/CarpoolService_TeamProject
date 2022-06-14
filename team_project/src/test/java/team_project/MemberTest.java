@@ -89,5 +89,17 @@ public class MemberTest {
 		String driverId = memberDao.getDriverId(driver_seq);
 		System.out.println("driverId:" + driverId);
 	}
+	
+	@Test
+	public void getTop5EvlMembers() {
+		List<MemberVo> list = memberDao.getTop5EvlMembers();
+		System.out.println("list:" + list);
+	}
+	public void isApplication() {
+		String m_id = "hong@naver.com";
+		boolean result = memberDao.isApplication(m_id);
+		System.out.println("result: " + result);
+
+	}
 }
 

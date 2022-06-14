@@ -42,4 +42,9 @@ public class ComplainServiceimpl implements ComplainService {
 		return complainDao.getNotFinishCount();
 	}
 
+	@Override
+	public boolean updateComplain(ComplainVo complainVo) {
+		return complainDao.updateComplain(complainVo);
+	}
+
 }

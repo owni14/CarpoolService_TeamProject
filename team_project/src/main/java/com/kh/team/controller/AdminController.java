@@ -64,7 +64,18 @@ public class AdminController {
 
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String homeAdmin() {
+	public String homeAdmin(Model model) {
+		List<MemberVo> top5List = memberService.getTop5EvlMembers();
+		int index = 1;
+		for (MemberVo memberVo : top5List) {
+			System.out.println("index : " + index);
+			System.out.println(memberVo.getM_id());
+			System.out.println(memberVo.getM_evl());
+			model.addAttribute("top" + index, memberVo.getM_id());
+			model.addAttribute("top" + index + "evl", memberVo.getM_evl());
+			index++;
+		}
+		model.addAttribute("top5List", top5List);
 		return "admin/home_admin";
 	}
 	
@@ -185,6 +196,13 @@ public class AdminController {
 		List<MemberUpdateVo> memberUpdateList = memberUpdateService.memberUpdateList();
 		return memberUpdateList;
 	} 
+	
+	@ResponseBody
+	@RequestMapping(value = "/memberInfoUpdate", method = RequestMethod.POST)
+	public String memberInfoUpdate(MemberVo memberVo, MemberUpdateVo memberUpdateVo) {
+		boolean result = memberService.adminUpdateMemberInfo(memberVo, memberUpdateVo);
+		return String.valueOf(result);
+	}
 
 	@RequestMapping(value = "/event_details", method = RequestMethod.GET)
 	public String eventGetBySeq(int event_seq, Model model,HttpSession session) {
@@ -465,12 +483,40 @@ public class AdminController {
 	} 
 	@RequestMapping(value="/complainForm", method=RequestMethod.GET)
 	public String complainForm(Model model) {
+		long dateTime=System.currentTimeMillis();
+		long agoSeven=dateTime-60*60*24*7*1000;
+		Date agoSevenDate = new Date(agoSeven);
+		
+		System.out.println(agoSevenDate);
 		int complain_count=complainService.getNotFinishCount();
 		List<ComplainVo> complainList=complainService.getAllNotFinishList();
+		int agoSevenCount=0;
+		for(ComplainVo complainVo:complainList) {
+			Date dbDate=complainVo.getComplain_regdate();
+			long dbTime=dbDate.getTime();
+			if(agoSeven>=dbTime) {
+				agoSevenCount++;
+			}
+		}
 		model.addAttribute("complainList",complainList);
 		model.addAttribute("complain_count",complain_count);
+		model.addAttribute("agoSevenCount",agoSevenCount);
 		
 		return "admin/complainMangement";
+					
+	} 
+	@RequestMapping(value="/complainAnswer", method=RequestMethod.POST)
+	public String complainAnswer(RedirectAttributes rttr,ComplainVo complainVo) {
+		
+		long dateTime=System.currentTimeMillis();
+		Date date = new Date(dateTime);
+		complainVo.setComplain_answer_date(date);
+		complainVo.setComplain_is_finish("Y");
+		System.out.println(date);
+		System.out.println("complainAnswer complainVo"+complainVo);
+		boolean result=complainService.updateComplain(complainVo);
+		rttr.addFlashAttribute("result",String.valueOf(result));
+		return "redirect:/admin/complainForm";
 					
 	} 
 	

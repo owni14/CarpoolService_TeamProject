@@ -120,5 +120,41 @@ public class MemberDaoImpl implements MemberDao {
 		String driverId = sqlSession.selectOne(NAMESPACE + "getDriverId", driver_seq);
 		return driverId;
 	}
+
+	@Override
+
+	public boolean adminUpdateMemberInfo(MemberVo memberVo) {
+		int count = sqlSession.update(NAMESPACE + "adminUpdateMemberInfo", memberVo);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public List<MemberVo> getTop5EvlMembers() {
+		List<MemberVo> top5EvlMembersList = sqlSession.selectList(NAMESPACE + "getTop5EvlMembers");
+		return top5EvlMembersList;
+	}
+	public boolean isApplication(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "isApplication", m_id);
+		if (count == 1)	 {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deletePassenger(String m_id, String driver_seq) {
+		Map<String, String> map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("driver_seq", driver_seq);
+		int count = sqlSession.update(NAMESPACE + "deletePassenger", map);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+
+	}
 	
 }

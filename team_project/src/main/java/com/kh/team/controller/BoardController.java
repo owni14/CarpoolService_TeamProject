@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,13 +48,19 @@ public class BoardController {
 	public String passengerReservation(Model model, HttpSession session) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_id = loginVo.getM_id();
+		boolean result = memberService.isApplication(m_id);
+//		System.out.println("BoardController passengerReservation result: " + result);
+		if (result) {
+			String driver_seq = memberService.getDriverSeq(m_id);
+			String driverId = memberService.getDriverId(driver_seq);
+			model.addAttribute("driverId", driverId);
+		}
+		
 		String m_company = loginVo.getM_company();
 		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
-		String driver_seq = memberService.getDriverSeq(m_id);
-		String driverId = memberService.getDriverId(driver_seq);
+		
 		if (driverList != null) {
 			model.addAttribute("driverList", driverList);
-			model.addAttribute("driverId", driverId);
 		}
 		return "board/reservation";
 	}
@@ -126,6 +133,33 @@ public class BoardController {
 	public Map<String, String> getCount(String m_id) {
 		Map<String, String> map = memberService.getCount(m_id);
 		return map;
+	}
+	
+	// 운전자의 아이디를 받아올 메서드
+	@ResponseBody
+	@RequestMapping(value = "/getDriverId", method = RequestMethod.POST)
+	public String getDriverId(String driver_seq) {
+		String driverId = memberService.getDriverId(driver_seq);
+		return driverId;
+	}
+	
+	// 탑승하기를 두번이상 눌렀는지여부
+	@ResponseBody
+	@RequestMapping(value = "/isApplicaiton", method = RequestMethod.GET)
+	public String isApplication(String m_id) {
+		System.out.println("BoardController BoardController, m_id:" + m_id);
+		boolean result = memberService.isApplication(m_id);
+		return String.valueOf(result);
+	}
+	
+	// 탑승취소 버튼 클릭할 경우 탑승객 테이블의 is_deletion을 'Y'로 바꿀 메서드
+	@RequestMapping(value = "/cancelBoarding", method = RequestMethod.GET)
+	public String cancelBoarding(RedirectAttributes rttr, String m_id, String driver_seq) {
+		boolean result = memberService.deletePassenger(m_id, driver_seq);
+		if (result) {
+			rttr.addFlashAttribute("deletePasgResult", result);
+		}
+		return "redirect:/board/reservation";
 	}
 	
 }

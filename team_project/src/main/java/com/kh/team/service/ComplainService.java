@@ -11,4 +11,5 @@ public interface ComplainService {
 	public List<ComplainVo> getNotFinishListById(String m_id);
 	public List<ComplainVo> getAllNotFinishList();
 	public int getNotFinishCount();
+	public boolean updateComplain(ComplainVo complainVo);
 }

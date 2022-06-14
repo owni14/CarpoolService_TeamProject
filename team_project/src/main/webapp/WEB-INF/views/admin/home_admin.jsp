@@ -80,7 +80,7 @@
                                             <!-- card1 end -->
                                             <!-- Statestics Start -->
                                             <div class="col-md-12 col-xl-8">
-                                                <div class="card">
+                                                <div class="card" style="height:620px">
                                                     <div class="card-header">
                                                         <h5>운전현황</h5>
                                                         <div class="card-header-left ">
@@ -146,33 +146,40 @@ const myChart = new Chart(
                                             </div>
 
 
-
                                             <div class="col-md-12 col-xl-4">
+                                            	<div class="card" style="height:620px">
                                     			<!-- Donut chart start -->
+                                           		<div class="row" style="align-self: center; margin-top:50px">
                                            		<canvas id="doughnut-chart" width="600" height="450"></canvas>
+                                           		</div>
                                            		<script>
 												new Chart(document.getElementById("doughnut-chart"), {
 												    type: 'doughnut',
 												    data: {
-												      labels: ["hong", "kim", "lee", "kang", "park"],
+												      labels: ["${top1}", "${top2}", "${top3}", "${top4}", "${top5}"],
 												      datasets: [
 												        {
 												          label: "Population (millions)",
-												          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-												          data: [2478,5267,734,784,433]
+												          backgroundColor: ["rgba(255, 99, 132, 0.2)",
+												        	  "rgba(255, 159, 64, 0.2)",
+												        	  "rgba(255, 205, 86, 0.2)",
+												        	  "rgba(75, 192, 192, 0.2)",
+												        	  "rgba(54, 162, 235, 0.2)"],
+												          data: ["${top1evl}","${top2evl}","${top3evl}","${top4evl}","${top5evl}"]
 												        }
 												      ]
 												    },
 												    options: {
 												      title: {
 												        display: true,
-												        text: '운전자 매너 온도'
+												        text: '평점 Top 5 운전자'
 												      }
 												    }
 												});
 												</script> 
                                             <!-- Donut chart Ends -->		
                                             </div>
+                                           </div>
                                            
                                             <!-- Email Sent End -->
                                             <!-- Data widget start -->

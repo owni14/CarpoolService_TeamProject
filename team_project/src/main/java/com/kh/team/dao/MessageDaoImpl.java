@@ -44,6 +44,16 @@ public class MessageDaoImpl implements MessageDao {
 		return false;
 	}
 
-	
+	@Override
+	public List<MessageVo> receivedMessageListById(String m_id) {
+		List<MessageVo> receivedMessageList = sqlSession.selectList(NAMESPACE + "receivedMessageListById", m_id);
+		return receivedMessageList;
+	}
+
+	@Override
+	public List<MessageVo> sendMessageListById(String m_id) {
+		List<MessageVo> sendMessageList = sqlSession.selectList(NAMESPACE + "sendMessageListById", m_id);
+		return sendMessageList;
+	}
 
 }

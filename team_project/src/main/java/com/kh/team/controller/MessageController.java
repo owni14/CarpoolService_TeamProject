@@ -2,6 +2,8 @@ package com.kh.team.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.team.service.MessageService;
+import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.MessageVo;
 
 @Controller
@@ -20,12 +23,21 @@ public class MessageController {
 	@Autowired
 	private MessageService messageService;
 	
-	@RequestMapping(value="/sendMessagePage", method= RequestMethod.GET)
-	public String sendMessagePage()	{
-		System.out.println("send 들어옴");
-		return "/message/send";
+	@RequestMapping(value="/receivedMessagePage", method= RequestMethod.GET)
+	public String receivedMessagePage(HttpSession session)	{
+		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
+		List<MessageVo> receivedMessageList = messageService.receivedMessageListById(loginVo.getM_id());
+		session.setAttribute("receivedMessageList", receivedMessageList);
+		return "/message/receive";
 	}
 	
+	@RequestMapping(value="/sendMessagePage", method= RequestMethod.GET)
+	public String sendMessagePage(HttpSession session)	{
+		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
+		List<MessageVo> sendMessageList = messageService.sendMessageListById(loginVo.getM_id());
+		session.setAttribute("sendMessageList", sendMessageList);
+		return "/message/send";
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="/notifyComplete", method= RequestMethod.POST)

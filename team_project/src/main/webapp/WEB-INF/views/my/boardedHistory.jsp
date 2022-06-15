@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
-<%@ include file="/WEB-INF/views/include/my_header.jsp"%>
+<%@ include file="/WEB-INF/views/my/my_header.jsp"%>
 <style>
 #black_m_id { display: inline-block; width: 300px;}
 #black_content { margin-top: 20px; height: 100px;}

@@ -103,8 +103,7 @@ public class MyController {
 		String company = memberVo.getM_company();
 		String saveName = m_id + "'s_driver_license";
 		byte[] fileData = driverLicense.getBytes();
-		
-		System.out.println("c_no:" + c_no);
+		System.out.println("ci_name:" + ci_name);
 		// 파일 경로 및 파일 이름
 		String saveFilename = FileUploadHelper.uploadFileForDriver("//192.168.0.232/ServerFolder/DriverLicense/"+ company, (saveName + imageExt), fileData);
 		
@@ -115,6 +114,7 @@ public class MyController {
 		
 		// db로부터 자동차 코드 얻어오기
 		String c_code = carService.getCarCode(ci_name);
+		System.out.println("c_code: " + c_code);
 		// db에 회원이 소유하고 있는 자동차 정보 등록
 		boolean result1 = carService.addCarByMember(c_no, c_code, m_id);
 		// db에 회원의 운전면허증 등록

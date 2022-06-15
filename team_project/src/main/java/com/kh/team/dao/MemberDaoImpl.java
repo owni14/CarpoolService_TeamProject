@@ -64,7 +64,6 @@ public class MemberDaoImpl implements MemberDao {
 		map.put("m_id", m_id);
 		map.put("m_company", m_company);
 		Map<String, Object> mapDriverInfo = sqlSession.selectOne(NAMESPACE + "getDriverById", map);
-//		System.out.println("driverInfo:" + driverInfo);
 		return mapDriverInfo;
 	}
 	
@@ -116,7 +115,9 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public String getDriverSeq(String m_id) {
+//		System.out.println("MemberDaoImpl getDriverSeq, m_id:" + m_id);
 		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeq", m_id);
+//		System.out.println("MemberDaoImpl getDriverSeq, driver_seq:" + driver_seq);
 		return driver_seq;
 	}
 

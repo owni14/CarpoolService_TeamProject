@@ -30,7 +30,10 @@
 	
 	<select id="getAllNotFinishList" resultType="ComplainVo">
 	select * from complain
-	where complain_is_finish = 'N' and admin_code=#{admin_code}
+	where complain_is_finish = 'N' 
+	and 
+	admin_code=#{admin_code}
+	<include refid="search"></include>
 	order by complain_regdate
 	</select>
 	
@@ -42,12 +45,14 @@
 	<select id="getAllNotFinishListNoCode" resultType="ComplainVo">
 	select * from complain
 	where complain_is_finish = 'N' 
+	<include refid="search"></include>
 	order by complain_regdate
 	</select>
 	
 	<select id="getNotFinishCountNoCode" resultType="int">
 	select count(*) from complain
 	where complain_is_finish = 'N' 
+	
 	</select>
 	
 	<update id="updateComplain">
@@ -60,12 +65,25 @@
 	
 	<select id="getAllFinishList" resultType="ComplainVo">
 	select * from complain where complain_is_finish ='Y'
+	<include refid="search"></include>
 	</select>
 	
 	<select id="getAllFinishListByCode" resultType="ComplainVo">
 	select * from complain 
 	where complain_is_finish ='Y'
 	and
-	amdin_code=#{admin_code}
+	admin_code=#{admin_code}
+	<include refid="search"></include>
 	</select>
+	
+	
+	<sql id="search">
+	<if test = "searchType != null and keyword != null">
+			<choose>
+				<when test='searchType == "i"'>
+					and m_id like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</sql>
 </mapper>

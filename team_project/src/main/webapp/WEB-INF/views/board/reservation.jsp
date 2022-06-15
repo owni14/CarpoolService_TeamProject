@@ -4,6 +4,7 @@
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <script>
 $(document).ready(function() {
+	// 회원의 탑승신청 결과와 탑승취소 결과를 얻어와 알림창으로 출력
 	var passengerResult = "${passengerResult}";
 	var deletePasgResult = "${deletePasgResult}";
 	if (passengerResult == "true") {
@@ -17,24 +18,31 @@ $(document).ready(function() {
 		alert("탑승신청취소 오류 \n고객센터로 문의부탁드립니다.");
 	}
 	
-	
+	// 리스트에서 순번을 나타낼 숫자
+	// 초기 숫자를 1로 설정하고 count++로 숫자를 증
 	var count = 1;
+	
+	
+	// 현재 로그인 되어있는 회원의 아이디
 	var m_id = "${loginVo.m_id}";
 	
 	// 회원이 탑승신청한 운전자 아이디
 	var driverId = "${driverId}";
 	
-	// 운전자목록을 얻어낼 url
-	var url_list = "/board/driverList";
+	// 현재 페이지의 정보를 가져옵니다.
+	var page = "${pagingDto.page}";
 	
-	// 회원 주소를 얻어낼 url
+	// 운전자 리스트를 얻어낼 url을 설정
+	// page는 현재 설정한 페이지
+	var url_list = "/board/driverList?page=" + page;
+	
+	// 현재 로그인된 회원의 주소를 얻어낼 url을 설정
+	// m_id는 현재 로그인 되어있는 아이디
 	var url_member = "/board/member?m_id=" + m_id;
 	
-	// 탑승신청여러번 체크할 url
+	// 탑승신청을 했는지 여부를 확인할 url을 설정
+	// m_id는 현재 로그인 되어있는 아이디
 	var url_isApplication = "/board/isApplicaiton?m_id=" + m_id;
-	
-	// 운전자정보를 알아낼 url
-	var url_getDriverId;
 	
 	var mapContainer = document.getElementById('map') // 지도를 표시할 div
 	
@@ -60,15 +68,19 @@ $(document).ready(function() {
 	// 주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
 	
-	// 비동기로 데이터 가져오기
+	// 비동기 방식으로 운전자 리스트를 가져옵니다.
 	$.get(url_list, function(rData) {
+		
+		// 가져온 데이터를 데이터의 길이만큼 반복
 		$.each(rData, function() {
+			
+			// 가져온 데이터 this를 that변수에 저장(다른곳에서 사용하기 위함)
 			var that = this;
 			// 주소로 좌표를 검색합니다
 			geocoder.addressSearch(this.DRIVER_DEPART_LOCATION, function(result, status) {
 			
 			    // 정상적으로 검색이 완료됐으면 
-			     if (status === kakao.maps.services.Status.OK) {
+			    if (status === kakao.maps.services.Status.OK) {
 			
 		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 		        
@@ -88,63 +100,82 @@ $(document).ready(function() {
 		    	
 		}); // geocoder.addressSearch(this.m_address, function(result, status){})
 				
-		// 차량 최대 탑승인원 및 현재 차량 탑승인원 얻어낼 url
-		var m_id = this.M_ID;
-		var url_count = "/board/count?m_id=" + m_id;
+		// 차량 최대 탑승인원 및 현재 차량 탑승인원 얻어낼 url을 설정
+		// 파라미터로 현재 반복중인 운전자의 아이디를 넘겨줍니다.
+		var url_count = "/board/count?m_id=" + that.M_ID;
+		var m_id = this.M_ID; // 운전자의 아이디를 m_id변수에 저장
+		
+		// 비동기 방식으로 운전자차량의 최대 탑승인원 및 현재 탑승인원을 얻어옵니다. 
 		$.get(url_count, function(rData_count) {
-			var maxCount = rData_count.maxCount;
-			var currentCount = rData_count.currentCount;
-			var tr = $("#tblDriverClone  tr").clone();
-			var tds = tr.find("td");
-			tds.eq(0).text(count++);
-			tds.eq(0).attr("data-driver_seq", that.DRIVER_SEQ);
-			tds.eq(1).text(that.M_NAME);
-			tds.eq(2).text(that.DRIVER_DEPART_LOCATION);
-			tds.eq(3).text(that.DRIVER_DEPART_TIME);
-			tds.eq(4).text(currentCount + " / " + maxCount);
+			var maxCount = rData_count.maxCount; // 차량 최대 탑승인원
+			var currentCount = rData_count.currentCount; // 차량 현재 탑승인원
+			var tr = $("#tblDriverClone  tr").clone(); // 테이블 복사
 			
-			var member_id = "${loginVo.m_id}";
-			console.log("member_id:" + member_id);
-			console.log("m_id:" + m_id);
+			// td들을 찾아서 순서대로 값을 넣습니다. 
+			var tds = tr.find("td"); 
+			tds.eq(0).text(count++); // 숫자 증가
+			tds.eq(0).attr("data-driver_seq", that.DRIVER_SEQ); // 운전자 번호
+			tds.eq(1).text(that.M_NAME); // 운전자 이름
+			tds.eq(2).text(that.DRIVER_DEPART_LOCATION); // 운전자 출발 위치
+			tds.eq(3).text(that.DRIVER_DEPART_TIME); // 운전자 출발 시간
+			tds.eq(4).text(currentCount + " / " + maxCount); // 최대 탑승인원 / 현재 탑승인원 설정
 			
+			var member_id = "${loginVo.m_id}"; // 현재 로그인 된 회원 아이디
+			
+// 			console.log("member_id:" + member_id);
+// 			console.log("m_id:" + m_id);
+			
+			// 현재 로그인 된 회원아이디와 운전자의 아이디를 비교해 같을 경우 테이블에서 제거
+			/* 
 			if(member_id == m_id) {
 				count--;
-				this.tr.remove();
+				$(this).tr.remove();
 			}
-			
+			 */
+			 
 			// 차량의 최대 탑승인원과 현재 인원이 동일할 경우
 			if(currentCount == maxCount) {
-				tds.eq(5).text("신청 불가");
-				tds.eq(5).attr("style", "color: red; font-weight: bold;");
-				tds.eq(6).children().text("탑승마감");
-				tds.eq(6).children().attr("class", "btn btn-danger btn-sm btnBoard disabled");
-				tds.eq(6).children().removeAttr("data-toggle");
-				tds.eq(6).children().attr("href", "#");
+				tds.eq(5).text("신청 불가"); // 신청상태를 신청 불가로 변경
+				tds.eq(5).attr("style", "color: red; font-weight: bold;"); // 신청상태 텍스트 빨간색 및 굵게 변경
+				tds.eq(6).children().text("탑승마감"); // 탑승신청 버튼을 탑승마감으로 변경
+				tds.eq(6).children().attr("class", "btn btn-danger btn-sm btnBoard disabled"); // 탑승신청 버튼을 빨간색으로 바꾸고 클릭할 수 없게 변경
+				tds.eq(6).children().removeAttr("data-toggle"); // 기존에 가지고 있던 data-toggle속성 제거
+				tds.eq(6).children().attr("href", "#"); // url제거
 			}
 			
-			// 반복문을 돌면서 회원이 탑승신청한 운전자와 가져올 운전자가 같으면 승인 대기상태로 신청상태를 변경
+			// 반복문을 돌면서 회원이 탑승신청한 운전자와 가지고 오는 운전자가 같으면 승인 대기상태로 신청상태를 변경
 			if (driverId == that.M_ID) {
 				var btnCancel= tds.eq(6).children();
-				tds.eq(5).text("승인 대기");
-				tds.eq(5).attr("style", "color:green; font-weight: bold;");
-				btnCancel.text("탑승취소");
-				btnCancel.attr("class", "btn btn-outline-warning btn-sm btnBoard");
+				tds.eq(5).text("승인 대기"); // 신청상태를 승인 대기로 변경
+				tds.eq(5).attr("style", "color:green; font-weight: bold;"); // 신청상태 텍스트 녹색 및 굵게 변경
+				btnCancel.text("탑승취소"); // 탑승신청 버튼을 탑승취소로 변경
+				btnCancel.attr("class", "btn btn-outline-warning btn-sm btnBoard"); // 탑승신청 버튼을 노란색으로 바꿈
+				
+				// 기존에 있던 role, data-toggle속성 제거
 				btnCancel.removeAttr("role");
 				btnCancel.removeAttr("data-toggle");
+				
+				// 회원이 탑승취소버튼을 클릭할 경우 보내질 url을 설정
+				// 현재 로그인되어있는 회원의 아이디, 클릭한 행의 운전자 번호 및 아이디를 파라미터로 넘겨줍니다.
 				btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID);
 			}
 			
+			// 운전자의 아이디를 td에 data-m_id속성을 이용해 값을 넣어줍니다.
 			tds.find(".btnBoard").attr("data-m_id", that.M_ID);
-			$("#tblDriver tbody").append(tr);
-		});
+			$("#tblDriver tbody").append(tr); // tr테이블을 'tblDriver tbody' 테이블 뒤에 붙입니다.
 			
+		}); // $.get(url_count, function(rData_count) {})
+		
 		}); // $.each(rData, function() {})
 		
 	}); // $.get(url, function(rData) {})
 	
-	// 비동기로 회원의 주소 가져오기
+	// 비동기로 로그인된 회원 주소를 가져옵니다.
 	$.get(url_member, function(rData) {
+		
+		// 탑승 위치에 가지고온 데이터를 입력
 		$("#boardLoct").val(rData);
+		
 		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch(rData, function(result, status) {
 		
@@ -179,16 +210,13 @@ $(document).ready(function() {
 		        map.setCenter(coords);
 		        
 		    } // if (status === kakao.maps.services.Status.OK)
-		    	
+		    
+		  	// 지도를 클릭시 발생할 함수
 		    clickMap(map, rvbmInfowindow, myMarker);
 		    
 		}); // geocoder.addressSearch(this.m_address, function(result, status){})
+		
 	}); // $.get(url_member, function(rData) {})
-	
-	// 지도 클릭시 클릭할때 마다 인포윈도우 위치 변경할 함수
-	function searchDetailAddrFromCoords(coords, callback) {
-        geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-    }
 	
 	// 지도 클릭 시 실행하는 함수
 	function clickMap(map, rvbmInfowindow, myMarker) {
@@ -208,12 +236,16 @@ $(document).ready(function() {
 	        var currentInfowindow = new kakao.maps.InfoWindow({
 	            content: "<div style='width:150px;text-align:center;padding:2px 0;'>내 위치</div>"
 	        });
+	        
+		 	// 현재 인포윈도우를 다른곳에 저장
 	        rvbmInfowindow = currentInfowindow;
+		 	// 현재 인포윈도우를 클릭한 위치에 표시
 	        currentInfowindow.open(map, myMarker);
 	        
 	        // 지도에 클릭할때 마다 탑승위치 텍스트가 변경
 	        searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
 	            if (status === kakao.maps.services.Status.OK) {
+	            	// 주소를 도로명 주소로 가져옵니다.
 	            	$("#boardLoct").val(result[0].road_address.address_name);
 	            }   
 	        }); // searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {})
@@ -222,7 +254,12 @@ $(document).ready(function() {
 		
 	} // function clickMap(map, rvbmInfowindow, myMarker) {} )
 	
-	// 모달창에서 지도를 보여줄 함수
+	// 지도 클릭시 클릭할때 마다 인포윈도우 위치 변경할 함수
+	function searchDetailAddrFromCoords(coords, callback) {
+        geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+    }
+	
+	// 모달창에서 지도 밑 상세정보를 표시할 함수
 	function showModalMap(drvName, gender, drvDepartLocation, drvDept, drvDepartTime, mBoardLoct, driver_comment) {
 		 
 		 /* 
@@ -231,6 +268,7 @@ $(document).ready(function() {
 		 console.log("driverDept:" + driverDept);
 		  */
 		  
+		  // 모달창에서 운전자 및 탑승자의 정보를 보여줄 내용을 설정
 		  $("#driverName").text(drvName);
 		  $("#gender").text(gender);
 		  $("#driverDept").text(drvDept);
@@ -250,6 +288,7 @@ $(document).ready(function() {
 				    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 				    level: 3 // 지도의 확대 레벨
 				};  
+		  
 			// 지도를 생성합니다    
 			var modalMap = new kakao.maps.Map(modalMapContainer, modalMapOption);
 			
@@ -275,9 +314,11 @@ $(document).ready(function() {
 			        });
 			        
 			        modalInfowindow.open(modalMap, modalMarker);
-			        modalMap.setDraggable(false);
-			        modalMap.setZoomable(false);
-			        setTimeout(function(){ modalMap.relayout();  modalMap.setCenter(modalCoords), modalMap.setLevel(4);}, 100);
+			        modalMap.setDraggable(false); // 지도 이동 금지
+			        modalMap.setZoomable(false); // 지도 확대및축소 금지
+			        
+			        // 지도를 0.1초 뒤에 로딩시킵니다.
+			        setTimeout(function(){ modalMap.relayout();  modalMap.setCenter(modalCoords), modalMap.setLevel(4);}, 100); 
 			        
 			    } // if (status === kakao.maps.services.Status.OK)
 			    	
@@ -288,29 +329,28 @@ $(document).ready(function() {
 	 // 탑승 신청버튼 클릭
 	 $("#tblDriver").on("click", ".btnBoard", function() {
 		 
-		 // 보낼 url 설정
+		 // 탑승신청할 url설정
 		 var url = "/board/driverInfo";
-		 var driver_seq = $(this).parent().parent().find(".classTd").attr("data-driver_seq");
-		 var state = $(this).parent().parent().parent().find(".boardingState");
-		 console.log(state);
+		 var driver_seq = $(this).parent().parent().find(".classTd").attr("data-driver_seq"); // 운전자의 번호를 가져옵니다.
+		 var state = $(this).parent().parent().parent().find(".boardingState"); // 탑승상태를 가져옵니다.
 		 
-// 		 if (boardingState == "승인 대기") {
-// 			 console.log("checked");
-// 		 }
-		 
-		 // 클릭한 버튼의 운전자에 대한 운전자 아이디 얻어오기
-		 url_getDriverId = "/board/getDriverId?driver_seq=" + driver_seq;
+		 // 클릭한 운전자의 번호를 보내 운전자 아이디를 얻어올 url 설정 
+		 /* 
+		 var url_getDriverId = "/board/getDriverId?driver_seq=" + driver_seq;
 		 $.post(url_getDriverId, function(rData) {
 			 $("#driver_id").val(rData);
 		 });
+		  */
 		 
 		 $("#driver_seq").val(driver_seq);
+		  
 		 
 		 // 버튼 클릭시 행에 있는 멤버 아이디 및 로그인된 회원의 회사 정보
 		 var m_id = $(this).attr("data-m_id");
 		 var m_company = "${loginVo.m_company}";
 		 $("#driver_id").val(m_id);
 		 
+		 // 보낼 데이터 설정
 		 var sData = {
 				 "m_id" : m_id,
 				 "m_company" : m_company
@@ -327,22 +367,27 @@ $(document).ready(function() {
 			 } else {
 				 gender = "여자";
 			 }
+			 // 모달 창에서 상세한 정보를 보여줄 함수
 			 showModalMap(rData.M_NAME, gender, rData.DRIVER_DEPART_LOCATION, rData.M_DEPT, rData.DRIVER_DEPART_TIME, mBoardLoct, rData.DRIVER_COMMENT);
-		 });
+		 }); // $.get(url, sData, function(rData) {})
 		 
 	 }); //  $("#tblDriver").on("click", ".btnBoard", function() {})
 	 
-	 // 모달창에서 버튼 클릭
+	 // 모달창에서 탑승신청 버튼 클릭
 	 $("#btnApply").click(function() {
+		 // 회원이 탑승신청을 두번이상 클릭했는지 유무 확인후 
 		 $.get(url_isApplication, function(rData) {
+			 // 두번 이상 클릭 했으면 알림창 표시
 			 if (rData == "true") {
 				 alert("탑승신청은 한번만 가능합니다.");
 			 } else if (rData == "false") {
-				 $("#frmPassenger").submit();
+				 $("#frmPassenger").submit(); // 아니면 url로 보냅니다.
 			 }
-		 });
+		 }); // $.get(url_isApplication, function(rData) {})
 	 }); // $("#btnApply").click(function() {})
 	 
+	 // 페이지를 클릭할 경우 실행됩니다.
+	 /* 
 	 $(".page-link").click(function(e) {
 		 e.preventDefault();
 		 var href = $(this).attr("href");
@@ -350,6 +395,7 @@ $(document).ready(function() {
 		 frmRsrvPaging.find("input").attr("value", href);
 		 frmRsrvPaging.submit();
 	 });
+	  */
 	 
 }); // $(document).ready(function() {})
 </script>
@@ -467,6 +513,7 @@ $(document).ready(function() {
 			</table>
 		</div>
 	</div>
+	<%-- 
 		<nav>
 			<ul class="pagination justify-content-center">
 				<c:if test="${pagingDto.startPage != 1}">
@@ -484,16 +531,17 @@ $(document).ready(function() {
 								class="page-item"
 							</c:otherwise>
 						</c:choose>>
-						<a class="page-link" href="#">${v}</a>
+						<a class="page-link" href="${v}">${v}</a>
 					</li>				
 				</c:forEach>
 				<c:if test="${pagingDto.endPage != pagingDto.totalPage}">
 					<li class="page-item">
-						<a class="page-link" href="${pagingDto.startPage + 1}">다음</a>
+						<a class="page-link" href="${pagingDto.endPage + 1}">다음</a>
 					</li>
 				</c:if>
 			</ul>
 		</nav>
+		 --%>
 	</div>
 	<div class="col-md-2"></div>
 </div>

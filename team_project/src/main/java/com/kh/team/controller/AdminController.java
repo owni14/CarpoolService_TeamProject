@@ -512,7 +512,7 @@ public class AdminController {
 					
 	} 
 	@RequestMapping(value="/complainForm", method=RequestMethod.GET)
-	public String complainForm(Model model,HttpSession session) {
+	public String complainForm(Model model,HttpSession session,PagingDto pagingDto) {
 		long dateTime=System.currentTimeMillis();
 		long agoSeven=dateTime-60*60*24*7*1000;
 		Date agoSevenDate = new Date(agoSeven);
@@ -526,11 +526,11 @@ public class AdminController {
 			//총괄 관리자 아닐떄
 			if(!"1004".equals(admin_code)) {
 				
-				complainList=complainService.getAllNotFinishList(admin_code);
+				complainList=complainService.getAllNotFinishList(admin_code,pagingDto);
 				complain_count=complainService.getNotFinishCount(admin_code);
 			}
 			else {
-				complainList=complainService.getAllNotFinishListNoCode();
+				complainList=complainService.getAllNotFinishListNoCode(pagingDto);
 				complain_count=complainService.getNotFinishCountNoCode();
 			}
 		}
@@ -566,8 +566,27 @@ public class AdminController {
 	} 
 	
 	@RequestMapping(value="/complainAnswerComplete", method=RequestMethod.GET)
-	public String complainAnswerComplete(Model model,HttpSession session) {
-		List<ComplainVo> complainList=complainService.getAllFinishList();
+	public String complainAnswerComplete(Model model,HttpSession session,PagingDto pagingDto) {
+		Object obj=session.getAttribute("admin_code");
+		List<ComplainVo> complainList=null;
+		if(obj !=null) {
+			
+			String admin_code=obj.toString();
+			
+			//총괄 관리자 아닐떄
+			if(!"1004".equals(admin_code)) {
+				System.out.println("문의담당 관리자 코드 완료목록"+admin_code);
+				complainList=complainService.getAllFinishListByCode(admin_code,pagingDto);
+				for(ComplainVo vo:complainList) {
+					System.out.println("로그 확인"+vo);
+				}
+				
+			}
+			else {
+				complainList=complainService.getAllFinishList(pagingDto);
+			}
+		}
+		
 		model.addAttribute("complainList",complainList);
 		return "admin/complainCompleteForm";
 					

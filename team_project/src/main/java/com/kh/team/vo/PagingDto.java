@@ -48,6 +48,7 @@ public class PagingDto {
 
 	public void setPage(int page) {
 		this.page = page;
+		System.out.println("PagingDto setPage, page: " + page);
 		// page 	startRow		endRow
 		//	1			1			 10
 		//	2			11			 20

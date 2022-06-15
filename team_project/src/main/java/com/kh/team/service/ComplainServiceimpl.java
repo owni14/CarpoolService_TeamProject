@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.team.dao.ComplainDao;
 import com.kh.team.vo.ComplainVo;
+import com.kh.team.vo.PagingDto;
 
 @Service
 public class ComplainServiceimpl implements ComplainService {
@@ -34,8 +35,8 @@ public class ComplainServiceimpl implements ComplainService {
 	}
 
 	@Override
-	public List<ComplainVo> getAllNotFinishList(String admin_code) {
-		return complainDao.getAllNotFinishList(admin_code);
+	public List<ComplainVo> getAllNotFinishList(String admin_code,PagingDto pagingDto) {
+		return complainDao.getAllNotFinishList(admin_code,pagingDto);
 	}
 	@Override
 	public int getNotFinishCount(String admin_code) {
@@ -47,19 +48,22 @@ public class ComplainServiceimpl implements ComplainService {
 		return complainDao.updateComplain(complainVo);
 	}
 	@Override
-	public List<ComplainVo> getAllFinishList() {
-		return complainDao.getAllFinishList();
+	public List<ComplainVo> getAllFinishList(PagingDto pagingDto) {
+		return complainDao.getAllFinishList(pagingDto);
 	}
 
 	@Override
-	public List<ComplainVo> getAllNotFinishListNoCode() {
-		return complainDao.getAllNotFinishListNoCode();
+	public List<ComplainVo> getAllNotFinishListNoCode(PagingDto pagingDto) {
+		return complainDao.getAllNotFinishListNoCode(pagingDto);
 	}
 
 	@Override
 	public int getNotFinishCountNoCode() {
-		// TODO Auto-generated method stub
 		return complainDao.getNotFinishCountNoCode();
+	}
+	@Override
+	public List<ComplainVo> getAllFinishListByCode(String admin_code,PagingDto pagingDto) {
+		return complainDao.getAllFinishListByCode(admin_code,pagingDto);
 	}
 
 }

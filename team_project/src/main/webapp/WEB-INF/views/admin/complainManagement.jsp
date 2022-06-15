@@ -12,6 +12,9 @@ cursor: pointer;
 }
 </style>
 <script>
+var mids=new Array();
+var oldVal;
+
 var updateAnswer="${result}";
 	if(updateAnswer =="true"){
 		alert("답변 전송성공");
@@ -23,6 +26,7 @@ var updateAnswer="${result}";
 
 	$(document).ready(function () {
 		var code="${admin_code}";
+		
 		if(code =="1001"){
 			$(".trList").click(function(){
 				$(this).next("tr").toggle();
@@ -51,10 +55,58 @@ var updateAnswer="${result}";
 		form.find("[name=complain_answer]").val(complain_answer);
 		form.submit();
 	});	
+	
+	
+	$("#search").on("propertychange change keyup paste input", function() {
+		var indexArr=new Array();
+	    var currentVal = $(this).val();
+	    if(currentVal == oldVal) {
+	        return;
+	    }
+	 	
+	    oldVal = currentVal;
+	    
+	    var flag=false;
+	    var tmpIndex=0;
+		for(var v=0; v<mids.length; v++){
+			flag=mids[v].startsWith(currentVal);
+			if(flag){
+
+				indexArr[tmpIndex]=v;
+				tmpIndex++;
+			}
+		}
+	  
+	    //index 값에 따라 trlist 감추기
+	    $(".trList").hide();
+	    for(var v=0; v<indexArr.length; v++){
+	    	$(".trList").eq(indexArr[v]).show();
+	    	$(".trList").eq(indexArr[v]).find("th[data-seq]").text(v+1);
+	    }
+	});
+	//key event
+	
+	 $(".trList").find("td[data-mid]").each(function(index){
+	    	
+	    	var m_id=$(this).attr("data-mid");
+	    	mids[index]=m_id;	
+	    		
+
+	    });
+	$("#btnSearch").click(function(){
+		var keyword=$("#keyword").val();
+		$("#frmPaging").find("[name=searchType]").val("i");
+		$("#frmPaging").find("[name=keyword]").val(keyword);
+		$("#frmPaging").attr("action","/admin/complainForm");
+		$("#frmPaging").attr("method","get");
+		$("#frmPaging").submit();
 		
+	});
 	
 	});
+	//end jquery
 </script>
+<%@ include file="/WEB-INF/views/include/frmPaging.jsp" %>
 <form method="post" action="/admin/complainAnswer" id="frmAnswer">
 <input type="hidden" name="complain_seq">
 <input type="hidden" name="admin_code">
@@ -69,16 +121,25 @@ var updateAnswer="${result}";
 				<!-- Page-header start -->
 				<div class="page-header card">
 					<div class="row align-items-end">
-						<div class="col-lg-8">
+						<div class="col-lg-5">
 							<div class="page-header-title">
 								<i class="ti-help-alt" style="background-color:#54BD54"></i>
-								<div class="d-inline">
+								<div class="d-inline" >
 									<h4>고객 문의 리스트</h4>
+								
 									<span></span>
 								</div>
 							</div>
+						
+						<!-- 새로 추가된 div -->
 						</div>
-					<div class="col-lg-4">
+							<div class="col-lg-4" style="text-align: right;">
+								<input type="text" id="keyword" name="keyword" style="height:25px;width:400px;"
+					placeholder="아이디로 검색"
+					>
+					<button type="button" id="btnSearch" style="background-color:white; border-color: #d2d2d2;">검색&nbsp;&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
+						</div>
+					<div class="col-lg-3">
 						<div class="page-header-breadcrumb">
 							<ul class="breadcrumb-title">
 								<li class="breadcrumb-item">
@@ -100,6 +161,9 @@ var updateAnswer="${result}";
 					<div class="card-header">
 						<i class="icofont  icofont-notification"></i>
 						<h5>답변 처리 현황</h5>
+					<input type="text" id="search" name="search" style="height:25px;width: 300px"
+					placeholder="검색 결과내 재검색"
+					>
 					</div>
 					<div class="card-block table-border-style">
 						<div class="table-responsive"> 

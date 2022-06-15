@@ -110,5 +110,11 @@ public class MemberTest {
 		System.out.println("list:" + list);
 	}
 	
+	@Test
+	public void approveDriver() {
+		String m_id = "user027@gmail.com";
+		memberDao.approveDriver(m_id);
+	}
+	
 }
 

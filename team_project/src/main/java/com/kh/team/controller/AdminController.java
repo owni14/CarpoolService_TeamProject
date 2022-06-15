@@ -149,6 +149,11 @@ public class AdminController {
 		return "admin/memberManagement";
 	}
 	
+	@RequestMapping(value = "/member_update_management", method = RequestMethod.GET)
+	public String member_update_management() {
+		return "admin/memberUpdateManagement";
+	}
+	
 	@RequestMapping(value = "/approveDriver_management", method = RequestMethod.GET)
 	public String approveDriverManagement(Model model) {
 		List<Map<String, Object>> notApprovedDriverList = memberService.adminNotApprovedDriver();

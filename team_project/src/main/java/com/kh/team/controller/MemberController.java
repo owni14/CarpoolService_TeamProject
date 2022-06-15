@@ -50,6 +50,7 @@ public class MemberController {
 		if (targetLocation == null || targetLocation.equals("")) {
 			return "redirect:/";
 		}
+		session.removeAttribute("targetLocation");
 		return "redirect:" + targetLocation;
 	}
 	

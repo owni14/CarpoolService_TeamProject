@@ -8,10 +8,10 @@
 	<div class="tabbable" id="tabs-754123">
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-				<a class="nav-link active" href="#tab1" data-toggle="tab">시스템 쪽지</a>
+				<a class="nav-link active" href="#" data-toggle="tab">시스템 쪽지</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#tab2" data-toggle="tab">유저 쪽지</a>
+				<a class="nav-link" href="/message/recUserMessagePage" data-toggle="tab">유저 쪽지</a>
 			</li>
 		</ul>
 		<table class="table">
@@ -20,11 +20,21 @@
 				<th>내용</th>
 				<th>받은날짜</th>
 			</tr>
+			
+			
+			<c:forEach items="${recAdminMessageList}" var="MessageVo">
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td id="th_receiver"><span>${MessageVo.sender_admin_code}</span></td>
+				<td id="th_content"><span>
+				<c:choose>
+				<c:when test="${MessageVo.content.length() >=30}">${MessageVo.content.substring(0,30)}...</c:when>
+				<c:otherwise>
+				${MessageVo.content}
+				</c:otherwise>
+				</c:choose></span></td>
+				<td id="th_senddate"><span>${MessageVo.senddate}</span></td>
 			</tr>
+			</c:forEach>
 		</table>
 	</div>
 </div>

@@ -39,9 +39,10 @@ vertical-align: middel;
 
 
 <div class="row" id="message_div">
-	<div class="col-md-3">
+<%@ include file = "/WEB-INF/views/message/message_form.jsp" %>
+	<div class="col-md-2">
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-8">
 	
 		<div class="row">
 			<div class="col-md-3">
@@ -50,10 +51,10 @@ vertical-align: middel;
 	            
 	            <ul id="MessageMenu">
 	                <li>
-	                    <a href="#"><span class="message_font">받은 쪽지함<i class="bi bi-arrow-right-circle-fill"></i></span></a>
+	                    <a href="/message/receivedMessagePage"><span class="message_font">받은 쪽지함<i class="bi bi-arrow-right-circle-fill"></i></span></a>
 	                </li>
 	                <li>
-	                    <a href="#"><span class="message_font">보낸 쪽지함<i class="bi bi-arrow-right-circle-fill"></i></span></a>
+	                    <a href="/message/sendMessagePage"><span class="message_font">보낸 쪽지함<i class="bi bi-arrow-right-circle-fill"></i></span></a>
 	                </li>
 	                <li>
 	                    <a href="#"><span class="message_font">보관함<i class="bi bi-arrow-right-circle-fill"></i></span></a>
@@ -62,6 +63,6 @@ vertical-align: middel;
 	                    <a href="#"><span class="message_font">설정<i class="bi bi-arrow-right-circle-fill"></i></span></a>
 	                </li>
 	            </ul>
-	            <a href="#"><span id="message_send"><i class="bi bi-pen"></i>쪽지보내기</span></a>
+	            <a class="message_form" href="#"><span id="message_send"><i class="bi bi-pen"></i>쪽지보내기</span></a>
 			</div>
 		<div class="col-md-9">

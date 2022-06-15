@@ -2,15 +2,15 @@ package com.kh.team.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.MessageService;
 import com.kh.team.vo.MemberVo;
@@ -20,15 +20,24 @@ import com.kh.team.vo.MessageVo;
 @RequestMapping("/message")
 public class MessageController {
 	
+	
 	@Autowired
 	private MessageService messageService;
 	
-	@RequestMapping(value="/receivedMessagePage", method= RequestMethod.GET)
+	@RequestMapping(value="/recAdminMessagePage", method= RequestMethod.GET)
 	public String receivedMessagePage(HttpSession session)	{
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
-		List<MessageVo> receivedMessageList = messageService.receivedMessageListById(loginVo.getM_id());
-		session.setAttribute("receivedMessageList", receivedMessageList);
-		return "/message/receive";
+		List<MessageVo> recAdminMessageList = messageService.recAdminMessageListById(loginVo.getM_id());
+		session.setAttribute("recAdminMessageList", recAdminMessageList);
+		return "/message/receive_admin";
+	}
+	
+	@RequestMapping(value="/recUserMessagePage", method= RequestMethod.GET)
+	public String recUserMessagePage(HttpSession session)	{
+		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
+		List<MessageVo> recUserMessageList = messageService.recUserMessageListById(loginVo.getM_id());
+		session.setAttribute("recUserMessageList", recUserMessageList);
+		return "/message/receive_user";
 	}
 	
 	@RequestMapping(value="/sendMessagePage", method= RequestMethod.GET)
@@ -37,6 +46,16 @@ public class MessageController {
 		List<MessageVo> sendMessageList = messageService.sendMessageListById(loginVo.getM_id());
 		session.setAttribute("sendMessageList", sendMessageList);
 		return "/message/send";
+	}
+	
+	@RequestMapping(value="/send", method= RequestMethod.POST)
+	public String send(MessageVo messageVo, HttpServletRequest request, RedirectAttributes rttr) {
+		boolean result = messageService.insertNoBlackMessage(messageVo);
+		System.out.println(result);
+		rttr.addFlashAttribute("send_result", result);
+		String prevUrl = request.getHeader("referer");
+		String prevUri = prevUrl.substring(16);
+		return "redirect:" + prevUri;
 	}
 	
 	@ResponseBody

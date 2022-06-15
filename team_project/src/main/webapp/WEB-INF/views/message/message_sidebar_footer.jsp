@@ -4,7 +4,7 @@
 </div>
 		</div>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-2">
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>

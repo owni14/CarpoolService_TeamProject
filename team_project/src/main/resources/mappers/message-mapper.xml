@@ -5,9 +5,11 @@
   
 <mapper namespace="com.kh.team.mappers.message">
 	<insert id="insertMessage">
-		insert into message (message_seq,receiver_m_id,receiver_admin_code,sender_m_id,sender_admin_code,content,blacklist_seq)
-		values(seq_message.nextval,#{receiver_m_id,jdbcType=VARCHAR},#{receiver_admin_code,jdbcType=VARCHAR},
-		#{sender_m_id,jdbcType=VARCHAR},#{sender_admin_code,jdbcType=VARCHAR},#{content},#{blacklist_seq,jdbcType=NUMERIC})
+		insert into message 
+			(message_seq, receiver_m_id, receiver_admin_code, sender_m_id, sender_admin_code, content, blacklist_seq)
+		values
+			(seq_message.nextval, #{receiver_m_id,jdbcType=VARCHAR}, #{receiver_admin_code,jdbcType=VARCHAR},
+				#{sender_m_id,jdbcType=VARCHAR}, #{sender_admin_code,jdbcType=VARCHAR}, #{content}, #{blacklist_seq,jdbcType=NUMERIC})
 	</insert>
 	<select id="adminCheckSendedMessage" resultType="int">
 		select blacklist_seq from message

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file = "/WEB-INF/views/message/message_sidebar_header.jsp" %>
+
 <div class="border">
 	<h3>보낸 쪽지함</h3>
 	<table class="table">

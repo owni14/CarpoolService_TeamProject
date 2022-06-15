@@ -172,9 +172,16 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+
+	public void approveDriver(String m_id) {
+		sqlSession.update(NAMESPACE + "approveDriver", m_id);
+	}
+	
+
 	public int getTotalDriverCount(String m_company) {
 		int count = sqlSession.selectOne(NAMESPACE + "getTotalDriverCount", m_company);
 		return count;
 	}
+
 
 }

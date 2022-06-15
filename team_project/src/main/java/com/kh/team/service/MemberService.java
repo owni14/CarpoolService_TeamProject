@@ -25,6 +25,10 @@ public interface MemberService {
 	public List<MemberVo> getTop5EvlMembers (); // 관리자 페이지에서 평점 top5 회원 정보 가져오기 
 	public boolean isApplication(String m_id);// 탑승신청하기가 되어 있는지 여부
 	public boolean deletePassenger(String m_id, String driver_seq); // 탑승객테이블의 is_deletion을 'Y'로 바꾸는 메서드
+
+	public List<Map<String, Object>> adminNotApprovedDriver(); // 관리자 페이지에서 미승인 운전자 확인
+	public void approveDriver(String m_id); // 관리자 페이지에서 미승인 운전자 승인
+
 	public int getTotalDriverCount(String m_company); // 각 회사별 운전자 수 확인
 
 }

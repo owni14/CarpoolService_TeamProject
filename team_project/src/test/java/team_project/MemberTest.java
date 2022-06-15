@@ -106,6 +106,10 @@ public class MemberTest {
 	}
 	
 	@Test
+	public void approveDriver() {
+		String m_id = "user027@gmail.com";
+		memberDao.approveDriver(m_id);
+	}
 	public void driverPagingTest() {
 		String m_company = "SAMSUNG";
 		PagingDto pagingDto = new PagingDto();
@@ -122,6 +126,7 @@ public class MemberTest {
 		String m_company = "SAMSUNG";
 		int count = memberDao.getTotalDriverCount(m_company);
 		System.out.println("count:" + count);
+
 	}
 	
 }

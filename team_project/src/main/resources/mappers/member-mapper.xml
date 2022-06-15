@@ -161,6 +161,14 @@
 		order by ad.ad_regdate desc
 	</select>
 	
+
+	<update id="approveDriver">
+		update approve_driver set 
+		ad_approve = 'Y',
+		ad_detail = '승인 완료'
+		where m_id = #{m_id}
+	</update>
+
 	<select id="getTotalDriverCount" resultType="_int">
 		select count(*) 
 			from (select rownum rnum, a.* 
@@ -171,5 +179,6 @@
         			and a.ad_approve = 'Y'
         			and m.m_company = 'SAMSUNG')a)
 	</select>
+
 	
 </mapper>

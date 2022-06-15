@@ -138,9 +138,20 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public List<Map<String, Object>> adminNotApprovedDriver() {
+		List<Map<String, Object>> list = memberDao.adminNotApprovedDriver();
+		return list;
+	}
+
+	@Override
+	public void approveDriver(String m_id) {
+		memberDao.approveDriver(m_id);
+	}
+
 	public int getTotalDriverCount(String m_company) {
 		int count = memberDao.getTotalDriverCount(m_company);
 		return count;
+
 	}
 
 }

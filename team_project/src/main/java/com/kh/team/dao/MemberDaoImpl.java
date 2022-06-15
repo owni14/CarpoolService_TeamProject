@@ -123,7 +123,9 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public boolean isApplication(String m_id) {
+		System.out.println("MemberDaoImpl isApplication, m_id: " + m_id);
 		int count = sqlSession.selectOne(NAMESPACE + "isApplication", m_id);
+		System.out.println("MemberDaoImpl isApplication, count:" + count);
 		if (count == 1)	 {
 			return true;
 		}

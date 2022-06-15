@@ -49,7 +49,6 @@ public class BoardController {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_id = loginVo.getM_id();
 		boolean result = memberService.isApplication(m_id);
-//		System.out.println("BoardController passengerReservation result: " + result);
 		if (result) {
 			String driver_seq = memberService.getDriverSeq(m_id);
 			String driverId = memberService.getDriverId(driver_seq);
@@ -154,10 +153,15 @@ public class BoardController {
 	
 	// 탑승취소 버튼 클릭할 경우 탑승객 테이블의 is_deletion을 'Y'로 바꿀 메서드
 	@RequestMapping(value = "/cancelBoarding", method = RequestMethod.GET)
-	public String cancelBoarding(RedirectAttributes rttr, String m_id, String driver_seq) {
+	public String cancelBoarding(RedirectAttributes rttr, String m_id, String driver_seq, String driver_id) {
+		System.out.println("BoardController cancelBoarding, m_id:" + m_id);
+		System.out.println("BoardController cancelBoarding, driver_seq:" + driver_seq);
 		boolean result = memberService.deletePassenger(m_id, driver_seq);
 		if (result) {
+			carService.decreaseCount(driver_id);
 			rttr.addFlashAttribute("deletePasgResult", result);
+		} else {
+			rttr.addFlashAttribute("deletePasgResult", "false");
 		}
 		return "redirect:/board/reservation";
 	}

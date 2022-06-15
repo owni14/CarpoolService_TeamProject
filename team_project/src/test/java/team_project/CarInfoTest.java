@@ -55,4 +55,10 @@ public class CarInfoTest {
 		System.out.println("ci_code:" + ci_code);
 	}
 	
+	@Test
+	public void decreaseCount() {
+		String m_id = "hong@naver.com";
+		carDao.decreaseCount(m_id);
+	}
+	
 }

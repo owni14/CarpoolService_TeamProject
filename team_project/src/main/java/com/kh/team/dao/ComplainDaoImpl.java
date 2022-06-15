@@ -1,5 +1,6 @@
 package com.kh.team.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.team.vo.ComplainVo;
+import com.kh.team.vo.PagingDto;
 
 @Repository
 public class ComplainDaoImpl implements ComplainDao {
@@ -39,8 +41,11 @@ public class ComplainDaoImpl implements ComplainDao {
 	}
 
 	@Override
-	public List<ComplainVo> getAllNotFinishList(String admin_code) {
-		return sqlSession.selectList(NAMESPACE+"getAllNotFinishList", admin_code);
+	public List<ComplainVo> getAllNotFinishList(String admin_code,PagingDto pagingDto) {
+		Map<String, Object> parameter =new HashMap<String, Object>();
+		parameter.put("admin_code", admin_code);
+		parameter.put("pagingDto", pagingDto);
+		return sqlSession.selectList(NAMESPACE+"getAllNotFinishList", parameter);
 	}
 
 	@Override
@@ -58,17 +63,25 @@ public class ComplainDaoImpl implements ComplainDao {
 	
 	}
 	@Override
-	public List<ComplainVo> getAllFinishList() {
-		return sqlSession.selectList(NAMESPACE+"getAllFinishList");
+	public List<ComplainVo> getAllFinishList(PagingDto pagingDto) {
+		return sqlSession.selectList(NAMESPACE+"getAllFinishList",pagingDto);
 	}
 
 	@Override
-	public List<ComplainVo> getAllNotFinishListNoCode() {
-		return sqlSession.selectList(NAMESPACE+"getAllNotFinishListNoCode");
+	public List<ComplainVo> getAllNotFinishListNoCode(PagingDto pagingDto) {
+		return sqlSession.selectList(NAMESPACE+"getAllNotFinishListNoCode",pagingDto);
 	}
 
 	@Override
 	public int getNotFinishCountNoCode() {
 		return sqlSession.selectOne(NAMESPACE+"getNotFinishCountNoCode");
+	}
+	
+	@Override
+	public List<ComplainVo> getAllFinishListByCode(String admin_code,PagingDto pagingDto) {
+		Map<String, Object> parameter =new HashMap<String, Object>();
+		parameter.put("admin_code", admin_code);
+		parameter.put("pagingDto", pagingDto);
+		return sqlSession.selectList(NAMESPACE+"getAllFinishListByCode",parameter);
 	}
 }

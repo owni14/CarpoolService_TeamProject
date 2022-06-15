@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
-<%@ include file="/WEB-INF/views/include/customer_header.jsp" %>
+<%@ include file="/WEB-INF/views/customer/customer_header.jsp" %>
 <style>
 .card-body { margin: 20px; float:left; width: 200px; height: 180px; border-color: orange; }
 .card-body:hover { color:white; background-color: orange; cursor: pointer; box-shadow: 2px 2px gray;}

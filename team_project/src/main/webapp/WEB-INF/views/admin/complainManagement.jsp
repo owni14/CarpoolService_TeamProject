@@ -19,14 +19,19 @@ var updateAnswer="${result}";
 	else if(updateAnswer =="false"){
 		alert("답변 전송에 문제가 발생했습니다");
 	}
+	
+
 	$(document).ready(function () {
-		$(".trList").click(function(){
-			$(this).next("tr").toggle();
-			$(this).next("tr").siblings(".trCollapse").hide();
-			
-			
-			
-		});
+		var code="${admin_code}";
+		if(code =="1001"){
+			$(".trList").click(function(){
+				$(this).next("tr").toggle();
+				$(this).next("tr").siblings(".trCollapse").hide();
+		
+			});
+		}
+		
+		
 	$(".btnAnswer").click(function(){
 		var trTarget=$(this).parents().prev("tr.trList");
 		var complain_seq= trTarget.find("th").eq(0).attr("data-seq");
@@ -42,7 +47,7 @@ var updateAnswer="${result}";
 		form.find("[name=complain_seq]").val(complain_seq);
 		form.find("[name=admin_code]").val(admin_code);
 		form.find("[name=m_id]").val(m_id);
-		complain_answer += "고객님이 문의주신 내용입니다 원문 : \n\n\n"+afterContent;
+		complain_answer += "고객님이 문의주신 내용입니다 \n\n\n원문 : \n\n\n"+afterContent;
 		form.find("[name=complain_answer]").val(complain_answer);
 		form.submit();
 	});	
@@ -194,7 +199,7 @@ var updateAnswer="${result}";
 											
 											</th>
 											<th style="width:10%">관리자 코드(아이디)</th>
-											<th style="width:10%">유저이름(id)</th>
+											<th style="width:10%">유저ID</th>
 											<th style="width:50%">문의내용</th>
 											<th style="width:10%">처리 결과</th>
 											<th style="width:5%">등록 일자</th>
@@ -241,6 +246,7 @@ var updateAnswer="${result}";
 											  <h4>유저(${complainVo.m_id})에 대한 답변달기</h4>
 											   <textarea class="form-control tareContent" ></textarea>
 											   <br>
+											   
 											   <br>
 											   <button class="btn btn-info btnAnswer" type="button">작성완료</button>
 											  </div>

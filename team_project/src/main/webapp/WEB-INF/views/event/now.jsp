@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
-<%@ include file="/WEB-INF/views/include/event_header.jsp" %>
+<%@ include file="/WEB-INF/views/event/event_header.jsp" %>
 <style>
 
 .e_td { height: 175px;}

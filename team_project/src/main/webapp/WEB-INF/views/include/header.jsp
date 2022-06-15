@@ -221,7 +221,7 @@ https://templatemo.com/tm-559-zay-shop
 									 <span class="span_message">새 쪽지</span>
 									 </div>
 									 <div style="float: right; margin: 10px;">
-									 <a href="#"><span class="span_message">쪽지함 ></span></a>
+									 <a href="/message/sendMessagePage"><span class="span_message">쪽지함 ></span></a>
 									 
 									 </div>
 									 

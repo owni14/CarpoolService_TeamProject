@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
-<%@ include file="/WEB-INF/views/include/customer_header.jsp"%>
+<%@ include file="/WEB-INF/views/customer/customer_header.jsp"%>
 <style>
 
 
@@ -53,7 +53,7 @@ $(document).ready(function() {
 });
 	
 </script>
-<%@ include file="/WEB-INF/views/include/frmComplain.jsp" %>
+<%@ include file="/WEB-INF/views/customer/frmComplain.jsp" %>
 <div class="row">
 	<div class="col-md-2"></div>
 	<div class="col-md-8">

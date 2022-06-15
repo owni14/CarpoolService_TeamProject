@@ -136,7 +136,7 @@
 							<div class="page-header-title">
 								<i class="icofont icofont-check bg-c-blue"></i>
 								<div class="d-inline">
-									<h4>신고 반려 리스트</h4>
+									<h4>신고 완료 리스트</h4>
 									<span></span>
 								</div>
 							</div>

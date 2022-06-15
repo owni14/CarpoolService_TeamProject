@@ -251,23 +251,6 @@
 			<div class="page-body">
 			<!-- Basic table card start -->
 			<div class="card">
-			<!-- tab start -->
-			<div class="col-lg-12">
-				<!-- Nav tabs -->
-				<ul class="nav nav-tabs md-tabs " role="tablist">
-					<li class="nav-item" style="width:50%"><a class="nav-link active"
-						data-toggle="tab" href="#home7" role="tab">회원 테이블</a>
-						<div class="slide" style="width:50%"></div></li>
-					<li class="nav-item" style="width:50%"><a class="nav-link" data-toggle="tab"
-						href="#profile7" role="tab">회원 정보 수정 내역</a>
-						<div class="slide" style="width:50%"></div></li>
-				</ul>
-				<!-- Tab panes -->
-				<div class="tab-content card-block">
-					<div class="tab-pane active" id="home7" role="tabpanel">
-					
-			
-				
 					<div class="card-header">
 						<i class="icofont icofont-ui-user"></i>
 						<h5>회원 테이블</h5>
@@ -420,47 +403,7 @@
 						</nav>
 					</div>
 				</div>
-				<!-- end pagination  -->
-				</div>
-				<!-- tab 1page end -->
-				<!-- tab 2page start -->
-				<div class="tab-pane" id="profile7" role="tabpanel" aria-expanded="false">
-					<div class="card-header">
-						<i class="icofont icofont-pencil-alt-2"></i>
-						<h5>회원 정보 수정 내역</h5>
-
-					</div>
-					<div class="card-block table-border-style">
-						<div class="table-responsive">
-							<table style="display:none" id="table_clone">
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							</table>
-							<table class="table" id="table_memberUpdate_list">
-								<thead>
-									<tr>
-										<th style="width:20%">회원 아이디</th>
-										<th style="width:20%">수정 사유</th>
-										<th style="width:20%">승인 관리자 코드</th>
-										<th style="width:20%">수정 일자</th>
-									</tr>
-								</thead>
-								<tbody>
-								
-								</tbody>
-							</table>
-						</div>
-					</div>
-						
-				</div>
-				<!-- tab 2page end -->
-				</div>
-			<!-- tab end -->
-			</div>
+				
 				
 				</div>
 				<!-- Basic table card end -->

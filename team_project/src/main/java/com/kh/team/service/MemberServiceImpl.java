@@ -87,9 +87,6 @@ public class MemberServiceImpl implements MemberService {
 		String maxCount = carDao.getMaxPeopleCountOfCar(ci_code);
 		String currentCount = carDao.getCurrentCountOfCar(m_id);
 		String driver_seq = memberDao.getDriverSeq(m_id);
-		System.out.println("ci_code:" + ci_code);
-		System.out.println("maxCount:" + maxCount);
-		System.out.println("currentCount:" + currentCount);
 		Map<String, String> map = new HashMap<>();
 		map.put("maxCount", maxCount);
 		map.put("currentCount", currentCount);

@@ -68,15 +68,15 @@ public class BoardController {
 		pagingDto = new PagingDto(5, count, 5);
 		
 		// 현재 페이지의 수를 얻어와 페이지 설정
-		int page = pagingDto.getPage();
-		pagingDto.setPage(page);
+		pagingDto.setPage(pagingDto.getPage());
 		
-		/*
+		System.out.println("BoardController passengerReservation, page :" + pagingDto.getPage());
+		
 		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
 		if (driverList != null) {
 			model.addAttribute("driverList", driverList);
 		}
-		*/
+		
 		
 		model.addAttribute("pagingDto", pagingDto);
 		return "board/reservation";
@@ -89,6 +89,7 @@ public class BoardController {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_company = loginVo.getM_company();
 		
+		System.out.println("BoardController passengerReservationList, page :" + page);
 		// 회원이 속한 회사의 금일 운전자수를 얻어옵니다. 
 		int count = memberService.getTotalDriverCount(m_company);
 		

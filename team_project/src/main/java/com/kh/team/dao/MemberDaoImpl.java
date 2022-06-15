@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.ls.LSInput;
 
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.ComplainVo;
@@ -42,9 +43,13 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> getDriverList(String m_company) {
-		List<Map<String, Object>> driverList = sqlSession.selectList(NAMESPACE + "getDriverList", m_company);
-		return driverList;
+	public List<Map<String, Object>> getDriverList(String m_company, PagingDto pagingDto) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("m_company", m_company);
+		map.put("startRow", pagingDto.getStartRow());
+		map.put("endRow", pagingDto.getEndRow());
+		List<Map<String, Object>> list = sqlSession.selectList(NAMESPACE + "getDriverList", map);
+		return list;
 	}
 
 	@Override
@@ -137,7 +142,9 @@ public class MemberDaoImpl implements MemberDao {
 		return top5EvlMembersList;
 	}
 	public boolean isApplication(String m_id) {
+		System.out.println("MemberDaoImpl isApplication, m_id: " + m_id);
 		int count = sqlSession.selectOne(NAMESPACE + "isApplication", m_id);
+		System.out.println("MemberDaoImpl isApplication, count:" + count);
 		if (count == 1)	 {
 			return true;
 		}
@@ -164,8 +171,16 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+
 	public void approveDriver(String m_id) {
 		sqlSession.update(NAMESPACE + "approveDriver", m_id);
 	}
 	
+
+	public int getTotalDriverCount(String m_company) {
+		int count = sqlSession.selectOne(NAMESPACE + "getTotalDriverCount", m_company);
+		return count;
+	}
+
+
 }

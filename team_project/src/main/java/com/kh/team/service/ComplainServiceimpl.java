@@ -34,17 +34,32 @@ public class ComplainServiceimpl implements ComplainService {
 	}
 
 	@Override
-	public List<ComplainVo> getAllNotFinishList() {
-		return complainDao.getAllNotFinishList();
+	public List<ComplainVo> getAllNotFinishList(String admin_code) {
+		return complainDao.getAllNotFinishList(admin_code);
 	}
 	@Override
-	public int getNotFinishCount() {
-		return complainDao.getNotFinishCount();
+	public int getNotFinishCount(String admin_code) {
+		return complainDao.getNotFinishCount(admin_code);
 	}
 
 	@Override
 	public boolean updateComplain(ComplainVo complainVo) {
 		return complainDao.updateComplain(complainVo);
+	}
+	@Override
+	public List<ComplainVo> getAllFinishList() {
+		return complainDao.getAllFinishList();
+	}
+
+	@Override
+	public List<ComplainVo> getAllNotFinishListNoCode() {
+		return complainDao.getAllNotFinishListNoCode();
+	}
+
+	@Override
+	public int getNotFinishCountNoCode() {
+		// TODO Auto-generated method stub
+		return complainDao.getNotFinishCountNoCode();
 	}
 
 }

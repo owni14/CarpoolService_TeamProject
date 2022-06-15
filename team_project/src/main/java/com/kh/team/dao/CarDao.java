@@ -13,4 +13,5 @@ public interface CarDao {
 	public String getMaxPeopleCountOfCar(String ci_code); // 차량의 최대 탑승인원
 	public String getCurrentCountOfCar(String m_id); // 현재 차량의 탑승인원
 	public String getCarCodeByM_Id(String m_id); // 회원 이메일로 자동차 코드 얻기
+	public void decreaseCount(String m_id); // 현재 차량의 탑승인원 감소
 }

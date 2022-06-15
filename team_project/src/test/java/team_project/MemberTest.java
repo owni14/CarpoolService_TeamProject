@@ -55,11 +55,6 @@ public class MemberTest {
 	}
 	
 	@Test
-	public void testgetMember() {
-	System.out.println(memberDao.getDriverList("user0187@gmail.com"));	
-	}
-	
-	@Test
 	public void adminupdateBlackScore() {
 		BlackListVo blackListVo = new BlackListVo();
 		blackListVo.setBlack_score(5);
@@ -114,6 +109,24 @@ public class MemberTest {
 	public void approveDriver() {
 		String m_id = "user027@gmail.com";
 		memberDao.approveDriver(m_id);
+	}
+	public void driverPagingTest() {
+		String m_company = "SAMSUNG";
+		PagingDto pagingDto = new PagingDto();
+		pagingDto.setStartRow(6);
+		pagingDto.setEndRow(10);
+		List<Map<String, Object>> list = memberDao.getDriverList(m_company, pagingDto);
+		for (Map<String, Object> map : list) {
+			System.out.println(map);
+		}
+	}
+	
+	@Test
+	public void getTotalDriverCountTest() {
+		String m_company = "SAMSUNG";
+		int count = memberDao.getTotalDriverCount(m_company);
+		System.out.println("count:" + count);
+
 	}
 	
 }

@@ -30,13 +30,24 @@
 	
 	<select id="getAllNotFinishList" resultType="ComplainVo">
 	select * from complain
-	where complain_is_finish = 'N'
+	where complain_is_finish = 'N' and admin_code=#{admin_code}
 	order by complain_regdate
 	</select>
 	
 	<select id="getNotFinishCount" resultType="int">
 	select count(*) from complain
-	where complain_is_finish = 'N'
+	where complain_is_finish = 'N' and admin_code=#{admin_code}
+	</select>
+	
+	<select id="getAllNotFinishListNoCode" resultType="ComplainVo">
+	select * from complain
+	where complain_is_finish = 'N' 
+	order by complain_regdate
+	</select>
+	
+	<select id="getNotFinishCountNoCode" resultType="int">
+	select count(*) from complain
+	where complain_is_finish = 'N' 
 	</select>
 	
 	<update id="updateComplain">
@@ -46,4 +57,15 @@
 	complain_answer_date =#{complain_answer_date}
 	where complain_seq=#{complain_seq}
 	</update>
+	
+	<select id="getAllFinishList" resultType="ComplainVo">
+	select * from complain where complain_is_finish ='Y'
+	</select>
+	
+	<select id="getAllFinishListByCode" resultType="ComplainVo">
+	select * from complain 
+	where complain_is_finish ='Y'
+	and
+	amdin_code=#{admin_code}
+	</select>
 </mapper>

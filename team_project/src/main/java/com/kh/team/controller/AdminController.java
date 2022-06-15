@@ -501,14 +501,29 @@ public class AdminController {
 					
 	} 
 	@RequestMapping(value="/complainForm", method=RequestMethod.GET)
-	public String complainForm(Model model) {
+	public String complainForm(Model model,HttpSession session) {
 		long dateTime=System.currentTimeMillis();
 		long agoSeven=dateTime-60*60*24*7*1000;
 		Date agoSevenDate = new Date(agoSeven);
+		Object obj=session.getAttribute("admin_code");
+		List<ComplainVo> complainList=null;
+		int complain_count=0;
+		if(obj !=null) {
+			
+			String admin_code=obj.toString();
+			System.out.println("문의담당 관리자 코드"+admin_code);
+			//총괄 관리자 아닐떄
+			if(!"1004".equals(admin_code)) {
+				
+				complainList=complainService.getAllNotFinishList(admin_code);
+				complain_count=complainService.getNotFinishCount(admin_code);
+			}
+			else {
+				complainList=complainService.getAllNotFinishListNoCode();
+				complain_count=complainService.getNotFinishCountNoCode();
+			}
+		}
 		
-		System.out.println(agoSevenDate);
-		int complain_count=complainService.getNotFinishCount();
-		List<ComplainVo> complainList=complainService.getAllNotFinishList();
 		int agoSevenCount=0;
 		for(ComplainVo complainVo:complainList) {
 			Date dbDate=complainVo.getComplain_regdate();
@@ -521,7 +536,7 @@ public class AdminController {
 		model.addAttribute("complain_count",complain_count);
 		model.addAttribute("agoSevenCount",agoSevenCount);
 		
-		return "admin/complainMangement";
+		return "admin/complainManagement";
 					
 	} 
 	@RequestMapping(value="/complainAnswer", method=RequestMethod.POST)
@@ -536,6 +551,14 @@ public class AdminController {
 		boolean result=complainService.updateComplain(complainVo);
 		rttr.addFlashAttribute("result",String.valueOf(result));
 		return "redirect:/admin/complainForm";
+					
+	} 
+	
+	@RequestMapping(value="/complainAnswerComplete", method=RequestMethod.GET)
+	public String complainAnswerComplete(Model model,HttpSession session) {
+		List<ComplainVo> complainList=complainService.getAllFinishList();
+		model.addAttribute("complainList",complainList);
+		return "admin/complainCompleteForm";
 					
 	} 
 	

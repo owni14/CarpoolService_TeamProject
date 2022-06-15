@@ -3,11 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
-<%@ include file="/WEB-INF/views/include/customer_header.jsp"%>
+<%@ include file="/WEB-INF/views/customer/customer_header.jsp"%>
 <style>
-.dropdown {
-	margin-bottom: 30px;
-}
 
 .tx-counsel {
 	margin-bottom: 20px;

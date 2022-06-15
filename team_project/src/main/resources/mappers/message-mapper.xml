@@ -22,4 +22,16 @@
 		#{sender_m_id,jdbcType=VARCHAR},
 		#{sender_admin_code,jdbcType=VARCHAR},#{content})
 	</insert>
+	
+	<select id="receivedMessageListById">
+		select * from message
+		where receiver_m_id = #{m_id}
+		order by opendate nulls first, senddate desc
+	</select>
+	
+	<select id="sendMessageListById">
+		select * from message
+		where sender_m_id = #{m_id}
+		order by senddate desc
+	</select>
 </mapper>

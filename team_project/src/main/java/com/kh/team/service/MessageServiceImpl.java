@@ -36,6 +36,18 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.insertNoBlackMessage(messageVo);
 	}
 
+	@Override
+	public List<MessageVo> receivedMessageListById(String m_id) {
+		List<MessageVo> receivedMessageList = messageDao.receivedMessageListById(m_id);
+		return receivedMessageList;
+	}
+
+	@Override
+	public List<MessageVo> sendMessageListById(String m_id) {
+		List<MessageVo> sendMessageList = messageDao.sendMessageListById(m_id);
+		return sendMessageList;
+	}
+
 	
 
 

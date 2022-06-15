@@ -22,6 +22,7 @@ import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.PagingDto;
 
 @Controller
 @RequestMapping("/board")
@@ -45,23 +46,30 @@ public class BoardController {
 	// 예약하기 페이지로 이동
 	// 로그인 안되어 있으면 페이지 이동이 안됨
 	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
-	public String passengerReservation(Model model, HttpSession session) {
+	public String passengerReservation(Model model, HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_id = loginVo.getM_id();
+		String m_company = loginVo.getM_company();
+		
 		boolean result = memberService.isApplication(m_id);
-//		System.out.println("BoardController passengerReservation result: " + result);
 		if (result) {
 			String driver_seq = memberService.getDriverSeq(m_id);
 			String driverId = memberService.getDriverId(driver_seq);
 			model.addAttribute("driverId", driverId);
 		}
 		
-		String m_company = loginVo.getM_company();
-		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
+		int count = memberService.getTotalDriverCount(m_company);
+		pagingDto = new PagingDto(5, count, 5);
+		pagingDto.setPage(pagingDto.getPage());
 		
+		/*
+		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
 		if (driverList != null) {
 			model.addAttribute("driverList", driverList);
 		}
+		*/
+		System.out.println(pagingDto);
+		model.addAttribute("pagingDto", pagingDto);
 		return "board/reservation";
 	}
 	
@@ -71,7 +79,17 @@ public class BoardController {
 	public List<Map<String, Object>> passengerReservationList(HttpSession session) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_company = loginVo.getM_company();
-		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
+		int count = memberService.getTotalDriverCount(m_company);
+		PagingDto pagingDto = new PagingDto(5, count, 5);
+		pagingDto.setPage(1);
+		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
+		
+		System.out.println(pagingDto);
+		for (Map<String, Object> map : driverList) {
+			System.out.println(map);
+		}
+		
+		System.out.println(driverList);
 		return driverList;
 	}
 	
@@ -154,10 +172,15 @@ public class BoardController {
 	
 	// 탑승취소 버튼 클릭할 경우 탑승객 테이블의 is_deletion을 'Y'로 바꿀 메서드
 	@RequestMapping(value = "/cancelBoarding", method = RequestMethod.GET)
-	public String cancelBoarding(RedirectAttributes rttr, String m_id, String driver_seq) {
+	public String cancelBoarding(RedirectAttributes rttr, String m_id, String driver_seq, String driver_id) {
+		System.out.println("BoardController cancelBoarding, m_id:" + m_id);
+		System.out.println("BoardController cancelBoarding, driver_seq:" + driver_seq);
 		boolean result = memberService.deletePassenger(m_id, driver_seq);
 		if (result) {
+			carService.decreaseCount(driver_id);
 			rttr.addFlashAttribute("deletePasgResult", result);
+		} else {
+			rttr.addFlashAttribute("deletePasgResult", "false");
 		}
 		return "redirect:/board/reservation";
 	}

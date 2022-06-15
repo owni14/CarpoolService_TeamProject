@@ -25,7 +25,7 @@ public class CarDaoImpl implements CarDao{
 	
 	@Override
 	public String getCarCodeByCi_Name(String ci_name) {
-		String ci_code = sqlSession.selectOne(NAMESPACE + "getCarCode", ci_name);
+		String ci_code = sqlSession.selectOne(NAMESPACE + "getCarCodeByCi_Name", ci_name);
 		return ci_code;
 	}
 

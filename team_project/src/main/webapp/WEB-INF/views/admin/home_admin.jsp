@@ -1,8 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/include_admin/header.jsp" %>
+<script>
+	$(document).ready(function () {
+		$(".driveLicenseImg").click(function () {
+			console.log("click");
+			$("#modal-751258").trigger("click");
+			var licenseImg =$(this).attr("src");
+			$("#magnifyImg").attr("src",licenseImg);
+		});
+		
+		$(".chkApprove").click(function () {
+			console.log("click");
+			var m_id = $(this).attr("data-m_id");
+			$("#frmApproveDriver").attr("action", "/admin/approveDriver");
+			$("#frmApproveDriver").attr("method", "post");
+			$("#frmApproveDriver").find("input[name=m_id]").val(m_id);
+			console.log(m_id);
+			$("#frmApproveDriver").submit();
+		});
+		
+		$("#btnApproveList").click(function () {
+			location.href = "/admin/approveDriver_management";
+		});
+	});
+</script>
+<!-- modal start -->
+<div class="row">
+	<div class="col-md-12">
+		<a id="modal-751258" href="#modal-container-751258" role="button"
+			class="btn" data-toggle="modal" style="display:none">Launch demo modal</a>
 
+		<div class="modal fade" id="modal-container-751258" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">운전면허증 확대 이미지</h5>
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<img id="magnifyImg" style="width:100%"/>
+					</div>
+					<div class="modal-footer">
+
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">뒤로가기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- modal end -->
 
                            <div class="main-body">
                                 <div class="page-wrapper">
@@ -184,7 +238,7 @@ const myChart = new Chart(
                                             <!-- Email Sent End -->
                                             <!-- Data widget start -->
                                             <div class="col-md-12 col-xl-6">
-                                                <div class="card project-task">
+                                                <div class="card project-task" style="height:480px">
                                                     <div class="card-header">
                                                         <div class="card-header-left ">
                                                             <h3>신고자 리스트</h3>
@@ -291,31 +345,78 @@ const myChart = new Chart(
                                                 </div>
                                             </div>
                                             <div class="col-md-12 col-xl-6">
-                                                <div class="card add-task-card">
+                                                <form id="frmApproveDriver">
+                                                  <input type="hidden" name="m_id"/>
+                                                </form>
+                                                <div class="card add-task-card" style="height:480px">
                                                     <div class="card-header">
                                                         <div class="card-header-left">
                                                             <h3>운전자 신청 승인 리스트</h3>
                                                         </div>
                                                         <div class="card-header-right">
-                                                            <button class="btn btn-card btn-primary">모두 승인하기(이버튼 많은 책임을 동원합니다)</button>
+                                                            <button class="btn btn-card btn-primary" id="btnApproveList">전체 리스트 확인</button>
                                                         </div>
                                                     </div>
                                                     <div class="card-block">
+                                                        
+                                                       <c:forEach items="${notApprovedDriverList}" var="map" varStatus="status">
+                                                        <c:if test="${status.index <= 2}">
                                                         <div class="to-do-list">
                                                             <div class="checkbox-fade fade-in-primary d-block">
-                                                                <label class="check-task d-block">
 <!--                                                                     <input type="checkbox" value=""> -->
 <!--                                                                     <span class="cr"> -->
 <!--                                                                         <i class="cr-icon icofont icofont-ui-check txt-default"></i> -->
 <!--                                                                     </span> -->
-                                                                    <span><h6>김홍구 <span class="label bg-c-green m-l-10 f-10">남성</span></h6></span>
-                                                                    <div class="task-card-img m-l-40">
-                                                                        <a href="#!"><img src="#"  alt="면허증이미지" class="img-40"></a>
-<!--                                                                         <a href="#!"><img src="/resources/admin/assets/images/avatar-3.jpg" data-toggle="tooltip" title="Alia" alt="" class="img-40 m-l-10"></a> -->
+																	<div class="task-card-img m-1-40">
+                                                                    <img src="/admin/displayLicenseImage?ad_license_img=${map.AD_LICENSE_IMG}"  alt="면허증이미지" class="img-100 m-l-10 driveLicenseImg" style="margin-bottom:15px">
                                                                     </div>
+                                                                <label class="check-task d-block">
+                                                                    <table>
+                                                                    	<tr style="width: 100%">
+                                                                    		<td style="width:10%; text-align: center">
+                                                                    			${map.M_NAME}
+                                                                    		</td>
+                                                                    		<td style="width:15%; text-align: center">
+                                                                    			<span
+				                                                                    <c:if test="${map.GENDER == 'M'}">
+				                                                                    	class="label bg-c-blue m-l-10 f-10"
+				                                                                    </c:if>
+				                                                                    	class="label bg-c-pink m-l-10 f-10"
+                                                                   				 >
+			                                                                    	<c:choose>
+				                                                                    	<c:when test="${map.GENDER == 'M'}">
+				                                                                    		남성회원
+				                                                                    	</c:when>
+				                                                                    	<c:otherwise>
+				                                                                    		여성회원
+				                                                                    	</c:otherwise>
+			                                                                    	</c:choose>
+			                                                                    </span>
+                                                                    		</td>
+                                                                    		<td style="width:25%">
+                                                                    			${map.M_ID}
+                                                                    		</td>
+                                                                    		<td style="width:25%; text-align: center">
+                                                                    			${map.AD_DETAIL}
+                                                                    		</td>
+                                                                    		<td style="width:25%; text-align: center">
+                                                                    			<fmt:formatDate value="${map.AD_REGDATE}" type="DATE" pattern="yy년 MM월 dd일 HH시"/>
+                                                                    			
+                                                                    		</td>
+                                                                    		<td>
+                                                                    			<input type="checkbox" value="" >
+			                                                                    <span class="cr">
+			                                                                        <i class="cr-icon icofont icofont-ui-check txt-default chkApprove" data-m_id="${map.M_ID}"></i>
+			                                                                    </span>
+                                                                    		</td>
+                                                                    	</tr>
+                                                                    </table>
                                                                 </label>
                                                             </div>
                                                         </div>
+                                                        </c:if>
+                                                        </c:forEach>
+                                                        
 <!--                                                         <div class="to-do-list"> -->
 <!--                                                             <div class="checkbox-fade fade-in-primary d-block"> -->
 <!--                                                                 <label class="check-task d-block"> -->
@@ -327,23 +428,7 @@ const myChart = new Chart(
 <!--                                                                 </label> -->
 <!--                                                             </div> -->
 <!--                                                         </div> -->
-                                                        <div class="to-do-list">
-                                                            <div class="checkbox-fade fade-in-primary d-block">
-                                                                <label class="check-task d-block">
-<!--                                                                     <input type="checkbox" value=""> -->
-<!--                                                                     <span class="cr"> -->
-<!--                                                                         <i class="cr-icon icofont icofont-ui-check txt-default"></i> -->
-<!--                                                                     </span> -->
-                                                                    <span><h6>김희애<span class="label bg-c-pink m-l-10">여성</span></h6></span>
-                                                                    <div class="task-card-img m-l-40">
-<!--                                                                         <a href="#!"><img src="/resources/admin/assets/images/avatar-2.jpg" data-toggle="tooltip" title="Alia" alt="" class="img-40"></a> -->
-<!--                                                                         <a href="#!"><img src="/resources/admin/assets/images/avatar-3.jpg" data-toggle="tooltip" title="Suzen" alt="" class="img-40 m-l-10"></a> -->
-<!--                                                                         <a href="#!"><img src="/resources/admin/assets/images/avatar-4.jpg" data-toggle="tooltip" title="Lary Doe" alt="" class="img-40 m-l-10"></a> -->
-                                                                        <a href="#!"><img src="#"   alt="면허증" class="img-40 m-l-10"></a>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                                                       
 <!--                                                         <div class="to-do-list"> -->
 <!--                                                             <div class="checkbox-fade fade-in-primary d-block"> -->
 <!--                                                                 <label class="check-task d-block"> -->

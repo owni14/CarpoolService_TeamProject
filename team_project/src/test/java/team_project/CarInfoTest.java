@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.SystemPropertyUtils;
 
 import com.kh.team.dao.CarDao;
 import com.kh.team.vo.CarInfoVo;
@@ -59,6 +60,13 @@ public class CarInfoTest {
 	public void decreaseCount() {
 		String m_id = "hong@naver.com";
 		carDao.decreaseCount(m_id);
+	}
+	
+	@Test
+	public void getCarCodeByCi_Name() {
+		String ci_name = "AVANTE";
+		String ci_code = carDao.getCarCodeByCi_Name(ci_name);
+		System.out.println("ci_code:" + ci_code);
 	}
 	
 }

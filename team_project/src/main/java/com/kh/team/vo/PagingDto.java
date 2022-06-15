@@ -11,7 +11,7 @@ public class PagingDto {
 	private int count;
 	private int startPage;
 	private int endPage;
-	private final int PAGE_BLOCK = 10;
+	private int page_block = 10;
 	
 	
 	
@@ -20,7 +20,12 @@ public class PagingDto {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	public PagingDto(int perPage, int count, int page_block) {
+		super();
+		this.perPage = perPage;
+		this.count = count;
+		this.page_block = page_block;
+	}
 
 	public PagingDto(int page, int startRow, int endRow, String searchType, String keyword, int perPage, int totalPage,
 			int count, int startPage, int endPage) {
@@ -43,10 +48,14 @@ public class PagingDto {
 
 	public void setPage(int page) {
 		this.page = page;
+		System.out.println("PagingDto setPage, page: " + page);
 		// page 	startRow		endRow
 		//	1			1			 10
 		//	2			11			 20
 		//	3			21			 30
+		//  1			1			 5
+		//  2			6			 10
+		//  3			11			 15
 		
 		this.startRow = (page-1)*this.perPage + 1;
 //		System.out.println("startRow: " + startRow);
@@ -54,8 +63,8 @@ public class PagingDto {
 //		System.out.println("endRow: " + endRow);
 		this.totalPage = (int)(Math.ceil(((double)count/this.perPage)));
 		
-		this.startPage = PAGE_BLOCK*((page-1)/PAGE_BLOCK)+1;
-		this.endPage = this.startPage + (PAGE_BLOCK - 1);
+		this.startPage = page_block*((page-1)/page_block)+1;
+		this.endPage = this.startPage + (page_block - 1);
 		
 		if(this.endPage > this.totalPage) {
 			this.endPage = this.totalPage;
@@ -135,14 +144,14 @@ public class PagingDto {
 	}
 
 	public int getPAGE_BLOCK() {
-		return PAGE_BLOCK;
+		return page_block;
 	}
 
 	@Override
 	public String toString() {
 		return "PagingDto [page=" + page + ", startRow=" + startRow + ", endRow=" + endRow + ", searchType="
 				+ searchType + ", keyword=" + keyword + ", perPage=" + perPage + ", totalPage=" + totalPage + ", count="
-				+ count + ", startPage=" + startPage + ", endPage=" + endPage + ", PAGE_BLOCK=" + PAGE_BLOCK + "]";
+				+ count + ", startPage=" + startPage + ", endPage=" + endPage + ", PAGE_BLOCK=" + page_block + "]";
 	}
 
 }

@@ -22,6 +22,7 @@ import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.PagingDto;
 
 @Controller
 @RequestMapping("/board")
@@ -36,45 +37,80 @@ public class BoardController {
 	@Autowired
 	private CarService carService;
 	
-	// 운전자 등록 페이지로 이동
+	// 운전자 등록 페이지로 이동합니다.
 	@RequestMapping(value = "/drive", method = RequestMethod.GET)
 	public String drive() {
 		return "board/drive";
 	}
 	
-	// 예약하기 페이지로 이동
-	// 로그인 안되어 있으면 페이지 이동이 안됨
+	// 예약하기 페이지로 이동합니다.
+	// 로그인 안되어 있으면 페이지 이동이 안됩니다.
 	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
-	public String passengerReservation(Model model, HttpSession session) {
+	public String passengerReservation(Model model, HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_id = loginVo.getM_id();
+		String m_company = loginVo.getM_company();
+		
+		// 회원이 탑승신청을 하였는지 여부를 확인
 		boolean result = memberService.isApplication(m_id);
+		
+		// 탑승신청을 하였다면, 운전자의 번호를 얻어내 운전자의 아이디를 받아옵니다.
 		if (result) {
 			String driver_seq = memberService.getDriverSeq(m_id);
 			String driverId = memberService.getDriverId(driver_seq);
 			model.addAttribute("driverId", driverId);
 		}
 		
-		String m_company = loginVo.getM_company();
-		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
+		// 회원의 회사정보를 가져와 그 회사에서 현재 등록된 금일 운전자의 수를 얻어옵니다. 
+		int count = memberService.getTotalDriverCount(m_company);
 		
+		// 보여줄 행을 5개(perPage), 금일 운전자수(count), 밑에 나타내는 페이지수를 5개(block_page)로 설정
+		pagingDto = new PagingDto(5, count, 5);
+		
+		// 현재 페이지의 수를 얻어와 페이지 설정
+		pagingDto.setPage(pagingDto.getPage());
+		
+		System.out.println("BoardController passengerReservation, page :" + pagingDto.getPage());
+		
+		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
 		if (driverList != null) {
 			model.addAttribute("driverList", driverList);
 		}
+		
+		
+		model.addAttribute("pagingDto", pagingDto);
 		return "board/reservation";
 	}
 	
-	// 운전자 리스트 (비동기)
+	// 비동기로 운전자 리스트를 얻어옵니다.
 	@ResponseBody
 	@RequestMapping(value = "/driverList", method = RequestMethod.GET)
-	public List<Map<String, Object>> passengerReservationList(HttpSession session) {
+	public List<Map<String, Object>> passengerReservationList(HttpSession session, String page) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_company = loginVo.getM_company();
-		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
+		
+		System.out.println("BoardController passengerReservationList, page :" + page);
+		// 회원이 속한 회사의 금일 운전자수를 얻어옵니다. 
+		int count = memberService.getTotalDriverCount(m_company);
+		
+		// 보여줄 행을 5개(perPage), 금일 운전자수(count), 밑에 나타내는 페이지수를 5개(block_page)로 설정
+		PagingDto pagingDto = new PagingDto(5, count, 5);
+		
+		// 현재 페이지를 얻어와  pagingDto에 페이지를 설정
+		pagingDto.setPage(Integer.parseInt(page));
+		
+		// 회사 정보와 페이지와 관련된 정보를 보내 운전자 리스트를 받아옵니다.
+		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
+		
+		// 가져온 운전자 리스트 확인
+		for (Map<String, Object> map : driverList) {
+			System.out.println("BoardController passengerReservationList: "+ map);
+		}
+		
 		return driverList;
 	}
 	
-	// 탑승하기 클릭시 운전자 정보 가져오는 메서드 (비동기)
+	// 탑승하기 클릭시 클릭한 행에 있는 운전자 정보를 비동기로 가져옵니다.
 	@ResponseBody
 	@RequestMapping(value = "/driverInfo", method = RequestMethod.GET)
 	public Map<String, Object> driverInformation(String m_id, String m_company) {

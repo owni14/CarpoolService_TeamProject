@@ -57,6 +57,9 @@ if(insert_result){
 				<!-- Basic table card start -->
 				<div class="card">
 					<div class="card-header">
+					<select>
+					<option>test</option>
+					</select>
 						<div class="table-responsive">
 				<table class="table table-hover">
 					<thead>

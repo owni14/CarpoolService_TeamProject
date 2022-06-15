@@ -39,13 +39,13 @@ public class ComplainDaoImpl implements ComplainDao {
 	}
 
 	@Override
-	public List<ComplainVo> getAllNotFinishList() {
-		return sqlSession.selectList(NAMESPACE+"getAllNotFinishList");
+	public List<ComplainVo> getAllNotFinishList(String admin_code) {
+		return sqlSession.selectList(NAMESPACE+"getAllNotFinishList", admin_code);
 	}
 
 	@Override
-	public int getNotFinishCount() {
-		return sqlSession.selectOne(NAMESPACE+"getNotFinishCount");
+	public int getNotFinishCount(String admin_code) {
+		return sqlSession.selectOne(NAMESPACE+"getNotFinishCount",admin_code);
 	}
 
 	@Override
@@ -57,5 +57,18 @@ public class ComplainDaoImpl implements ComplainDao {
 		return false;
 	
 	}
+	@Override
+	public List<ComplainVo> getAllFinishList() {
+		return sqlSession.selectList(NAMESPACE+"getAllFinishList");
+	}
 
+	@Override
+	public List<ComplainVo> getAllNotFinishListNoCode() {
+		return sqlSession.selectList(NAMESPACE+"getAllNotFinishListNoCode");
+	}
+
+	@Override
+	public int getNotFinishCountNoCode() {
+		return sqlSession.selectOne(NAMESPACE+"getNotFinishCountNoCode");
+	}
 }

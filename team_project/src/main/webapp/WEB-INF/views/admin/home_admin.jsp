@@ -18,7 +18,12 @@
 			$("#frmApproveDriver").attr("action", "/admin/approveDriver");
 			$("#frmApproveDriver").attr("method", "post");
 			$("#frmApproveDriver").find("input[name=m_id]").val(m_id);
+			console.log(m_id);
 			$("#frmApproveDriver").submit();
+		});
+		
+		$("#btnApproveList").click(function () {
+			location.href = "/admin/approveDriver_management";
 		});
 	});
 </script>
@@ -349,7 +354,7 @@ const myChart = new Chart(
                                                             <h3>운전자 신청 승인 리스트</h3>
                                                         </div>
                                                         <div class="card-header-right">
-                                                            <button class="btn btn-card btn-primary">전체 리스트 확인</button>
+                                                            <button class="btn btn-card btn-primary" id="btnApproveList">전체 리스트 확인</button>
                                                         </div>
                                                     </div>
                                                     <div class="card-block">
@@ -358,7 +363,6 @@ const myChart = new Chart(
                                                         <c:if test="${status.index <= 2}">
                                                         <div class="to-do-list">
                                                             <div class="checkbox-fade fade-in-primary d-block">
-                                                                <label class="check-task d-block">
 <!--                                                                     <input type="checkbox" value=""> -->
 <!--                                                                     <span class="cr"> -->
 <!--                                                                         <i class="cr-icon icofont icofont-ui-check txt-default"></i> -->
@@ -366,6 +370,7 @@ const myChart = new Chart(
 																	<div class="task-card-img m-1-40">
                                                                     <img src="/admin/displayLicenseImage?ad_license_img=${map.AD_LICENSE_IMG}"  alt="면허증이미지" class="img-100 m-l-10 driveLicenseImg" style="margin-bottom:15px">
                                                                     </div>
+                                                                <label class="check-task d-block">
                                                                     <table>
                                                                     	<tr style="width: 100%">
                                                                     		<td style="width:10%; text-align: center">
@@ -376,7 +381,7 @@ const myChart = new Chart(
 				                                                                    <c:if test="${map.GENDER == 'M'}">
 				                                                                    	class="label bg-c-blue m-l-10 f-10"
 				                                                                    </c:if>
-				                                                                    	class="label bg-c-red m-l-10 f-10"
+				                                                                    	class="label bg-c-pink m-l-10 f-10"
                                                                    				 >
 			                                                                    	<c:choose>
 				                                                                    	<c:when test="${map.GENDER == 'M'}">
@@ -399,9 +404,9 @@ const myChart = new Chart(
                                                                     			
                                                                     		</td>
                                                                     		<td>
-                                                                    			<input type="checkbox" value="" class="chkApprove" data-m_id="${map.M_ID}">
+                                                                    			<input type="checkbox" value="" >
 			                                                                    <span class="cr">
-			                                                                        <i class="cr-icon icofont icofont-ui-check txt-default"></i>
+			                                                                        <i class="cr-icon icofont icofont-ui-check txt-default chkApprove" data-m_id="${map.M_ID}"></i>
 			                                                                    </span>
                                                                     		</td>
                                                                     	</tr>

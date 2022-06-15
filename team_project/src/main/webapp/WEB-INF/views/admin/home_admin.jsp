@@ -149,7 +149,7 @@ const myChart = new Chart(
                                             <div class="col-md-12 col-xl-4">
                                             	<div class="card" style="height:620px">
                                     			<!-- Donut chart start -->
-                                           		<div class="row" style="align-self: center; margin-top:50px">
+                                           		<div class="row" style="align-self: center; margin-top:75px">
                                            		<canvas id="doughnut-chart" width="600" height="450"></canvas>
                                            		</div>
                                            		<script>

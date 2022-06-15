@@ -74,4 +74,9 @@ public class CarDaoImpl implements CarDao{
 		return ci_code;
 	}
 
+	@Override
+	public void decreaseCount(String m_id) {
+		sqlSession.update(NAMESPACE + "decreaseCount", m_id);
+	}
+
 }

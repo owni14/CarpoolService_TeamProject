@@ -25,6 +25,11 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
+	@Override
+	public List<String> getAllAdminCode() {
+		return adminDao.getAllAdminCode();
+	}
+
 	
 
 

@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.PagingDto;
 
@@ -42,7 +43,7 @@ public class ComplainDaoImpl implements ComplainDao {
 
 	@Override
 	public List<ComplainVo> getAllNotFinishList(String admin_code,PagingDto pagingDto) {
-		Map<String, Object> parameter =new HashMap<String, Object>();
+		Map<String, Object> parameter =new HashMap<>();
 		parameter.put("admin_code", admin_code);
 		parameter.put("pagingDto", pagingDto);
 		return sqlSession.selectList(NAMESPACE+"getAllNotFinishList", parameter);
@@ -63,10 +64,15 @@ public class ComplainDaoImpl implements ComplainDao {
 	
 	}
 	@Override
-	public List<ComplainVo> getAllFinishList(PagingDto pagingDto) {
-		return sqlSession.selectList(NAMESPACE+"getAllFinishList",pagingDto);
+	public List<ComplainVo> getAllFinishList(PagingDto pagingDto,AdminVo adminVo,ComplainVo complainVo) {
+		Map<String, Object> parameter =new HashMap<>();
+		parameter.put("admin_code", adminVo.getAdmin_code());
+		parameter.put("complain_classification",complainVo.getComplain_classification());
+		parameter.put("searchType", pagingDto.getSearchType());
+		parameter.put("keyword", pagingDto.getKeyword());
+		return sqlSession.selectList(NAMESPACE+"getAllFinishList",parameter);
 	}
-
+	
 	@Override
 	public List<ComplainVo> getAllNotFinishListNoCode(PagingDto pagingDto) {
 		return sqlSession.selectList(NAMESPACE+"getAllNotFinishListNoCode",pagingDto);

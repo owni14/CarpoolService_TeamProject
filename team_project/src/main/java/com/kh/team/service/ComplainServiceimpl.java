@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.team.dao.ComplainDao;
+import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.PagingDto;
 
@@ -48,8 +49,8 @@ public class ComplainServiceimpl implements ComplainService {
 		return complainDao.updateComplain(complainVo);
 	}
 	@Override
-	public List<ComplainVo> getAllFinishList(PagingDto pagingDto) {
-		return complainDao.getAllFinishList(pagingDto);
+	public List<ComplainVo> getAllFinishList(PagingDto pagingDto,AdminVo adminVo,ComplainVo complainVo) {
+		return complainDao.getAllFinishList(pagingDto, adminVo,complainVo);
 	}
 
 	@Override

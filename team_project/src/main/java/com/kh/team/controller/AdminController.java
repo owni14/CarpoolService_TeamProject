@@ -82,10 +82,14 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/approveDriver", method = RequestMethod.POST)
-	public String approveDriver(String m_id) {
+	public String approveDriver(String m_id, String check_page) {
 //		System.out.println("m_id : " + m_id);
 		memberService.approveDriver(m_id);
-		return "redirect:/admin/home";
+		if (check_page != null && !check_page.equals("")) {
+			return "redirect:/admin/approveDriver_management";
+		} else {
+			return "redirect:/admin/home";
+		}
 	}
 	
 	@RequestMapping(value="/admin_login", method=RequestMethod.GET)
@@ -143,6 +147,13 @@ public class AdminController {
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pagingDto", pagingDto);
 		return "admin/memberManagement";
+	}
+	
+	@RequestMapping(value = "/approveDriver_management", method = RequestMethod.GET)
+	public String approveDriverManagement(Model model) {
+		List<Map<String, Object>> notApprovedDriverList = memberService.adminNotApprovedDriver();
+		model.addAttribute("notApprovedDriverList",notApprovedDriverList);
+		return "admin/approveDriverManagement";
 	}
 	
 	@RequestMapping(value = "/report_management", method = RequestMethod.GET)

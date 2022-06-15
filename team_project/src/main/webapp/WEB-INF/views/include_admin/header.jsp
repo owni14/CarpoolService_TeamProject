@@ -390,18 +390,30 @@ var nav = $('.fixed-button');
 <!--                             </ul> -->
                             <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">회원</div>
                             <ul class="pcoded-item pcoded-left-item">
-                                <li>
-                                    <a href="/admin/member_management">
+                                <li class="pcoded-hasmenu">
+<!--                                     <a href="/admin/member_management"> -->
+                                    <a href="javascript:void(0)">
                                         <span class="pcoded-micon" style="background-color:#148CFF"><i class="ti-user"></i><b>FC</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">회원관리</span>
+                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">회원 관리</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
+                                    <!-- 아이콘 추가 0615 -->
+                                     <ul class="pcoded-submenu">
+                                         
+                                        <li class="more-details">                                       
+                                        		<a href="/admin/member_management"><i class="icofont icofont-listing-box"></i> &nbsp; 회원 테이블</a>
+                                        </li>
+                                        <li class="more-details">
+                                        		<a href="/admin/approveDriver_management"><i class="icofont icofont-ui-v-card"></i> &nbsp; 운전자 미승인 테이블</a>
+                                        </li>
+                                     </ul>
+                                	<!-- 아이콘 추가 0615  끝-->
                                 </li>
                              </ul> 
                              
 
 							<ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu ">
+                                <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon" style="background-color:#FF5A5A"><i class="ti-alert"></i><b>FC</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.form-components.main">신고 회원 관리</span>

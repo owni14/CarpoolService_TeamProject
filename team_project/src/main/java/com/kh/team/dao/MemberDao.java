@@ -29,5 +29,6 @@ public interface MemberDao {
 	public boolean isApplication(String m_id); // 회원이 탑승하기를 두번 이상 했을경우 기존에 탑승하기가 되어 있는지 확인하기 위한 메서드
 
 	public boolean deletePassenger(String m_id, String driver_seq); // 탑승객테이블의 is_deletion을 'Y'로 바꾸는 메서드
+	public List<Map<String, Object>> adminNotApprovedDriver(); // 관리자 페이지에서 미승인 운전자 확인
 
 }

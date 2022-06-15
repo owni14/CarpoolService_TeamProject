@@ -156,5 +156,11 @@ public class MemberDaoImpl implements MemberDao {
 		return false;
 
 	}
+
+	@Override
+	public List<Map<String, Object>> adminNotApprovedDriver() {
+		List<Map<String, Object>> adminNotApprovedList = sqlSession.selectList(NAMESPACE + "adminNotApprovedDriver");
+		return adminNotApprovedList;
+	}
 	
 }

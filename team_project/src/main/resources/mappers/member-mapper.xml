@@ -149,4 +149,11 @@
 		and is_approve = 'W';
 	</select>
 	
+	<select id="adminNotApprovedDriver" resultType="Map">
+		select m.m_id, m.m_name, m.gender, ad.ad_license_img, ad.ad_regdate, ad.ad_detail
+		from member m, approve_driver ad
+		where m.m_id = ad.m_id and ad.ad_approve ='W'
+		order by ad.ad_regdate desc
+	</select>
+	
 </mapper>

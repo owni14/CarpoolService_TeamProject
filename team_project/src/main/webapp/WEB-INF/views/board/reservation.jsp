@@ -103,7 +103,6 @@ $(document).ready(function() {
 		// 차량 최대 탑승인원 및 현재 차량 탑승인원 얻어낼 url을 설정
 		// 파라미터로 현재 반복중인 운전자의 아이디를 넘겨줍니다.
 		var url_count = "/board/count?m_id=" + that.M_ID;
-		var m_id = this.M_ID; // 운전자의 아이디를 m_id변수에 저장
 		
 		// 비동기 방식으로 운전자차량의 최대 탑승인원 및 현재 탑승인원을 얻어옵니다. 
 		$.get(url_count, function(rData_count) {
@@ -120,18 +119,18 @@ $(document).ready(function() {
 			tds.eq(3).text(that.DRIVER_DEPART_TIME); // 운전자 출발 시간
 			tds.eq(4).text(currentCount + " / " + maxCount); // 최대 탑승인원 / 현재 탑승인원 설정
 			
-			var member_id = "${loginVo.m_id}"; // 현재 로그인 된 회원 아이디
-			
-// 			console.log("member_id:" + member_id);
-// 			console.log("m_id:" + m_id);
-			
-			// 현재 로그인 된 회원아이디와 운전자의 아이디를 비교해 같을 경우 테이블에서 제거
-			/* 
-			if(member_id == m_id) {
-				count--;
-				$(this).tr.remove();
+			// 현재 로그인 된 회원아이디(m_id)와 운전자의 아이디(that.M_ID)를 비교해 같을 경우 테이블에서 제거
+			console.log("m_id:" + m_id);
+			console.log("that.M_ID:" + that.M_ID);
+			if(m_id == that.M_ID) {
+				tr.attr("style", "color:#ff8c00; font-weight: bold;");
+				tds.eq(5).text("신청 불가"); // 신청상태를 신청 불가로 변경
+				tds.eq(5).attr("style", "color: red; font-weight: bold;"); // 신청상태 텍스트 빨간색 및 굵게 변경
+				tds.eq(6).children().text("탑승제한"); // 탑승신청 버튼을 탑승마감으로 변경
+				tds.eq(6).children().attr("class", "btn btn-danger btn-sm btnBoard disabled"); // 탑승신청 버튼을 빨간색으로 바꾸고 클릭할 수 없게 변경
+				tds.eq(6).children().removeAttr("data-toggle"); // 기존에 가지고 있던 data-toggle속성 제거
+				tds.eq(6).children().attr("href", "#"); // url제거
 			}
-			 */
 			 
 			// 차량의 최대 탑승인원과 현재 인원이 동일할 경우
 			if(currentCount == maxCount) {
@@ -387,7 +386,6 @@ $(document).ready(function() {
 	 }); // $("#btnApply").click(function() {})
 	 
 	 // 페이지를 클릭할 경우 실행됩니다.
-	 /* 
 	 $(".page-link").click(function(e) {
 		 e.preventDefault();
 		 var href = $(this).attr("href");
@@ -395,7 +393,7 @@ $(document).ready(function() {
 		 frmRsrvPaging.find("input").attr("value", href);
 		 frmRsrvPaging.submit();
 	 });
-	  */
+	  
 	 
 }); // $(document).ready(function() {})
 </script>
@@ -454,7 +452,8 @@ $(document).ready(function() {
 		<input hidden="true" id="driver_seq" name="driver_seq" value="">
 		<input hidden="true" id="driver_id" name="driver_id" value="">
 			<div class="form-group" style="margin-bottom: 10px;">
-				<h3 style="text-align: center">운전자 위치를 확인하시고, 탑승할 위치<span style="color: blue;">(도로명 주소기준)</span>를 클릭해주세요.</h3>
+				<h3 style="text-align: center;">운전자 위치를 확인하시고, 탑승할 위치<span style="color: blue;">(도로명 주소기준)</span>를 클릭해주세요.</h3>
+				<h4 style="text-align: center;">운전자로 등록되어 있는 경우 <span style="color:#ff8c00; font-weight: bold;">주황색</span>으로 표시됩니다.</h4>
 					<label for="startLocation"> 탑승 위치 </label> 
 				<input type="text" class="form-control" id="boardLoct" name="boardLoct" readonly="readonly"/>
 			</div>
@@ -513,7 +512,6 @@ $(document).ready(function() {
 			</table>
 		</div>
 	</div>
-	<%-- 
 		<nav>
 			<ul class="pagination justify-content-center">
 				<c:if test="${pagingDto.startPage != 1}">
@@ -541,7 +539,6 @@ $(document).ready(function() {
 				</c:if>
 			</ul>
 		</nav>
-		 --%>
 	</div>
 	<div class="col-md-2"></div>
 </div>

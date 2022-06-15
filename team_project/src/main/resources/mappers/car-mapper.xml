@@ -45,5 +45,11 @@
 		select c_code from car
 		where m_id = #{m_id}
 	</select>
+	
+	<update id="decreaseCount">
+		update car set
+		c_people_count = c_people_count - 1
+		where m_id = #{m_id}
+	</update>
 
 </mapper>

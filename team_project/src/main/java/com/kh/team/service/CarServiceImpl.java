@@ -32,4 +32,9 @@ public class CarServiceImpl implements CarService{
 		return result;
 	}
 
+	@Override
+	public void decreaseCount(String m_id) {
+		carDao.decreaseCount(m_id);
+	}
+
 }

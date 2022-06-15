@@ -56,6 +56,11 @@ https://templatemo.com/tm-559-zay-shop
     <script src="/resources/assets/js/templatemo.js"></script>
     <script src="/resources/assets/js/custom.js"></script>
     <!-- End Script -->
+    
+    <!-- popovers start -->
+      
+    <!-- popovers end -->
+    
     <script>
     $(function() {
     	var header = $("#header");
@@ -77,25 +82,36 @@ https://templatemo.com/tm-559-zay-shop
     		 $(".smenu").hide();
     		header.stop().animate({height:'90px'}, 300);
     	});
+    	 
+// //     	popover start
+//  		$("#message").click(function(e) {
+//  			e.preventDefault();
+//  			$('[data-toggle="popover"]').popover();
+//  		});
     });
     </script>
     <style>
-   #header{
- 	height:90px; 
-  	overflow:hidden;
-   }
+    #header{ 
+ 	height:90px;
+    } 
    
-   .smenu {
-    position : absolute;
-    display:none;
-   }
-   
-   .smenu_a {
-   text-decoration: none;
-   color: black;
-   margin-right: 30px;
-   
-   }
+	#headerMenu{
+	overflow:hidden;
+	}
+	
+	.smenu {
+	position : absolute;
+	display:none;
+	}
+	
+	.smenu_a {
+	text-decoration: none;
+	color: black;
+	margin-right: 30px;
+	
+	}
+	
+	
     </style>
 </head>
 
@@ -123,6 +139,8 @@ https://templatemo.com/tm-559-zay-shop
    	   	});	
 //      서브 메뉴 위치 선정 end
    	   	
+   	     
+	   	
 	   	 
     });
     </script>
@@ -141,7 +159,7 @@ https://templatemo.com/tm-559-zay-shop
             </button>
 
             <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
-              <div class="flex-fill">
+              <div class="flex-fill" id="headerMenu">
                 <div>
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto clearfix"  id="navul">
                         <li class="nav-item main_menu" id="menu_1">
@@ -167,6 +185,8 @@ https://templatemo.com/tm-559-zay-shop
 <!-- 					</ul> -->
 <!--                 </div> -->
                 </div>
+                
+                
                 <div class="navbar align-self-center d-flex">
                     <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                         <div class="input-group">
@@ -189,8 +209,26 @@ https://templatemo.com/tm-559-zay-shop
 <!--                     </a> -->
                     <c:choose>
                     	<c:when test="${not empty loginVo}">
-                    		${loginVo.m_name}님 환영합니다.
-                    		<a href="/member/logout"><i class="icofont icofont-logout" style="font-size: 25px;"></i></a>
+                    		 
+							    
+							  
+							<div class="dropdown">
+								<a class="nav-link" type="button" id="message" data-toggle="dropdown">
+									<i class="bi bi-envelope" style="font-size: 25px; margin: 5px;"></i>
+								</a>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="message_dropdown" style="width: 300px; height: 300px;" >
+									 <div style="float: left; margin: 10px;">
+									 <span class="span_message">새 쪽지</span>
+									 </div>
+									 <div style="float: right; margin: 10px;">
+									 <a href="#"><span class="span_message">쪽지함 ></span></a>
+									 
+									 </div>
+									 
+								</div>
+							</div>
+                    		<a href="/member/logout"><i class="icofont icofont-logout" style="font-size: 25px; margin: 5px;"></i></a>
+                    		${loginVo.m_name}
                     	</c:when>
 	                    <c:otherwise>
 	                    	<a href="/member/loginForm"><i class="icofont icofont-login" style="font-size: 25px; margin-right: 10px;"></i></a>

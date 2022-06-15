@@ -5,11 +5,18 @@
 <script>
 $(document).ready(function() {
 	var passengerResult = "${passengerResult}";
+	var deletePasgResult = "${deletePasgResult}";
 	if (passengerResult == "true") {
 		alert("탑승신청이 완료되었습니다.");
 	} else if (passengerResult == "false") {
 		alert("탑승신청에 실패하였습니다. \n실패가 계속 될 경우 고객센터로 문의부탁드립니다.");
 	}
+	if (deletePasgResult == "true") {
+		alert("탑승신청이 취소되었습니다.");
+	} else if (deletePasgResult == "false") {
+		alert("탑승신청취소 오류 \n고객센터로 문의부탁드립니다.");
+	}
+	
 	
 	var count = 1;
 	var m_id = "${loginVo.m_id}";
@@ -96,16 +103,35 @@ $(document).ready(function() {
 			tds.eq(3).text(that.DRIVER_DEPART_TIME);
 			tds.eq(4).text(currentCount + " / " + maxCount);
 			
-			// 회원이 탑승신청한 운전자와 반복문을 돌면서 가져올 운전자와 같으면 승인 대기상태로 신청상태를 변경
+			var member_id = "${loginVo.m_id}";
+			console.log("member_id:" + member_id);
+			console.log("m_id:" + m_id);
+			
+			if(member_id == m_id) {
+				count--;
+				this.tr.remove();
+			}
+			
+			// 차량의 최대 탑승인원과 현재 인원이 동일할 경우
+			if(currentCount == maxCount) {
+				tds.eq(5).text("신청 불가");
+				tds.eq(5).attr("style", "color: red; font-weight: bold;");
+				tds.eq(6).children().text("탑승마감");
+				tds.eq(6).children().attr("class", "btn btn-danger btn-sm btnBoard disabled");
+				tds.eq(6).children().removeAttr("data-toggle");
+				tds.eq(6).children().attr("href", "#");
+			}
+			
+			// 반복문을 돌면서 회원이 탑승신청한 운전자와 가져올 운전자가 같으면 승인 대기상태로 신청상태를 변경
 			if (driverId == that.M_ID) {
 				var btnCancel= tds.eq(6).children();
 				tds.eq(5).text("승인 대기");
-				tds.eq(5).attr("style", "color:blue; font-weight: bold;");
+				tds.eq(5).attr("style", "color:green; font-weight: bold;");
 				btnCancel.text("탑승취소");
-				btnCancel.attr("class", "btn btn-danger btn-sm btnBoard");
+				btnCancel.attr("class", "btn btn-outline-warning btn-sm btnBoard");
 				btnCancel.removeAttr("role");
 				btnCancel.removeAttr("data-toggle");
-				btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ);
+				btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID);
 			}
 			
 			tds.find(".btnBoard").attr("data-m_id", that.M_ID);
@@ -412,8 +438,8 @@ $(document).ready(function() {
 					<td></td>
 					<td></td>
 					<td></td>
-					<td class="boardingState" style="color: red; font-weight: bold;">미신청</td>
-					<td class="tds"><a href="#modal-container-899906" role="button" class="btn btn-info btn-sm btnBoard" data-toggle="modal">탑승신청</a></td>
+					<td class="boardingState" style="color: black; font-weight: bold;">미신청</td>
+					<td class="tds"><a href="#modal-container-899906" role="button" class="btn btn-outline-info btn-sm btnBoard" data-toggle="modal">탑승신청</a></td>
 				</tr>
 			</table>
 			<table class="table" id="tblDriver" class="table">

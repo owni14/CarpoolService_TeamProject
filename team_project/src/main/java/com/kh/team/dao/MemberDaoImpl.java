@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.ls.LSInput;
 
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.ComplainVo;
@@ -42,9 +43,13 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> getDriverList(String m_company) {
-		List<Map<String, Object>> driverList = sqlSession.selectList(NAMESPACE + "getDriverList", m_company);
-		return driverList;
+	public List<Map<String, Object>> getDriverList(String m_company, PagingDto pagingDto) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("m_company", m_company);
+		map.put("startRow", pagingDto.getStartRow());
+		map.put("endRow", pagingDto.getEndRow());
+		List<Map<String, Object>> list = sqlSession.selectList(NAMESPACE + "getDriverList", map);
+		return list;
 	}
 
 	@Override
@@ -164,5 +169,11 @@ public class MemberDaoImpl implements MemberDao {
 		List<Map<String, Object>> adminNotApprovedList = sqlSession.selectList(NAMESPACE + "adminNotApprovedDriver");
 		return adminNotApprovedList;
 	}
-	
+
+	@Override
+	public int getTotalDriverCount(String m_company) {
+		int count = sqlSession.selectOne(NAMESPACE + "getTotalDriverCount", m_company);
+		return count;
+	}
+
 }

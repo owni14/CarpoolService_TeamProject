@@ -116,11 +116,31 @@
 		where driver_seq = #{driver_seq}
 	</select>
 	
+
+	<update id="adminUpdateMemberInfo">
+		update member set
+		m_address = #{m_address},
+		m_cellphone = #{m_cellphone},
+		m_is_drop = #{m_is_drop}
+		where m_id = #{m_id}
+	</update>
+	
+	<select id="getTop5EvlMembers" resultType="MemberVo">
+		select m_id, m_evl from
+			(select rownum rnum, a.* from
+				(select * from member
+				order by m_evl desc)a)
+		<![CDATA[
+		where rnum <= 5
+		]]>
+	</select>
+
 	<select id="isApplication" resultType="_int">
 		select count(*) from passenger
 		where is_approve = 'W'
 		and is_deletion = 'N'
 		and m_id = #{m_id}
+
 	</select>
 	
 	<select id="deletePassenger">
@@ -129,6 +149,13 @@
 		where m_id = #{m_id}
 		and driver_seq = #{driver_seq}
 		and is_approve = 'W'
+	</select>
+	
+	<select id="adminNotApprovedDriver" resultType="Map">
+		select m.m_id, m.m_name, m.gender, ad.ad_license_img, ad.ad_regdate, ad.ad_detail
+		from member m, approve_driver ad
+		where m.m_id = ad.m_id and ad.ad_approve ='W'
+		order by ad.ad_regdate desc
 	</select>
 	
 </mapper>

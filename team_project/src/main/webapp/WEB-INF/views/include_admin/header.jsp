@@ -104,6 +104,7 @@ var nav = $('.fixed-button');
 // 			e.preventDefault();
 // 			$("#frmReportComplete").submit();
 // 		});
+	
 	});
 </script>
   
@@ -427,7 +428,7 @@ var nav = $('.fixed-button');
 
                             <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">이벤트</div>
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="pcoded-hasmenu ">
+                                <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon" style="background-color:#FF9696"><i class="ti-gift"></i><b>FC</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.form-components.main">이벤트</span>
@@ -538,13 +539,28 @@ var nav = $('.fixed-button');
 <!--                             </ul> -->
  <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">서비스</div>
                             <ul class="pcoded-item pcoded-left-item">
-                                <li>
-                                    <a href="/admin/complainForm">
+                                <li class="pcoded-hasmenu" >
+                                    <a href="javascript:void(0)" id="aService">
                                         <span class="pcoded-micon" style="background-color:#54BD54"><i class="ti-help-alt"></i><b>FC</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">답변관리</span>
+                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">문의관리</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
+                                     <!-- 아이콘 추가 0609 -->
+                                        <ul class="pcoded-submenu service" style="margin-left: 60px; margin-bottom: 20px">
+                                         
+                                        <li class="more-details" style="margin-bottom: 20px;">
+                                            <a href="/admin/complainForm"><i class="icofont icofont-list"></i> &nbsp; 대기중 답변 목록</a>
+                                        </li>
+                                         <li class="more-details" style="margin-bottom: 20px;">
+                                            <a href="/admin/event_insertForm"><i class="icofont icofont-plus-square"></i> &nbsp; 처리 완료 문의</a>
+                                        </li>
+                                         
+                                  
+                                      
+                                            </ul>
+                                            <!-- 아이콘 추가 0609  끝-->
                                     </li>
+                                     
                                     </ul>
                                     <!-- add menu -->
                             

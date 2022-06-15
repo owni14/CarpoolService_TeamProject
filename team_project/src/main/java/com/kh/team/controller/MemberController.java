@@ -25,6 +25,7 @@ public class MemberController {
 		return "member/login_form";
 	}
 	
+	
 	@RequestMapping(value = "/loginRun", method = RequestMethod.POST)
 	public String loginRun(String m_id, String m_pw, String saveId, HttpSession session, HttpServletResponse response) {
 		MemberVo memberVo = memberService.getMemberByIdAndPw(m_id, m_pw);

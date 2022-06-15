@@ -91,10 +91,24 @@ public class MemberTest {
 	}
 	
 	@Test
+	public void getTop5EvlMembers() {
+		List<MemberVo> list = memberDao.getTop5EvlMembers();
+		System.out.println("list:" + list);
+	}
+	
+	@Test
 	public void isApplication() {
 		String m_id = "hong@naver.com";
 		boolean result = memberDao.isApplication(m_id);
 		System.out.println("result: " + result);
+
 	}
+	
+	@Test
+	public void adminNotApprovedDriver() {
+		List<Map<String, Object>> list = memberDao.adminNotApprovedDriver();
+		System.out.println("list:" + list);
+	}
+	
 }
 

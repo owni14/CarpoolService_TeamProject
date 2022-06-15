@@ -122,6 +122,20 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+
+	public boolean adminUpdateMemberInfo(MemberVo memberVo) {
+		int count = sqlSession.update(NAMESPACE + "adminUpdateMemberInfo", memberVo);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public List<MemberVo> getTop5EvlMembers() {
+		List<MemberVo> top5EvlMembersList = sqlSession.selectList(NAMESPACE + "getTop5EvlMembers");
+		return top5EvlMembersList;
+	}
 	public boolean isApplication(String m_id) {
 		System.out.println("MemberDaoImpl isApplication, m_id: " + m_id);
 		int count = sqlSession.selectOne(NAMESPACE + "isApplication", m_id);
@@ -142,6 +156,13 @@ public class MemberDaoImpl implements MemberDao {
 			return true;
 		}
 		return false;
+
+	}
+
+	@Override
+	public List<Map<String, Object>> adminNotApprovedDriver() {
+		List<Map<String, Object>> adminNotApprovedList = sqlSession.selectList(NAMESPACE + "adminNotApprovedDriver");
+		return adminNotApprovedList;
 	}
 	
 }

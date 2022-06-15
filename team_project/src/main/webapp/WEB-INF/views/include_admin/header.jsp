@@ -546,13 +546,13 @@ var nav = $('.fixed-button');
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                      <!-- 아이콘 추가 0609 -->
-                                        <ul class="pcoded-submenu service" style="margin-left: 60px; margin-bottom: 20px">
+                                        <ul class="pcoded-submenu service">
                                          
-                                        <li class="more-details" style="margin-bottom: 20px;">
-                                            <a href="/admin/complainForm"><i class="icofont icofont-list"></i> &nbsp; 대기중 답변 목록</a>
+                                        <li class="more-details">
+                                            <a href="/admin/complainForm"><i class="icofont icofont-hour-glass"></i> &nbsp; 대기중 답변 목록</a>
                                         </li>
-                                         <li class="more-details" style="margin-bottom: 20px;">
-                                            <a href="/admin/event_insertForm"><i class="icofont icofont-plus-square"></i> &nbsp; 처리 완료 문의</a>
+                                         <li class="more-details">
+                                            <a href="/admin/complainAnswerComplete"><i class="icofont icofont-check-circled"></i> &nbsp; 처리 완료 문의</a>
                                         </li>
                                          
                                   

@@ -22,6 +22,7 @@ import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.PagingDto;
 
 @Controller
 @RequestMapping("/board")
@@ -45,9 +46,11 @@ public class BoardController {
 	// 예약하기 페이지로 이동
 	// 로그인 안되어 있으면 페이지 이동이 안됨
 	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
-	public String passengerReservation(Model model, HttpSession session) {
+	public String passengerReservation(Model model, HttpSession session, PagingDto pagingDto) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_id = loginVo.getM_id();
+		String m_company = loginVo.getM_company();
+		
 		boolean result = memberService.isApplication(m_id);
 		if (result) {
 			String driver_seq = memberService.getDriverSeq(m_id);
@@ -55,12 +58,18 @@ public class BoardController {
 			model.addAttribute("driverId", driverId);
 		}
 		
-		String m_company = loginVo.getM_company();
-		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
+		int count = memberService.getTotalDriverCount(m_company);
+		pagingDto = new PagingDto(5, count, 5);
+		pagingDto.setPage(pagingDto.getPage());
 		
+		/*
+		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
 		if (driverList != null) {
 			model.addAttribute("driverList", driverList);
 		}
+		*/
+		System.out.println(pagingDto);
+		model.addAttribute("pagingDto", pagingDto);
 		return "board/reservation";
 	}
 	
@@ -70,7 +79,17 @@ public class BoardController {
 	public List<Map<String, Object>> passengerReservationList(HttpSession session) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_company = loginVo.getM_company();
-		List<Map<String, Object>> driverList = memberService.getDriverList(m_company);
+		int count = memberService.getTotalDriverCount(m_company);
+		PagingDto pagingDto = new PagingDto(5, count, 5);
+		pagingDto.setPage(1);
+		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
+		
+		System.out.println(pagingDto);
+		for (Map<String, Object> map : driverList) {
+			System.out.println(map);
+		}
+		
+		System.out.println(driverList);
 		return driverList;
 	}
 	

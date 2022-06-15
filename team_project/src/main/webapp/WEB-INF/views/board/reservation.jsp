@@ -341,11 +341,19 @@ $(document).ready(function() {
 				 $("#frmPassenger").submit();
 			 }
 		 });
+	 }); // $("#btnApply").click(function() {})
+	 
+	 $(".page-link").click(function(e) {
+		 e.preventDefault();
+		 var href = $(this).attr("href");
+		 var frmRsrvPaging = $("#frmRsrvPaging");
+		 frmRsrvPaging.find("input").attr("value", href);
+		 frmRsrvPaging.submit();
 	 });
 	 
 }); // $(document).ready(function() {})
 </script>
-
+<%@ include file="/WEB-INF/views/include/frmRsrvPaging.jsp"%>
 <!-- 카카오 지도 -->
 <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
 	<div class="col-md-2"></div>
@@ -459,30 +467,31 @@ $(document).ready(function() {
 			</table>
 		</div>
 	</div>
-	<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>> 페이지 작업 해야함 (하나도 안되어 있음) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
 		<nav>
 			<ul class="pagination justify-content-center">
-				<li class="page-item">
-					<a class="page-link" href="#">Previous</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" href="#">1</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" href="#">2</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" href="#">3</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" href="#">4</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" href="#">5</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" href="#">Next</a>
-				</li>
+				<c:if test="${pagingDto.startPage != 1}">
+					<li class="page-item">
+						<a class="page-link" href="${pagingDto.startPage - 1}">이전</a>
+					</li>
+				</c:if>
+				<c:forEach var="v" begin="${pagingDto.startPage}" end="${pagingDto.endPage}">
+					<li 
+						<c:choose>
+							<c:when test="${pagingDto.page == v}">
+								class="page-item active"
+							</c:when>
+							<c:otherwise>
+								class="page-item"
+							</c:otherwise>
+						</c:choose>>
+						<a class="page-link" href="#">${v}</a>
+					</li>				
+				</c:forEach>
+				<c:if test="${pagingDto.endPage != pagingDto.totalPage}">
+					<li class="page-item">
+						<a class="page-link" href="${pagingDto.startPage + 1}">다음</a>
+					</li>
+				</c:if>
 			</ul>
 		</nav>
 	</div>

@@ -44,8 +44,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getDriverList(String m_company) {
-		List<Map<String, Object>> driverList = memberDao.getDriverList(m_company);
+	public List<Map<String, Object>> getDriverList(String m_company, PagingDto pagingDto) {
+		List<Map<String, Object>> driverList = memberDao.getDriverList(m_company, pagingDto);
 		return driverList;
 	}
 
@@ -138,6 +138,23 @@ public class MemberServiceImpl implements MemberService {
 	public boolean deletePassenger(String m_id, String driver_seq) {
 		boolean result = memberDao.deletePassenger(m_id, driver_seq);
 		return result;
+	}
+
+	@Override
+	public List<Map<String, Object>> adminNotApprovedDriver() {
+		List<Map<String, Object>> list = memberDao.adminNotApprovedDriver();
+		return list;
+	}
+
+	@Override
+	public void approveDriver(String m_id) {
+		memberDao.approveDriver(m_id);
+	}
+
+	public int getTotalDriverCount(String m_company) {
+		int count = memberDao.getTotalDriverCount(m_company);
+		return count;
+
 	}
 
 }

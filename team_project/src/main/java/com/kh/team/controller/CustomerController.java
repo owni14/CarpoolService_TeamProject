@@ -24,7 +24,7 @@ import com.kh.team.vo.MemberVo;
 public class CustomerController {
 	private final String GM = "1001";
 	private final String CS = "1002";
-	private final String EV = "1003";
+	private final String CS2 = "1003";
 	@Autowired
 	private FaqService faqService;
 	@Autowired
@@ -59,8 +59,8 @@ public class CustomerController {
 		}
 		if (menu.equals("시스템 이용문의") || menu.equals("기타")) {
 			complainVo.setAdmin_code(GM);
-		} else if (menu.equals("이벤트")) {
-			complainVo.setAdmin_code(EV);
+		} else if (menu.equals("불편")) {
+			complainVo.setAdmin_code(CS2);
 		} else {
 			complainVo.setAdmin_code(CS);
 		}

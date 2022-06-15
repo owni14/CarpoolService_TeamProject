@@ -28,13 +28,16 @@
 	
 	<!-- Driver List Query -->
 	<select id="getDriverList" resultType="map">
-		select d.driver_seq, m.m_id, m.m_address, m.m_company, m.m_name, m.m_dept, d.driver_depart_location, d.driver_depart_time, a.ad_approve
-		from driver d, member m, approve_driver a
-		where d.m_id = m.m_id
-		and a.m_id = m.m_id
-		and a.ad_approve = 'Y'
-		and m.m_company = #{m_company}
-		order by d.driver_depart_time, driver_seq asc
+		select * from       
+    		(select rownum rnum, a.* from 
+        		(select d.driver_seq, m.m_id, m.m_address, m.m_company, m.m_name, m.m_dept, d.driver_depart_location, d.driver_depart_time, a.ad_approve
+		            from driver d, member m, approve_driver a
+		            where d.m_id = m.m_id
+		            and a.m_id = m.m_id
+		            and a.ad_approve = 'Y'
+		            and m.m_company = #{m_company}
+		            order by d.driver_depart_time, d.driver_seq asc) a)
+		where rnum between #{startRow} and #{endRow}
 	</select>
 	 
 	<select id="adminGetCount" resultType="int">
@@ -157,5 +160,25 @@
 		where m.m_id = ad.m_id and ad.ad_approve ='W'
 		order by ad.ad_regdate desc
 	</select>
+	
+
+	<update id="approveDriver">
+		update approve_driver set 
+		ad_approve = 'Y',
+		ad_detail = '승인 완료'
+		where m_id = #{m_id}
+	</update>
+
+	<select id="getTotalDriverCount" resultType="_int">
+		select count(*) 
+			from (select rownum rnum, a.* 
+				from (select a.m_id
+        			from driver d, member m, approve_driver a
+        			where d.m_id = m.m_id
+        			and a.m_id = m.m_id
+        			and a.ad_approve = 'Y'
+        			and m.m_company = 'SAMSUNG')a)
+	</select>
+
 	
 </mapper>

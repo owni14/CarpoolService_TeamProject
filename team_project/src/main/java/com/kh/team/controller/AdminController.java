@@ -65,18 +65,27 @@ public class AdminController {
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin(Model model) {
+		List<Map<String, Object>> notApprovedDriverList = memberService.adminNotApprovedDriver();
+		model.addAttribute("notApprovedDriverList",notApprovedDriverList);
 		List<MemberVo> top5List = memberService.getTop5EvlMembers();
 		int index = 1;
 		for (MemberVo memberVo : top5List) {
-			System.out.println("index : " + index);
-			System.out.println(memberVo.getM_id());
-			System.out.println(memberVo.getM_evl());
+//			System.out.println("index : " + index);
+//			System.out.println(memberVo.getM_id());
+//			System.out.println(memberVo.getM_evl());
 			model.addAttribute("top" + index, memberVo.getM_id());
 			model.addAttribute("top" + index + "evl", memberVo.getM_evl());
 			index++;
 		}
 		model.addAttribute("top5List", top5List);
 		return "admin/home_admin";
+	}
+	
+	@RequestMapping(value="/approveDriver", method = RequestMethod.POST)
+	public String approveDriver(String m_id) {
+//		System.out.println("m_id : " + m_id);
+		memberService.approveDriver(m_id);
+		return "redirect:/admin/home";
 	}
 	
 	@RequestMapping(value="/admin_login", method=RequestMethod.GET)
@@ -196,6 +205,16 @@ public class AdminController {
 		List<MemberUpdateVo> memberUpdateList = memberUpdateService.memberUpdateList();
 		return memberUpdateList;
 	} 
+	
+	@ResponseBody
+	@RequestMapping(value = "/displayLicenseImage", method = RequestMethod.GET)
+	public byte[] displayLicenseImage(String ad_license_img) throws Exception{
+		FileInputStream fis;
+			fis = new FileInputStream(ad_license_img);
+			byte[] data = IOUtils.toByteArray(fis);
+			fis.close();
+		return data;
+	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/memberInfoUpdate", method = RequestMethod.POST)

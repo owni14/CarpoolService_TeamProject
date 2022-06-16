@@ -25,6 +25,28 @@ $(document).ready(function() {
 		frmPaging.attr("method", "get");
 		frmPaging.submit();
 	});
+	
+	$(".m_content_tr").click(function() {
+		$("#message_read").modal('show');
+		var sender = $(this).children().eq(0).text();
+		var content = $(this).children().eq(1).attr("data-mContent");
+		$("#sender").val(sender);
+		$("#message_content").val(content);
+		if (sender.includes("@")) {
+			$("#reMessage").show();
+		}
+	});
+		
+	$("#reMessage").click(function() {
+		$("#message_read").modal('hide');
+		$("#message_form_modal").modal('show');
+		$("#receiver_m_id").val($("#sender").val());
+		
+	});
+	
+	$("#readClose").click(function() {
+		$("#message_read").modal('hide');
+	});
 });
 </script>
 
@@ -62,16 +84,16 @@ $(document).ready(function() {
 			</tr>
 		
 			<c:forEach items="${recUserMessageList}" var="MessageVo">
-			<tr>
-				<td id="th_receiver"><span>${MessageVo.sender_m_id}</span></td>
-				<td id="th_content"><span>
+			<tr class="m_content_tr">
+				<td id="td_receiver">${MessageVo.sender_m_id}</td>
+				<td id="td_content" data-mContent="${MessageVo.content}">
 				<c:choose>
  				<c:when test="${MessageVo.content.length() >=30}">${MessageVo.content.substring(0,30)}...</c:when> 
 				<c:otherwise>
 				${MessageVo.content}
 				</c:otherwise>
-				</c:choose></span></td>
-				<td id="th_senddate"><span>${MessageVo.senddate}</span></td>
+				</c:choose></td>
+				<td id="td_senddate">${MessageVo.senddate}</td>
 			</tr>
 			</c:forEach>
 		</table>

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file = "/WEB-INF/views/message/message_sidebar_header.jsp" %>
+
 <script>
 $(document).ready(function() {
 	var frmPaging = $("#frmPaging");
@@ -25,6 +26,26 @@ $(document).ready(function() {
 		frmPaging.attr("method", "get");
 		frmPaging.submit();
 	});
+	
+	$(".m_content_tr").click(function() {
+		$("#message_read").modal('show');
+		var sender = $(this).children().eq(0).text();
+		var content = $(this).children().eq(1).attr("data-mContent");
+		$("#sender").val(sender);
+		$("#message_content").val(content);
+	});
+		
+	$("#reMessage").click(function() {
+		$("#message_read").modal('hide');
+		$("#message_form_modal").modal('show');
+		$("#receiver_m_id").val($("#sender").val());
+		
+	});
+	
+	$("#readClose").click(function() {
+		$("#message_read").modal('hide');
+	});
+	
 });
 </script>
 
@@ -61,16 +82,16 @@ $(document).ready(function() {
 				<th>받은날짜</th>
 			</tr>
 			<c:forEach items="${recAdminMessageList}" var="MessageVo">
-			<tr>
-				<td id="th_receiver"><span>${MessageVo.ADMIN_WORK}</span></td>
-				<td id="th_content"><span>
+			<tr class="m_content_tr">
+			
+				<td id="td_receiver">${MessageVo.ADMIN_WORK}</td>
+				<td id="td_content" data-mContent="${MessageVo.CONTENT}">
 				<c:choose>
- 				<c:when test="${MessageVo.CONTENT.length() >=30}">${MessageVo.CONTENT.substring(0,30)}...</c:when> 
-				<c:otherwise>
-				${MessageVo.CONTENT}
-				</c:otherwise>
-				</c:choose></span></td>
-				<td id="th_senddate"><span>${MessageVo.SENDDATE}</span></td>
+	 				<c:when test="${MessageVo.CONTENT.length() >=30}">${MessageVo.CONTENT.substring(0,30)}...</c:when> 
+					<c:otherwise>${MessageVo.CONTENT}</c:otherwise>
+				</c:choose></td>
+				<td id="td_senddate">${MessageVo.SENDDATE}</td>
+			
 			</tr>
 			</c:forEach>
 		</table>

@@ -181,6 +181,11 @@ where m.m_id=ep${event_seq}.m_id
 	where event_seq=#{event_seq}
 	</select>
 	
+	<!-- event Winner 경품 미수령 -->
+	<select id="selectCountWinnerNoGet" resultType="int">
+	select count(*) from event_winner
+	where e_winner_is_get ='N'
+	</select>
 	<sql id="search">
 	<if test = "searchType != null">
 			<choose>

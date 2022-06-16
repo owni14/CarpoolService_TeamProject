@@ -1,5 +1,6 @@
 package com.kh.team.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,6 +156,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+
+	public int getCountByApplyDate(String str_date) {
+		return memberDao.getCountByApplyDate(str_date);
+	}
+
 	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company) {
 		List<Map<String, Object>> passengerList = memberDao.getPassengerList(driver_seq, m_company);
 		return passengerList;
@@ -164,6 +170,24 @@ public class MemberServiceImpl implements MemberService {
 	public String getDriverSeqFromDriver(String m_id) {
 		String driver_seq = memberDao.getDriverSeqFromDriver(m_id);
 		return driver_seq;
+	}
+
+	@Override
+	public boolean approvePassenger(String m_id) {
+		boolean result = memberDao.approvePassenger(m_id);
+		return result;
+	}
+
+	@Override
+	public boolean rejectPassenger(String m_id) {
+		boolean result = memberDao.rejectPassenger(m_id);
+		return result;
+	}
+
+	@Override
+	public String getApproveState(String m_id) {
+		String approveState = memberDao.getApproveState(m_id);
+		return approveState;
 	}
 
 }

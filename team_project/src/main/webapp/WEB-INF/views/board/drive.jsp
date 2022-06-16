@@ -6,10 +6,23 @@
 	$(document).ready(function() {
 		var m_company = "${loginVo.m_company}";
 		var driver_seq = "${driver_seq}";
+		var approveResult = "${approveResult}";
+		var rejectResult = "${rejectResult}";
+		if (approveResult == "true") {
+			alert ("탑승승인이 정상적으로 처리되었습니다.");
+		} else if (approveResult == "false") {
+			alert ("탑승승인에 오류가 있습니다. \n고객센터로 문의부탁드립니다.");
+		}
+		if (rejectResult == "true") {
+			alert ("탑승거부가 정상적으로 처리되었습니다.")
+		} else if (rejectResult == "false") {
+			alert ("탑승거부하는데 오류가 있습니다. \n고객센터로 문의부탁드립니다.")
+		}
 		console.log("m_company:" + m_company);
 		console.log("driver_seq:" + driver_seq);
 	// 카카오 지도 api
 	var address = $("#startLoct").val();
+	var m_name = "N";
 	console.log("startLocation:" + address); // 출발 위치 확인
 	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -34,31 +47,74 @@
 
 	// 주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
+	
+	// 주소를 받아 지도에 표시할 함수
+	searchLocation(address, map, m_name);
+	
+	// 주소를 받아 지도에 표시할 함수
+	function searchLocation(address, map, m_name) {
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch(address, function(result, status) { 
+	
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+	
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new kakao.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+	
+		        
+		        if (m_name != "N") {
+		        	var infowindow = new kakao.maps.InfoWindow({
+			            content: "<div style='width:150px;text-align:center;'> " + m_name + "님의 위치</div>"
+			        });	        	
+		        } else {
+		        	 // 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new kakao.maps.InfoWindow({
+			            content: '<div style="width:150px;text-align:center;">출발 위치</div>'
+			        });
+		        }
+		       
+		        infowindow.open(map, marker);
+		        
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		        
+		        if (m_name != "N") {
+		        	setTimeout(function(){ map.relayout();  map.setCenter(coords), map.setLevel(4);}, 150);		        	
+		        }
+		    } // if (status === kakao.maps.services.Status.OK) {})
+		}); // geocoder.addressSearch()  
+	}
+	
+	// 모달창에 표시할 지도
+	function showModalMap(address, m_name) {
+		var mapContainer = document.getElementById('mapInModal'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    }; // mapOption
 
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch(address, function(result, status) { 
-
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === kakao.maps.services.Status.OK) {
-
-	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new kakao.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-
-	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;">출발 위치</div>'
-	        });
-	        infowindow.open(map, marker);
-
-	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        map.setCenter(coords);
-	    } 
-	}); // geocoder.addressSearch()  
+		// 지도를 생성합니다    
+		var modalMap = new kakao.maps.Map(mapContainer, mapOption);
+	    
+		// 주소를 받아 지도에 표시할 함수
+		var coords = searchLocation(address, modalMap, m_name);
+	} // function showModalMap(address) {}
+	
+	// 탑승자 주소 클릭시 실행되는 함수
+	$(".btnBoard").click(function() {
+		// 탑승자의 주소를 얻습니다.
+		var address = $(this).attr("data-location");
+		var m_name = $(this).attr("data-m_name");
+		// 주소를 지도를 띄울 함수로 보냅니다.
+		showModalMap(address, m_name);
+	});
+	
 }); // $(document).ready(function(){})
 </script>
 <!-- 카카오 지도 api -->
@@ -78,28 +134,11 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="myModalLabel" style="font-weight: bold;">
-						탑승자 상세위치
+						탑승자 위치
 					</h5>
 				</div>
 				<div class="modal-body">
-					<h6 style="font-weight: bold; "> 이름 : <span id="driverName"></span></h6> 
-					<h6 style="font-weight: bold; "> 성별 : <span id="gender"></span></h6>
-					<h6 style="font-weight: bold; "> 부서 : <span id="driverDept"></span></h6> 
-					<h6 style="font-weight: bold; "> 출발 위치 : <span id="driverLoct"></span></h6> 
-					<h6 style="font-weight: bold; "> 출발 시간 : <span id="driverStartTime"></span></h6> 
-					<h6 style="font-weight: bold; color: red;"> 요구 사항 : <span id="driverComment"></span></h6> 
-					<hr>
-					<h6 style="font-weight: bold; "> 내 위치 : <span id="mBoardLoct"></span></h6>
-					<div style="font-weight: bold; text-align: center; color: green;"> 운전자 위치 </div> 
 					<div id="mapInModal" style="height: 300px; width: 100%;"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" id="btnApply" class="btn btn-success" >
-						신청하기
-					</button> 
-					<button type="button" id="btnCancel" class="btn btn-danger" data-dismiss="modal">
-						취소
-					</button>
 				</div>
 			</div>
 		</div>
@@ -146,7 +185,6 @@
 	<div class="col-md-2"></div>
 </div>
 <!-- // 운전자 등록폼 -->
-
 <!-- 동승자 리스트 -->
 <div class="row">
 	<div class="col-md-2"></div>
@@ -172,9 +210,9 @@
 							<td>${v.M_NAME}</td>
 							<td>${v.M_DEPT}</td>
 							<td>${v.PASSENGER_DEPART_TIME}</td>
-							<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal">${v.PASSENGER_DEPART_LOCATION}</a></td>
-							<td><button class="btn btn-success btn-sm" class="checkResv">승인</button></td>
-							<td><button class="btn btn-danger btn-sm" class="checkResv">거부</button></td>
+							<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
+							<td><a href="/board/approvePassenger?m_id=${v.M_ID}" class="btn btn-success btn-sm approve">승인</a></td>
+							<td><a href="/board/rejectPassenger?m_id=${v.M_ID}" class="btn btn-danger btn-sm reject">거부</a></td>
 						</tr>	
 					</c:forEach>
 				</tbody>

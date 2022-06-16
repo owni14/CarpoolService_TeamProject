@@ -163,4 +163,9 @@ public class EventServiceImpl implements EventService {
 	public List<EventWinnerVo> selectWinnerIsGet(int event_seq) {
 		return eventDao.selectWinnerIsGet(event_seq);
 	}
+
+	@Override
+	public int selectCountWinnerNoGet() {
+		return eventDao.selectCountWinnerNoGet();
+	}
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.kh.team.service.CarService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
@@ -59,11 +60,17 @@ public class BoardController {
 		// 회원이 탑승신청을 하였는지 여부를 확인
 		boolean result = memberService.isApplication(m_id);
 		
+		System.out.println("BoardController passengerReservation, result: " + result);
 		// 탑승신청을 하였다면, 운전자의 번호를 얻어내 운전자의 아이디를 받아옵니다.
 		if (result) {
 			String driver_seq = memberService.getDriverSeqFromPassenger(m_id);
+			String approveState = memberService.getApproveState(m_id);
 			String driverId = memberService.getDriverId(driver_seq);
+			System.out.println("BoardController passengerReservation, m_id: " + m_id);
+			System.out.println("BoardController passengerReservation, approveState: " + approveState);
+			
 			model.addAttribute("driverId", driverId);
+			model.addAttribute("approveState", approveState);
 		}
 		
 		// 회원의 회사정보를 가져와 그 회사에서 현재 등록된 금일 운전자의 수를 얻어옵니다. 
@@ -78,7 +85,7 @@ public class BoardController {
 		// 현재 페이지의 수를 얻어와 페이지 설정
 		pagingDto.setPage(pagingDto.getPage());
 		
-		System.out.println("BoardController passengerReservation, page :" + pagingDto.getPage());
+//		System.out.println("BoardController passengerReservation, page :" + pagingDto.getPage());
 		
 		/* 초반에 설정했었는데 코드 분석을 하다보니 동기로 운전자리스트를 가져올 필요가 있나 싶은데 혹시 몰라서 남겨둡니다. 
 		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
@@ -216,11 +223,37 @@ public class BoardController {
 		return "redirect:/board/reservation";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/getPsgList", method = RequestMethod.GET)
-	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company) {
-		
-		return null;
+	// 운전자가 탑승객을 승인
+	@RequestMapping(value = "/approvePassenger", method = RequestMethod.GET)
+	public String approvePassenger(RedirectAttributes rttr, String m_id) {
+		boolean result = memberService.approvePassenger(m_id);
+		if (result)	{
+			rttr.addFlashAttribute("approveResult", result);
+		} else {
+			rttr.addFlashAttribute("approveResult", "false");
+		}
+		return "redirect:/board/drive";
 	}
 	
+	// 운전자가 탑승객을 거부
+	@RequestMapping(value = "/rejectPassenger", method = RequestMethod.GET)
+	public String rejectPassenger(RedirectAttributes rttr, String m_id) {
+		boolean result = memberService.rejectPassenger(m_id);
+		if (result)	{
+			rttr.addFlashAttribute("rejectResult", result);
+		} else {
+			rttr.addFlashAttribute("rejectResult", "false");
+		}
+		return "redirect:/board/drive";
+	}
+	
+	/*
+	@ResponseBody
+	@RequestMapping(value = "/approveState", method = RequestMethod.GET)
+	public String approveState(String m_id) {
+		System.out.println("m_id:" + m_id);
+		String state = memberService.approveState(m_id);
+		return state;
+	}
+	*/
 }

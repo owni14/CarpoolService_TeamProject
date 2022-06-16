@@ -4,7 +4,10 @@
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <script>
 	$(document).ready(function() {
-		
+		var m_company = "${loginVo.m_company}";
+		var driver_seq = "${driver_seq}";
+		console.log("m_company:" + m_company);
+		console.log("driver_seq:" + driver_seq);
 	// 카카오 지도 api
 	var address = $("#startLoct").val();
 	console.log("startLocation:" + address); // 출발 위치 확인
@@ -55,7 +58,7 @@
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 	        map.setCenter(coords);
 	    } 
-	}); // geocoder.addressSearch()   
+	}); // geocoder.addressSearch()  
 }); // $(document).ready(function(){})
 </script>
 <!-- 카카오 지도 api -->
@@ -67,6 +70,41 @@
 	<div class="col-md-2"></div>
 </div>
 <!-- // 카카오 지도 api -->
+
+<!-- 모달창 -->
+ <a id="modal-899906" style="display: none;">modal</a>
+	<div class="modal fade" id="modal-container-899906" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModalLabel" style="font-weight: bold;">
+						탑승자 상세위치
+					</h5>
+				</div>
+				<div class="modal-body">
+					<h6 style="font-weight: bold; "> 이름 : <span id="driverName"></span></h6> 
+					<h6 style="font-weight: bold; "> 성별 : <span id="gender"></span></h6>
+					<h6 style="font-weight: bold; "> 부서 : <span id="driverDept"></span></h6> 
+					<h6 style="font-weight: bold; "> 출발 위치 : <span id="driverLoct"></span></h6> 
+					<h6 style="font-weight: bold; "> 출발 시간 : <span id="driverStartTime"></span></h6> 
+					<h6 style="font-weight: bold; color: red;"> 요구 사항 : <span id="driverComment"></span></h6> 
+					<hr>
+					<h6 style="font-weight: bold; "> 내 위치 : <span id="mBoardLoct"></span></h6>
+					<div style="font-weight: bold; text-align: center; color: green;"> 운전자 위치 </div> 
+					<div id="mapInModal" style="height: 300px; width: 100%;"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="btnApply" class="btn btn-success" >
+						신청하기
+					</button> 
+					<button type="button" id="btnCancel" class="btn btn-danger" data-dismiss="modal">
+						취소
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- // 모달창 -->
 
 <!-- 운전자 등록폼 -->
 <div class="row" style="margin-bottom: 20px;">
@@ -119,22 +157,26 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>동승자</th>
+						<th>탑승자</th>
 						<th>부서</th>
-						<th>주소</th>
+						<th>탑승시간</th>
+						<th>탑승위치</th>
 						<th>승인</th>
 						<th>거부</th>
 					</tr>
 				</thead>
 				<tbody>
-						<tr>
-							<td>#</td>
-							<td>#</td>
-							<td>#</td>
-							<td>#</td>
+					<c:forEach items="${passengerList}" var="v" varStatus="status">
+						<tr>	
+							<td>${status.count}</td>
+							<td>${v.M_NAME}</td>
+							<td>${v.M_DEPT}</td>
+							<td>${v.PASSENGER_DEPART_TIME}</td>
+							<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal">${v.PASSENGER_DEPART_LOCATION}</a></td>
 							<td><button class="btn btn-success btn-sm" class="checkResv">승인</button></td>
 							<td><button class="btn btn-danger btn-sm" class="checkResv">거부</button></td>
 						</tr>	
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
@@ -143,4 +185,5 @@
 	<div class="col-md-2"></div>
 </div>
 <!-- // 동승자 리스트 -->
+
 <%@ include file="/WEB-INF/views/include/footer.jsp"%>

@@ -39,7 +39,12 @@ public class BoardController {
 	
 	// 운전자 등록 페이지로 이동합니다.
 	@RequestMapping(value = "/drive", method = RequestMethod.GET)
-	public String drive() {
+	public String drive(HttpSession session, Model model) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
+		String driver_seq = memberService.getDriverSeqFromDriver(memberVo.getM_id());
+		List<Map<String, Object>> passengerList = memberService.getPassengerList(driver_seq, memberVo.getM_company());
+		model.addAttribute("driver_seq", driver_seq);
+		model.addAttribute("passengerList", passengerList);
 		return "board/drive";
 	}
 	
@@ -56,7 +61,7 @@ public class BoardController {
 		
 		// 탑승신청을 하였다면, 운전자의 번호를 얻어내 운전자의 아이디를 받아옵니다.
 		if (result) {
-			String driver_seq = memberService.getDriverSeq(m_id);
+			String driver_seq = memberService.getDriverSeqFromPassenger(m_id);
 			String driverId = memberService.getDriverId(driver_seq);
 			model.addAttribute("driverId", driverId);
 		}
@@ -81,6 +86,7 @@ public class BoardController {
 			model.addAttribute("driverList", driverList);
 		}
 		*/
+		
 		
 		model.addAttribute("pagingDto", pagingDto);
 		return "board/reservation";
@@ -109,11 +115,11 @@ public class BoardController {
 		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
 		
 		// 가져온 운전자 리스트 확인
-		/* Driver List Test : OK.
+		// Driver List Test : OK.
 		for (Map<String, Object> map : driverList) {
 			System.out.println("BoardController passengerReservationList: "+ map);
 		}
-		*/
+		
 		
 		return driverList;
 	}
@@ -208,6 +214,13 @@ public class BoardController {
 			rttr.addFlashAttribute("deletePasgResult", "false");
 		}
 		return "redirect:/board/reservation";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/getPsgList", method = RequestMethod.GET)
+	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company) {
+		
+		return null;
 	}
 	
 }

@@ -86,7 +86,7 @@ public class MemberServiceImpl implements MemberService {
 		String ci_code = carDao.getCarCodeByM_Id(m_id);
 		String maxCount = carDao.getMaxPeopleCountOfCar(ci_code);
 		String currentCount = carDao.getCurrentCountOfCar(m_id);
-		String driver_seq = memberDao.getDriverSeq(m_id);
+		String driver_seq = memberDao.getDriverSeqFromPassenger(m_id);
 		Map<String, String> map = new HashMap<>();
 		map.put("maxCount", maxCount);
 		map.put("currentCount", currentCount);
@@ -94,8 +94,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String getDriverSeq(String m_id) {
-		String driver_seq = memberDao.getDriverSeq(m_id);
+	public String getDriverSeqFromPassenger(String m_id) {
+		String driver_seq = memberDao.getDriverSeqFromPassenger(m_id);
 		return driver_seq;
 	}
 
@@ -152,6 +152,18 @@ public class MemberServiceImpl implements MemberService {
 		int count = memberDao.getTotalDriverCount(m_company);
 		return count;
 
+	}
+
+	@Override
+	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company) {
+		List<Map<String, Object>> passengerList = memberDao.getPassengerList(driver_seq, m_company);
+		return passengerList;
+	}
+
+	@Override
+	public String getDriverSeqFromDriver(String m_id) {
+		String driver_seq = memberDao.getDriverSeqFromDriver(m_id);
+		return driver_seq;
 	}
 
 }

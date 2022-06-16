@@ -10,7 +10,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var page = $(this).attr("href")
 		frmPaging.find("input[name=page]").val(page);
-		frmPaging.attr("action", "/message/recUserMessagePage");
+		frmPaging.attr("action", "/message/recAdminMessagePage");
 		frmPaging.attr("method", "get");
 		frmPaging.submit();
 	});
@@ -21,7 +21,7 @@ $(document).ready(function() {
 		
  		console.log(perPage);
 		frmPaging.find("input[name=perPage]").val(perPage);
-		frmPaging.attr("action", "/message/recUserMessagePage");
+		frmPaging.attr("action", "/message/recAdminMessagePage");
 		frmPaging.attr("method", "get");
 		frmPaging.submit();
 	});

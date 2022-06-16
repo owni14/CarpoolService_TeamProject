@@ -51,7 +51,7 @@ vertical-align: middel;
 	            
 	            <ul id="MessageMenu">
 	                <li>
-	                    <a href="/message/receivedMessagePage"><span class="message_font">받은 쪽지함<i class="bi bi-arrow-right-circle-fill"></i></span></a>
+	                    <a href="/message/recAdminMessagePage"><span class="message_font">받은 쪽지함<i class="bi bi-arrow-right-circle-fill"></i></span></a>
 	                </li>
 	                <li>
 	                    <a href="/message/sendMessagePage"><span class="message_font">보낸 쪽지함<i class="bi bi-arrow-right-circle-fill"></i></span></a>

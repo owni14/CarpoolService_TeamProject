@@ -95,4 +95,10 @@ public class MessageDaoImpl implements MessageDao {
 		return count;
 	}
 
+	@Override
+	public List<MessageVo> lastMessageListById(String m_id) {
+		List<MessageVo> lastMessageList = sqlSession.selectList(NAMESPACE + "lastMessageListById", m_id);
+		return lastMessageList;
+	}
+
 }

@@ -72,6 +72,12 @@ public class MessageServiceImpl implements MessageService {
 		return count;
 	}
 
+	@Override
+	public List<MessageVo> lastMessageListById(String m_id) {
+		List<MessageVo> lastMessageList = messageDao.lastMessageListById(m_id);
+		return lastMessageList;
+	}
+
 	
 
 

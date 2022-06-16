@@ -16,4 +16,5 @@ public interface MessageService {
 	public int recAdminMessageCountById(String m_id); // 시스템 쪽지 개수
 	public int recUserMessageCountById(String m_id); // 유저 쪽지 개수
 	public int sendMessageCountById(String m_id); // 보낸 쪽지 개수
+	public List<MessageVo> lastMessageListById(String m_id); // 최근 쪽지 목록
 }

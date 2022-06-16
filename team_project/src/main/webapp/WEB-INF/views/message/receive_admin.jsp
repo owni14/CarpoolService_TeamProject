@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file = "/WEB-INF/views/message/message_sidebar_header.jsp" %>
 
 <script>
@@ -90,7 +91,7 @@ $(document).ready(function() {
 	 				<c:when test="${MessageVo.CONTENT.length() >=30}">${MessageVo.CONTENT.substring(0,30)}...</c:when> 
 					<c:otherwise>${MessageVo.CONTENT}</c:otherwise>
 				</c:choose></td>
-				<td id="td_senddate">${MessageVo.SENDDATE}</td>
+				<td id="td_senddate"><fmt:formatDate value="${MessageVo.SENDDATE}" pattern="yyyy-MM-dd"/></td>
 			
 			</tr>
 			</c:forEach>

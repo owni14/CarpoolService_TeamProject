@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kh.team.dao.MemberDao;
 import com.kh.team.dao.NotifyDao;
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.PagingDto;
 
 @Service
 public class NotifyServiceImpl implements NotifyService{
@@ -48,8 +49,8 @@ public class NotifyServiceImpl implements NotifyService{
 	}
 
 	@Override
-	public List<BlackListVo> nNotifyList() {
-		List<BlackListVo> nNotifyList = notifyDao.nNotifyList();
+	public List<BlackListVo> nNotifyList(PagingDto pagingDto) {
+		List<BlackListVo> nNotifyList = notifyDao.nNotifyList(pagingDto);
 		return nNotifyList;
 	}
 

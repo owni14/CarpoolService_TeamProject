@@ -413,7 +413,7 @@ var nav = $('.fixed-button');
                                         		<a href="/admin/member_management"><i class="icofont icofont-listing-box"></i> &nbsp; 회원 테이블</a>
                                         </li>
                                         <li class="more-details">
-                                        		<a href="/admin/member_update_management"><i class="icofont icofont-ui-v-card"></i> &nbsp; 회원 정보 수정 내역</a>
+                                        		<a href="/admin/member_update_management"><i class="icofont icofont-tasks"></i> &nbsp; 회원 정보 수정 내역</a>
                                         </li>
                                         <li class="more-details">
                                         		<a href="/admin/approveDriver_management"><i class="icofont icofont-ui-v-card"></i> &nbsp; 운전자 미승인 테이블</a>

@@ -115,9 +115,9 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public String getDriverSeq(String m_id) {
+	public String getDriverSeqFromPassenger(String m_id) {
 //		System.out.println("MemberDaoImpl getDriverSeq, m_id:" + m_id);
-		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeq", m_id);
+		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeqFromPassenger", m_id);
 //		System.out.println("MemberDaoImpl getDriverSeq, driver_seq:" + driver_seq);
 		return driver_seq;
 	}
@@ -185,8 +185,24 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+
 	public int getCountByApplyDate(String str_date) {
 		return sqlSession.selectOne(NAMESPACE+"getCountByApplyDate",str_date);
+	}
+
+	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("driver_seq", driver_seq);
+		map.put("m_company", m_company);
+		List<Map<String, Object>> passengerList = sqlSession.selectList(NAMESPACE + "getPassengerList", map);
+		return passengerList;
+	}
+
+	@Override
+	public String getDriverSeqFromDriver(String m_id) {
+		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeqFromDriver", m_id);
+		return driver_seq;
+
 	}
 
 

@@ -67,7 +67,7 @@ public class AdminController {
 
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String homeAdmin(Model model,HttpSession session) {
+	public String homeAdmin(Model model,HttpSession session,PagingDto pagingDto) {
 		List<Map<String, Object>> notApprovedDriverList = memberService.adminNotApprovedDriver();
 		model.addAttribute("notApprovedDriverList",notApprovedDriverList);
 		List<MemberVo> top5List = memberService.getTop5EvlMembers();
@@ -99,7 +99,7 @@ public class AdminController {
 		long curTime=System.currentTimeMillis();
 		Date curDate;
 		List<Integer> dayPassengerCounts= new ArrayList<>();
-		List<BlackListVo> blackLists= notifyService.nNotifyList();
+		List<BlackListVo> blackLists= notifyService.nNotifyList(pagingDto);
 		List<String> strList=new ArrayList<>();
 		//날짜계산
 		for(int i=1; i<=7; i++) {
@@ -215,11 +215,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
-	public String reportManagement(Model model, BlackListVo blackListVo) {
+	public String reportManagement(Model model, BlackListVo blackListVo,PagingDto pagingDto) {
 		
 		System.out.println("blackListVo : " + blackListVo);
 		List<BlackListVo> notifyList = notifyService.notifyList();
-		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
+		List<BlackListVo> nNotifyList = notifyService.nNotifyList(pagingDto);
 		List<BlackListVo> dayNotifyList = notifyService.dayNotifyList();
 		List<BlackListVo> cNotifyList = notifyService.cNotifyList();
 		int dayNotifyCount = notifyService.dayNotifyCount();

@@ -19,9 +19,17 @@ if(insert_result){
 			console.log(event_seq);
 			location.href="/admin/event_details?event_seq="+event_seq;	
 		});
+		$("#btnSearch").click(function(){
+			var keyword=$("#txtkeyword").val();
+			$("#frmEventSearch").find("[name=keyword]").val(keyword);
+			$("#frmEventSearch").submit();
+		});
 	});
 </script>
-
+<form id="frmEventSearch" method="get" action="/admin/event">
+<input type="hidden" name="searchType" value="i">
+<input type="hidden" name="keyword">
+</form>
 <!-- start Event inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -57,9 +65,8 @@ if(insert_result){
 				<!-- Basic table card start -->
 				<div class="card">
 					<div class="card-header">
-					<select>
-					<option>test</option>
-					</select>
+					<input type="text" id="txtkeyword" style="background-color:white; border-color: #d2d2d2; margin-right:50px;width:150px" placeholder="이벤트 이름">
+					<button type="button" id="btnSearch" style="background-color:white; border-color: #d2d2d2;">조회하기&nbsp;&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
 						<div class="table-responsive">
 				<table class="table table-hover">
 					<thead>
@@ -103,6 +110,13 @@ if(insert_result){
 							
 						</tr>
 						</c:forEach>
+						<c:if test="${eventList.size() <=0 }">
+						<tr>
+						<td colspan="5" style="text-align: center;
+						font-size:35px;
+						"> "${param.keyword}"에대한 검색결과가 없습니다</td>
+						</tr>
+						</c:if>
 					</tbody>
 				</table>
 			</div>

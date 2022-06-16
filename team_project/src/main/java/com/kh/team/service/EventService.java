@@ -12,7 +12,7 @@ import com.kh.team.vo.EventWinnerVo;
 import com.kh.team.vo.PagingDto;
 
 public interface EventService {
-	public List<EventVo> getEventList();
+	public List<EventVo> getEventList(PagingDto pagingDto);
 	public boolean insertEvent(@Param("param")EventVo param);
 	public boolean updateEvent(EventVo eventVo);
 	public boolean deleteEvent(int event_seq);

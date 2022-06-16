@@ -19,8 +19,8 @@ public class EventDaoImpl implements EventDao{
 	SqlSession sqlSession;
 	
 	@Override
-	public List<EventVo> getEventList() {
-		List<EventVo> eventList=sqlSession.selectList(NAMESPACE+"getEventList");
+	public List<EventVo> getEventList(PagingDto pagingDto) {
+		List<EventVo> eventList=sqlSession.selectList(NAMESPACE+"getEventList",pagingDto);
 		return eventList;
 	}
 

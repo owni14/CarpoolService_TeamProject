@@ -18,5 +18,5 @@ public interface ComplainService {
 	public List<ComplainVo> getAllFinishList(PagingDto pagingDto,AdminVo adminVo,ComplainVo complainVo);//
 	public int getNotFinishCountNoCode();
 	public int getNotFinishCount(String admin_code);
-	public List<ComplainVo> getAllFinishListByCode(String admin_code,PagingDto pagingDto);
+	public List<ComplainVo> getAllFinishListByCode(String admin_code,PagingDto pagingDto,ComplainVo complainVo);// 개별관리자
 }

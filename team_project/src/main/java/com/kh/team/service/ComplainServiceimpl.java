@@ -63,8 +63,8 @@ public class ComplainServiceimpl implements ComplainService {
 		return complainDao.getNotFinishCountNoCode();
 	}
 	@Override
-	public List<ComplainVo> getAllFinishListByCode(String admin_code,PagingDto pagingDto) {
-		return complainDao.getAllFinishListByCode(admin_code,pagingDto);
+	public List<ComplainVo> getAllFinishListByCode(String admin_code,PagingDto pagingDto,ComplainVo complainVo) {
+		return complainDao.getAllFinishListByCode(admin_code,pagingDto,complainVo);
 	}
 
 }

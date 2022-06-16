@@ -117,9 +117,9 @@ public class AdminController {
 	
 
 	@RequestMapping(value = "/event", method = RequestMethod.GET)
-	public String eventList(Model model,HttpSession session) {
+	public String eventList(Model model,HttpSession session,PagingDto pagingDto) {
 		session.removeAttribute("event_seq");
-		List<EventVo> eventList = eventService.getEventList();
+		List<EventVo> eventList = eventService.getEventList(pagingDto);
 		Date today=new Date(System.currentTimeMillis());
 		for(EventVo eventVo:eventList) {
 			if(eventVo.getEvent_enddate() ==null) {
@@ -590,7 +590,7 @@ public class AdminController {
 			//총괄 관리자 아닐때
 			if(!"1004".equals(admin_code)) {
 				System.out.println("문의담당 관리자 코드 완료목록"+admin_code);
-				complainList=complainService.getAllFinishListByCode(admin_code,pagingDto);
+				complainList=complainService.getAllFinishListByCode(admin_code,pagingDto,complainVo);
 				
 				
 			}

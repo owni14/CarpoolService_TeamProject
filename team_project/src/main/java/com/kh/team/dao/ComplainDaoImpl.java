@@ -84,10 +84,12 @@ public class ComplainDaoImpl implements ComplainDao {
 	}
 	
 	@Override
-	public List<ComplainVo> getAllFinishListByCode(String admin_code,PagingDto pagingDto) {
+	public List<ComplainVo> getAllFinishListByCode(String admin_code,PagingDto pagingDto,ComplainVo complainVo) {
 		Map<String, Object> parameter =new HashMap<String, Object>();
 		parameter.put("admin_code", admin_code);
-		parameter.put("pagingDto", pagingDto);
+		parameter.put("searchType", pagingDto.getSearchType());
+		parameter.put("keyword", pagingDto.getKeyword());
+		parameter.put("complain_classification",complainVo.getComplain_classification());
 		return sqlSession.selectList(NAMESPACE+"getAllFinishListByCode",parameter);
 	}
 }

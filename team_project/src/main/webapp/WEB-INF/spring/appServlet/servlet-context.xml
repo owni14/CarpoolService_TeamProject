@@ -61,5 +61,7 @@
 		</interceptor>
 	</interceptors>
 	<!-- main 인터셉터 end -->
+	
+	<!-- code 1001 인터셉터 -->
 </beans:beans>
 

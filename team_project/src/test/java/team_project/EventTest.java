@@ -28,8 +28,8 @@ public class EventTest {
 
 	@Test
 	public void eventGetList() {
-		List<EventVo> list=eventDao.getEventList();
-		System.out.println("EventTest eventGetList list "+list);
+//		List<EventVo> list=eventDao.getEventList();
+//		System.out.println("EventTest eventGetList list "+list);
 		//성공
 	}
 	@Test

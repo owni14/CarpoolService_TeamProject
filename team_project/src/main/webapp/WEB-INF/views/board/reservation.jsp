@@ -31,6 +31,7 @@ $(document).ready(function() {
 	
 	// 현재 페이지의 정보를 가져옵니다.
 	var page = "${pagingDto.page}";
+	console.log("page:" + page);	
 	
 	// 운전자 리스트를 얻어낼 url을 설정
 	// page는 현재 설정한 페이지
@@ -393,7 +394,6 @@ $(document).ready(function() {
 		 frmRsrvPaging.find("input").attr("value", href);
 		 frmRsrvPaging.submit();
 	 });
-	  
 	 
 }); // $(document).ready(function() {})
 </script>

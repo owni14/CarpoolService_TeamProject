@@ -37,15 +37,21 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<MessageVo> receivedMessageListById(String m_id) {
-		List<MessageVo> receivedMessageList = messageDao.receivedMessageListById(m_id);
-		return receivedMessageList;
-	}
-
-	@Override
 	public List<MessageVo> sendMessageListById(String m_id) {
 		List<MessageVo> sendMessageList = messageDao.sendMessageListById(m_id);
 		return sendMessageList;
+	}
+
+	@Override
+	public List<MessageVo> recAdminMessageListById(String m_id) {
+		List<MessageVo> recAdminMessageList = messageDao.recAdminMessageListById(m_id);
+		return recAdminMessageList;
+	}
+
+	@Override
+	public List<MessageVo> recUserMessageListById(String m_id) {
+		List<MessageVo> recUserMessageList = messageDao.recUserMessageListById(m_id);
+		return recUserMessageList;
 	}
 
 	

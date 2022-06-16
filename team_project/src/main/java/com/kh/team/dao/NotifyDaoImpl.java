@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.PagingDto;
 
 @Repository
 public class NotifyDaoImpl implements NotifyDao{
@@ -49,8 +50,8 @@ public class NotifyDaoImpl implements NotifyDao{
 	}
 
 	@Override
-	public List<BlackListVo> nNotifyList() {
-		List<BlackListVo> nNotifyList = sqlSession.selectList(NAMESPACE + "nNotifyList");
+	public List<BlackListVo> nNotifyList(PagingDto pagingDto) {
+		List<BlackListVo> nNotifyList = sqlSession.selectList(NAMESPACE + "nNotifyList",pagingDto);
 		return nNotifyList;
 	}
 

@@ -1,5 +1,6 @@
 package com.kh.team.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,6 +156,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+
+	public int getCountByApplyDate(String str_date) {
+		return memberDao.getCountByApplyDate(str_date);
+	}
+
 	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company) {
 		List<Map<String, Object>> passengerList = memberDao.getPassengerList(driver_seq, m_company);
 		return passengerList;

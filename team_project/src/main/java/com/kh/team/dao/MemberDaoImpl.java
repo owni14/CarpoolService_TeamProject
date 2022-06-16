@@ -190,6 +190,11 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+
+	public int getCountByApplyDate(String str_date) {
+		return sqlSession.selectOne(NAMESPACE+"getCountByApplyDate",str_date);
+	}
+
 	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("driver_seq", driver_seq);
@@ -202,6 +207,7 @@ public class MemberDaoImpl implements MemberDao {
 	public String getDriverSeqFromDriver(String m_id) {
 		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeqFromDriver", m_id);
 		return driver_seq;
+
 	}
 
 

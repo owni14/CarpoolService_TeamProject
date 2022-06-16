@@ -5,6 +5,7 @@ import java.sql.Date;
 public class MessageVo {
 	private int message_seq;
 	private String receiver_m_id;
+	private String receiver_black_id; // 신고 받은 사람에게 신고 완료 됨을 보내기 위한 변수 (관리자 페이지 : 신고 회원 관리에서만 사용)
 	private String receiver_admin_code;
 	private String sender_m_id;
 	private String sender_admin_code;
@@ -132,13 +133,24 @@ public class MessageVo {
 		this.blacklist_seq = blacklist_seq;
 	}
 
+	
+	public void setReceiver_black_id(String receiver_black_id) {
+		this.receiver_black_id = receiver_black_id;
+	}
+
+
+	public String getReceiver_black_id() {
+		return receiver_black_id;
+	}
+
 
 	@Override
 	public String toString() {
-		return "MessageVo [message_seq=" + message_seq + ", receiver_m_id=" + receiver_m_id + ", receiver_admin_code="
-				+ receiver_admin_code + ", sender_m_id=" + sender_m_id + ", sender_admin_code=" + sender_admin_code
-				+ ", content=" + content + ", senddate=" + senddate + ", opendate=" + opendate + ", blacklist_seq="
-				+ blacklist_seq + "]";
+		return "MessageVo [message_seq=" + message_seq + ", receiver_m_id=" + receiver_m_id + ", receiver_black_id="
+				+ receiver_black_id + ", receiver_admin_code=" + receiver_admin_code + ", sender_m_id=" + sender_m_id
+				+ ", sender_admin_code=" + sender_admin_code + ", content=" + content + ", senddate=" + senddate
+				+ ", opendate=" + opendate + ", blacklist_seq=" + blacklist_seq + "]";
 	}
+
 
 }

@@ -18,6 +18,7 @@ import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.FaqVo;
 import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.PagingDto;
 
 @Controller
 @RequestMapping("/customer")
@@ -70,9 +71,9 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/report", method = RequestMethod.GET)
-	public String report(HttpSession session) {
+	public String report(HttpSession session,PagingDto pagingDto) {
 		List<BlackListVo> yBlackList = notifyService.yNotifyList();
-		List<BlackListVo> nBlackList = notifyService.nNotifyList();
+		List<BlackListVo> nBlackList = notifyService.nNotifyList(pagingDto);
 		session.setAttribute("yBlackList", yBlackList);
 		session.setAttribute("nBlackList", nBlackList);
 		return "customer/report";

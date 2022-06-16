@@ -187,9 +187,22 @@
 		and m_company = #{m_company}
 	</select>
 
+	<select id="getCountByApplyDate" resultType="int">
+	
+	select count(*) from passenger 
+	where
+	is_approve ='Y'
+	and
+	is_deletion ='N'
+	and
+	to_char(apply_date,'yyyy/MM/dd') = #{str_date} 
+	</select>
+
+
 	<select id="getDriverSeqFromDriver" resultType="string"> 
 		select driver_seq from driver
 		where m_id = #{m_id}
+
 	</select>
 	
 	<select id="approvePassenger">

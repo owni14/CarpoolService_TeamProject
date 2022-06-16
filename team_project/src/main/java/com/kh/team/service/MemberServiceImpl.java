@@ -166,5 +166,23 @@ public class MemberServiceImpl implements MemberService {
 		return driver_seq;
 	}
 
+	@Override
+	public boolean approvePassenger(String m_id) {
+		boolean result = memberDao.approvePassenger(m_id);
+		return result;
+	}
+
+	@Override
+	public boolean rejectPassenger(String m_id) {
+		boolean result = memberDao.rejectPassenger(m_id);
+		return result;
+	}
+
+	@Override
+	public String getApproveState(String m_id) {
+		String approveState = memberDao.getApproveState(m_id);
+		return approveState;
+	}
+
 }
 

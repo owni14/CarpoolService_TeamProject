@@ -30,4 +30,7 @@ public interface MemberService {
 	public int getTotalDriverCount(String m_company); // 각 회사별 운전자 수 확인
 	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company); // 탑승객 리스트 확인
 	public String getDriverSeqFromDriver(String m_id); // 운전자 번호 확인
+	public boolean approvePassenger(String m_id); // 탑승자 승인
+	public boolean rejectPassenger(String m_id); // 탑승자 거절
+	public String getApproveState(String m_id); // 탑승자의 현재 신청상태 확인
 }

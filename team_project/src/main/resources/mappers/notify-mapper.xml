@@ -21,6 +21,7 @@
 	<select id="nNotifyList" resultType="BlackListVo">
 		select * from blacklist
 		where black_is_processed = 'N'
+		<include refid="search"></include>	
 		order by black_regdate asc
 	</select>
 	
@@ -64,18 +65,33 @@
 		<if test="admin_check !=null">
 			<choose>
 				<when test='admin_check == "Y"'>
-				 	set black_is_processed = 'Y'
+				 	set black_is_processed = 'Y' 
 				</when>
 				<when test='admin_check == "N"'>
-					set black_is_processed = 'N'
+					set black_is_processed = 'N' 
 				</when>
 				<when test='admin_check == "C"'>
-					set black_is_processed = 'C'
+					set black_is_processed = 'C' 
 				</when>
 			</choose>
 		</if>
 		where blacklist_seq = #{blacklist_seq}
 	</update>
 	
+	<sql id="search">
+		<if test = "searchType != null and keyword != null">
+			<choose>
+				<when test='searchType == "ni"'>
+					and m_id like '%' || #{keyword} || '%' 
+				</when>
+				<when test='searchType == "ndi"'>
+					and black_m_id like '%' || #{keyword} || '%' 
+				</when>
+				<when test='searchType == "c"'>
+					and black_content like '%' || #{keyword} || '%' 
+				</when>
+			</choose>
+		</if>
+	</sql>
 	
 </mapper>

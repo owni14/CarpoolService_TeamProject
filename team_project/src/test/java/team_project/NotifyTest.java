@@ -86,6 +86,16 @@ public class NotifyTest {
 	}
 	// test ok,
 	
+	@Test
+	public void nNotifyList() {
+		PagingDto pagingDto = new PagingDto();
+		pagingDto.setSearchType("ni");
+		pagingDto.setKeyword("user04");
+		List<BlackListVo> list = notifyDao.nNotifyList(pagingDto);
+		System.out.println("list : " + list );
+	}
+	// test ok,
+	
 	
 }
 

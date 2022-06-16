@@ -42,9 +42,17 @@ public class MessageController {
 	@ResponseBody
 	@RequestMapping(value="/notifyComplete", method= RequestMethod.POST)
 	public String notifyComplete(MessageVo messageVo) {
-		System.out.println("messageVo : " + messageVo);
-		boolean result = messageService.insertMessage(messageVo);
-		return String.valueOf(result);
+//		System.out.println("messageVo1 : " + messageVo);
+		boolean result1 = messageService.insertMessage(messageVo);
+		if (messageVo.getReceiver_black_id() != null && !messageVo.getReceiver_black_id().equals("")) {
+			messageVo.setReceiver_m_id(messageVo.getReceiver_black_id());
+//			System.out.println("messageVo2 : " + messageVo);
+			boolean result2 = messageService.insertMessage(messageVo);
+			if (result1 == true && result2 == true) {
+				result1 = true;
+			}
+		}
+		return String.valueOf(result1);
 	}
 	
 	@ResponseBody

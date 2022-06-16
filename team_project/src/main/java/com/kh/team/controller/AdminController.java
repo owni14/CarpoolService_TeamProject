@@ -162,11 +162,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
-	public String reportManagement(Model model, BlackListVo blackListVo) {
+	public String reportManagement(Model model, BlackListVo blackListVo,PagingDto pagingDto) {
 		
 		System.out.println("blackListVo : " + blackListVo);
 		List<BlackListVo> notifyList = notifyService.notifyList();
-		List<BlackListVo> nNotifyList = notifyService.nNotifyList();
+		List<BlackListVo> nNotifyList = notifyService.nNotifyList(pagingDto);
 		List<BlackListVo> dayNotifyList = notifyService.dayNotifyList();
 		List<BlackListVo> cNotifyList = notifyService.cNotifyList();
 		int dayNotifyCount = notifyService.dayNotifyCount();

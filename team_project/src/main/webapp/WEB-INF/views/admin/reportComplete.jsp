@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 <script>
 	$(document).ready(function (e) {
@@ -334,5 +334,6 @@
 		</div>
 	</div>
 </div>
+
 <!-- end inner header -->
 <%@ include file="/WEB-INF/views/include_admin/footer.jsp"%>

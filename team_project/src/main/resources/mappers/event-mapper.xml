@@ -4,8 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kh.team.mappers.event">
+	
 	<select id="getEventList" resultType="EventVo">
-		select * from event order by event_is_finish desc, event_seq desc
+		select * from event 
+	<include refid="search"></include>
+		order by event_is_finish desc, event_seq desc
 	</select>
 
 	<insert id="insertEvent" parameterType="EventVo">
@@ -178,4 +181,14 @@ where m.m_id=ep${event_seq}.m_id
 	where event_seq=#{event_seq}
 	</select>
 	
+	<sql id="search">
+	<if test = "searchType != null">
+			<choose>
+				<when test='searchType == "i"'>
+					where event_name like '%' || #{keyword,jdbcType=VARCHAR} || '%'
+				</when>
+				
+			</choose>
+		</if>
+	</sql>
 </mapper>

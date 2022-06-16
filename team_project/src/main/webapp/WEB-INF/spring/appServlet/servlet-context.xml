@@ -48,18 +48,65 @@
 	<!-- admin 인터셉터 end -->
 	
 	<!-- main 인터셉터 start -->
+	<!-- loginInterceptor -->
 	<beans:bean class="com.kh.team.interceptor.MainInterceptor"  id="mainInterceptor"></beans:bean>
-	
+
 	<interceptors>
 		<interceptor>
 			<mapping path="/my/**/*"/>
 			<mapping path="/customer/counsel/**"/>
 			<mapping path="/customer/report/**"/>
+			<mapping path="/board/drive/**"/>
+			<mapping path="/board/reservation/**"/>
 			<exclude-mapping path="/member/loginForm"/>
 			
 			<beans:ref bean="mainInterceptor"/>
 		</interceptor>
+		
 	</interceptors>
+	
 	<!-- main 인터셉터 end -->
+	
+	<!-- code 1001 인터셉터 -->
+	<beans:bean class="com.kh.team.interceptor.AdminCodeGMInterceptor"  id="adminCodeGM"></beans:bean>
+
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/member*"/>
+			
+			
+			<beans:ref bean="adminCodeGM"/>
+		</interceptor>
+		
+	</interceptors>
+	<!-- code 1001 인터셉터 end -->
+	
+	<!-- code 1002 인터셉터 -->
+	<beans:bean class="com.kh.team.interceptor.AdminCodeCSOneInterceptor"  id="adminCodeCSOne"></beans:bean>
+
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/event*"/>
+			
+			
+			<beans:ref bean="adminCodeCSOne"/>
+		</interceptor>
+		
+	</interceptors>
+	<!-- code 1002 인터셉터 end -->
+	
+	<!-- code 1003 인터셉터 -->
+	<beans:bean class="com.kh.team.interceptor.AdminCodeCSTwoInterceptor"  id="adminCodeCSTwo"></beans:bean>
+
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/report*"/>
+			
+			
+			<beans:ref bean="adminCodeCSTwo"/>
+		</interceptor>
+		
+	</interceptors>
+	<!-- code 1003 인터셉터 end -->
 </beans:beans>
 

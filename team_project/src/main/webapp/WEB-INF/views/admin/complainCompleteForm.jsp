@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
+<%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
 <style>
 .trList:hover{
 cursor: pointer;
@@ -13,6 +14,7 @@ cursor: pointer;
 </style>
 <script>
 var updateAnswer="${result}";
+
 	if(updateAnswer =="true"){
 		alert("답변 전송성공");
 	}
@@ -20,7 +22,7 @@ var updateAnswer="${result}";
 		alert("답변 전송에 문제가 발생했습니다");
 	}
 	$(document).ready(function () {
-		
+		var frm=$("#frmComplainPaging");
 		$(".trList").click(function(){
 			$(this).next("tr").toggle();
 			$(this).next("tr").siblings(".trCollapse").hide();
@@ -30,12 +32,64 @@ var updateAnswer="${result}";
 		$(".trCollapse").click(function(){
 			$(this).toggle();
 		});	
-	
 		
+		$("#sel_adminCode").change(function(){
+			var admin_code=$(this).val();
+			var complain_classification=$("#sel_classify").val();
+			
+			if(complain_classification == null){
+				frm.find("[name=searchType]").val("ac");
+			}
+			else{
+				frm.find("[name=searchType]").val("cls");
+			}
+			
+			frm.find("[name=admin_code]").val(admin_code);
+			frm.find("[name=complain_classification]").val(complain_classification);
+			frm.submit();
+			
+		});
+		
+		$("#sel_classify").change(function(){
+			var complain_classification=$(this).val();
+			var admin_code=$("#sel_adminCode").val();
+			if(admin_code ==null){
+				frm.find("[name=searchType]").val("clsnoac");
+			}
+			else{
+				frm.find("[name=searchType]").val("cls");
+			}
+			frm.find("[name=admin_code]").val(admin_code);
+			frm.find("[name=complain_classification]").val(complain_classification);
+			frm.submit();
+		});
+		
+		$("#btnSearch").click(function(){
+			var admin_code=$("#sel_adminCode").val();
+			var complain_classification=$("#sel_classify").val();
+			var keyword=$("#txtkeyword").val();
+			if(admin_code ==null && complain_classification==null){
+				frm.find("[name=searchType]").val("i");
+			}
+			else if(admin_code !=null && complain_classification ==null ){
+				frm.find("[name=searchType]").val("iac");
+			}
+			else if(admin_code ==null && complain_classification !=null ){
+				frm.find("[name=searchType]").val("icls");
+			}
+			else{
+				frm.find("[name=searchType]").val("all");
+			}
+			frm.find("[name=admin_code]").val(admin_code);
+			frm.find("[name=complain_classification]").val(complain_classification);
+			frm.find("[name=keyword]").val(keyword);
+			frm.submit();
+			
+		});
 	
 	});
 </script>
-
+<%@ include file="/WEB-INF/views/include_admin/frmComplainPaging.jsp" %>
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -44,7 +98,7 @@ var updateAnswer="${result}";
 				<!-- Page-header start -->
 				<div class="page-header card">
 					<div class="row align-items-end">
-						<div class="col-lg-8">
+						<div class="col-lg-5">
 							<div class="page-header-title">
 								<i class="ti-face-smile" style="background-color:#54BD54"></i>
 								<div class="d-inline">
@@ -52,8 +106,55 @@ var updateAnswer="${result}";
 									<span></span>
 								</div>
 							</div>
+						<select style="height:26px; float: right; align-items: flex-end; margin: 50px 0px 0px" id="sel_adminCode">
+			<option selected="selected" value="" disabled="disabled">관리자 코드를 선택하여 주세요</option>
+					<c:forEach items="${amdinCodes}" var="adminVo">
+					<option value="${adminVo}"
+					<c:if test="${adminVo eq param.admin_code}">
+					selected
+					</c:if>
+					>관리자 코드 &nbsp;${adminVo}</option>
+					</c:forEach>
+					</select>
 						</div>
-					<div class="col-lg-4">
+						<!-- 새로 추가된 div -->
+							<div class="col-lg-4" style="text-align: right;">
+					
+					<select style="height:26px; float:left;" id="sel_classify">
+			<option selected="selected" value="" disabled="disabled">=====문의 구분=====</option>
+					
+					<option value="시스템이용문의"
+					<c:if test="${'시스템이용문의' eq param.complain_classification}">
+					selected
+					</c:if>
+					>시스템이용문의</option>
+					<option value="포인트"
+					<c:if test="${'포인트' eq param.complain_classification}">
+					selected
+					</c:if>
+					>포인트</option>
+					<option value="이벤트"
+					<c:if test="${'이벤트' eq param.complain_classification}">
+					selected
+					</c:if>
+					>이벤트</option>
+					<option value="불편"
+					<c:if test="${'불편' eq param.complain_classification}">
+					selected
+					</c:if>
+					>불편</option>
+					<option value="기타"
+					<c:if test="${'기타' eq param.complain_classification}">
+					selected
+					</c:if>
+					>기타</option>
+					
+					</select>
+					&nbsp;
+					<input type="text" id="txtkeyword" style="background-color:white; border-color: #d2d2d2; margin-right:50px" placeholder="유저아이디로 검색합니다">
+					<button type="button" id="btnSearch" style="background-color:white; border-color: #d2d2d2;">검색&nbsp;&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
+						</div>
+					<div class="col-lg-3">
 						<div class="page-header-breadcrumb">
 							<ul class="breadcrumb-title">
 								<li class="breadcrumb-item">

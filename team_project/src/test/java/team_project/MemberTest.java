@@ -74,7 +74,7 @@ public class MemberTest {
 	@Test
 	public void getDriverSeq() {
 		String m_id = "hong@naver.com";
-		String driver_seq = memberDao.getDriverSeq(m_id);
+		String driver_seq = memberDao.getDriverSeqFromPassenger(m_id);
 		System.out.println("driver_seq: " + driver_seq);
 	}
 	

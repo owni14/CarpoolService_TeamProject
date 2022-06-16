@@ -27,10 +27,10 @@ public class ComplainTest {
 	@Test
 	public void testFinishByCode() {
 		PagingDto pagingDto=new PagingDto();
-		List<ComplainVo> list=complainDao.getAllFinishListByCode("1001",pagingDto);
-		for(ComplainVo vo:list) {
-			System.out.println(vo);
-		}
+//		List<ComplainVo> list=complainDao.getAllFinishListByCode("1001",pagingDto);
+//		for(ComplainVo vo:list) {
+//			System.out.println(vo);
+//		}
 	}
 }
 

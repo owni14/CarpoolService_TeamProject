@@ -31,6 +31,7 @@ $(document).ready(function() {
 	
 	// 현재 페이지의 정보를 가져옵니다.
 	var page = "${pagingDto.page}";
+	console.log("page:" + page);	
 	
 	// 운전자 리스트를 얻어낼 url을 설정
 	// page는 현재 설정한 페이지
@@ -393,7 +394,41 @@ $(document).ready(function() {
 		 frmRsrvPaging.find("input").attr("value", href);
 		 frmRsrvPaging.submit();
 	 });
-	  
+	 
+	 // 회원 회사에 따른 회사 로고 설정
+	 var company = "${loginVo.m_company}";
+	 switch(company) {
+	 case "DOOSAN" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/DOOSAN.png");
+		 break;
+	 case "HANWHA" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/HANWHA.png");
+		 break;
+	 case "HYUNDAI" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/HYUNDAI.png");
+		 break;
+	 case "KAKAO" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/KAKAO.jpg");
+		 break;
+	 case "KT" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/KT.png");
+		 break;
+	 case "LG" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/LG.png");
+		 break;
+	 case "NAVER" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/NAVER.png");
+		 break;
+	 case "NEXEN" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/NEXEN.jpg");
+		 break;
+	 case "SAMSUNG":
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/SAMSUNG.png");
+		 break;
+	 case "SK":
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/SK.png");
+		 break;
+	 }
 	 
 }); // $(document).ready(function() {})
 </script>
@@ -451,6 +486,9 @@ $(document).ready(function() {
 		<input hidden="true" name="m_id" value="${loginVo.m_id}">
 		<input hidden="true" id="driver_seq" name="driver_seq" value="">
 		<input hidden="true" id="driver_id" name="driver_id" value="">
+			<div style="text-align: center;">
+				<img id="companyImg" alt="companyImg.jpg" src="/resources/images/companyLogo/DEFAULTLOGO.png" width="500px;" height="200px;">
+			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
 				<h3 style="text-align: center;">운전자 위치를 확인하시고, 탑승할 위치<span style="color: blue;">(도로명 주소기준)</span>를 클릭해주세요.</h3>
 				<h4 style="text-align: center;">운전자로 등록되어 있는 경우 <span style="color:#ff8c00; font-weight: bold;">주황색</span>으로 표시됩니다.</h4>

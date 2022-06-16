@@ -22,7 +22,6 @@ $(document).ready(function() {
 	// 초기 숫자를 1로 설정하고 count++로 숫자를 증
 	var count = 1;
 	
-	
 	// 현재 로그인 되어있는 회원의 아이디
 	var m_id = "${loginVo.m_id}";
 	
@@ -31,6 +30,10 @@ $(document).ready(function() {
 	
 	// 현재 페이지의 정보를 가져옵니다.
 	var page = "${pagingDto.page}";
+	console.log("page:" + page);	
+	
+	// 운전자가 탑승자를 승인했는지 여부
+	var approveState = "${approveState}";
 	
 	// 운전자 리스트를 얻어낼 url을 설정
 	// page는 현재 설정한 페이지
@@ -70,12 +73,13 @@ $(document).ready(function() {
 	
 	// 비동기 방식으로 운전자 리스트를 가져옵니다.
 	$.get(url_list, function(rData) {
+		// 가져온 데이터 this를 that변수에 저장(다른곳에서 사용하기 위함)
+		
 		
 		// 가져온 데이터를 데이터의 길이만큼 반복
 		$.each(rData, function() {
-			
-			// 가져온 데이터 this를 that변수에 저장(다른곳에서 사용하기 위함)
 			var that = this;
+			
 			// 주소로 좌표를 검색합니다
 			geocoder.addressSearch(this.DRIVER_DEPART_LOCATION, function(result, status) {
 			
@@ -122,6 +126,7 @@ $(document).ready(function() {
 			// 현재 로그인 된 회원아이디(m_id)와 운전자의 아이디(that.M_ID)를 비교해 같을 경우 테이블에서 제거
 			console.log("m_id:" + m_id);
 			console.log("that.M_ID:" + that.M_ID);
+			
 			if(m_id == that.M_ID) {
 				tr.attr("style", "color:#ff8c00; font-weight: bold;");
 				tds.eq(5).text("신청 불가"); // 신청상태를 신청 불가로 변경
@@ -144,19 +149,53 @@ $(document).ready(function() {
 			
 			// 반복문을 돌면서 회원이 탑승신청한 운전자와 가지고 오는 운전자가 같으면 승인 대기상태로 신청상태를 변경
 			if (driverId == that.M_ID) {
-				var btnCancel= tds.eq(6).children();
-				tds.eq(5).text("승인 대기"); // 신청상태를 승인 대기로 변경
-				tds.eq(5).attr("style", "color:green; font-weight: bold;"); // 신청상태 텍스트 녹색 및 굵게 변경
-				btnCancel.text("탑승취소"); // 탑승신청 버튼을 탑승취소로 변경
-				btnCancel.attr("class", "btn btn-outline-warning btn-sm btnBoard"); // 탑승신청 버튼을 노란색으로 바꿈
-				
-				// 기존에 있던 role, data-toggle속성 제거
-				btnCancel.removeAttr("role");
-				btnCancel.removeAttr("data-toggle");
-				
-				// 회원이 탑승취소버튼을 클릭할 경우 보내질 url을 설정
-				// 현재 로그인되어있는 회원의 아이디, 클릭한 행의 운전자 번호 및 아이디를 파라미터로 넘겨줍니다.
-				btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID);
+				switch (approveState) {
+				case "W": // 승인대기
+					var btnCancel= tds.eq(6).children();
+					tds.eq(5).text("승인 대기"); // 신청상태를 승인 대기로 변경
+					tds.eq(5).attr("style", "color:green; font-weight: bold;"); // 신청상태 텍스트 녹색 및 굵게 변경
+					btnCancel.text("탑승취소"); // 탑승신청 버튼을 탑승취소로 변경
+					btnCancel.attr("class", "btn btn-outline-warning btn-sm btnBoard"); // 탑승신청 버튼을 노란색으로 바꿈
+					
+					// 기존에 있던 role, data-toggle속성 제거
+					btnCancel.removeAttr("role");
+					btnCancel.removeAttr("data-toggle");
+					
+					// 회원이 탑승취소버튼을 클릭할 경우 보내질 url을 설정
+					// 현재 로그인되어있는 회원의 아이디, 클릭한 행의 운전자 번호 및 아이디를 파라미터로 넘겨줍니다.
+					btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID);
+					break;
+				case "Y": // 승인
+					var btnCancel= tds.eq(6).children();
+					tds.eq(5).text("승인"); // 신청상태를 승인 대기로 변경
+					tds.eq(5).attr("style", "color:blue; font-weight: bold;"); // 신청상태 텍스트 녹색 및 굵게 변경
+					btnCancel.text("탑승취소"); // 탑승신청 버튼을 탑승취소로 변경
+					btnCancel.attr("class", "btn btn-outline-success btn-sm btnBoard"); // 탑승신청 버튼을 노란색으로 바꿈
+					
+					// 기존에 있던 role, data-toggle속성 제거
+					btnCancel.removeAttr("role");
+					btnCancel.removeAttr("data-toggle");
+					
+					// 회원이 탑승취소버튼을 클릭할 경우 보내질 url을 설정
+					// 현재 로그인되어있는 회원의 아이디, 클릭한 행의 운전자 번호 및 아이디를 파라미터로 넘겨줍니다.
+					btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID);
+					break;
+				case "C": // 승인거부
+					var btnCancel= tds.eq(6).children();
+					tds.eq(5).text("승인 거부"); // 신청상태를 승인 대기로 변경
+					tds.eq(5).attr("style", "color:red; font-weight: bold;"); // 신청상태 텍스트 녹색 및 굵게 변경
+					btnCancel.text("탑승취소"); // 탑승신청 버튼을 탑승취소로 변경
+					btnCancel.attr("class", "btn btn-outline-success btn-sm btnBoard"); // 탑승신청 버튼을 노란색으로 바꿈
+					
+					// 기존에 있던 role, data-toggle속성 제거
+					btnCancel.removeAttr("role");
+					btnCancel.removeAttr("data-toggle");
+					
+					// 회원이 탑승취소버튼을 클릭할 경우 보내질 url을 설정
+					// 현재 로그인되어있는 회원의 아이디, 클릭한 행의 운전자 번호 및 아이디를 파라미터로 넘겨줍니다.
+					btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID);
+					break;
+				}
 			}
 			
 			// 운전자의 아이디를 td에 data-m_id속성을 이용해 값을 넣어줍니다.
@@ -393,7 +432,41 @@ $(document).ready(function() {
 		 frmRsrvPaging.find("input").attr("value", href);
 		 frmRsrvPaging.submit();
 	 });
-	  
+	 
+	 // 회원 회사에 따른 회사 로고 설정
+	 var company = "${loginVo.m_company}";
+	 switch(company) {
+	 case "DOOSAN" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/DOOSAN.png");
+		 break;
+	 case "HANWHA" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/HANWHA.png");
+		 break;
+	 case "HYUNDAI" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/HYUNDAI.png");
+		 break;
+	 case "KAKAO" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/KAKAO.jpg");
+		 break;
+	 case "KT" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/KT.png");
+		 break;
+	 case "LG" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/LG.png");
+		 break;
+	 case "NAVER" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/NAVER.png");
+		 break;
+	 case "NEXEN" :
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/NEXEN.jpg");
+		 break;
+	 case "SAMSUNG":
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/SAMSUNG.png");
+		 break;
+	 case "SK":
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/SK.png");
+		 break;
+	 }
 	 
 }); // $(document).ready(function() {})
 </script>
@@ -451,6 +524,9 @@ $(document).ready(function() {
 		<input hidden="true" name="m_id" value="${loginVo.m_id}">
 		<input hidden="true" id="driver_seq" name="driver_seq" value="">
 		<input hidden="true" id="driver_id" name="driver_id" value="">
+			<div style="text-align: center;">
+				<img id="companyImg" alt="companyImg.jpg" src="/resources/images/companyLogo/DEFAULTLOGO.png" width="500px;" height="200px;">
+			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
 				<h3 style="text-align: center;">운전자 위치를 확인하시고, 탑승할 위치<span style="color: blue;">(도로명 주소기준)</span>를 클릭해주세요.</h3>
 				<h4 style="text-align: center;">운전자로 등록되어 있는 경우 <span style="color:#ff8c00; font-weight: bold;">주황색</span>으로 표시됩니다.</h4>

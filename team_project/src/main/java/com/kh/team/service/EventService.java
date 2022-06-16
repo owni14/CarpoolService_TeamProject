@@ -12,7 +12,7 @@ import com.kh.team.vo.EventWinnerVo;
 import com.kh.team.vo.PagingDto;
 
 public interface EventService {
-	public List<EventVo> getEventList();
+	public List<EventVo> getEventList(PagingDto pagingDto);
 	public boolean insertEvent(@Param("param")EventVo param);
 	public boolean updateEvent(EventVo eventVo);
 	public boolean deleteEvent(int event_seq);
@@ -53,4 +53,5 @@ public interface EventService {
 	//event 당첨자
 	public boolean insertEventWinnerTable(String m_id,int event_seq);
 	public List<EventWinnerVo> selectWinnerIsGet(int event_seq);
+	public int selectCountWinnerNoGet();//총 미수령 갯수 시퀀스 상관x
 }

@@ -3,9 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
+<%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
 <script>
 	$(document).ready(function (e) {
 		var frmApproveNotify = $("#frmApproveNotify");
+		var frmPaging = $("#frmPaging"); 
 		$("a.dropdown-item").click(function (e) {
 			e.preventDefault();
 			var blacklist_seqValue = $(this).attr("data-blacklistSeq");
@@ -27,9 +29,25 @@
 				frmApproveNotify.attr("method","post");
 			frmApproveNotify.submit();
 		});
+		
+		$("#btnSearch").click(function () {
+			var searchTypeValue = $("#searchTypeSelector").val();
+			var keywordValue = $("#adminKeyword").val();
+			
+			var searchType = frmPaging.find("input[name=searchType]");
+			searchType.val(searchTypeValue);
+			var keyword = frmPaging.find("input[name=keyword]");
+			keyword.val(keywordValue);
+// 			frmPaging.find("input[name=page]").val(1);
+			frmPaging.attr("action","/admin/report_management");
+			frmPaging.attr("method","get");
+			frmPaging.submit();
+		});
+		
 	});
 </script>
 <%@ include file="/WEB-INF/views/include_admin/frmApproveNotify.jsp" %>
+<%@ include file="/WEB-INF/views/include/frmPaging.jsp" %>
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -176,6 +194,30 @@
 							<!-- chart Ends -->
 						</div>
 						<div class="col-md-12 col-xl-8" style="margin-top:10px">
+						<!-- search start -->
+						<h6>
+							<select id="searchTypeSelector" name="searchTypeSelector" style="height:25px">
+		<!-- notifying id -->	<option value="ni" 
+									<c:if test="${pagingDto.searchType == 'ni'}">
+										selected
+									</c:if>
+								>신고자 아이디</option>
+		<!-- notifyed id -->	<option value="ndi"
+									<c:if test="${pagingDto.searchType == 'ndi'}">
+										selected
+									</c:if>
+								>신고 받은 회원 아이디</option>
+								<option value="c"
+									<c:if test="${pagingDto.searchType == 'c'}">
+										selected
+									</c:if>
+								>신고 내용</option>
+							</select>
+						
+							<input type="text" id="adminKeyword" name="adminKeyword" style="height:25px">
+							<button id="btnSearch" style="background-color:white; border-color: #d2d2d2">검색&nbsp;&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
+						</h6>
+						<!-- search end -->
 						<!-- Basic table card start -->
 <!-- 					<div class="card"> -->
 <!-- 					<div class="card-block table-border-style"> -->

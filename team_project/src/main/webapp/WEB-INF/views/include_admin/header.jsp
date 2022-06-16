@@ -229,7 +229,22 @@ var nav = $('.fixed-button');
                             </li>
                             <li class="user-profile header-notification">
                                 <a>
-                                    <img src="#" class="img-radius" alt="프로필">
+                                    <img class="img-radius" alt="프로필"
+                                    	<c:choose>
+                                    		<c:when test="${admin_code == '1001'}">
+                                    			src="/resources/images/managerimage/gm1.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1002'}">
+                                    			src="/resources/images/managerimage/cs11.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1003'}">
+                                    			src="/resources/images/managerimage/cs21.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1004'}">
+                                    			src="/resources/images/managerimage/cm1.png" 
+                                    		</c:when>
+                                    	</c:choose>
+                                    >
                                     <span>관리자 ${admin_code}</span>
                                     <i class="ti-angle-down"></i>
                                 </a>
@@ -245,8 +260,9 @@ var nav = $('.fixed-button');
                                         </a>
                                     </li>
                                     <li>
-                                        <a >
-                                            <i class="ti-email"></i> My Messages
+                                        <a href="/admin/checkMyMessage">
+                                            <i class="ti-email"></i>
+                                            My Messages
                                         </a>
 <!--                                     </li> -->
 <!--                                     <li> -->
@@ -272,12 +288,30 @@ var nav = $('.fixed-button');
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="">
                                 <div class="main-menu-header">
-                                    <img class="img-40 img-radius" src="#" alt="User-Profile-Image">
+                                    <img class="img-40 img-radius" 
+                                    	<c:choose>
+                                    		<c:when test="${admin_code == '1001'}">
+                                    			src="/resources/images/managerimage/gm1.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1002'}">
+                                    			src="/resources/images/managerimage/cs11.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1003'}">
+                                    			src="/resources/images/managerimage/cs21.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1004'}">
+                                    			src="/resources/images/managerimage/cm1.png" 
+                                    		</c:when>
+                                    	</c:choose>
+                                    	alt="관리자 이미지"
+                                    	>
                                     <div class="user-details">
-                                        <span>관리자 </span>
+                                        <span>관리자 코드
+                                        </span>
                                         <span id="more-details">${admin_code}
 <!--                                      	   <i class="ti-angle-down"></i> -->
                                         </span>
+                                	
                                     </div>
                                 </div>
 
@@ -291,13 +325,21 @@ var nav = $('.fixed-button');
 <!--                                     </ul> -->
 <!--                                 </div> -->
                             </div>
-                            <div class="pcoded-search">
-                                <span class="searchbar-toggle">  </span>
-                                <div class="pcoded-search-box ">
-                                    <input type="text" placeholder="Search">
-                                    <span class="search-icon"><i class="ti-search" aria-hidden="true"></i></span>
-                                </div>
-                            </div>
+                            <!-- 검색 영역 -->
+                            
+<!--                             <div class="pcoded-search"> -->
+<!--                             <select class="form-control" style="height:26px;margin-bottom: 5px"> -->
+<!--                             <option> -->
+<!--                             </option></select> -->
+<!--                                 <span class="searchbar-toggle">  </span> -->
+<!--                                 <div class="pcoded-search-box "> -->
+<!--                                     <input type="text" placeholder="검색"> -->
+<!--                                     <span class="search-icon"><a> -->
+<!--                                     <i class="ti-search" aria-hidden="true"></i> -->
+<!--                                     </a></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+                            <!-- 검색영역 끝 -->
 <!--                             <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">회원</div> -->
 <!--                             <ul class="pcoded-item pcoded-left-item"> -->
 <!--                                 <li class="active"> -->
@@ -388,7 +430,8 @@ var nav = $('.fixed-button');
 <!--                                     </ul> -->
 <!--                                 </li> -->
 <!--                             </ul> -->
-                            <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">회원</div>
+<div class="to-do-list"></div>
+                            <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms" style="padding-top:0px">회원</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu">
 <!--                                     <a href="/admin/member_management"> -->
@@ -404,7 +447,7 @@ var nav = $('.fixed-button');
                                         		<a href="/admin/member_management"><i class="icofont icofont-listing-box"></i> &nbsp; 회원 테이블</a>
                                         </li>
                                         <li class="more-details">
-                                        		<a href="/admin/member_update_management"><i class="icofont icofont-ui-v-card"></i> &nbsp; 회원 정보 수정 내역</a>
+                                        		<a href="/admin/member_update_management"><i class="icofont icofont-tasks"></i> &nbsp; 회원 정보 수정 내역</a>
                                         </li>
                                         <li class="more-details">
                                         		<a href="/admin/approveDriver_management"><i class="icofont icofont-ui-v-card"></i> &nbsp; 운전자 미승인 테이블</a>

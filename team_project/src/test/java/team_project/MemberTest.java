@@ -1,10 +1,17 @@
 package team_project;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.text.DateFormatter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -74,7 +81,7 @@ public class MemberTest {
 	@Test
 	public void getDriverSeq() {
 		String m_id = "hong@naver.com";
-		String driver_seq = memberDao.getDriverSeq(m_id);
+		String driver_seq = memberDao.getDriverSeqFromPassenger(m_id);
 		System.out.println("driver_seq: " + driver_seq);
 	}
 	
@@ -127,6 +134,19 @@ public class MemberTest {
 		int count = memberDao.getTotalDriverCount(m_company);
 		System.out.println("count:" + count);
 
+	}
+	
+	@Test
+	public void approvePassengerTest() {
+		String m_id = "hong@naver.com";
+		memberDao.approvePassenger(m_id);
+	}
+	
+	@Test
+	public void approveState() {
+		String m_id = "user04@gmail.com";
+		String state = memberDao.getApproveState(m_id);
+		System.out.println("state:" + state);
 	}
 	
 }

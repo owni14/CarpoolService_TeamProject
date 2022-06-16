@@ -146,12 +146,20 @@ public class PagingDto {
 	public int getPAGE_BLOCK() {
 		return page_block;
 	}
+	
+	public int getPage_block() {
+		return page_block;
+	}
+
+	public void setPage_block(int page_block) {
+		this.page_block = page_block;
+	}
 
 	@Override
 	public String toString() {
 		return "PagingDto [page=" + page + ", startRow=" + startRow + ", endRow=" + endRow + ", searchType="
 				+ searchType + ", keyword=" + keyword + ", perPage=" + perPage + ", totalPage=" + totalPage + ", count="
-				+ count + ", startPage=" + startPage + ", endPage=" + endPage + ", PAGE_BLOCK=" + page_block + "]";
+				+ count + ", startPage=" + startPage + ", endPage=" + endPage + ", page_block=" + page_block + "]";
 	}
-
+	
 }

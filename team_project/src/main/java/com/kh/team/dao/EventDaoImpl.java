@@ -19,8 +19,8 @@ public class EventDaoImpl implements EventDao{
 	SqlSession sqlSession;
 	
 	@Override
-	public List<EventVo> getEventList() {
-		List<EventVo> eventList=sqlSession.selectList(NAMESPACE+"getEventList");
+	public List<EventVo> getEventList(PagingDto pagingDto) {
+		List<EventVo> eventList=sqlSession.selectList(NAMESPACE+"getEventList",pagingDto);
 		return eventList;
 	}
 
@@ -228,6 +228,12 @@ public class EventDaoImpl implements EventDao{
 	@Override
 	public List<EventWinnerVo> selectWinnerIsGet(int event_seq) {
 		return sqlSession.selectList(NAMESPACE+"selectWinnerIsGet",event_seq);
+	}
+
+	@Override
+	public int selectCountWinnerNoGet() {
+
+		return sqlSession.selectOne(NAMESPACE+"selectCountWinnerNoGet");
 	}
 
 }

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 <script>
 	$(document).ready(function (e) {
@@ -24,22 +24,28 @@
 		
 		$(".fa-paper-plane").click(function () {
 			$("#modal-97340").trigger("click");
-			var reporter = $(this).attr("data-reporter");
+			var reporter = $(this).attr("data-notifyingid");
 			var blacklist_seq = $(this).attr("data-blacklistseq");
+			var notifiedId = $(this).attr("data-notifiedid");
+			var black_content = $(this).attr("data-content");
 			console.log(blacklist_seq);
 			$("#thReporter").text(reporter);
+			$("#thNotifiedId").text(notifiedId);
 			$("#btnModalSend").attr("data-blacklistseq",blacklist_seq);
+			$("#txtReportContent").prepend("신고 내용 : " + black_content);
 		});
 		
 		$("#btnModalSend").click(function () {
 			var content = $("#txtReportContent").val();
 			var receiver_m_id = $("#thReporter").text();
+			var receiver_black_id = $("#thNotifiedId").text();
 			var sender_admin_code = "${admin_code}";
 			var blacklist_seq = $("#btnModalSend").attr("data-blacklistseq");
 			console.log(content);
-			console.log(receiver_m_id);
+			console.log(receiver_black_id);
 			console.log(sender_admin_code);
 			var sData = {"receiver_m_id" : receiver_m_id,
+						 "receiver_black_id" : receiver_black_id,
 						 "sender_admin_code" : sender_admin_code,
 						 "content" : content,
 						 "blacklist_seq" : blacklist_seq};
@@ -95,12 +101,17 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<textarea id="txtReportContent" class="form-control">신고 완료가 정상 처리 되었습니다.</textarea>
+							<textarea id="txtReportContent" class="form-control">
+							신고 완료가 정상 처리 되었습니다.</textarea>
 							<table style="margin-top: 20px; float: right;">
 								<thead>
 								<tr>
-									<th>받는 사람</th>
+									<th>받는 사람(신고자)</th>
 									<th id="thReporter" style="padding-left:10px"></th>
+								</tr>
+								<tr>
+									<th>받는 사람(피신고자)</th>
+									<th id="thNotifiedId" style="padding-left:10px"></th>
 								</tr>
 								</thead>
 							</table>
@@ -304,7 +315,8 @@
 												<!-- dropdown end -->
 											</td>
 											<td>${blackListVo.black_regdate}</td>
-											<td style="text-align: center"><i class="fa fa-paper-plane sendMessage" data-reporter="${blackListVo.m_id}" data-blacklistseq="${blackListVo.blacklist_seq}"></i></td>
+											<td style="text-align: center"><i class="fa fa-paper-plane sendMessage" data-notifyingid="${blackListVo.m_id}" data-blacklistseq="${blackListVo.blacklist_seq}" 
+												data-notifiedid="${blackListVo.black_m_id}" data-content="${blackListVo.black_content}"></i></td>
 											
 								</tr>
 	 									</c:forEach> 
@@ -322,5 +334,6 @@
 		</div>
 	</div>
 </div>
+
 <!-- end inner header -->
 <%@ include file="/WEB-INF/views/include_admin/footer.jsp"%>

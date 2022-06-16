@@ -18,9 +18,9 @@ public class EventServiceImpl implements EventService {
 	EventDao eventDao;
 	
 	@Override
-	public List<EventVo> getEventList() {
+	public List<EventVo> getEventList(PagingDto pagingDto) {
 		
-		return eventDao.getEventList();
+		return eventDao.getEventList(pagingDto);
 	}
 
 	@Override
@@ -162,5 +162,10 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public List<EventWinnerVo> selectWinnerIsGet(int event_seq) {
 		return eventDao.selectWinnerIsGet(event_seq);
+	}
+
+	@Override
+	public int selectCountWinnerNoGet() {
+		return eventDao.selectCountWinnerNoGet();
 	}
 }

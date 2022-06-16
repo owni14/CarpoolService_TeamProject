@@ -1,5 +1,9 @@
 package com.kh.team.dao;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,9 +118,9 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public String getDriverSeq(String m_id) {
+	public String getDriverSeqFromPassenger(String m_id) {
 //		System.out.println("MemberDaoImpl getDriverSeq, m_id:" + m_id);
-		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeq", m_id);
+		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeqFromPassenger", m_id);
 //		System.out.println("MemberDaoImpl getDriverSeq, driver_seq:" + driver_seq);
 		return driver_seq;
 	}
@@ -142,6 +146,8 @@ public class MemberDaoImpl implements MemberDao {
 		List<MemberVo> top5EvlMembersList = sqlSession.selectList(NAMESPACE + "getTop5EvlMembers");
 		return top5EvlMembersList;
 	}
+	
+	@Override
 	public boolean isApplication(String m_id) {
 //		System.out.println("MemberDaoImpl isApplication, m_id: " + m_id);
 		int count = sqlSession.selectOne(NAMESPACE + "isApplication", m_id);
@@ -183,5 +189,76 @@ public class MemberDaoImpl implements MemberDao {
 		return count;
 	}
 
+	@Override
 
+	public int getCountByApplyDate(String str_date) {
+		return sqlSession.selectOne(NAMESPACE+"getCountByApplyDate",str_date);
+	}
+
+	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("driver_seq", driver_seq);
+		map.put("m_company", m_company);
+		List<Map<String, Object>> passengerList = sqlSession.selectList(NAMESPACE + "getPassengerList", map);
+		return passengerList;
+	}
+
+	@Override
+	public String getDriverSeqFromDriver(String m_id) {
+		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeqFromDriver", m_id);
+		return driver_seq;
+
+	}
+
+
+	@Override
+	public boolean approvePassenger(String m_id) {
+		Map<String, String> map = new HashMap<>();
+		
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
+		
+		map.put("m_id", m_id);
+		map.put("formattedToday", formattedToday);
+		int count = sqlSession.update(NAMESPACE + "approvePassenger", map);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean rejectPassenger(String m_id) {
+		Map<String, String> map = new HashMap<>();
+		
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
+		
+		map.put("m_id", m_id);
+		map.put("formattedToday", formattedToday);
+		int count = sqlSession.update(NAMESPACE + "rejectPassenger", map);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	// 로그인된 회원의 파라미터를 받아, 오늘날짜와 함께 map에 담아 신청되어있는 운전자가 승인했는지 여부를 확인
+	@Override
+	public String getApproveState(String m_id) {
+		Map<String, String> map = new HashMap<>();
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
+		map.put("m_id", m_id);
+		map.put("formattedToday", formattedToday);
+		String approveState = sqlSession.selectOne(NAMESPACE + "getApproveState", map);
+		return approveState;
+	}
+	
 }

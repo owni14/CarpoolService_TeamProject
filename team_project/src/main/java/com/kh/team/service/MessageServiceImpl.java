@@ -37,21 +37,39 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<MessageVo> sendMessageListById(String m_id) {
-		List<MessageVo> sendMessageList = messageDao.sendMessageListById(m_id);
+	public List<MessageVo> sendMessageListById(String m_id, PagingDto pagingDto) {
+		List<MessageVo> sendMessageList = messageDao.sendMessageListById(m_id, pagingDto);
 		return sendMessageList;
 	}
 
 	@Override
-	public List<MessageVo> recAdminMessageListById(String m_id) {
-		List<MessageVo> recAdminMessageList = messageDao.recAdminMessageListById(m_id);
+	public List<Map<String, Object>> recAdminMessageListById(String m_id, PagingDto pagingDto) {
+		List<Map<String, Object>> recAdminMessageList = messageDao.recAdminMessageListById(m_id, pagingDto);
 		return recAdminMessageList;
 	}
 
 	@Override
-	public List<MessageVo> recUserMessageListById(String m_id) {
-		List<MessageVo> recUserMessageList = messageDao.recUserMessageListById(m_id);
+	public List<MessageVo> recUserMessageListById(String m_id, PagingDto pagingDto) {
+		List<MessageVo> recUserMessageList = messageDao.recUserMessageListById(m_id, pagingDto);
 		return recUserMessageList;
+	}
+
+	@Override
+	public int recAdminMessageCountById(String m_id) {
+		int count = messageDao.recAdminMessageCountById(m_id);
+		return count;
+	}
+
+	@Override
+	public int recUserMessageCountById(String m_id) {
+		int count = messageDao.recUserMessageCountById(m_id);
+		return count;
+	}
+
+	@Override
+	public int sendMessageCountById(String m_id) {
+		int count = messageDao.sendMessageCountById(m_id);
+		return count;
 	}
 
 	

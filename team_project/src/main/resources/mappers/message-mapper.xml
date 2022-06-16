@@ -25,23 +25,51 @@
 		#{sender_admin_code,jdbcType=VARCHAR},#{content})
 	</insert>
 	
-	<select id="recAdminMessageListById" resultType="MessageVo">
-		select * from message
-		where receiver_m_id = #{m_id}
-		and sender_admin_code is not null
-		order by opendate nulls first, senddate desc
+	<select id="recAdminMessageListById" resultType="Map">
+		select * from
+			(select rownum rnum, b.* from
+			    (select m.*, a.* 
+			    from message m, admin a
+			    where receiver_m_id = #{m_id}
+			    and m.sender_admin_code is not null
+			    and m.sender_admin_code = a.admin_code
+			    order by opendate nulls first, senddate desc) b)
+		where rnum between #{startRow} and #{endRow}
 	</select>
 	
 	<select id="recUserMessageListById" resultType="MessageVo">
-		select * from message
-		where receiver_m_id = #{m_id}
-		and sender_m_id is not null
-		order by opendate nulls first, senddate desc
+		select * from
+			(select rownum rnum, b.* from
+				(select * from message
+				where receiver_m_id = #{m_id}
+				and sender_m_id is not null
+				order by opendate nulls first, senddate desc) b)
+		where rnum between #{startRow} and #{endRow}
 	</select>
 	
 	<select id="sendMessageListById" resultType="MessageVo">
-		select * from message
+		select * from
+			(select rownum rnum, b.* from
+				(select * from message
+				where sender_m_id = #{m_id}
+				order by senddate desc) b)
+		where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="recAdminMessageCountById" resultType="int">
+		select count(*) from message
+		where receiver_m_id = #{m_id}
+		and sender_admin_code is not null
+	</select>
+	
+	<select id="recUserMessageCountById" resultType="int">
+		select count(*) from message
+		where receiver_m_id = #{m_id}
+		and sender_m_id is not null
+	</select>
+	
+	<select id="sendMessageCountById" resultType="int">
+		select count(*) from message
 		where sender_m_id = #{m_id}
-		order by senddate desc
 	</select>
 </mapper>

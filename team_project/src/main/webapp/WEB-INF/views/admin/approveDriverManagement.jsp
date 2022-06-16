@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
+<%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
 	<!-- CSS -->
 	<link rel="stylesheet" href="/resources/movie/css/bootstrap-reboot.min.css">
 	<link rel="stylesheet" href="/resources/movie/css/bootstrap-grid.min.css">

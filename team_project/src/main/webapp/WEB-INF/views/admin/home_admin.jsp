@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/include_admin/header.jsp" %>
+<%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
 <script>
 	$(document).ready(function () {
 		$(".driveLicenseImg").click(function () {

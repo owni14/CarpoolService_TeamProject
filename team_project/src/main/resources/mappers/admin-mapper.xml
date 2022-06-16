@@ -8,5 +8,8 @@
 		select count(*) from admin
 		where admin_code = #{admin_code}
 	</select>
-
+	
+	<select id="getAllAdminCode" resultType="string">
+	select admin_code from admin
+	</select>
 </mapper>

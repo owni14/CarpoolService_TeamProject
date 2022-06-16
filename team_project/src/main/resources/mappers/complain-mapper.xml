@@ -78,11 +78,39 @@
 	
 	
 	<sql id="search">
-	<if test = "searchType != null and keyword != null">
+	<if test = "searchType != null">
 			<choose>
 				<when test='searchType == "i"'>
-					and m_id like '%' || #{keyword} || '%'
+					and m_id like '%' || #{keyword,jdbcType=VARCHAR} || '%'
 				</when>
+				
+				<when test='searchType == "ac"'>
+					and admin_code like '%' || #{admin_code} || '%'
+				</when>
+				<when test='searchType == "clsnoac"'>
+					and complain_classification like '%' || #{complain_classification} || '%'
+				</when>
+				<when test='searchType == "cls"'>
+					and complain_classification like '%' || #{complain_classification} || '%'
+					and admin_code = #{admin_code} 
+				</when>
+				
+				<when test='searchType == "icls"'>
+					and complain_classification like '%' || #{complain_classification} || '%'
+					and m_id like '%' || #{keyword,jdbcType=VARCHAR} || '%'
+				</when>
+				
+				<when test='searchType == "iac"'>
+					and admin_code like '%' || #{admin_code} || '%'
+					and m_id like '%' || #{keyword,jdbcType=VARCHAR} || '%'
+				</when>
+				
+				
+					<when test='searchType == "all"'>
+					and complain_classification like '%' || #{complain_classification} || '%'
+					and admin_code = #{admin_code} 
+					and m_id like '%' || #{keyword,jdbcType=VARCHAR} || '%'
+					</when>
 			</choose>
 		</if>
 	</sql>

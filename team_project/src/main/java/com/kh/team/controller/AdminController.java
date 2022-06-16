@@ -149,6 +149,11 @@ public class AdminController {
 		return "admin/memberManagement";
 	}
 	
+	@RequestMapping(value = "/member_update_management", method = RequestMethod.GET)
+	public String member_update_management() {
+		return "admin/memberUpdateManagement";
+	}
+	
 	@RequestMapping(value = "/approveDriver_management", method = RequestMethod.GET)
 	public String approveDriverManagement(Model model) {
 		List<Map<String, Object>> notApprovedDriverList = memberService.adminNotApprovedDriver();
@@ -529,9 +534,11 @@ public class AdminController {
 				complainList=complainService.getAllNotFinishList(admin_code,pagingDto);
 				complain_count=complainService.getNotFinishCount(admin_code);
 			}
+			//총괄 관리자 해당
 			else {
 				complainList=complainService.getAllNotFinishListNoCode(pagingDto);
 				complain_count=complainService.getNotFinishCountNoCode();
+				
 			}
 		}
 		
@@ -566,28 +573,41 @@ public class AdminController {
 	} 
 	
 	@RequestMapping(value="/complainAnswerComplete", method=RequestMethod.GET)
-	public String complainAnswerComplete(Model model,HttpSession session,PagingDto pagingDto) {
+	public String complainAnswerComplete(Model model,HttpSession session,
+			PagingDto pagingDto,AdminVo adminVo,ComplainVo complainVo) {
 		Object obj=session.getAttribute("admin_code");
 		List<ComplainVo> complainList=null;
+		List<String> amdinCodes=null;
 		if(obj !=null) {
 			
 			String admin_code=obj.toString();
+			//처음 접속시 adminCode가 널일수 있다
+			if(adminVo.getAdmin_code() ==null) {
+				adminVo.setAdmin_code(admin_code);
+				System.out.println("adminVo"+adminVo);
+			}
 			
-			//총괄 관리자 아닐떄
+			//총괄 관리자 아닐때
 			if(!"1004".equals(admin_code)) {
 				System.out.println("문의담당 관리자 코드 완료목록"+admin_code);
 				complainList=complainService.getAllFinishListByCode(admin_code,pagingDto);
+				
+				
+			}
+			//총괄 관리자 
+			else {
+				complainList=complainService.getAllFinishList(pagingDto,adminVo,complainVo);
+				amdinCodes=adminService.getAllAdminCode();
 				for(ComplainVo vo:complainList) {
 					System.out.println("로그 확인"+vo);
 				}
-				
-			}
-			else {
-				complainList=complainService.getAllFinishList(pagingDto);
 			}
 		}
 		
 		model.addAttribute("complainList",complainList);
+		model.addAttribute("amdinCodes",amdinCodes);
+		model.addAttribute("pagingDto",pagingDto);
+		
 		return "admin/complainCompleteForm";
 					
 	} 

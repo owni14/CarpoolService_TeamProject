@@ -17,5 +17,5 @@ public interface ComplainDao {
 	public List<ComplainVo> getAllFinishList(PagingDto pagingDto,AdminVo adminVo,ComplainVo complainVo);//
 	public List<ComplainVo> getAllNotFinishListNoCode(PagingDto pagingDto);
 	public int getNotFinishCountNoCode();
-	public List<ComplainVo> getAllFinishListByCode(String admin_code,PagingDto pagingDto);
+	public List<ComplainVo> getAllFinishListByCode(String admin_code,PagingDto pagingDto,ComplainVo complainVo);//일반 관리자
 }

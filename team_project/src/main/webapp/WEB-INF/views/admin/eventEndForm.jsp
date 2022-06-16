@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
+<%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
 
 <script>
 //참가인원의 10퍼센트 당첨인원

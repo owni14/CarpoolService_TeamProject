@@ -230,4 +230,10 @@ public class EventDaoImpl implements EventDao{
 		return sqlSession.selectList(NAMESPACE+"selectWinnerIsGet",event_seq);
 	}
 
+	@Override
+	public int selectCountWinnerNoGet() {
+
+		return sqlSession.selectOne(NAMESPACE+"selectCountWinnerNoGet");
+	}
+
 }

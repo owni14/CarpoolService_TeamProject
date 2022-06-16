@@ -58,7 +58,7 @@
 	</div>
 </div>
 <!-- modal end -->
-
+${dayPassengerCounts}
                            <div class="main-body">
                                 <div class="page-wrapper">
 
@@ -86,8 +86,8 @@
                                             <div class="col-md-6 col-xl-3">
                                                 <div class="card widget-card-1">
                                                     <div class="card-block-small">
-                                                        <i class="ti-car bg-c-pink card1-icon"></i>
-                                                        <span class="text-c-pink f-w-600">이용현황</span>
+                                                        <i class="ti-car bg-c-green card1-icon"></i>
+                                                        <span class="text-c-green f-w-600">이용현황</span>
                                                         <h4>운전자수 33</h4>
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
@@ -103,9 +103,9 @@
                                             <div class="col-md-6 col-xl-3">
                                                 <div class="card widget-card-1">
                                                     <div class="card-block-small">
-                                                        <i class="ti-check-box bg-c-green card1-icon"></i>
-                                                        <span class="text-c-green f-w-600">이벤트 경품 미수령자</span>
-                                                        <h4>45</h4>
+                                                        <i class="ti-check-box bg-c-pink card1-icon"></i>
+                                                        <span class="text-c-pink f-w-600">이벤트 경품 미수령자</span>
+                                                        <h4>${noEventGetCount}명 있습니다</h4>
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
                                                               <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>event non-receiver 
@@ -122,7 +122,7 @@
                                                     <div class="card-block-small">
                                                         <i class="ti-comment-alt bg-c-yellow card1-icon"></i>
                                                         <span class="text-c-yellow f-w-600">미답변 문의 글 수</span>
-                                                        <h4>15</h4>
+                                                        <h4>${noAnswer}개 존재합니다</h4>
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
                                                              <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>count unanswered
@@ -163,23 +163,34 @@
 
 <script>
 const labels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
+  '${strList.get(6)}',
+  '${strList.get(5)}',
+  '${strList.get(4)}',
+  '${strList.get(3)}',
+  '${strList.get(2)}',
+  '${strList.get(1)}',
+  '${strList.get(0)}',
+  
 ];
+
 
 const data = {
   labels: labels,
   datasets: [{
 	fill: false,
-    label: 'My First dataset',
+    label: '예약현황',
     backgroundColor: 'rgb(255, 99, 132)',
     borderColor: 'rgb(255, 99, 132)',
-    data: [0, 10, 5, 2, 20, 30, 45],
-  }]
+    data: [
+    	${dayPassengerCounts.get(6)},
+    	${dayPassengerCounts.get(5)},
+    	${dayPassengerCounts.get(4)},
+    	${dayPassengerCounts.get(3)},
+    	${dayPassengerCounts.get(2)},
+    	${dayPassengerCounts.get(1)},
+    	${dayPassengerCounts.get(0)},
+    ],
+  }  ]
   
 };
 
@@ -264,25 +275,11 @@ const myChart = new Chart(
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
+                                                                    
                                                                     <tr>
                                                                         <td>
                                                                             <div class="task-contain">
-                                                                                <h6 class="bg-c-blue d-inline-block text-center">3</h6>
-                                                                                <p class="d-inline-block m-l-20">김형동</p>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <p class="d-inline-block m-r-20">이거 너무 한거아니냐고</p>
-<!--                                                                             <div class="progress d-inline-block"> -->
-<!--                                                                                 <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:80%"> -->
-<!--                                                                                 </div> -->
-<!--                                                                             </div> -->
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="task-contain">
-                                                                                <h6 class="bg-c-pink d-inline-block text-center">5</h6>
+                                                                                <h6 class="bg-c-pink d-inline-block text-center">3</h6>
                                                                                 <p class="d-inline-block m-l-20">이재곤</p>
                                                                             </div>
                                                                         </td>
@@ -297,12 +294,25 @@ const myChart = new Chart(
                                                                     <tr>
                                                                         <td>
                                                                             <div class="task-contain">
-                                                                                <h6 class="bg-c-yellow d-inline-block text-center">4</h6>
+                                                                                <h6 class="bg-c-yellow d-inline-block text-center">2</h6>
                                                                                 <p class="d-inline-block m-l-20">김민우</p>
                                                                             </div>
                                                                         </td>
                                                                         <td>
                                                                             <p class="d-inline-block m-r-20">운전중 자꾸 한숨을 쉬어요</p>
+                                                                            
+							                                               <!-- dropdown start -->
+							                                             <div style="float: right;">
+																		<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:red"
+																			id="dropdownMenuButton1" data-toggle="dropdown">
+																			${blackListVo.black_is_processed}</button>
+																		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+																			<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-bScore="${blackListVo.black_score}" data-blackid="${blackListVo.black_m_id}">승인</a> 
+																			<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a>
+																		</div>
+																		</div> 
+																		<!-- dropdown end -->
+																		
 <!--                                                                             <div class="progress d-inline-block"> -->
 <!--                                                                                 <div class="progress-bar bg-c-yellow" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:50%"> -->
 <!--                                                                                 </div> -->
@@ -339,6 +349,11 @@ const myChart = new Chart(
 <!--                                                                             </div> -->
 <!--                                                                         </td> -->
 <!--                                                                     </tr> -->
+<c:forEach items="${blackLists}" var="blackListVo">
+																<tr>
+																
+																</tr>
+																</c:forEach>
                                                                 </tbody>
                                                             </table>
                                                         </div>

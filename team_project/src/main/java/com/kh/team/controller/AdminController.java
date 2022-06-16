@@ -8,7 +8,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -64,7 +67,7 @@ public class AdminController {
 
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String homeAdmin(Model model) {
+	public String homeAdmin(Model model,HttpSession session) {
 		List<Map<String, Object>> notApprovedDriverList = memberService.adminNotApprovedDriver();
 		model.addAttribute("notApprovedDriverList",notApprovedDriverList);
 		List<MemberVo> top5List = memberService.getTop5EvlMembers();
@@ -77,7 +80,57 @@ public class AdminController {
 			model.addAttribute("top" + index + "evl", memberVo.getM_evl());
 			index++;
 		}
+		Object adminObject=session.getAttribute("admin_code");
+		String admin_code=null;
+		int noEventGetCount=eventService.selectCountWinnerNoGet();
+		int noAnswer=0;
+		if(adminObject != null) {
+			admin_code=adminObject.toString();
+			
+			if(admin_code.equals("1004"))//총괄 관리자 일때만 
+				{
+				noAnswer=complainService.getNotFinishCountNoCode();
+				}
+			else {
+				noAnswer=complainService.getNotFinishCount(admin_code);
+			}
+		}
+		//예약 현황 구하기 7일전까지
+		long curTime=System.currentTimeMillis();
+		Date curDate;
+		List<Integer> dayPassengerCounts= new ArrayList<>();
+		List<BlackListVo> blackLists= notifyService.nNotifyList();
+		List<String> strList=new ArrayList<>();
+		//날짜계산
+		for(int i=1; i<=7; i++) {
+			long targetTime=curTime-(60*60*24*1000*i);
+			curDate=new Date(targetTime);
+			Calendar cal=Calendar.getInstance();
+			cal.clear();
+			cal.setTime(curDate);
+			int tarDay=cal.get(Calendar.DATE);
+			int tarMonth=cal.get(Calendar.MONTH)+1;
+			int tarYear=cal.get(Calendar.YEAR);
+			String day=""+tarDay;
+			String month=""+tarMonth;
+		if(tarDay<10) {
+			day="0"+tarDay;
+		}
+		if(tarMonth<10) {
+			month="0"+tarMonth;
+		}
+		String targetDateStr=tarYear+"/"+month+"/"+day;
+		System.out.println(targetDateStr);
+		int daycount=memberService.getCountByApplyDate(targetDateStr);
+		dayPassengerCounts.add(daycount);
+		strList.add(targetDateStr);
+		}//end for
 		model.addAttribute("top5List", top5List);
+		model.addAttribute("noEventGetCount", noEventGetCount);
+		model.addAttribute("noAnswer", noAnswer);
+		model.addAttribute("dayPassengerCounts", dayPassengerCounts);
+		model.addAttribute("blackLists", blackLists);
+		model.addAttribute("strList", strList);
 		return "admin/home_admin";
 	}
 	

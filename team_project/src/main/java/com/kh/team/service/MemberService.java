@@ -1,5 +1,6 @@
 package com.kh.team.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,5 +31,6 @@ public interface MemberService {
 	public void approveDriver(String m_id); // 관리자 페이지에서 미승인 운전자 승인
 
 	public int getTotalDriverCount(String m_company); // 각 회사별 운전자 수 확인
+	public int getCountByApplyDate(String str_date);//하루 확정 예약자수 찾기
 
 }

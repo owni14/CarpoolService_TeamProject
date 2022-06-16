@@ -291,13 +291,21 @@ var nav = $('.fixed-button');
 <!--                                     </ul> -->
 <!--                                 </div> -->
                             </div>
-                            <div class="pcoded-search">
-                                <span class="searchbar-toggle">  </span>
-                                <div class="pcoded-search-box ">
-                                    <input type="text" placeholder="Search">
-                                    <span class="search-icon"><i class="ti-search" aria-hidden="true"></i></span>
-                                </div>
-                            </div>
+                            <!-- 검색 영역 -->
+                            
+<!--                             <div class="pcoded-search"> -->
+<!--                             <select class="form-control" style="height:26px;margin-bottom: 5px"> -->
+<!--                             <option> -->
+<!--                             </option></select> -->
+<!--                                 <span class="searchbar-toggle">  </span> -->
+<!--                                 <div class="pcoded-search-box "> -->
+<!--                                     <input type="text" placeholder="검색"> -->
+<!--                                     <span class="search-icon"><a> -->
+<!--                                     <i class="ti-search" aria-hidden="true"></i> -->
+<!--                                     </a></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+                            <!-- 검색영역 끝 -->
 <!--                             <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">회원</div> -->
 <!--                             <ul class="pcoded-item pcoded-left-item"> -->
 <!--                                 <li class="active"> -->
@@ -388,7 +396,8 @@ var nav = $('.fixed-button');
 <!--                                     </ul> -->
 <!--                                 </li> -->
 <!--                             </ul> -->
-                            <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms">회원</div>
+<div class="to-do-list"></div>
+                            <div class="pcoded-navigatio-lavel" data-i18n="nav.category.forms" style="padding-top:0px">회원</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="pcoded-hasmenu">
 <!--                                     <a href="/admin/member_management"> -->

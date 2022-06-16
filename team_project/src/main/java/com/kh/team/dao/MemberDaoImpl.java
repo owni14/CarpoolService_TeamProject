@@ -1,5 +1,6 @@
 package com.kh.team.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -181,6 +182,11 @@ public class MemberDaoImpl implements MemberDao {
 	public int getTotalDriverCount(String m_company) {
 		int count = sqlSession.selectOne(NAMESPACE + "getTotalDriverCount", m_company);
 		return count;
+	}
+
+	@Override
+	public int getCountByApplyDate(String str_date) {
+		return sqlSession.selectOne(NAMESPACE+"getCountByApplyDate",str_date);
 	}
 
 

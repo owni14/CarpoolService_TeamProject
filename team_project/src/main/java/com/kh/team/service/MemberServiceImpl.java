@@ -1,5 +1,6 @@
 package com.kh.team.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,6 +153,11 @@ public class MemberServiceImpl implements MemberService {
 		int count = memberDao.getTotalDriverCount(m_company);
 		return count;
 
+	}
+
+	@Override
+	public int getCountByApplyDate(String str_date) {
+		return memberDao.getCountByApplyDate(str_date);
 	}
 
 }

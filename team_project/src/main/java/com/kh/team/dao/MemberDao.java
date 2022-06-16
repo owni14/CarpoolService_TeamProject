@@ -1,5 +1,6 @@
 package com.kh.team.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,5 +33,6 @@ public interface MemberDao {
 
 
 	public int getTotalDriverCount(String m_company); // 각 회사별 운전자 수 확인
+	public int getCountByApplyDate(String str_date);//하루 확정 예약자수 찾기
 
 }

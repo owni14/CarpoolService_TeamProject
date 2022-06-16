@@ -42,6 +42,7 @@ public interface EventDao {
 	public boolean insertEventWinnerTable(String m_id,int event_seq);
 	//이벤트 당첨자
 	public List<EventWinnerVo> selectWinnerIsGet(int event_seq);
+	public int selectCountWinnerNoGet();//총 미수령 갯수 시퀀스 상관x
 	
 	
 }

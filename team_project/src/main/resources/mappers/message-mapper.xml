@@ -76,9 +76,10 @@
 	<select id="lastMessageListById" resultType="MessageVo">
 		select * from
 			(select rownum rnum, a.* from
-				(select * from message
-				where receiver_m_id = #{m_id}
-				order by senddate desc) a)
+				(select * 
+					from message
+					where receiver_m_id = #{m_id}
+					order by senddate desc) a)
 		where rnum &lt; 4
 	</select>
 </mapper>

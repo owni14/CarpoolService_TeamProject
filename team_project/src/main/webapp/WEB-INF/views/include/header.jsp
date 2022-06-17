@@ -145,9 +145,17 @@ $(document).ready(function(){
 				console.log($(this));
 				var tr = $("#clonetable tr").clone();
 				var span = tr.find("span");
-				span.eq(0).text(this.sender_m_id);
-				span.eq(1).text(this.content);
-				span.eq(2).text(this.senddate);
+				if (this.sender_m_id != null) {
+					span.eq(0).text(this.sender_m_id);
+				} else {
+					span.eq(0).text(this.sender_admin_code);
+				}
+				span.eq(1).text(this.senddate);
+				if(this.content.length >= 25) {
+					span.eq(2).text(this.content.substring(0,25) + ".....");
+				} else {
+					span.eq(2).text(this.content);
+				}
 				$("#lastTable").append(tr);
 			});
 		});
@@ -228,9 +236,9 @@ $(document).ready(function(){
 								<table style="display: none" id="clonetable">
 									<tr style="height: 33%;">
 										<td>
-											<span style="font-size: 5px;"></span>
-											<span></span>
-											<span></span>
+											<span style="font-size: 14px;"></span>
+											<span style="font-size: 12px;"></span><br>
+											<span style="font-size: 12px;"></span>
 										</td>
 									</tr>
 								</table>

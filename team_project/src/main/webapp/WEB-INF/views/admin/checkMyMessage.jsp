@@ -104,11 +104,56 @@
 		
 		$("#chkSendToMe").click(function () {
 			console.log("click");
+			var admin_code = "${sessionScope.admin_code}";
 			if($("#checkBoxSendToMe").is(":checked") == false) {
 				console.log("체크 된 상태");
-				$("inputSendToMe").val();
+				$("#inputSendToMe").val(admin_code);
 			} else {
 				console.log("체크 해제 된 상태");
+				$("#inputSendToMe").val("");
+			}
+		});
+		
+		// textArea 바이트 수 체크 하는 함수
+		function fn_checkByte(obj) {
+			const maxByte = 1800; // 최대 100바이트
+			const text_val = obj.value; // 입력한 문자
+			const text_len = text_val.length; // 입력한 문자 수 
+			
+			let totalByte = 0;
+			for (let i=0; i <text_len; i++) {
+				const each_char = text_val.charAt(i);
+				const uni_char = escape(each_char); // 유니코드 형식으로 변환
+				if (uni_char.length > 4) {
+					// 한글 : 2Byte
+					totalByte +=2;
+				} else {
+					// 영문,숫자,특수문자 : 1Byte
+					totalByte +=1;
+				}
+			}
+			
+			if (totalByte>maxByte) {
+				alert("최대 1800byte까지만 입력가능합니다.");
+				$("#nowByte").text(totalByte);
+				$("#nowByte").css("color","red");
+			} else {
+				$("#nowByte").text(totalByte);
+				$("#nowByte").css("color","green");
+			}
+		}
+		
+		$("#taMessage").keyup(function (e) {
+			var content = $(this).val();
+			var contentLength = content.length;
+			console.log("글자 : " + content);
+			console.log("글자수 : " + contentLength);
+			if (contentLength < 500) {
+				$("#nowLength").text(contentLength);
+				$("#nowLength").css("color","green");
+			} else if (contentLength = 500) {
+				$("#nowLength").text(contentLength);
+				$("#nowLength").css("color","red");
 			}
 		});
 		
@@ -260,10 +305,13 @@
 			<!-- 쪽지 보내기 card start -->
 			<div class="card col-lg-4">
 				<div class="card-header">
-				<table>
+				<table style="margin-left:20px; border-top=1px; border-collapse: collapse;">
+					<tr style=" height: 40px; border-bottom: 1px;">
+						<td colspan="4" style="background-color:#34495E;"><h5 style="color:white; margin-left:10px">새 쪽지</h5></td>
+					</tr>
 					<tr>
 						<td><h5>받는 사람</h5></td>
-						<td style="padding-left:20px">
+						<td style="padding-left:15px">
 						<div class="checkbox-fade fade-in-primary d-block" style="margin-right:0px">
 							<label class="check-task d-block">
 							<input type="checkbox" value="" id="checkBoxSendToMe">
@@ -277,7 +325,10 @@
 					    <td><input id="inputSendToMe" type="text" class="form-control" style="height:25px; width:220px" placeholder="관리자 코드를 입력해 주세요"></td>
 				    </tr>
 			    </table>
-			    <textarea style="width:410px; height: 300px"></textarea>
+			    <textarea id="taMessage" style="width:403px; height: 300px; margin-left:20px" maxlength="500"></textarea>
+			    <div style="margin-left:20px">
+			    	<span id="nowLength" style="display:inline;">0</span><span style="display:inline">/500자</span>
+				</div>
 				</div>
 			</div>
 			<!-- 쪽지 보내기 card end -->

@@ -168,9 +168,9 @@ $(document).ready(function() {
 				case "Y": // 승인
 					var btnCancel= tds.eq(6).children();
 					tds.eq(5).text("승인"); // 신청상태를 승인 대기로 변경
-					tds.eq(5).attr("style", "color:blue; font-weight: bold;"); // 신청상태 텍스트 녹색 및 굵게 변경
+					tds.eq(5).attr("style", "color:blue; font-weight: bold;"); // 신청상태 텍스트 파랑 및 굵게 변경
 					btnCancel.text("탑승취소"); // 탑승신청 버튼을 탑승취소로 변경
-					btnCancel.attr("class", "btn btn-outline-success btn-sm btnBoard"); // 탑승신청 버튼을 노란색으로 바꿈
+					btnCancel.attr("class", "btn btn-outline-success btn-sm btnBoard"); // 탑승신청 버튼을 파란색으로 바꿈
 					
 					// 기존에 있던 role, data-toggle속성 제거
 					btnCancel.removeAttr("role");
@@ -183,9 +183,9 @@ $(document).ready(function() {
 				case "C": // 승인거부
 					var btnCancel= tds.eq(6).children();
 					tds.eq(5).text("승인 거부"); // 신청상태를 승인 대기로 변경
-					tds.eq(5).attr("style", "color:red; font-weight: bold;"); // 신청상태 텍스트 녹색 및 굵게 변경
+					tds.eq(5).attr("style", "color:red; font-weight: bold;"); // 신청상태 텍스트 빨강 및 굵게 변경
 					btnCancel.text("탑승취소"); // 탑승신청 버튼을 탑승취소로 변경
-					btnCancel.attr("class", "btn btn-outline-success btn-sm btnBoard"); // 탑승신청 버튼을 노란색으로 바꿈
+					btnCancel.attr("class", "btn btn-outline-warning btn-sm btnBoard"); // 탑승신청 버튼을 노란색으로 바꿈
 					
 					// 기존에 있던 role, data-toggle속성 제거
 					btnCancel.removeAttr("role");

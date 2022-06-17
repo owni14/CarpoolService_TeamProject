@@ -71,7 +71,14 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public boolean addPassengerInfo(String m_id, String boardLoct, String boardTime, String driver_seq) {
-		boolean result = memberDao.insertPassenger(m_id, boardLoct, boardTime, driver_seq);
+		boolean result = false;
+		result = memberDao.isApplication(m_id);
+		System.out.println("MemberServiceImpl addPassengerInfo, result: ");
+		if (result) {
+			result = memberDao.changeDeletionState(m_id);
+		} else {
+			result = memberDao.insertPassenger(m_id, boardLoct, boardTime, driver_seq);
+		}
 		return result;
 	}
 

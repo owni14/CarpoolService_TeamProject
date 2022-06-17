@@ -26,7 +26,7 @@ public class MessageTest {
 		messageVo.setReceiver_m_id("hong@naver.com");
 		messageVo.setSender_admin_code("1001");
 		messageVo.setContent("신고 접수가 완료되어 벌점 3점이 추가 되었습니다.");
-		messageDao.insertMessage(messageVo);
+		messageDao.insertNoBlackMessage(messageVo);
 	}
 	// test ok
 	

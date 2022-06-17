@@ -96,8 +96,8 @@ public class MessageDaoImpl implements MessageDao {
 	}
 
 	@Override
-	public List<MessageVo> lastMessageListById(String m_id) {
-		List<MessageVo> lastMessageList = sqlSession.selectList(NAMESPACE + "lastMessageListById", m_id);
+	public List<Map<String, Object>> lastMessageListById(String m_id) {
+		List<Map<String, Object>> lastMessageList = sqlSession.selectList(NAMESPACE + "lastMessageListById", m_id);
 		return lastMessageList;
 	}
 

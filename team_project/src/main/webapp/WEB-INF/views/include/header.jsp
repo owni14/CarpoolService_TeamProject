@@ -68,7 +68,7 @@ https://templatemo.com/tm-559-zay-shop
     	$(".main_menu").mouseenter(function() {
     		$(".smenu").hide();
     		var a = $(this).attr("id");
-    		console.log(a);
+//     		console.log(a);
     		if (a != "menu_2") {
 		   		header.stop().animate({height:'150px'}, 300);
 		   		$("#s"+a).show();
@@ -106,7 +106,10 @@ https://templatemo.com/tm-559-zay-shop
 	
 	}
 	
-	
+	.last_message_td:hover {
+	cursor: pointer;
+	background-color: aliceblue;
+	}
 	
     </style>
 </head>
@@ -135,31 +138,54 @@ $(document).ready(function(){
    		}
    	});	
 // 	서브 메뉴 위치 선정 end
-
+	
+// 	메세지 아이콘 클릭 start
 	$("#messageIcon").click(function(){
 		var url = "/message/lastMessageList";
 		$.post(url, function(rData) {
 			$("#lastTable tr").remove();
-			console.log(rData);
+// 			console.log(rData);
 			$.each(rData, function() {
-				console.log($(this));
+// 				console.log("rData : ", rData);
+// 				console.log($(this));
 				var tr = $("#clonetable tr").clone();
 				var span = tr.find("span");
-				if (this.sender_m_id != null) {
-					span.eq(0).text(this.sender_m_id);
+				if (this.SENDER_M_ID != null) {
+					span.eq(0).text(this.SENDER_M_ID);
 				} else {
-					span.eq(0).text(this.sender_admin_code);
+					span.eq(0).text(this.ADMIN_WORK);
 				}
-				span.eq(1).text(this.senddate);
-				if(this.content.length >= 25) {
-					span.eq(2).text(this.content.substring(0,25) + ".....");
+				// 날짜 구하기
+				var enddate=new Date(this.SENDDATE);
+				var startdate=new Date();
+				var diffMin = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60));
+				if (diffMin <= 60) {
+					span.eq(1).text(diffMin + "분 전");
+				} else if (diffMin > 60 && diffMin <= 1440) {
+					var diffHour = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60*60));
+					span.eq(1).text(diffHour + "시간 전");
+				} else if (diffMin > 1440 && diffMin <= 10080) {
+					var diffHour = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60*60*24));
+					span.eq(1).text(diffHour + "일 전");
+				} else if (diffMin > 10080) {
+					var diffHour = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60*60*24*7));
+					span.eq(1).text(diffHour + "주 전");
+				}
+				if(this.CONTENT.length >= 25) {
+					span.eq(2).text(this.CONTENT.substring(0,25) + ".....");
 				} else {
-					span.eq(2).text(this.content);
+					span.eq(2).text(this.CONTENT);
 				}
 				$("#lastTable").append(tr);
 			});
 		});
 	});
+// 	메세지 아이콘 클릭 end
+
+	$("#lastTable").on("click", ".last_message_td", function(){
+		$.post
+	});
+	
 });
 </script>
 
@@ -233,15 +259,18 @@ $(document).ready(function(){
 									
 									</table>
 								</div>
+								
+								<!-- lastMessageList start -->
 								<table style="display: none" id="clonetable">
-									<tr style="height: 33%;">
-										<td>
+									<tr style="height: 33%;" >
+										<td class="last_message_td">
 											<span style="font-size: 14px;"></span>
 											<span style="font-size: 12px;"></span><br>
 											<span style="font-size: 12px;"></span>
 										</td>
 									</tr>
 								</table>
+								<!-- lastMessageList end -->
 								
 <!-- 									<div style="height: 28.3%;"> -->
 <!-- 										<div class="row" style="vertical-align: middle;"> -->

@@ -136,6 +136,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public String getDriverId(String driver_seq) {
+		System.out.println("driver_seq:" + driver_seq);
 		String driverId = sqlSession.selectOne(NAMESPACE + "getDriverId", driver_seq);
 		return driverId;
 	}
@@ -283,6 +284,22 @@ public class MemberDaoImpl implements MemberDao {
 		map.put("formattedToday", formattedToday);
 		String approveState = sqlSession.selectOne(NAMESPACE + "getApproveState", map);
 		return approveState;
+	}
+
+	@Override
+	public boolean changeDeletionState(String m_id) {
+		Map<String, String> map = new HashMap<>();
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
+		map.put("m_id", m_id);
+		map.put("formattedToday", formattedToday);
+		int count = sqlSession.update(NAMESPACE + "changeDeletionState", map);
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 	
 }

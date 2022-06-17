@@ -109,7 +109,7 @@
 	
 	<select id="getDriverSeqFromPassenger" resultType="string">
 		select driver_seq from passenger
-		where is_approve = 'W'
+		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
 		and is_deletion = 'N' 
 		and m_id = #{m_id}
 	</select>
@@ -139,7 +139,7 @@
 
 	<select id="isApplication" resultType="_int">
 		select count(*) from passenger
-		where is_approve = 'W'
+		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
 		and is_deletion = 'N'
 		and m_id = #{m_id}
 	</select>
@@ -147,9 +147,9 @@
 	<select id="deletePassenger">
 		update passenger set
 		is_deletion = 'Y'
-		where m_id = #{m_id}
+		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
+		and m_id = #{m_id}
 		and driver_seq = #{driver_seq}
-		and is_approve = 'W'
 	</select>
 	
 	<select id="adminNotApprovedDriver" resultType="Map">

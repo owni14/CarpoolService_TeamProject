@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.kh.team.dao.CarDao;
 import com.kh.team.service.CarService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
@@ -59,8 +60,8 @@ public class BoardController {
 		
 		// 회원이 탑승신청을 하였는지 여부를 확인
 		boolean result = memberService.isApplication(m_id);
-		
 		System.out.println("BoardController passengerReservation, result: " + result);
+		
 		// 탑승신청을 하였다면, 운전자의 번호를 얻어내 운전자의 아이디를 받아옵니다.
 		if (result) {
 			String driver_seq = memberService.getDriverSeqFromPassenger(m_id);
@@ -122,10 +123,11 @@ public class BoardController {
 		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
 		
 		// 가져온 운전자 리스트 확인
-		// Driver List Test : OK.
+		/* Driver List Test : OK.
 		for (Map<String, Object> map : driverList) {
 			System.out.println("BoardController passengerReservationList: "+ map);
 		}
+		*/
 		
 		
 		return driverList;
@@ -211,8 +213,8 @@ public class BoardController {
 	// 탑승취소 버튼 클릭할 경우 탑승객 테이블의 is_deletion을 'Y'로 바꿀 메서드
 	@RequestMapping(value = "/cancelBoarding", method = RequestMethod.GET)
 	public String cancelBoarding(RedirectAttributes rttr, String m_id, String driver_seq, String driver_id) {
-		System.out.println("BoardController cancelBoarding, m_id:" + m_id);
-		System.out.println("BoardController cancelBoarding, driver_seq:" + driver_seq);
+//		System.out.println("BoardController cancelBoarding, m_id:" + m_id);
+//		System.out.println("BoardController cancelBoarding, driver_seq:" + driver_seq);
 		boolean result = memberService.deletePassenger(m_id, driver_seq);
 		if (result) {
 			carService.decreaseCount(driver_id);
@@ -237,9 +239,10 @@ public class BoardController {
 	
 	// 운전자가 탑승객을 거부
 	@RequestMapping(value = "/rejectPassenger", method = RequestMethod.GET)
-	public String rejectPassenger(RedirectAttributes rttr, String m_id) {
+	public String rejectPassenger(RedirectAttributes rttr, String m_id, String driverId) {
 		boolean result = memberService.rejectPassenger(m_id);
 		if (result)	{
+			carService.decreaseCount(driverId);
 			rttr.addFlashAttribute("rejectResult", result);
 		} else {
 			rttr.addFlashAttribute("rejectResult", "false");

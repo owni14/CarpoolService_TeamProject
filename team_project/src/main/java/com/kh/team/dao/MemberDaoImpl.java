@@ -119,8 +119,17 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public String getDriverSeqFromPassenger(String m_id) {
+		Map<String, String> map = new HashMap<>();
+		
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
+		
+		map.put("m_id", m_id);
+		map.put("formattedToday", formattedToday);
 //		System.out.println("MemberDaoImpl getDriverSeq, m_id:" + m_id);
-		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeqFromPassenger", m_id);
+		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeqFromPassenger", map);
 //		System.out.println("MemberDaoImpl getDriverSeq, driver_seq:" + driver_seq);
 		return driver_seq;
 	}
@@ -149,10 +158,19 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public boolean isApplication(String m_id) {
+		Map<String, String> map = new HashMap<>();
+		
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
+		
+		map.put("m_id", m_id);
+		map.put("formattedToday", formattedToday);
 //		System.out.println("MemberDaoImpl isApplication, m_id: " + m_id);
-		int count = sqlSession.selectOne(NAMESPACE + "isApplication", m_id);
+		int count = sqlSession.selectOne(NAMESPACE + "isApplication", map);
 //		System.out.println("MemberDaoImpl isApplication, count:" + count);
-		if (count == 1)	 {
+		if (count > 0)	 {
 			return true;
 		}
 		return false;
@@ -161,8 +179,14 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean deletePassenger(String m_id, String driver_seq) {
 		Map<String, String> map = new HashMap<>();
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
+		
 		map.put("m_id", m_id);
 		map.put("driver_seq", driver_seq);
+		map.put("formattedToday", formattedToday);
 		int count = sqlSession.update(NAMESPACE + "deletePassenger", map);
 		if (count > 0) {
 			return true;

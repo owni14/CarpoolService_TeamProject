@@ -1,6 +1,7 @@
 package com.kh.team.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.team.service.MessageService;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.MessageVo;
+import com.kh.team.vo.PagingDto;
 
 @Controller
 @RequestMapping("/message")
@@ -25,25 +27,35 @@ public class MessageController {
 	private MessageService messageService;
 	
 	@RequestMapping(value="/recAdminMessagePage", method= RequestMethod.GET)
-	public String receivedMessagePage(HttpSession session)	{
+	public String receivedMessagePage(HttpSession session, PagingDto pagingDto)	{
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
-		List<MessageVo> recAdminMessageList = messageService.recAdminMessageListById(loginVo.getM_id());
+		String m_id = loginVo.getM_id();
+		pagingDto.setCount(messageService.recAdminMessageCountById(m_id));
+		pagingDto.setPage(pagingDto.getPage());
+		List<Map<String, Object>> recAdminMessageList = messageService.recAdminMessageListById(m_id, pagingDto);
+		System.out.println("recAdminMessageList : " + recAdminMessageList);
 		session.setAttribute("recAdminMessageList", recAdminMessageList);
 		return "/message/receive_admin";
 	}
 	
 	@RequestMapping(value="/recUserMessagePage", method= RequestMethod.GET)
-	public String recUserMessagePage(HttpSession session)	{
+	public String recUserMessagePage(HttpSession session, PagingDto pagingDto)	{
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
-		List<MessageVo> recUserMessageList = messageService.recUserMessageListById(loginVo.getM_id());
+		String m_id = loginVo.getM_id();
+		pagingDto.setCount(messageService.recUserMessageCountById(m_id));
+		pagingDto.setPage(pagingDto.getPage());
+		List<MessageVo> recUserMessageList = messageService.recUserMessageListById(m_id, pagingDto);
 		session.setAttribute("recUserMessageList", recUserMessageList);
 		return "/message/receive_user";
 	}
 	
 	@RequestMapping(value="/sendMessagePage", method= RequestMethod.GET)
-	public String sendMessagePage(HttpSession session)	{
+	public String sendMessagePage(HttpSession session, PagingDto pagingDto)	{
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
-		List<MessageVo> sendMessageList = messageService.sendMessageListById(loginVo.getM_id());
+		String m_id = loginVo.getM_id();
+		pagingDto.setCount(messageService.sendMessageCountById(m_id));
+		pagingDto.setPage(pagingDto.getPage());
+		List<MessageVo> sendMessageList = messageService.sendMessageListById(m_id, pagingDto);
 		session.setAttribute("sendMessageList", sendMessageList);
 		return "/message/send";
 	}
@@ -56,6 +68,15 @@ public class MessageController {
 		String prevUrl = request.getHeader("referer");
 		String prevUri = prevUrl.substring(16);
 		return "redirect:" + prevUri;
+	}
+	
+	// 최신 쪽지 불러오기 (3개)
+	@ResponseBody
+	@RequestMapping(value="/lastMessageList", method= RequestMethod.POST)
+	public List<MessageVo> lastMessageList(HttpSession session) {
+		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
+		List<MessageVo> lastMessageList = messageService.lastMessageListById(loginVo.getM_id());
+		return lastMessageList;
 	}
 	
 	@ResponseBody

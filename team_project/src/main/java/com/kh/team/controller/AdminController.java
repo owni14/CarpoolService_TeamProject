@@ -207,6 +207,11 @@ public class AdminController {
 		return "admin/memberUpdateManagement";
 	}
 	
+	@RequestMapping(value = "/checkMyMessage", method = RequestMethod.GET)
+	public String checkMyMessage() {
+		return "admin/checkMyMessage";
+	}
+	
 	@RequestMapping(value = "/approveDriver_management", method = RequestMethod.GET)
 	public String approveDriverManagement(Model model) {
 		List<Map<String, Object>> notApprovedDriverList = memberService.adminNotApprovedDriver();
@@ -264,6 +269,10 @@ public class AdminController {
 				blackListVo.getBlack_score() < 0) {
 				notifyService.modifyApprovement(blackListVo);			
 			return "redirect:/admin/report_complete_management";
+		} else if (blackListVo.getBlacklist_seq() > 0 &&
+				blackListVo.getBlack_score() == 0) {
+				notifyService.modifyApprovement(blackListVo);
+			return "redirect:/admin/report_management";
 		}
 		return null;
 	}

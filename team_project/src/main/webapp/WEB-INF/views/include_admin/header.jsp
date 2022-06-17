@@ -229,7 +229,22 @@ var nav = $('.fixed-button');
                             </li>
                             <li class="user-profile header-notification">
                                 <a>
-                                    <img src="#" class="img-radius" alt="프로필">
+                                    <img class="img-radius" alt="프로필"
+                                    	<c:choose>
+                                    		<c:when test="${admin_code == '1001'}">
+                                    			src="/resources/images/managerimage/gm1.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1002'}">
+                                    			src="/resources/images/managerimage/cs11.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1003'}">
+                                    			src="/resources/images/managerimage/cs21.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1004'}">
+                                    			src="/resources/images/managerimage/cm1.png" 
+                                    		</c:when>
+                                    	</c:choose>
+                                    >
                                     <span>관리자 ${admin_code}</span>
                                     <i class="ti-angle-down"></i>
                                 </a>
@@ -245,8 +260,9 @@ var nav = $('.fixed-button');
                                         </a>
                                     </li>
                                     <li>
-                                        <a >
-                                            <i class="ti-email"></i> My Messages
+                                        <a href="/admin/checkMyMessage">
+                                            <i class="ti-email"></i>
+                                            My Messages
                                         </a>
 <!--                                     </li> -->
 <!--                                     <li> -->
@@ -272,12 +288,30 @@ var nav = $('.fixed-button');
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="">
                                 <div class="main-menu-header">
-                                    <img class="img-40 img-radius" src="#" alt="User-Profile-Image">
+                                    <img class="img-40 img-radius" 
+                                    	<c:choose>
+                                    		<c:when test="${admin_code == '1001'}">
+                                    			src="/resources/images/managerimage/gm1.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1002'}">
+                                    			src="/resources/images/managerimage/cs11.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1003'}">
+                                    			src="/resources/images/managerimage/cs21.png" 
+                                    		</c:when>
+                                    		<c:when test="${admin_code == '1004'}">
+                                    			src="/resources/images/managerimage/cm1.png" 
+                                    		</c:when>
+                                    	</c:choose>
+                                    	alt="관리자 이미지"
+                                    	>
                                     <div class="user-details">
-                                        <span>관리자 </span>
+                                        <span>관리자 코드
+                                        </span>
                                         <span id="more-details">${admin_code}
 <!--                                      	   <i class="ti-angle-down"></i> -->
                                         </span>
+                                	
                                     </div>
                                 </div>
 

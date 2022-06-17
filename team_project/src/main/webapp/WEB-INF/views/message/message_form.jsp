@@ -57,10 +57,10 @@ $(document).ready(function() {
 					<div class="row" style="text-align:center;">
 						<div class="col-lg-4 modal_text">받는 사람 : </div>
 						<div class="col-lg-7 modal_input">
-							<input type="email" class="form-control" id="receiver_m_id" name="receiver_m_id" placeholder="아이디(이메일형식)을 입력해 주세요">
+							<input type="email" class="form-control" id="receiver_m_id" name="receiver_m_id" placeholder="아이디(이메일형식)을 입력해 주세요" required>
 						</div>
 					</div>
-					<textarea id="modal_content" class="form-control" name="content" placeholder="쪽지 내용을 입력해 주세요"></textarea>
+					<textarea id="modal_content" class="form-control" name="content" placeholder="쪽지 내용을 입력해 주세요" required></textarea>
 				</div>
 				<div class="modal-footer">
 					<button type="button" id="modalClose" class="btn btn-secondary" data-dismiss="modal">

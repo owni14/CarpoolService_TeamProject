@@ -193,7 +193,7 @@
 	where
 	is_approve ='Y'
 	and
-	is_deletion ='N'
+	is_cancel ='N'
 	and
 	to_char(apply_date,'yyyy/MM/dd') = #{str_date} 
 	</select>

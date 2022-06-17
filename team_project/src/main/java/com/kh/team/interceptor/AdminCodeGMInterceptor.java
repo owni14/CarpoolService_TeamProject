@@ -15,7 +15,10 @@ public class AdminCodeGMInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		HttpSession session = request.getSession();
 		String url=request.getHeader("referer");
-		String targetUri=url.substring(16);
+		String targetUri=null;
+		if(url !=null) {
+			targetUri=url.substring(16);
+		}
 		System.out.println(targetUri);
 //		System.out.println("url"+url);
 //		System.out.println("인터셉터 작동");

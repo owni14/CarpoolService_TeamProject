@@ -66,20 +66,20 @@
 			}
 			var form=$("#frmEvent");
 			var event_max_count=$("#select_event_count").val();
-			var point_code=$("#select_point_code").val();
+			var pc_code=$("#select_point_code").val();
 			if(event_max_count ==null){
 				event_max_count="${Math.ceil(memberCount*0.05) }";
 			}
-			if(point_code ==null){
-				point_code="1002";
+			if(pc_code ==null){
+				pc_code="1002";
 			}
-			event_max_cout=Math.floor(event_max_count);
+			event_max_count=parseInt(event_max_count);
 			form.find("[name=event_name]").val($("#eventName").val());
 			form.find("[name=event_content]").val(content);
 			form.find("[name=event_enddate]").val(event_enddate);
 			form.find("[name=event_max_count]").val(event_max_count);
-			form.find("[name=point_code]").val(point_code);
-			//form.submit();
+			form.find("[name=pc_code]").val(pc_code);
+			form.submit();
 			
 		});
 		
@@ -95,7 +95,7 @@
 <input type="hidden" name="event_content" >
 <input type="hidden" name="event_enddate" >
 <input type="hidden" name="event_max_count" >
-<input type="hidden" name="point_code" >
+<input type="hidden" name="pc_code" >
 </form>
 <div class="pcoded-inner-content">
 	<!-- Main-body start -->

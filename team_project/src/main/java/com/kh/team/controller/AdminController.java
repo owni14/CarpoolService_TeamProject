@@ -502,6 +502,7 @@ public class AdminController {
 				System.out.println("잘못된 저장형식");
 			}
 		}
+		System.out.println("event_code "+eventVo);
 		boolean insert_result=eventService.insertEvent(eventVo);
 //		System.out.println("insert후 시퀀스"+eventVo.getEvent_seq());
 		//boolean resultParticipation= eventService.createTableEvnet();

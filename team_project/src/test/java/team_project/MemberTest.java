@@ -100,10 +100,9 @@ public class MemberTest {
 	
 	@Test
 	public void isApplication() {
-		String m_id = "hong@naver.com";
+		String m_id = "user04@gmail.com";
 		boolean result = memberDao.isApplication(m_id);
 		System.out.println("result: " + result);
-
 	}
 	
 	@Test
@@ -147,6 +146,13 @@ public class MemberTest {
 		String m_id = "user04@gmail.com";
 		String state = memberDao.getApproveState(m_id);
 		System.out.println("state:" + state);
+	}
+	
+	@Test
+	public void getDriverSeqFromPassengerTest() {
+		String m_id = "user04@gmail.com";
+		String driverSeq = memberDao.getDriverSeqFromPassenger(m_id);
+		System.out.println("driver_seq:" + driverSeq);
 	}
 	
 }

@@ -20,50 +20,7 @@
 			}
 		});
 	}
-	
-// 	submitPost = function() {
-// 		  oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", []);
-// 		  let content = document.getElementById("editorTxt").value;
-// 			var event_name=document.getElementById("eventName").value;
-// 			var event_enddate=document.getElementById("select_date").value;
-			
-// 			if(event_enddate =="" || event_enddate.length <=0){
-// 				alert('날짜를 골라주세요');
-// 				return;
-// 			}
-// 			var event_startdate="${eventVo.event_startdate}";
-// 		  if(content == '') {
-// 		    alert("내용을 입력해주세요.");
-// 		    oEditors.getById["editorTxt"].exec("FOCUS");
-// 		    return
-// 		  } else {
-// 		    let post = {
-// 		    	"event_seq": event_seq,
-//       			 "event_content": content,
-//       			 "event_name":event_name,
-//       			 "event_enddate":event_enddate,
-//       			 "event_is_finish":"${eventVo.event_is_finish}",
-//       			 "event_max_count":"${eventVo.event_max_count}",
-//       			 "event_point":"${eventVo.event_point}"
-//         			}
-// 		    $.ajax({
-// 				 url: "/admin/event_update"
-// 				 	,type:"post"
-// 			          , data: post
-// 			          , success: function(data) {
-// 			            console.log(data);
-// 			            alert('저장하였습니다.');
-			            
-// 			          }
-// 			          , error: function(jqXHR, textStatus, errorThrown) {
-// 			            console.log(jqXHR)
-// 			            alert('오류가 발생하였습니다.')
-// 			          }
-// 			});	
-			
-// 		  }
-	
-// 	}
+
 	
 	 function getData(){
 		 oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", []);
@@ -97,6 +54,7 @@
 		});
 		$("#btnEventInsert").click(function(){
 			var content=getData();
+			console.log("c");
 			var event_enddate=$("#select_date").val();
 			if(event_enddate ==null){
 				alert('날짜를 골라주세요');
@@ -108,19 +66,20 @@
 			}
 			var form=$("#frmEvent");
 			var event_max_count=$("#select_event_count").val();
-			var event_point=$("#select_event_point").val();
+			var point_code=$("#select_point_code").val();
 			if(event_max_count ==null){
-				event_max_count="10";
+				event_max_count="${Math.ceil(memberCount*0.05) }";
 			}
-			if(event_point ==null){
-				event_point="500";
+			if(point_code ==null){
+				point_code="1002";
 			}
+			event_max_cout=Math.floor(event_max_count);
 			form.find("[name=event_name]").val($("#eventName").val());
 			form.find("[name=event_content]").val(content);
-			form.find("[name=event_enddate]").val($("#select_date").val());
+			form.find("[name=event_enddate]").val(event_enddate);
 			form.find("[name=event_max_count]").val(event_max_count);
-			form.find("[name=event_point]").val(event_point);
-			form.submit();
+			form.find("[name=point_code]").val(point_code);
+			//form.submit();
 			
 		});
 		
@@ -136,7 +95,7 @@
 <input type="hidden" name="event_content" >
 <input type="hidden" name="event_enddate" >
 <input type="hidden" name="event_max_count" >
-<input type="hidden" name="event_point" >
+<input type="hidden" name="point_code" >
 </form>
 <div class="pcoded-inner-content">
 	<!-- Main-body start -->
@@ -169,22 +128,25 @@
 						<option></option>
 					</c:forEach>
 				</select>
-				<select id="select_event_point"
+				<select id="select_point_code"
 					style="margin-top: 15px; margin-bottom: 1.5px">
 						
-					<option selected="selected" disabled="disabled" value="">이벤트 포인트 미선택시(500포인트)</option>
-					<c:forEach begin="0" end="500" var="i" step="100">
-						<option value="${i}">${i}</option>
-					</c:forEach>
+					<option selected="selected" disabled="disabled" value="">이벤트 포인트 미선택시[500포인트]</option>
+					<option value="1001">10포인트</option>
+					<option value="1002">500포인트</option>
+					<option value="1003">3000포인트</option>
 				</select>
 				
 				<select id="select_event_count"
 					style="margin-top: 15px; margin-bottom: 1.5px">
 						
-					<option selected="selected" disabled="disabled" value="">이벤트 최대 참석인원 미선택시 (10명)</option>
-					<c:forEach begin="1" end="501" var="v" step="50">
-						<option value="${v}">${v}</option>
-					</c:forEach>
+					<option selected="selected" disabled="disabled" value="">이벤트 최대 참석인원 미선택시 (${Math.ceil(memberCount*0.05) })명</option>
+						<option value="${Math.ceil(memberCount*0.01) }">1프로(${Math.ceil(memberCount*0.01) })명</option>
+						<option value="${Math.ceil(memberCount*0.03) }">3프로(${Math.ceil(memberCount*0.03) })명</option>
+						<option value="${Math.ceil(memberCount*0.05) }">5프로(${Math.ceil(memberCount*0.05) })명</option>
+						<option value="${Math.ceil(memberCount*0.1) }">10프로(${Math.ceil(memberCount*0.1) })명</option>
+						<option value="${Math.ceil(memberCount*0.15) }">15프로(${Math.ceil(memberCount*0.15) })명</option>
+					
 				</select>
 				
 				</div>

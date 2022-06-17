@@ -28,13 +28,13 @@ var updateAnswer="${result}";
 	$(document).ready(function () {
 		var code="${admin_code}";
 		
-		if(code =="1001"){
+		
 			$(".trList").click(function(){
 				$(this).next("tr").toggle();
 				$(this).next("tr").siblings(".trCollapse").hide();
 		
 			});
-		}
+		
 		
 		
 	$(".btnAnswer").click(function(){

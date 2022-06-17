@@ -110,7 +110,6 @@
 	<select id="getDriverSeqFromPassenger" resultType="string">
 		select driver_seq from passenger
 		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
-		and is_deletion = 'N' 
 		and m_id = #{m_id}
 	</select>
 	
@@ -140,17 +139,16 @@
 	<select id="isApplication" resultType="_int">
 		select count(*) from passenger
 		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
-		and is_deletion = 'N'
 		and m_id = #{m_id}
 	</select>
 	
-	<select id="deletePassenger">
+	<update id="deletePassenger">
 		update passenger set
-		is_deletion = 'Y'
+		is_cancel = 'Y'
 		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
 		and m_id = #{m_id}
 		and driver_seq = #{driver_seq}
-	</select>
+	</update>
 	
 	<select id="adminNotApprovedDriver" resultType="Map">
 		select m.m_id, m.m_name, m.gender, ad.ad_license_img, ad.ad_regdate, ad.ad_detail
@@ -182,7 +180,7 @@
 		select p.m_id, m.m_name, m.m_dept, p.passenger_depart_time, p.passenger_depart_location
 			from member m, passenger p
 			where m.m_id = p.m_id
-			and p.is_deletion = 'N'
+			and p.is_cancel = 'N'
 			and p.driver_seq = #{driver_seq}
 		and m_company = #{m_company}
 	</select>
@@ -193,7 +191,7 @@
 	where
 	is_approve ='Y'
 	and
-	is_deletion ='N'
+	is_cancel ='N'
 	and
 	to_char(apply_date,'yyyy/MM/dd') = #{str_date} 
 	</select>
@@ -209,7 +207,7 @@
 		update passenger set
 		is_approve = 'Y'
 		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
-		and is_deletion = 'N'
+		and is_cancel = 'N'
 		and m_id = #{m_id}
 	</select>
 	
@@ -217,14 +215,14 @@
 		update passenger set
 		is_approve = 'C'
 		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
-		and is_deletion = 'N'
+		and is_cancel = 'N'
 		and m_id = #{m_id}
 	</select>
 	
 	<select id="approveState" resultType="string">
 		select is_approve from passenger
 		where to_char(apply_date, 'yyyy/mm/dd') = '2022/06/16'
-		and is_deletion = 'N'
+		and is_cancel = 'N'
 		and m_id = #{m_id}
 	</select>
 	
@@ -233,8 +231,16 @@
 		from driver d, passenger p
 		where d.driver_seq = p.driver_seq
 		and to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
-		and p.is_deletion = 'N'
+		and p.is_cancel = 'N'
 		and p.m_id = #{m_id}
+	</select>
+	
+	<select id="changeDeletionState">
+		update passenger set
+		is_approve = 'W',
+		is_cancel = 'N'
+		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
+		and m_id = #{m_id}
 	</select>
 	
 </mapper>

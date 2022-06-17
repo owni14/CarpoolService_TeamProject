@@ -154,6 +154,13 @@ public class MemberTest {
 		String driverSeq = memberDao.getDriverSeqFromPassenger(m_id);
 		System.out.println("driver_seq:" + driverSeq);
 	}
+
+	@Test
+	public void changeDeletionStateTest() {
+		String m_id = "user04@gmail.com";
+		boolean result = memberDao.changeDeletionState(m_id);
+		System.out.println("result:" + result);
+	}
 	
 }
 

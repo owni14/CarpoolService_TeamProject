@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/WEB-INF/views/include_admin/header.jsp" %>
 <%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
+<%@ include file="/WEB-INF/views/include_admin/frmApproveNotify.jsp" %>
 <script>
 	$(document).ready(function () {
 		$(".driveLicenseImg").click(function () {
@@ -25,6 +26,33 @@
 		
 		$("#btnApproveList").click(function () {
 			location.href = "/admin/approveDriver_management";
+		});
+		
+		var frmApproveNotify = $("#frmApproveNotify");
+		var frmPaging = $("#frmPaging"); 
+		$("a.dropdown-item").click(function (e) {
+			e.preventDefault();
+			var blacklist_seqValue = $(this).attr("data-blacklistSeq");
+			var admin_checkValue = $(this).attr("data-value");
+			var blackScoreValue = $(this).attr("data-bScore");
+			var black_m_id = $(this).attr("data-blackid");
+			console.log(admin_checkValue); // 반려 : C, 반려 취소 : N, 승인 : Y
+			frmApproveNotify.find("input[name=refresh]").val(1);
+			frmApproveNotify.find("input[name=blacklist_seq]").val(blacklist_seqValue);
+			frmApproveNotify.find("input[name=admin_check]").val(admin_checkValue);
+			if (admin_checkValue == "N" || admin_checkValue == "C") {
+				frmApproveNotify.find("input[name=black_score]").val(0);
+				
+			} else if (admin_checkValue == "Y") {
+				frmApproveNotify.find("input[name=black_m_id]").val(black_m_id);
+				frmApproveNotify.find("input[name=black_score]").val(blackScoreValue);
+			}
+				frmApproveNotify.attr("action","/admin/modifyBlackPoint");
+				frmApproveNotify.attr("method","post");
+			//frmApproveNotify.submit();
+		});
+		$("p.content").click(function(){
+			location.href="/admin/report_management";
 		});
 	});
 </script>
@@ -253,7 +281,7 @@ const myChart = new Chart(
                                                 <div class="card project-task" style="height:480px">
                                                     <div class="card-header">
                                                         <div class="card-header-left ">
-                                                            <h3>신고자 리스트</h3>
+                                                            <h3 id="test">신고자 리스트</h3>
                                                         </div>
                                                         <div class="card-header-right">
 <!--                                                             <ul class="list-unstyled card-option"> -->
@@ -267,7 +295,7 @@ const myChart = new Chart(
                                                     </div>
                                                     <div class="card-block p-b-10">
                                                         <div class="table-responsive">
-                                                            <table class="table table-hover">
+                                                            <table class="table table">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>신고 처리 대상</th>
@@ -276,64 +304,64 @@ const myChart = new Chart(
                                                                 </thead>
                                                                 <tbody>
                                                                     
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="task-contain">
-                                                                                <h6 class="bg-c-pink d-inline-block text-center">3</h6>
-                                                                                <p class="d-inline-block m-l-20">이재곤</p>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <p class="d-inline-block m-r-20">담배를 너무 많이 피어요</p>
-<!--                                                                             <div class="progress d-inline-block"> -->
-<!--                                                                                 <div class="progress-bar bg-c-pink" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:60%"> -->
-<!--                                                                                 </div> -->
+<!--                                                                     <tr> -->
+<!--                                                                         <td> -->
+<!--                                                                             <div class="task-contain"> -->
+<!--                                                                                 <h6 class="bg-c-pink d-inline-block text-center">3</h6> -->
+<!--                                                                                 <p class="d-inline-block m-l-20">이재곤</p> -->
 <!--                                                                             </div> -->
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="task-contain">
-                                                                                <h6 class="bg-c-yellow d-inline-block text-center">2</h6>
-                                                                                <p class="d-inline-block m-l-20">김민우</p>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <p class="d-inline-block m-r-20">운전중 자꾸 한숨을 쉬어요</p>
+<!--                                                                         </td> -->
+<!--                                                                         <td> -->
+<!--                                                                             <p class="d-inline-block m-r-20">담배를 너무 많이 피어요</p> -->
+<!-- <!--                                                                             <div class="progress d-inline-block"> --> 
+<!-- <!--                                                                                 <div class="progress-bar bg-c-pink" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:60%"> --> 
+<!-- <!--                                                                                 </div> --> 
+<!-- <!--                                                                             </div> --> 
+<!--                                                                         </td> -->
+<!--                                                                     </tr> -->
+<!--                                                                     <tr> -->
+<!--                                                                         <td> -->
+<!--                                                                             <div class="task-contain"> -->
+<!--                                                                                 <h6 class="bg-c-yellow d-inline-block text-center">2</h6> -->
+<!--                                                                                 <p class="d-inline-block m-l-20">김민우</p> -->
+<!--                                                                             </div> -->
+<!--                                                                         </td> -->
+<!--                                                                         <td> -->
+<!--                                                                             <p class="d-inline-block m-r-20">운전중 자꾸 한숨을 쉬어요</p> -->
                                                                             
-							                                               <!-- dropdown start -->
-							                                             <div style="float: right;">
-																		<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:red"
-																			id="dropdownMenuButton1" data-toggle="dropdown">
-																			${blackListVo.black_is_processed}</button>
-																		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-																			<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-bScore="${blackListVo.black_score}" data-blackid="${blackListVo.black_m_id}">승인</a> 
-																			<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a>
-																		</div>
-																		</div> 
-																		<!-- dropdown end -->
+<!-- 							                                               dropdown start -->
+<!-- 							                                             <div style="float: right;"> -->
+<!-- 																		<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:red" -->
+<!-- 																			id="dropdownMenuButton1" data-toggle="dropdown"> -->
+<%-- 																			${blackListVo.black_is_processed}</button> --%>
+<!-- 																		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
+<%-- 																			<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-bScore="${blackListVo.black_score}" data-blackid="${blackListVo.black_m_id}">승인</a>  --%>
+<%-- 																			<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a> --%>
+<!-- 																		</div> -->
+<!-- 																		</div>  -->
+<!-- 																		dropdown end -->
 																		
-<!--                                                                             <div class="progress d-inline-block"> -->
-<!--                                                                                 <div class="progress-bar bg-c-yellow" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:50%"> -->
-<!--                                                                                 </div> -->
+<!-- <!--                                                                             <div class="progress d-inline-block"> --> 
+<!-- <!--                                                                                 <div class="progress-bar bg-c-yellow" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:50%"> --> 
+<!-- <!--                                                                                 </div> --> 
+<!-- <!--                                                                             </div> --> 
+<!--                                                                         </td> -->
+<!--                                                                     </tr> -->
+<!--                                                                     <tr> -->
+<!--                                                                         <td> -->
+<!--                                                                             <div class="task-contain"> -->
+<!--                                                                                 <h6 class="bg-c-green d-inline-block text-center">1</h6> -->
+<!--                                                                                 <p class="d-inline-block m-l-20">화장실 빌런</p> -->
 <!--                                                                             </div> -->
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="task-contain">
-                                                                                <h6 class="bg-c-green d-inline-block text-center">1</h6>
-                                                                                <p class="d-inline-block m-l-20">화장실 빌런</p>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <p class="d-inline-block m-r-20">화장실이 가고 싶은데 출근이 급하다고 안내려줘요</p>
+<!--                                                                         </td> -->
+<!--                                                                         <td> -->
+<!--                                                                             <p class="d-inline-block m-r-20">화장실이 가고 싶은데 출근이 급하다고 안내려줘요</p> -->
 <!--                                                                             <div class="progress d-inline-block"> -->
 <!--                                                                                 <div class="progress-bar bg-c-green" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:50%"> -->
 <!--                                                                                 </div> -->
 <!--                                                                             </div> -->
-                                                                        </td>
-                                                                    </tr>
+<!--                                                                         </td> -->
+<!--                                                                     </tr> -->
 <!--                                                                     <tr> -->
 <!--                                                                         <td> -->
 <!--                                                                             <div class="task-contain"> -->
@@ -349,11 +377,41 @@ const myChart = new Chart(
 <!--                                                                             </div> -->
 <!--                                                                         </td> -->
 <!--                                                                     </tr> -->
-<c:forEach items="${blackLists}" var="blackListVo">
-																<tr>
+								<c:forEach items="${blackLists}" var="blackListVo" begin="0" end="2" step="1">
 																
+																<tr class="trBlackLists">
+																<td>
+                                                                            <div class="task-contain">
+                                                                                <h6 <c:choose>
+                                                                                <c:when test="${blackListVo.black_score eq 3}">class="bg-c-pink d-inline-block text-center"</c:when>
+                                                                                <c:when test="${blackListVo.black_score eq 2}">class="bg-c-yellow d-inline-block text-center"</c:when>
+                                                                                <c:when test="${blackListVo.black_score eq 1}">class="bg-c-green d-inline-block text-center"</c:when></c:choose>
+                                                                                >${blackListVo.black_score}</h6>
+                                                                                <p class="d-inline-block m-l-20">${blackListVo.black_m_id}</p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20 content">
+                                                                            <c:choose>
+                                                                            <c:when test="${blackListVo.black_content.length() >=10}">
+                                                                          
+                                                                            ${blackListVo.black_content.substring(0,10)}...</c:when>
+                                                                            <c:otherwise> ${blackListVo.black_content}</c:otherwise>
+                                                                            </c:choose>
+                                                                           </p>
+                                                                            
+							                                               <!-- dropdown start -->
+							                                             <div style="float: right;">
+																		<button class="btn dropdown-toggle approve" type="button" style="background-color:white; padding-top:0px; color:red;"
+																			id="dropdownMenuButton1" data-toggle="dropdown">
+																			${blackListVo.black_is_processed}</button>
+																		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+																			<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-bScore="${blackListVo.black_score}" data-blackid="${blackListVo.black_m_id}">승인</a> 
+																			<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a>
+																		</div>
+																		</div> 
 																</tr>
-																</c:forEach>
+								</c:forEach>
                                                                 </tbody>
                                                             </table>
                                                         </div>

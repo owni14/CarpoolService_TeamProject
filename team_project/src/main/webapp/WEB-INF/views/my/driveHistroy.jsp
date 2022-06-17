@@ -44,16 +44,15 @@ $(document).ready(function() {
 		};
 		$.post(url, sData, function(rData) {
 // 			console.log(rData);
-				$("#modal_body tr").remove();
-				$.each(rData, function() {
-						var tr = $("#table_clone tr").clone();
-						var tds = tr.find("td");
-						tds.eq(0).text(this.m_id);
-						tds.eq(1).text(this.passenger_depart_location);
-						tds.eq(2).text(this.passenger_depart_time);
-						$("#modal_body").append(tr);
-				});
-			
+			$("#modal_body tr").remove();
+			$.each(rData, function() {
+					var tr = $("#table_clone tr").clone();
+					var tds = tr.find("td");
+					tds.eq(0).text(this.m_id);
+					tds.eq(1).text(this.passenger_depart_location);
+					tds.eq(2).text(this.passenger_depart_time);
+					$("#modal_body").append(tr);
+			});
 		});
 	});
 	

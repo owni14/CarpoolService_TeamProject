@@ -83,11 +83,6 @@ https://templatemo.com/tm-559-zay-shop
     		header.stop().animate({height:'90px'}, 300);
     	});
     	 
-// //     	popover start
-//  		$("#message").click(function(e) {
-//  			e.preventDefault();
-//  			$('[data-toggle="popover"]').popover();
-//  		});
     });
     </script>
     <style>
@@ -112,38 +107,61 @@ https://templatemo.com/tm-559-zay-shop
 	}
 	
 	
+	
     </style>
 </head>
 
 <body>
-    <script>
+  <script>
 
-    $(document).ready(function(){
-//     	마우스 커서 위치에 따른 좌표 start
-    	$(document).on("mousemove",function(e) {
-    	   $("#log").text(e.pageX+", "+e.pageY);
-    	});
-//     	마우스 커서 위치에 따른 좌표 end
+$(document).ready(function(){
+	
+// 	마우스 커서 위치에 따른 좌표 start
+	$(document).on("mousemove",function(e) {
+	   $("#log").text(e.pageX+", "+e.pageY);
+	});
+// 	마우스 커서 위치에 따른 좌표 end
 
-//      서브 메뉴 위치 선정 start
-    	for (var v = 1; v < 5; v++) {
-    		 var left = $("#a_" + v).offset().left;
-    		 $("#smenu_"+v).offset({left: left});
-    	}
-    	     
-   	   	$(window).resize(function(e){
-   	   		for (var v = 1; v < 5; v++) {
-   	   			var left = $("#a_" + v).offset().left;
-	    		$("#smenu_"+v).offset({left: left});
-   	   		}
-   	   	});	
-//      서브 메뉴 위치 선정 end
-   	   	
-   	     
-	   	
-	   	 
-    });
-    </script>
+// 	서브 메뉴 위치 선정 start
+	for (var v = 1; v < 5; v++) {
+		 var left = $("#a_" + v).offset().left;
+		 $("#smenu_"+v).offset({left: left});
+	}
+	     
+   	$(window).resize(function(e){
+   		for (var v = 1; v < 5; v++) {
+   			var left = $("#a_" + v).offset().left;
+ 		$("#smenu_"+v).offset({left: left});
+   		}
+   	});	
+// 	서브 메뉴 위치 선정 end
+
+	$("#messageIcon").click(function(){
+		var url = "/message/lastMessageList";
+		$.post(url, function(rData) {
+			$("#lastTable tr").remove();
+			console.log(rData);
+			$.each(rData, function() {
+				console.log($(this));
+				var tr = $("#clonetable tr").clone();
+				var span = tr.find("span");
+				if (this.sender_m_id != null) {
+					span.eq(0).text(this.sender_m_id);
+				} else {
+					span.eq(0).text(this.sender_admin_code);
+				}
+				span.eq(1).text(this.senddate);
+				if(this.content.length >= 25) {
+					span.eq(2).text(this.content.substring(0,25) + ".....");
+				} else {
+					span.eq(2).text(this.content);
+				}
+				$("#lastTable").append(tr);
+			});
+		});
+	});
+});
+</script>
 
     <!-- Header -->
     <header id="header">
@@ -175,16 +193,8 @@ https://templatemo.com/tm-559-zay-shop
                             <a class="nav-link" id="a_4" href="/customer/faq">고객센터</a>
                         </li>
                     </ul>
-                   
                 </div>
-                
-<!--                 <div> -->
-<!--                 	<ul class="nav navbar-nav d-flex "> -->
-<!-- 						<li class="nav-item"><a class="nav-link">아이템</a></li> -->
-<!-- 						<li class="nav-item"><a class="nav-link">아이템</a></li> -->
-<!-- 					</ul> -->
-<!--                 </div> -->
-                </div>
+               </div>
                 
                 
                 <div class="navbar align-self-center d-flex">
@@ -199,33 +209,54 @@ https://templatemo.com/tm-559-zay-shop
                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
-<!--                     <a class="nav-icon position-relative text-decoration-none" href="#"> -->
-<!--                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i> -->
-<!--                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span> -->
-<!--                     </a> -->
-<!--                     <a class="nav-icon position-relative text-decoration-none" href="#"> -->
-<!--                         <i class="fa fa-fw fa-user text-dark mr-3"></i> -->
-<!--                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span> -->
-<!--                     </a> -->
                     <c:choose>
                     	<c:when test="${not empty loginVo}">
                     		 
 							    
 							  
 							<div class="dropdown">
-								<a class="nav-link" type="button" id="message" data-toggle="dropdown">
+								<a class="nav-link" type="button" id="messageIcon" data-toggle="dropdown">
 									<i class="bi bi-envelope" style="font-size: 25px; margin: 5px;"></i>
 								</a>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="message_dropdown" style="width: 300px; height: 300px;" >
-									 <div style="float: left; margin: 10px;">
-									 <span class="span_message">새 쪽지</span>
-									 </div>
-									 <div style="float: right; margin: 10px;">
-									 <a href="/message/recAdminMessagePage"><span class="span_message">쪽지함 ></span></a>
-									 
-									 </div>
-									 
+									<div style="height: 15%" id="m_dropdown_title">
+										<div class="row">
+											<div class="col-md-6">
+												<span class="span_message" style="margin: 10px;">새 쪽지</span>
+											</div>
+											<div class="col-md-6" style="text-align: right;">
+												<a href="/message/recAdminMessagePage"><span class="span_message" style="margin: 10px;">쪽지함 ></span></a>
+											</div>
+										</div>
+									</div>
+									<table class="table" id="lastTable" style="height: 85%">
+									
+									</table>
 								</div>
+								<table style="display: none" id="clonetable">
+									<tr style="height: 33%;">
+										<td>
+											<span style="font-size: 14px;"></span>
+											<span style="font-size: 12px;"></span><br>
+											<span style="font-size: 12px;"></span>
+										</td>
+									</tr>
+								</table>
+								
+<!-- 									<div style="height: 28.3%;"> -->
+<!-- 										<div class="row" style="vertical-align: middle;"> -->
+<!-- 											<div class="col-md-3" style="vertical-align:middle; text-align: center;"> -->
+<!-- 												<span></span> -->
+<!-- 											</div> -->
+<!-- 											<div class="col-md-6" style="text-align: center;"> -->
+<!-- 												<span></span> -->
+<!-- 											</div> -->
+<!-- 											<div class="col-md-3" style="text-align: center;"> -->
+<!-- 												<span></span> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+								
 							</div>
                     		<a href="/member/logout"><i class="icofont icofont-logout" style="font-size: 25px; margin: 5px;"></i></a>
                     		${loginVo.m_name}

@@ -16,7 +16,7 @@ else if(transactionResult=="false"){
 	alert("작업실패");
 }
 var listSize="${participationList.size()}";
-var winnerCount=parseInt(listSize/10);
+var winnerCount="${event_max_count}";
 var numS=new Array();
 
 var winnerNums=new Array(); 
@@ -235,8 +235,7 @@ console.log("winnerNums" ,winnerNums);
 						</div>
 					</div>
 					<div class="col-lg-4">
-						참가인원&nbsp; :&nbsp; ${participationList.size()}&nbsp; /&nbsp;총원&nbsp;: &nbsp;${participationList.get(0).EVENT_MAX_COUNT} 
-						(${participation_percentStr})%
+						
 						<div class="page-header-breadcrumb">
 							
 							<ul class="breadcrumb-title">

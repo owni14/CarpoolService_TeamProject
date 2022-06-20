@@ -126,6 +126,7 @@ $(document).ready(function() {
 			// 현재 로그인 된 회원아이디(m_id)와 운전자의 아이디(that.M_ID)를 비교해 같을 경우 테이블에서 제거
 			console.log("m_id:" + m_id);
 			console.log("that.M_ID:" + that.M_ID);
+			console.log("driverId:" + driverId);
 			
 			if(m_id == that.M_ID) {
 				tr.attr("style", "color:#ff8c00; font-weight: bold;");

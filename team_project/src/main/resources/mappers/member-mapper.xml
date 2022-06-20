@@ -144,7 +144,8 @@
 	
 	<update id="deletePassenger">
 		update passenger set
-		is_cancel = 'Y'
+		is_cancel = 'Y',
+		is_click  = 'N'
 		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
 		and m_id = #{m_id}
 		and driver_seq = #{driver_seq}
@@ -238,7 +239,14 @@
 	<select id="changeDeletionState">
 		update passenger set
 		is_approve = 'W',
-		is_cancel = 'N'
+		is_cancel = 'N',
+		is_click = 'Y'
+		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
+		and m_id = #{m_id}
+	</select>
+	
+	<select id="isClick" resultType="string">
+		select is_click from passenger
 		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
 		and m_id = #{m_id}
 	</select>

@@ -5,7 +5,7 @@
 <script>
 	$(document).ready(function() {
 		var m_company = "${loginVo.m_company}";
-		var driver_seq = "${driver_seq}";
+// 		var driver_seq = "${driver_seq}";
 		var approveResult = "${approveResult}";
 		var rejectResult = "${rejectResult}";
 		if (approveResult == "true") {
@@ -19,7 +19,7 @@
 			alert ("탑승거부하는데 오류가 있습니다. \n고객센터로 문의부탁드립니다.")
 		}
 		console.log("m_company:" + m_company);
-		console.log("driver_seq:" + driver_seq);
+// 		console.log("driver_seq:" + driver_seq);
 	// 카카오 지도 api
 	var address = $("#startLoct").val();
 	var m_name = "N";
@@ -85,7 +85,7 @@
 		        map.setCenter(coords);
 		        
 		        if (m_name != "N") {
-		        	setTimeout(function(){ map.relayout();  map.setCenter(coords), map.setLevel(4);}, 150);		        	
+		        	setTimeout(function(){ map.relayout();  map.setCenter(coords), map.setLevel(4);}, 200);		        	
 		        }
 		    } // if (status === kakao.maps.services.Status.OK) {})
 		}); // geocoder.addressSearch()  
@@ -117,6 +117,50 @@
 	
 }); // $(document).ready(function(){})
 </script>
+
+<!-- 동승자 리스트 -->
+<div class="row"
+	<c:if test="${isDriver == false}">
+		style="display: none;"
+	</c:if>
+>
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>탑승자</th>
+						<th>부서</th>
+						<th>탑승시간</th>
+						<th>탑승위치</th>
+						<th>승인</th>
+						<th>거부</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${passengerList}" var="v" varStatus="status">
+						<tr>	
+							<td>${status.count}</td>
+							<td>${v.M_NAME}</td>
+							<td>${v.M_DEPT}</td>
+							<td>${v.PASSENGER_DEPART_TIME}</td>
+							<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
+							<td><a href="/board/approvePassenger?m_id=${v.M_ID}" class="btn btn-success btn-sm approve">승인</a></td>
+							<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">거부</a></td>
+						</tr>	
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</div>
+	<div class="col-md-2"></div>
+</div>
+<!-- // 동승자 리스트 -->
+
 <!-- 카카오 지도 api -->
 <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
 	<div class="col-md-2"></div>
@@ -185,43 +229,5 @@
 	<div class="col-md-2"></div>
 </div>
 <!-- // 운전자 등록폼 -->
-<!-- 동승자 리스트 -->
-<div class="row">
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
-		<div class="row">
-		<div class="col-md-12">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>탑승자</th>
-						<th>부서</th>
-						<th>탑승시간</th>
-						<th>탑승위치</th>
-						<th>승인</th>
-						<th>거부</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${passengerList}" var="v" varStatus="status">
-						<tr>	
-							<td>${status.count}</td>
-							<td>${v.M_NAME}</td>
-							<td>${v.M_DEPT}</td>
-							<td>${v.PASSENGER_DEPART_TIME}</td>
-							<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
-							<td><a href="/board/approvePassenger?m_id=${v.M_ID}" class="btn btn-success btn-sm approve">승인</a></td>
-							<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">거부</a></td>
-						</tr>	
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	</div>
-	<div class="col-md-2"></div>
-</div>
-<!-- // 동승자 리스트 -->
 
 <%@ include file="/WEB-INF/views/include/footer.jsp"%>

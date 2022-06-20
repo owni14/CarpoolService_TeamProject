@@ -22,7 +22,7 @@ public class MylogTest {
 	public void insertDriver () {
 		for (int i = 1; i < 4; i++) {
 			DriverVo driverVo = new DriverVo(10+i, "hong@naver.com", "울산 북구 아진로 75", "N", "담배 거절", "2022-06-0"+ i + " 07:30");
-			mylogDao.insertDriver(driverVo);
+//			mylogDao.insertDriver(driverVo);
 		}
 	}
 	

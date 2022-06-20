@@ -50,7 +50,7 @@ $(document).ready(function() {
 	var mapContainer = document.getElementById('map') // 지도를 표시할 div
 	
     mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(35.535009319843475, 129.31084069895888), // 지도의 중심좌표
         level: 5 // 지도의 확대 레벨
     };  
 	
@@ -148,6 +148,7 @@ $(document).ready(function() {
 				tds.eq(6).children().attr("href", "#"); // url제거
 			}
 			
+			var is_refuse = "false"
 			// 반복문을 돌면서 회원이 탑승신청한 운전자와 가지고 오는 운전자가 같으면 승인 대기상태로 신청상태를 변경
 			if (driverId == that.M_ID) {
 				switch (approveState) {
@@ -164,7 +165,7 @@ $(document).ready(function() {
 					
 					// 회원이 탑승취소버튼을 클릭할 경우 보내질 url을 설정
 					// 현재 로그인되어있는 회원의 아이디, 클릭한 행의 운전자 번호 및 아이디를 파라미터로 넘겨줍니다.
-					btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID);
+					btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID + "&is_refuse=" + is_refuse);
 					break;
 				case "Y": // 승인
 					var btnCancel= tds.eq(6).children();
@@ -179,22 +180,22 @@ $(document).ready(function() {
 					
 					// 회원이 탑승취소버튼을 클릭할 경우 보내질 url을 설정
 					// 현재 로그인되어있는 회원의 아이디, 클릭한 행의 운전자 번호 및 아이디를 파라미터로 넘겨줍니다.
-					btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID);
+					btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID + "&is_refuse=" + is_refuse);
 					break;
 				case "C": // 승인거부
 					var btnCancel= tds.eq(6).children();
 					tds.eq(5).text("승인 거부"); // 신청상태를 승인 대기로 변경
 					tds.eq(5).attr("style", "color:red; font-weight: bold;"); // 신청상태 텍스트 빨강 및 굵게 변경
 					btnCancel.text("탑승취소"); // 탑승신청 버튼을 탑승취소로 변경
-					btnCancel.attr("class", "btn btn-outline-warning btn-sm btnBoard"); // 탑승신청 버튼을 노란색으로 바꿈
+					btnCancel.attr("class", "btn btn-outline-warning btn-sm btnBoard"); // 탑승신청 버튼을 빨간색으로 바꿈
 					
 					// 기존에 있던 role, data-toggle속성 제거
 					btnCancel.removeAttr("role");
 					btnCancel.removeAttr("data-toggle");
-					
+					is_refuse = "true";
 					// 회원이 탑승취소버튼을 클릭할 경우 보내질 url을 설정
 					// 현재 로그인되어있는 회원의 아이디, 클릭한 행의 운전자 번호 및 아이디를 파라미터로 넘겨줍니다.
-					btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID);
+					btnCancel.attr("href", "/board/cancelBoarding?m_id=" + "${loginVo.m_id}" + "&driver_seq=" + that.DRIVER_SEQ + "&driver_id=" + that.M_ID + "&is_refuse=" + is_refuse);
 					break;
 				}
 			}
@@ -246,7 +247,7 @@ $(document).ready(function() {
 		        rvbmInfowindow.open(map, myMarker);
 	
 		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		        map.setCenter(coords);
+		        setTimeout(function(){ map.relayout();  map.setCenter(coords), map.setLevel(5);}, 200); 
 		        
 		    } // if (status === kakao.maps.services.Status.OK)
 		    
@@ -619,4 +620,5 @@ $(document).ready(function() {
 	</div>
 	<div class="col-md-2"></div>
 </div>
+
 <%@ include file="/WEB-INF/views/include/footer.jsp"%>

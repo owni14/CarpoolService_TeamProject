@@ -156,11 +156,9 @@ public class MemberTest {
 	}
 
 	@Test
-	public void changeDeletionStateTest() {
+	public void isDriverTest() {
 		String m_id = "user04@gmail.com";
-		boolean result = memberDao.changeDeletionState(m_id);
+		boolean result = memberDao.isDriver(m_id);
 		System.out.println("result:" + result);
 	}
-	
 }
-

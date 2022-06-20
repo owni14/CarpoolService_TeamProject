@@ -34,19 +34,24 @@ public class BoardController {
 	private MemberService memberService;
 	
 	@Autowired
-	private MylogService myLogService;
-	
-	@Autowired
 	private CarService carService;
 	
 	// 운전자 등록 페이지로 이동합니다.
 	@RequestMapping(value = "/drive", method = RequestMethod.GET)
 	public String drive(HttpSession session, Model model) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
-		String driver_seq = memberService.getDriverSeqFromDriver(memberVo.getM_id());
-		List<Map<String, Object>> passengerList = memberService.getPassengerList(driver_seq, memberVo.getM_company());
-		model.addAttribute("driver_seq", driver_seq);
-		model.addAttribute("passengerList", passengerList);
+		String m_id = memberVo.getM_id();
+		boolean result = memberService.isDriver(m_id); 
+		System.out.println("BoardController drive, result:" + result);
+		if (result) {
+			String driver_seq = memberService.getDriverSeqFromDriver(m_id);
+			List<Map<String, Object>> passengerList = memberService.getPassengerList(driver_seq, memberVo.getM_company());
+			model.addAttribute("driver_seq", driver_seq);
+			model.addAttribute("passengerList", passengerList);
+			model.addAttribute("isDriver", result);
+		} else {
+			model.addAttribute("isDriver", false);
+		}
 		return "board/drive";
 	}
 	
@@ -163,17 +168,12 @@ public class BoardController {
 		String m_id = loginVo.getM_id();
 		String driver_depart_time = startHour + startMin;
 		DriverVo driverVo = new DriverVo(m_id, startLoct, isSmoke, requirements, driver_depart_time);
-		boolean result = myLogService.addDriver(driverVo);
+		boolean result = memberService.addDriver(driverVo);
 		if (result) {
 			rttr.addFlashAttribute("driverResult", result);
 		} else {
 			rttr.addFlashAttribute("driverResult", "false");
 		}
-		
-//		System.out.println("MyController addDriver, startLoct:" + startLoct);
-//		System.out.println("MyController addDriver, isSmoke:" + isSmoke);
-//		System.out.println("MyController addDriver, requirements:" + requirements);
-//		System.out.println("MyController addDriver, stratTime:" + stratTime);
 		
 		return "redirect:/";
 	}
@@ -213,12 +213,14 @@ public class BoardController {
 	
 	// 탑승취소 버튼 클릭할 경우 탑승객 테이블의 is_deletion을 'Y'로 바꿀 메서드
 	@RequestMapping(value = "/cancelBoarding", method = RequestMethod.GET)
-	public String cancelBoarding(RedirectAttributes rttr, String m_id, String driver_seq, String driver_id) {
+	public String cancelBoarding(RedirectAttributes rttr, String m_id, String driver_seq, String driver_id, String is_refuse) {
 //		System.out.println("BoardController cancelBoarding, m_id:" + m_id);
 //		System.out.println("BoardController cancelBoarding, driver_seq:" + driver_seq);
 		boolean result = memberService.deletePassenger(m_id, driver_seq);
 		if (result) {
-			carService.decreaseCount(driver_id);
+			if (!(is_refuse.equals("true"))){
+				carService.decreaseCount(driver_id);
+			}
 			rttr.addFlashAttribute("deletePasgResult", result);
 		} else {
 			rttr.addFlashAttribute("deletePasgResult", "false");

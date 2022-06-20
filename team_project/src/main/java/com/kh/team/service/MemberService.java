@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberUpdateVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
@@ -37,4 +38,6 @@ public interface MemberService {
 	public boolean approvePassenger(String m_id); // 탑승자 승인
 	public boolean rejectPassenger(String m_id); // 탑승자 거절
 	public String getApproveState(String m_id); // 탑승자의 현재 신청상태 확인
+	public boolean addDriver(DriverVo driverVo); // 회원이 운전하기페이지에서 운전정보 등록
+	public boolean isDriver(String m_id); // 운전하기에 등록이 되어있는지 여부 확인
 }

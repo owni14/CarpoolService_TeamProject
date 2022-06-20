@@ -13,6 +13,7 @@ import com.kh.team.dao.CarDao;
 import com.kh.team.dao.MemberDao;
 import com.kh.team.dao.MemberUpdateDao;
 import com.kh.team.vo.BlackListVo;
+import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberUpdateVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
@@ -75,7 +76,7 @@ public class MemberServiceImpl implements MemberService {
 		boolean result = memberDao.isApplication(m_id); // 현재 탑승신청을 한번이라도 했는지 여부 확인
 		System.out.println("MemberServiceImpl addPassengerInfo, result: ");
 		if (result) {
-			result = memberDao.changeDeletionState(m_id); // 한번이라도 탑승 신청을 했다면 따로 데이터를 삽입하는게 아니라 is_deletion을 'N'으로 변경
+			result = memberDao.changeDeletionState(m_id, boardLoct, boardTime, driver_seq); // 한번이라도 탑승 신청을 했다면 따로 데이터를 삽입하는게 아니라 is_deletion을 'N'으로 변경
 		} else {
 			result = memberDao.insertPassenger(m_id, boardLoct, boardTime, driver_seq); // 탑승 신청을 한적이 없으면 새로운 데이터를 삽입
 		}
@@ -201,5 +202,16 @@ public class MemberServiceImpl implements MemberService {
 		return approveState;
 	}
 
-}
+	@Override
+	public boolean addDriver(DriverVo driverVo) {
+		boolean result = memberDao.insertDriver(driverVo);
+		return result;
+	}
 
+	@Override
+	public boolean isDriver(String m_id) {
+		boolean result = memberDao.isDriver(m_id);
+		return result;
+	}
+
+}

@@ -55,6 +55,7 @@ public class EventController {
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public String detail(String event_seq) {
 		System.out.println("event_seq: " + event_seq);
+		
 		return "event/detail";
 	}
 	

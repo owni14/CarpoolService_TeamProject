@@ -31,4 +31,8 @@ private EvlDao evlDao;
 		public boolean updatePointByEvl() {
 			return evlDao.updatePointByEvl();
 		}
+	@Override
+		public int selectCountIsUpdate(String formattedToday, String iup_what) {
+			return evlDao.selectCountIsUpdate(formattedToday, iup_what);
+		}
 }

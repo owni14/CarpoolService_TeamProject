@@ -1,16 +1,19 @@
 package team_project;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.kh.team.dao.AdminDao;
 import com.kh.team.dao.EvlDao;
-import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.Driver_EvlVo;
+import com.kh.team.vo.Is_Update_PointVo;
 import com.kh.team.vo.Passenger_EvlVo;
 
 
@@ -43,8 +46,40 @@ public class EvlTest {
 	@Test
 	public void updateAllMemberPointByDriverEvl() {
 		System.out.println(evlDao.updatePointByEvl());
-	}
+	}//Ok
 	
+	
+	// 멤버 포인트 지급  유무 업데이트 테스트s
+	@Test
+	public void selectIsUpdatePoint() {
+		String iup_what="D";
+		Date now=new Date(System.currentTimeMillis());
+		Calendar cal=Calendar.getInstance();
+		cal.clear();
+		cal.setTime(now);
+		cal.set(Calendar.DAY_OF_MONTH,cal.getMinimum(Calendar.DAY_OF_YEAR));
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+		Date date=cal.getTime();
+		String formattedToday=sdf.format(date);
+		System.out.println("evlTest formattedToday "+formattedToday);
+		System.out.println(evlDao.selectCountIsUpdate(formattedToday, iup_what));
+	}//Ok
+	
+	//멤버쉽 포인트지급 유무 테이블에 추가
+	@Test
+	public void insertIsUpdatePoint() {
+		String iup_what="D";
+		Date now=new Date(System.currentTimeMillis());
+		Calendar cal=Calendar.getInstance();
+		cal.clear();
+		cal.setTime(now);
+		cal.set(Calendar.DAY_OF_MONTH,cal.getMinimum(Calendar.DAY_OF_YEAR));
+		long time=cal.getTimeInMillis();
+		java.sql.Date iup_date=new java.sql.Date(time);
+		System.out.println("evlTest iup_date "+iup_date);
+		Is_Update_PointVo is_Update_PointVo=new Is_Update_PointVo(0, iup_date, iup_what);
+		System.out.println(evlDao.insertEvlUpdate(is_Update_PointVo));
+	}//Ok
 	
 }
 

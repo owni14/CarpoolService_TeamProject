@@ -10,4 +10,5 @@ public interface EvlService {
 	public boolean insertPassengerEvl(Passenger_EvlVo passenger_Evl);
 	public List<String> selectEvlCodeList();
 	public boolean updatePointByEvl();
+	public int selectCountIsUpdate(String formattedToday, String iup_what);// 포인트 업데이트 유무
 }

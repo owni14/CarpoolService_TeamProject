@@ -128,7 +128,6 @@ ep_is_winner	char(1)	default 'N'
 
 );
 
-<<<<<<< HEAD
 -- 쪽지 
 create table message (
     message_seq number primary key,
@@ -155,6 +154,12 @@ create table memberUpdate (
     update_date date default sysdate,
     update_reason varchar2(60) not null
 );
+--포인트 지급 유무 테이블
+create table is_Update_Point(
+iup_seq	number	primary key,
+iup_date	date	default sysdate,
+iup_what	char(1)	not null 
+);
 
 
 
@@ -175,7 +180,7 @@ create sequence seq_faq;
 create sequence seq_member_update;
 create sequence seq_driver_evl;
 create sequence seq_passenger_evl;
-
+create sequence seq_is_update_point;
 --동적 시퀀스
 create sequence seq_event_participation;
 

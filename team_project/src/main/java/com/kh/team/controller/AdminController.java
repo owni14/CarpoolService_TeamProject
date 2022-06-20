@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -34,6 +35,7 @@ import com.kh.team.service.MemberService;
 import com.kh.team.service.MemberUpdateService;
 import com.kh.team.service.MessageService;
 import com.kh.team.service.NotifyService;
+import com.kh.team.util.DateHelper;
 import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
@@ -44,7 +46,6 @@ import com.kh.team.vo.MemberUpdateVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.MessageVo;
 import com.kh.team.vo.PagingDto;
-import com.kh.team.vo.PointCodeVo;
 
 @Controller
 @RequestMapping("/admin")
@@ -123,6 +124,11 @@ public class AdminController {
 		dayPassengerCounts.add(daycount);
 		strList.add(targetDateStr);
 		}//end for
+		//모든 유저에게 한달후 포인트 자동으로 등급에 따라 지급
+
+		boolean log=DateHelper.isPointMonthDay();
+       
+        // 포인트 자동 지급 끝
 		model.addAttribute("top5List", top5List);
 		model.addAttribute("noEventGetCount", noEventGetCount);
 		model.addAttribute("noAnswer", noAnswer);
@@ -643,9 +649,13 @@ public class AdminController {
 		Date date = new Date(dateTime);
 		complainVo.setComplain_answer_date(date);
 		complainVo.setComplain_is_finish("Y");
+		String senderUser=complainVo.getM_id();
+		String admin_code=complainVo.getAdmin_code();
+		MessageVo messageVo=new MessageVo(senderUser, null, null, admin_code,"유저 ("+ complainVo.getM_id()+")님이문의하신 내용에 대한 답변이 완료되었습니다");
 		System.out.println(date);
 		System.out.println("complainAnswer complainVo"+complainVo);
 		boolean result=complainService.updateComplain(complainVo);
+		messageService.insertNoBlackMessage(messageVo);
 		rttr.addFlashAttribute("result",String.valueOf(result));
 		return "redirect:/admin/complainForm";
 					

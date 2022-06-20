@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kh.team.mappers.evl">
+	
+	<insert id="insertDriverEvl">
+	insert into driver_evl
+	(de_seq, de_drive_count, m_id, g_code)
+	values
+	(seq_driver_evl.nextval, #{de_drive_count}, #{m_id}, #{g_code} )
+	</insert>
+	
+	<insert id="insertPassengerEvl">
+	insert into passenger_evl
+	(pe_seq, pe_ride_count, m_id, g_code)
+	values
+	(seq_passenger_evl.nextval, #{pe_ride_count}, #{m_id}, #{g_code})
+	</insert>
+	
+	<select id="selectEvlCodeList" resultType="string">
+	select g_code from grade_benefit
+	</select>
+	
+	<update id="updatePointByEvl">
+	update (select m.m_id, m.m_point, de.g_code,gb.g_benefit from member m, driver_evl de , grade_benefit gb
+where m.m_id = de.m_id and  de.g_code = gb.g_code
+) b
+	set b.m_point = b.m_point + b.g_benefit
+	
+	</update>
+</mapper>

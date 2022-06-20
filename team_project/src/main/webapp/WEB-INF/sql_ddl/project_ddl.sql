@@ -173,6 +173,8 @@ create sequence seq_message;
 
 create sequence seq_faq;
 create sequence seq_member_update;
+create sequence seq_driver_evl;
+create sequence seq_passenger_evl;
 
 --동적 시퀀스
 create sequence seq_event_participation;

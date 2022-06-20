@@ -52,7 +52,7 @@ var updateAnswer="${result}";
 		form.find("[name=complain_seq]").val(complain_seq);
 		form.find("[name=admin_code]").val(admin_code);
 		form.find("[name=m_id]").val(m_id);
-		complain_answer += "고객님이 문의주신 내용입니다 \n\n\n원문 : \n\n\n"+afterContent;
+		complain_answer += "\n\n\n고객님이 문의주신 내용입니다 \n\n\n원문 : \n\n\n"+afterContent;
 		form.find("[name=complain_answer]").val(complain_answer);
 		form.submit();
 	});	

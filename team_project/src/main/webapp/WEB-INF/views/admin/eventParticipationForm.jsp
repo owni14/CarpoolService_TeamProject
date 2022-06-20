@@ -78,8 +78,7 @@
 						</div>
 					</div>
 					<div class="col-lg-4">
-						참가인원&nbsp; :&nbsp; ${participationList.size()}&nbsp; /&nbsp;총원&nbsp;: &nbsp;${participationList.get(0).EVENT_MAX_COUNT} 
-						(${participation_percentStr})%
+						
 						<div class="page-header-breadcrumb">
 							
 							<ul class="breadcrumb-title">

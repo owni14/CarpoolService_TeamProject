@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -34,6 +35,7 @@ import com.kh.team.service.MemberService;
 import com.kh.team.service.MemberUpdateService;
 import com.kh.team.service.MessageService;
 import com.kh.team.service.NotifyService;
+import com.kh.team.util.DateHelper;
 import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
@@ -42,8 +44,8 @@ import com.kh.team.vo.EventVo;
 import com.kh.team.vo.EventWinnerVo;
 import com.kh.team.vo.MemberUpdateVo;
 import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.MessageVo;
 import com.kh.team.vo.PagingDto;
-import com.kh.team.vo.PointCodeVo;
 
 @Controller
 @RequestMapping("/admin")
@@ -122,6 +124,11 @@ public class AdminController {
 		dayPassengerCounts.add(daycount);
 		strList.add(targetDateStr);
 		}//end for
+		//모든 유저에게 한달후 포인트 자동으로 등급에 따라 지급
+
+		boolean log=DateHelper.isPointMonthDay();
+       
+        // 포인트 자동 지급 끝
 		model.addAttribute("top5List", top5List);
 		model.addAttribute("noEventGetCount", noEventGetCount);
 		model.addAttribute("noAnswer", noAnswer);
@@ -529,12 +536,9 @@ public class AdminController {
 			event_seq=eventService.getMaxNoFinishEventSeq();
 			eventVo.setEvent_seq(event_seq);
 		}
+		int allMemberCount=memberService.adminGetCount(null);
 		List<Map<String,Object>> participationList=eventService.getJoinEventData(eventVo.getEvent_seq());
 		int event_max_count=eventService.selectEventMaxCount(event_seq);
-		int participation=participationList.size();
-		double participation_percent=( participation/(double)event_max_count) *100;
-		String participation_percentStr=
-				String.format("%.2f",participation_percent);
 		List<Integer> liveEventList=eventService.selectLiveEventList();
 		List<EventVo> endEventList=eventService.selectEndEventList();
 		
@@ -545,7 +549,7 @@ public class AdminController {
 		
 		model.addAttribute("liveEventList",liveEventList);
 		model.addAttribute("endEventList",endEventList);
-		model.addAttribute("participation_percentStr",participation_percentStr);
+
 		return "admin/eventParticipationForm";
 					
 	} 
@@ -556,10 +560,6 @@ public class AdminController {
 		List<Map<String,Object>> participationList=eventService.getJoinEventData(eventVo.getEvent_seq());
 		eventVo=eventService.getEventByEseq(eventVo.getEvent_seq());
 		int event_max_count=eventService.selectEventMaxCount(eventVo.getEvent_seq());
-		int participation=participationList.size();
-		double participation_percent=( participation/(double)event_max_count) *100;
-		String participation_percentStr=
-				String.format("%.2f",participation_percent);
 		List<Integer> liveEventList=eventService.selectLiveEventList();
 		List<EventVo> endEventList=eventService.selectEndEventList();
 		List<EventWinnerVo> eventWinnerList=eventService.selectWinnerIsGet(eventVo.getEvent_seq());
@@ -570,21 +570,32 @@ public class AdminController {
 		model.addAttribute("eventWinnerList",eventWinnerList);
 		model.addAttribute("liveEventList",liveEventList);
 		model.addAttribute("endEventList",endEventList);
-		model.addAttribute("participation_percentStr",participation_percentStr);
+		model.addAttribute("event_max_count",event_max_count);
 		return "admin/eventEndForm";
 					
 	} 
 	
 	@RequestMapping(value="/event_winnerRun", method=RequestMethod.POST)
-	public String eventWinnerRun(EventVo eventVo, String[] memberList,RedirectAttributes rttr) {
+	public String eventWinnerRun(EventVo eventVo, String[] memberList,RedirectAttributes rttr
+			,HttpSession session) {
 //		System.out.println("eventWinnerRun memberList"+memberList[0]);
 		int event_seq=eventVo.getEvent_seq();
 		System.out.println("eventWinnerRun event_seq "+event_seq);
-		String pc_code="1001";//포인트 코드
+		eventVo=eventService.getEventByEseq(event_seq);//포인트 코드
+		String admin_code=(String)session.getAttribute("admin_code");
+		if(admin_code ==null) {
+			return "redirect:/admin/admin_admin_login";
+		}
 		boolean result=false;
+		String 	pc_code=eventVo.getPc_code();
+		
+//		System.out.println("이벤트 코드 :"+eventVo.getPc_code());
+//		System.out.println("어드민 코드 :"+admin_code);
 		for(String m_id:memberList) {
 			result=eventService.transactionEventUpdate(event_seq, m_id, pc_code);
-		
+			MessageVo messageVo=new MessageVo(m_id, null, null, admin_code, "축하드립니다 유저 "+m_id+"님 이벤트 명("+
+			eventVo.getEvent_name()+")에 당첨되셨습니다 고객님의 이용에 항상 감사드립니다 앞으로도 꾸준한 사랑 부탁드리겠습니다");
+			messageService.insertNoBlackMessage(messageVo);
 		}
 		rttr.addFlashAttribute("transactionResult", String.valueOf(result));
 		return "redirect:/admin/event_end_participation?event_seq="+eventVo.getEvent_seq();
@@ -638,9 +649,13 @@ public class AdminController {
 		Date date = new Date(dateTime);
 		complainVo.setComplain_answer_date(date);
 		complainVo.setComplain_is_finish("Y");
+		String senderUser=complainVo.getM_id();
+		String admin_code=complainVo.getAdmin_code();
+		MessageVo messageVo=new MessageVo(senderUser, null, null, admin_code,"유저 ("+ complainVo.getM_id()+")님이문의하신 내용에 대한 답변이 완료되었습니다");
 		System.out.println(date);
 		System.out.println("complainAnswer complainVo"+complainVo);
 		boolean result=complainService.updateComplain(complainVo);
+		messageService.insertNoBlackMessage(messageVo);
 		rttr.addFlashAttribute("result",String.valueOf(result));
 		return "redirect:/admin/complainForm";
 					

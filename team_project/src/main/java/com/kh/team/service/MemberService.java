@@ -30,9 +30,7 @@ public interface MemberService {
 	public List<Map<String, Object>> adminNotApprovedDriver(); // 관리자 페이지에서 미승인 운전자 확인
 	public void approveDriver(String m_id); // 관리자 페이지에서 미승인 운전자 승인
 	public int getTotalDriverCount(String m_company); // 각 회사별 운전자 수 확인
-
 	public int getCountByApplyDate(String str_date);//하루 확정 예약자수 찾기
-
 	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company); // 탑승객 리스트 확인
 	public String getDriverSeqFromDriver(String m_id); // 운전자 번호 확인
 	public boolean approvePassenger(String m_id); // 탑승자 승인
@@ -40,4 +38,7 @@ public interface MemberService {
 	public String getApproveState(String m_id); // 탑승자의 현재 신청상태 확인
 	public boolean addDriver(DriverVo driverVo); // 회원이 운전하기페이지에서 운전정보 등록
 	public boolean isDriver(String m_id); // 운전하기에 등록이 되어있는지 여부 확인
+	public boolean updateDriver(DriverVo driverVo); // 운전하기등록 수정
+	public boolean deleteDriver(int driver_seq); // 운전하기에서 삭제
+	public DriverVo getDriverInfo(int driver_seq); // 운전하기에 등록한 정보 가져오기
 }

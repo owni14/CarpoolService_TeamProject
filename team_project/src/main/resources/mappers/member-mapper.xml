@@ -268,4 +268,23 @@
 		and m_id = #{m_id}
 	</select>
 	
+	<update id="updateDriver">
+		update driver set
+		driver_depart_location = #{driver_depart_location},
+		driver_is_smoke = #{driver_is_smoke},
+		driver_comment= #{driver_comment},
+		driver_depart_time = #{driver_depart_time}
+		where driver_seq = #{driver_seq}
+	</update>
+	
+	<delete id="deleteDriver">
+		delete from driver
+		where driver_seq = #{driver_seq}
+	</delete>
+	
+	<select id="getDriverInfo" resultType="DriverVo">
+		select * from driver
+		where driver_seq = #{driver_seq}
+	</select>
+	
 </mapper>

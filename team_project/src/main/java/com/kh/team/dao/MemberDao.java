@@ -41,4 +41,7 @@ public interface MemberDao {
 	public boolean isClick(String m_id); // 탑승자가 클릭했는지 유무 확인
 	public boolean insertDriver(DriverVo driverVo); // 운전등록
 	public boolean isDriver(String m_id); // 운전하기에 등록이 되어있는지 여부 확인
+	public boolean updateDriver(DriverVo driverVo); // 운전하기등록 수정
+	public boolean deleteDriver(int driver_seq); // 운전하기에서 삭제
+	public DriverVo getDriverInfo(int driver_seq); // 운전하기에 등록한 정보 가져오기
 }

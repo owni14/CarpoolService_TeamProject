@@ -83,4 +83,10 @@
 					order by senddate desc) a)
 		where rnum &lt; 4
 	</select>
+	
+	<select id="noneReadMCount" resultType="int">
+		select count(*) from message
+		where receiver_m_id = #{m_id}
+		and opendate is null
+	</select>
 </mapper>

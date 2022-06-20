@@ -70,13 +70,22 @@ public class MessageController {
 		return "redirect:" + prevUri;
 	}
 	
-	// 최신 쪽지 불러오기 (3개)
+	// 최근 쪽지 불러오기 (3개)
 	@ResponseBody
 	@RequestMapping(value="/lastMessageList", method= RequestMethod.POST)
 	public List<Map<String, Object>> lastMessageList(HttpSession session) {
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
 		List<Map<String, Object>> lastMessageList = messageService.lastMessageListById(loginVo.getM_id());
 		return lastMessageList;
+	}
+	
+	// 안읽은 쪽지 개수 불러오기
+	@ResponseBody
+	@RequestMapping(value="/noneReadMCount", method= RequestMethod.POST)
+	public int noneReadMCount(HttpSession session) {
+		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
+		
+		return 0;
 	}
 	
 	@ResponseBody

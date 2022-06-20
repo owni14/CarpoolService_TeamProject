@@ -111,6 +111,15 @@ https://templatemo.com/tm-559-zay-shop
 	background-color: aliceblue;
 	}
 	
+	/* message start */
+	#reMessage {display: none;}
+	#sender {background-color: white;}
+	#message_content {background-color: white;}
+	
+	#th_receiver {width: 20%;}
+	#th_content {width: 60%;}
+	#th_senddate {width: 20%;}
+	/* message end */
     </style>
 </head>
 
@@ -173,22 +182,36 @@ $(document).ready(function(){
 				}
 				if(this.CONTENT.length >= 25) {
 					span.eq(2).text(this.CONTENT.substring(0,25) + ".....");
+					span.eq(2).attr("data-content", this.CONTENT);
 				} else {
 					span.eq(2).text(this.CONTENT);
 				}
 				$("#lastTable").append(tr);
 			});
 		});
+		
+		var url2 = "/";
+		$.post
 	});
 // 	메세지 아이콘 클릭 end
 
+// 	최근 쪽지 상세보기 start
 	$("#lastTable").on("click", ".last_message_td", function(){
-		$.post
+		$("#message_read").modal("show");
+		var sender = $(this).find("span.last_sender").text();
+		var content = $(this).find("span.last_content").attr("data-content");
+		$("#sender").val(sender);
+		$("#message_content").text(content);
 	});
+	
+	$("#readClose").click(function() {
+		$("#message_read").modal('hide');
+	});
+// 	최근 쪽지 상세보기 end
 	
 });
 </script>
-
+	<%@ include file="/WEB-INF/views/message/message_read.jsp" %>
     <!-- Header -->
     <header id="header">
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -264,9 +287,9 @@ $(document).ready(function(){
 								<table style="display: none" id="clonetable">
 									<tr style="height: 33%;" >
 										<td class="last_message_td">
-											<span style="font-size: 14px;"></span>
+											<span style="font-size: 14px;" class="last_sender"></span>
 											<span style="font-size: 12px;"></span><br>
-											<span style="font-size: 12px;"></span>
+											<span style="font-size: 12px;" class="last_content"></span>
 										</td>
 									</tr>
 								</table>

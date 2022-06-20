@@ -31,7 +31,7 @@
 	
 	$(document).ready(function() {
 		smartEditor();
-		
+		var valPoint;
 	
 		//날짜계산
 		var item=$("#select_date").find("option:gt(0)");
@@ -67,22 +67,33 @@
 			var form=$("#frmEvent");
 			var event_max_count=$("#select_event_count").val();
 			var pc_code=$("#select_point_code").val();
+
 			if(event_max_count ==null){
 				event_max_count="${Math.ceil(memberCount*0.05) }";
 			}
 			if(pc_code ==null){
 				pc_code="1002";
+				valPoint="500포인트";
 			}
+			
 			event_max_count=parseInt(event_max_count);
 			form.find("[name=event_name]").val($("#eventName").val());
 			form.find("[name=event_content]").val(content);
 			form.find("[name=event_enddate]").val(event_enddate);
 			form.find("[name=event_max_count]").val(event_max_count);
 			form.find("[name=pc_code]").val(pc_code);
-			form.submit();
+			var isSubmit=window.confirm("입력하신 내용 끝나는 날짜 :"+event_enddate+"\n 당첨 인원수 :"+event_max_count
+					+"명\n포인트 획득 :"+valPoint+"\n맞습니까?");
+			if(isSubmit){
+				form.submit();
+			}
+			
 			
 		});
-		
+		//포인트 값 저장해놓기 
+		$("#select_point_code").change(function(){
+			valPoint=$("#select_point_code option:selected").text();
+		});
 	});
 </script>
 <c:set var="today" value="<%=new Date(new Date().getTime()) %>"/>

@@ -34,9 +34,4 @@ public class MylogSeviceImpl implements MylogService {
 		return driver_passengerlogList;
 	}
 
-	@Override
-	public boolean addDriver(DriverVo driverVo) {
-		boolean result = mylogDao.insertDriver(driverVo);
-		return result;
-	}
 }

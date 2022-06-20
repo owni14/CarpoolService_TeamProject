@@ -85,6 +85,7 @@
 		where rnum &lt; 4
 	</select>
 	
+
 	<!-- 안읽은 쪽지 개수 -->
 	<select id="noneReadMCount" resultType="int">
 		select count(*) from message
@@ -98,4 +99,25 @@
 		opendate = sysdate
 		where message_seq = #{message_seq}
 	</update>
+
+	<select id="adminGetMessageList" resultType="MessageVo">
+		select * from message
+		where receiver_admin_code = #{receiver_admin_code}
+		order by senddate desc
+	</select>
+	
+	<select id="adminSendMessageList" resultType="MessageVo">
+		select * from message
+		where sender_admin_code = #{sender_admin_code} 
+		and receiver_admin_code is not null and receiver_admin_code != #{sender_admin_code}
+		order by senddate desc
+	</select>
+	
+	<select id="adminToMeMessageList" resultType="MessageVo">
+		select * from message
+		where sender_admin_code = #{sender_admin_code} and receiver_admin_code is not null and
+		receiver_admin_code = #{sender_admin_code}
+		order by senddate desc
+	</select>
+
 </mapper>

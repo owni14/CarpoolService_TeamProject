@@ -298,7 +298,7 @@
 								<a href="/admin/home"><i class="icofont icofont-home"></i></a>
 								</li>
 								<li class="breadcrumb-item"><a href="#!">관리자 페이지</a></li>
-								<li class="breadcrumb-item"><a href="#!">받은 쪽지함</a></li>
+								<li class="breadcrumb-item"><a href="#!">내게쓴쪽지함</a></li>
 							</ul>
 						</div>
 					</div>
@@ -346,7 +346,7 @@
 			<!-- Basic table card start -->
 			<div class="card">
 					<div class="card-header">
-						<h5>받은 쪽지함</h5>
+						<h5>내게쓴쪽지함</h5>
 						<h5>
 							<select id="searchTypeSelector" name="searchTypeSelector" style="height:25px">
 								<option value="i"
@@ -425,7 +425,7 @@
 					</div>
 					<div class="card-block table-border-style">
 						<div class="table-responsive">
-							<a id="tag1"></a>
+							<a id="tag3"></a>
 							<table class="table" id="memberTable">
 								<thead>
 									<tr>

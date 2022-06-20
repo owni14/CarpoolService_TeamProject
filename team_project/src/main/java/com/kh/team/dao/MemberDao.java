@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.ComplainVo;
+import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -36,5 +37,11 @@ public interface MemberDao {
 	public boolean approvePassenger(String m_id); // 탑승자 승인
 	public boolean rejectPassenger(String m_id); // 탑승자 거절
 	public String getApproveState(String m_id); // 탑승자의 현재 신청상태 확인
-	public boolean changeDeletionState(String m_id); // 탑승신청을 하고 난 후 탑승취소를 했을경우 deletion이 'Y'로 되어 있는데 'Y'를 'N'으로 변경하게 해주는 메서드
+	public boolean changeDeletionState(String m_id, String boardLoct, String boardTime, String driver_seq); // 탑승신청을 하고 난 후 탑승취소를 했을경우 deletion이 'Y'로 되어 있는데 'Y'를 'N'으로 변경하게 해주는 메서드
+	public boolean isClick(String m_id); // 탑승자가 클릭했는지 유무 확인
+	public boolean insertDriver(DriverVo driverVo); // 운전등록
+	public boolean isDriver(String m_id); // 운전하기에 등록이 되어있는지 여부 확인
+	public boolean updateDriver(DriverVo driverVo); // 운전하기등록 수정
+	public boolean deleteDriver(int driver_seq); // 운전하기에서 삭제
+	public DriverVo getDriverInfo(int driver_seq); // 운전하기에 등록한 정보 가져오기
 }

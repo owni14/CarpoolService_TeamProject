@@ -282,4 +282,9 @@
 		where driver_seq = #{driver_seq}
 	</delete>
 	
+	<select id="getDriverInfo" resultType="DriverVo">
+		select * from driver
+		where driver_seq = #{driver_seq}
+	</select>
+	
 </mapper>

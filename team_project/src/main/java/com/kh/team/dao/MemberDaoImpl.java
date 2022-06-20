@@ -380,5 +380,11 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		return false;
 	}
+
+	@Override
+	public DriverVo getDriverInfo(int driver_seq) {
+		DriverVo driverVo = sqlSession.selectOne(NAMESPACE + "getDriverInfo", driver_seq);
+		return driverVo;
+	}
 	
 }

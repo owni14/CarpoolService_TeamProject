@@ -72,7 +72,7 @@ public class MemberTest {
 	}
 	
 	@Test
-	public void getDriverInfo() {
+	public void getDriverList() {
 		String m_id = "user03@gmail.com";
 		String m_company = "KAKAO";
 		Map<String, Object> mapDriverInfo = memberDao.getDriverById(m_id, m_company);
@@ -174,5 +174,11 @@ public class MemberTest {
 	public void deleteDriverTest() {
 		boolean result = memberDao.deleteDriver(52);
 		System.out.println("result:" + result);
+	}
+	
+	@Test
+	public void getDriverInfo() {
+		DriverVo driverVo = memberDao.getDriverInfo(4);
+		System.out.println(driverVo);
 	}
 }

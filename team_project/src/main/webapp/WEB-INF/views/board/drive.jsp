@@ -4,6 +4,14 @@
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <script>
 	var isDriver = "${isDriver}";
+	var updateResult = "${updateResult}";
+	var deleteResult = "${deleteResult}";
+	if (updateResult == "true") {
+		alert("수정이 완료되었습니다.");
+	}
+	if (deleteResult == "true") {
+		alert("삭제가 완료되었습니다.");
+	}
 	$(document).ready(function() {
 		var m_company = "${loginVo.m_company}";
 // 		var driver_seq = "${driver_seq}";
@@ -24,7 +32,7 @@
 	// 카카오 지도 api
 	var address = $("#startLoct").val();
 	var m_name = "N";
-	console.log("startLocation:" + address); // 출발 위치 확인
+// 	console.log("startLocation:" + address); // 출발 위치 확인
 	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
@@ -62,13 +70,28 @@
 	
 		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 	
+		     	// 마커 이미지의 이미지 주소입니다
+		        var imageSrc = "/resources/images/maker/home.png"; 
+		     	
+		     	// 마커 이미지의 이미지 크기 입니다
+		        var imageSize = new kakao.maps.Size(35, 35); 
+		        
+		        // 마커 이미지를 생성합니다    
+		        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		        
 		        // 결과값으로 받은 위치를 마커로 표시합니다
 		        var marker = new kakao.maps.Marker({
 		            map: map,
-		            position: coords
+		            position: coords,
+		            image : markerImage
 		        });
-	
 		        
+// 		        // 결과값으로 받은 위치를 마커로 표시합니다
+// 		        var marker = new kakao.maps.Marker({
+// 		            map: map,
+// 		            position: coords
+// 		        });
+	
 		        if (m_name != "N") {
 		        	var infowindow = new kakao.maps.InfoWindow({
 			            content: "<div style='width:150px;text-align:center;'> " + m_name + "님의 위치</div>"
@@ -88,9 +111,11 @@
 		        if (m_name != "N") {
 		        	setTimeout(function(){ map.relayout();  map.setCenter(coords), map.setLevel(4);}, 200);		        	
 		        }
+		        map.setDraggable(false); // 지도 이동 금지
+		        map.setZoomable(false); // 지도 확대및축소 금지
 		    } // if (status === kakao.maps.services.Status.OK) {})
 		}); // geocoder.addressSearch()  
-	}
+	} // function searchLocation(address, map, m_name) {})
 	
 	// 모달창에 표시할 지도
 	function showModalMap(address, m_name) {
@@ -105,7 +130,9 @@
 	    
 		// 주소를 받아 지도에 표시할 함수
 		var coords = searchLocation(address, modalMap, m_name);
-	} // function showModalMap(address) {}
+	} // function showModalMap(address) {})
+	
+	
 	
 	// 탑승자 주소 클릭시 실행되는 함수
 	$(".btnBoard").click(function() {
@@ -118,18 +145,20 @@
 	
 	// 운전하기가 등록되어 있을 경우 기존 운전하기내용을 수정 및 삭제할 수 있는 버튼을 보여줍니다.
 	if (isDriver == "true") {
-		console.log("checked");
-		console.log($("#btnCheck").attr("style", "display:none;"));
+		$("#btnCheck").attr("style", "display:none;")
 		$("#btnModify").attr("style", "false");
 		$("#btnDelete").attr("style", "false");
 	}
 	
 	$("#btnModify").click(function() {
-		console.log("clicked");
+		$("#btnCheck").attr("type", "button");
+		$("#frmDriver").attr("action", "/board/updateDriver");
+		$(this).attr("type", "submit");
 	});
 	
 }); // $(document).ready(function(){})
 </script>
+<h3 style="text-align: center;">탑승자 리스트</h3>
 <!-- 동승자 리스트 -->
 <div class="row"
 	<c:if test="${isDriver == false}">
@@ -205,38 +234,83 @@
 <div class="row" style="margin-bottom: 20px;">
 	<div class="col-md-2"></div>
 	<div class="col-md-8">
-		<form role="form" action="/board/addDriver" method="post">
+		<form id="frmDriver" role="form" action="/board/addDriver" method="post">
+		<input type="hidden" name="driver_seq" value="${driver_seq}">
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="startLocation"> 출발 위치 </label> 
 				<input type="text" class="form-control" id="startLoct" name="startLoct" readonly="readonly" value="${loginVo.m_address}"/>
 			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="isSmoke"> 흡연 여부 </label><br>
-				<input type="radio" id="isSmoke" name="isSmoke" value="Y"> 흡연
-				<input type="radio" id="isSmoke" name="isSmoke" value="N"> 비흡연
+				<input type="radio" id="isSmoke" name="isSmoke" value="Y" 
+					<c:if test="${driverVo.driver_is_smoke == 'Y'}">
+						checked="checked"
+					</c:if>
+				> 흡연
+				<input type="radio" id="isSmoke" name="isSmoke" value="N"
+					<c:if test="${driverVo.driver_is_smoke == 'N'}">
+						checked="checked"
+					</c:if>
+				> 비흡연
 			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="requirements"> 요구 사항 </label> 
-				<input type="text" class="form-control" id="requirements" name="requirements"/>
+				<input type="text" class="form-control" id="requirements" name="requirements" value="${driverVo.driver_comment}"/>
 			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
 				<label for="startTime"> 출발 시간 </label> 
 				<select id="startHour" name="startHour">
-					<option value="06:">06
-					<option value="07:">07
-					<option value="08:">08
+					<option value="06:" 
+						<c:if test="${depart_time_hour == '06:'}">
+							selected="selected"
+						</c:if>
+					>06
+					<option value="07:"
+						<c:if test="${depart_time_hour == '07:'}">
+							selected="selected"
+						</c:if>
+					>07
+					<option value="08:"
+						<c:if test="${depart_time_hour == '08:'}">
+							selected="selected"
+						</c:if>
+					>08
 				</select>
 				<select id="startMin" name="startMin">
-					<option value="00">00
-					<option value="10">10
-					<option value="20">20
-					<option value="30">30
-					<option value="40">40
-					<option value="50">50
+					<option value="00"
+						<c:if test="${depart_time_min == '00'}">
+							selected="selected"
+						</c:if>
+					>00
+					<option value="10"
+						<c:if test="${depart_time_min == '10'}">
+							selected="selected"
+						</c:if>
+					>10
+					<option value="20"
+						<c:if test="${depart_time_min == '20'}">
+							selected="selected"
+						</c:if>
+					>20
+					<option value="30"
+						<c:if test="${depart_time_min == '30'}">
+							selected="selected"
+						</c:if>
+					>30
+					<option value="40"
+						<c:if test="${depart_time_min == '40'}">
+							selected="selected"
+						</c:if>
+					>40
+					<option value="50"
+						<c:if test="${depart_time_min == '50'}">
+							selected="selected"
+						</c:if>
+					>50
 				</select>
 			</div>
 			<button id="btnCheck" type="submit" class="btn btn-primary" style="display: ">확인</button>
-			<a id="btnModify" type="button" class="btn btn-warning" style="display: none;">운전수정</a>
+			<button id="btnModify" type="button" class="btn btn-warning" style="display: none;">운전수정</button>
 			<a href="/board/deleteDriver?driver_seq=${driver_seq}" id="btnDelete" type="button" class="btn btn-danger" style="display: none;">운전취소</a>
 		</form>
 	</div>

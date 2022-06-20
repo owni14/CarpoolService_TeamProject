@@ -226,4 +226,10 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@Override
+	public DriverVo getDriverInfo(int driver_seq) {
+		DriverVo driverVo = memberDao.getDriverInfo(driver_seq);
+		return driverVo;
+	}
+
 }

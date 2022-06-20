@@ -37,4 +37,5 @@ public interface MemberDao {
 	public boolean rejectPassenger(String m_id); // 탑승자 거절
 	public String getApproveState(String m_id); // 탑승자의 현재 신청상태 확인
 	public boolean changeDeletionState(String m_id); // 탑승신청을 하고 난 후 탑승취소를 했을경우 deletion이 'Y'로 되어 있는데 'Y'를 'N'으로 변경하게 해주는 메서드
+	public boolean isClick(String m_id); // 탑승자가 클릭했는지 유무 확인
 }

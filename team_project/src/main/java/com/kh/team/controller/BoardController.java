@@ -69,6 +69,7 @@ public class BoardController {
 			String driverId = memberService.getDriverId(driver_seq);
 			System.out.println("BoardController passengerReservation, m_id: " + m_id);
 			System.out.println("BoardController passengerReservation, approveState: " + approveState);
+			System.out.println("BoardController passengerReservation, driverId: " + driverId);
 			
 			model.addAttribute("driverId", driverId);
 			model.addAttribute("approveState", approveState);

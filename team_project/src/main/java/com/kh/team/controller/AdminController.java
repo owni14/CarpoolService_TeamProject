@@ -318,6 +318,15 @@ public class AdminController {
 		}
 		String db_event_content=eventService.getContent((int)objSession);
 		System.out.println("eventUpdate db_event_Content" +db_event_content);
+		//섬네일 파일 만들기
+		List<String> insertImgList=FileUploadHelper.eventFilnameExtraction(eventVo.getEvent_content(), SERVERIP);
+		if(insertImgList.size()>0) {
+			eventVo.setEvent_img(insertImgList.get(0));
+		}
+		//섬네일 파일 추가
+		else {
+			eventVo.setEvent_img(null);
+		}
 		String contentStr=eventVo.getEvent_content();
 		List<String> contentFileList=FileUploadHelper.eventFilnameExtraction(contentStr, SERVERIP);
 		List<String> db_contentFileList=FileUploadHelper.eventFilnameExtraction(db_event_content, SERVERIP);

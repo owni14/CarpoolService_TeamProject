@@ -463,6 +463,7 @@ public class AdminController {
 	@RequestMapping(value = "/displayImage", method = RequestMethod.GET)
 	@ResponseBody
 	public byte[] displayImage(String filename) throws Exception {
+		
 		FileInputStream fis = null;
 		fis = new FileInputStream(filename);
 		byte[] data = IOUtils.toByteArray(fis);

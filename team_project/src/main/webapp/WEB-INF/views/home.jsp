@@ -29,7 +29,7 @@ $(document).ready(function() {
 			<div class="col-12 col-md-6 p-5 mt-3">
 				<a href="board/drive"><img style="width:500px; height:300px;" src="/resources/assets/img/driver.jpg"
 					class=" img-fluid border"></a>
-				<h5 class="text-center mt-3 mb-3">운전하기</h5>
+				<h5 class="text-center mt-3 mb-3">운전하기/탑승자 확인</h5>
 			</div>
 			<div class="col-12 col-md-6 p-5 mt-3">
 				<a href="board/reservation"><img style="width:500px; height:300px;" src="/resources/assets/img/reservation.jpg"

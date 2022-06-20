@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.team.dao.MessageDao;
 import com.kh.team.service.MessageService;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.MessageVo;
@@ -110,5 +111,17 @@ public class MessageController {
 		System.out.println("messageVo : " + messageVo);
 		boolean result = messageService.insertNoBlackMessage(messageVo);
 		return String.valueOf(result);
+	}
+	
+	@RequestMapping(value="/sendMessageBetweenAdmins", method = RequestMethod.POST)
+	public String sendMessageBetweenAdmins(MessageVo messageVo) {
+//		System.out.println("messageVo : " + messageVo);
+		String receiver_admin_codes = messageVo.getReceiver_admin_code();
+		String[] codes = receiver_admin_codes.split(",");
+		for (String code : codes) {
+			messageVo.setReceiver_admin_code(code);
+			messageService.insertNoBlackMessage(messageVo);
+		}
+		return "redirect:/admin/checkMyMessage";
 	}
 }

@@ -78,6 +78,24 @@ public class MessageServiceImpl implements MessageService {
 		return lastMessageList;
 	}
 
+	@Override
+	public List<MessageVo> adminGetMessageList(String receiver_admin_code) {
+		List<MessageVo> list = messageDao.adminGetMessageList(receiver_admin_code);
+		return list;
+	}
+
+	@Override
+	public List<MessageVo> adminSendMessageList(String sender_admin_code) {
+		List<MessageVo> list = messageDao.adminSendMessageList(sender_admin_code);
+		return list;
+	}
+
+	@Override
+	public List<MessageVo> adminToMeMessageList(String sender_admin_code) {
+		List<MessageVo> list = messageDao.adminToMeMessageList(sender_admin_code);
+		return list;
+	}
+
 	
 
 

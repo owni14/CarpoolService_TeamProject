@@ -83,4 +83,24 @@
 					order by senddate desc) a)
 		where rnum &lt; 4
 	</select>
+	
+	<select id="adminGetMessageList" resultType="MessageVo">
+		select * from message
+		where receiver_admin_code = #{receiver_admin_code}
+		order by senddate desc
+	</select>
+	
+	<select id="adminSendMessageList" resultType="MessageVo">
+		select * from message
+		where sender_admin_code = #{sender_admin_code} 
+		and receiver_admin_code is not null and receiver_admin_code != #{sender_admin_code}
+		order by senddate desc
+	</select>
+	
+	<select id="adminToMeMessageList" resultType="MessageVo">
+		select * from message
+		where sender_admin_code = #{sender_admin_code} and receiver_admin_code is not null and
+		receiver_admin_code = #{sender_admin_code}
+		order by senddate desc
+	</select>
 </mapper>

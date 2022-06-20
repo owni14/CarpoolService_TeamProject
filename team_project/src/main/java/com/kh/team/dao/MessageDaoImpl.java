@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.MessageVo;
 import com.kh.team.vo.PagingDto;
 
@@ -99,6 +100,25 @@ public class MessageDaoImpl implements MessageDao {
 	public List<Map<String, Object>> lastMessageListById(String m_id) {
 		List<Map<String, Object>> lastMessageList = sqlSession.selectList(NAMESPACE + "lastMessageListById", m_id);
 		return lastMessageList;
+	}
+
+	@Override
+	public List<MessageVo> adminGetMessageList(String receiver_admin_code) {
+		List<MessageVo> list = sqlSession.selectList(NAMESPACE + "adminGetMessageList", receiver_admin_code);
+		return list;
+	}
+
+
+	@Override
+	public List<MessageVo> adminSendMessageList(String sender_admin_code) {
+		List<MessageVo> list = sqlSession.selectList(NAMESPACE + "adminSendMessageList", sender_admin_code);
+		return list;
+	}
+
+	@Override
+	public List<MessageVo> adminToMeMessageList(String sender_admin_code) {
+		List<MessageVo> list = sqlSession.selectList(NAMESPACE+ "adminToMeMessageList", sender_admin_code);
+		return list;
 	}
 
 }

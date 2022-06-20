@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.team.service.AdminService;
 import com.kh.team.service.ComplainService;
 import com.kh.team.service.EventService;
+import com.kh.team.service.EvlService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.MemberUpdateService;
 import com.kh.team.service.MessageService;
@@ -64,6 +65,7 @@ public class AdminController {
 	MemberUpdateService memberUpdateService;
 	@Autowired
 	MessageService messageService;
+	
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin(Model model,HttpSession session,PagingDto pagingDto) {
@@ -124,11 +126,13 @@ public class AdminController {
 		dayPassengerCounts.add(daycount);
 		strList.add(targetDateStr);
 		}//end for
-		//모든 유저에게 한달후 포인트 자동으로 등급에 따라 지급
-
-		boolean log=DateHelper.isPointMonthDay();
-       
-        // 포인트 자동 지급 끝
+//		//모든 유저에게 한달후 포인트 자동으로 등급에 따라 지급
+//
+//		boolean isgivingDay=DateHelper.isPointMonthDay();
+//		if(isgivingDay) {
+//			evlService.updatePointByEvl();
+//		}
+//        // 포인트 자동 지급 끝
 		model.addAttribute("top5List", top5List);
 		model.addAttribute("noEventGetCount", noEventGetCount);
 		model.addAttribute("noAnswer", noAnswer);

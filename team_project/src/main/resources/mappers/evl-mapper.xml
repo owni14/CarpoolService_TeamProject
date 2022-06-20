@@ -30,4 +30,18 @@ where m.m_id = de.m_id and  de.g_code = gb.g_code
 	set b.m_point = b.m_point + b.g_benefit
 	
 	</update>
+	
+	<!-- 포인트 체크용 테이블 사용  -->
+	<select id="selectCountIsUpdate" resultType="int">
+	select count(*) from is_update_point
+	where to_char(iup_date, 'yyyymmdd') = #{formattedToday}
+	and iup_what = #{iup_what}
+	</select>
+	
+	<insert id="insertEvlUpdate">
+	insert into is_update_point
+	(iup_seq, iup_date, iup_what)
+	values
+	(seq_is_update_point.nextval, #{iup_date}, #{iup_what})
+	</insert>
 </mapper>

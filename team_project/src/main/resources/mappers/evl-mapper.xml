@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kh.team.mappers.evl">
+	
+	<insert id="insertDriverEvl">
+	insert into driver_evl
+	(de_seq, de_drive_count, m_id, g_code)
+	values
+	(seq_driver_evl.nextval, #{de_drive_count}, #{m_id}, #{g_code} )
+	</insert>
+	
+	<insert id="insertPassengerEvl">
+	insert into passenger_evl
+	(pe_seq, pe_ride_count, m_id, g_code)
+	values
+	(seq_passenger_evl.nextval, #{pe_ride_count}, #{m_id}, #{g_code})
+	</insert>
+	
+	<select id="selectEvlCodeList" resultType="string">
+	select g_code from grade_benefit
+	</select>
+	
+	<!-- drive등급에 따른 포인트 지급 -->
+	<update id="updatePointByEvl">
+	update (select m.m_id, m.m_point, de.g_code,gb.g_benefit from member m, driver_evl de , grade_benefit gb
+where m.m_id = de.m_id and  de.g_code = gb.g_code
+) b
+	set b.m_point = b.m_point + b.g_benefit
+	
+	</update>
+	
+	<!-- 포인트 체크용 테이블 사용  -->
+	<select id="selectCountIsUpdate" resultType="int">
+	select count(*) from is_update_point
+	where to_char(iup_date, 'yyyymmdd') = #{formattedToday}
+	and iup_what = #{iup_what}
+	</select>
+	<!-- iup what 에 따른 인서트 -->
+	<insert id="insertEvlUpdate">
+	insert into is_update_point
+	(iup_seq, iup_date, iup_what)
+	values
+	(seq_is_update_point.nextval, #{iup_date}, #{iup_what})
+	</insert>
+	
+	<!-- drive등급에 따른 포인트 지급 -->
+	<update id="updatePointPassengerByEvl">
+	update (select m.m_id, m.m_point, pe.g_code, gb.g_benefit from member m, passenger_evl pe , grade_benefit gb
+where m.m_id = pe.m_id and  pe.g_code = gb.g_code
+) b
+	set b.m_point = b.m_point + b.g_benefit
+
+	</update>
+	
+</mapper>

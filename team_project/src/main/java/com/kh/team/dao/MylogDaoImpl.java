@@ -20,15 +20,6 @@ public class MylogDaoImpl implements MylogDao {
 	private SqlSession sqlSession;
 	
 	@Override
-	public boolean insertDriver(DriverVo driverVo) {
-		int count = sqlSession.insert(NAMESPACE + "insertDriver", driverVo);
-		if (count > 0) {
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	public void insertPassenger(PassengerVo passengerVo) {
 		sqlSession.insert(NAMESPACE + "insertPassenger", passengerVo);
 	}

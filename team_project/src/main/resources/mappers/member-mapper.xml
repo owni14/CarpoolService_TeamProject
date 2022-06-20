@@ -144,7 +144,8 @@
 	
 	<update id="deletePassenger">
 		update passenger set
-		is_cancel = 'Y'
+		is_cancel = 'Y',
+		is_click  = 'N'
 		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
 		and m_id = #{m_id}
 		and driver_seq = #{driver_seq}
@@ -180,9 +181,10 @@
 		select p.m_id, m.m_name, m.m_dept, p.passenger_depart_time, p.passenger_depart_location
 			from member m, passenger p
 			where m.m_id = p.m_id
+			and to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
 			and p.is_cancel = 'N'
 			and p.driver_seq = #{driver_seq}
-		and m_company = #{m_company}
+			and m_company = #{m_company}
 	</select>
 
 	<select id="getCountByApplyDate" resultType="int">
@@ -199,8 +201,8 @@
 
 	<select id="getDriverSeqFromDriver" resultType="string"> 
 		select driver_seq from driver
-		where m_id = #{m_id}
-
+		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
+		and m_id = #{m_id}
 	</select>
 	
 	<select id="approvePassenger">
@@ -230,17 +232,59 @@
 		select p.is_approve 
 		from driver d, passenger p
 		where d.driver_seq = p.driver_seq
-		and to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
+		and to_char(p.apply_date, 'yyyy/mm/dd') = #{formattedToday}
 		and p.is_cancel = 'N'
 		and p.m_id = #{m_id}
 	</select>
 	
 	<select id="changeDeletionState">
 		update passenger set
+		passenger_depart_location = #{boardLoct},
+		passenger_depart_time = #{boardTime},
+		driver_seq = #{driver_seq},
 		is_approve = 'W',
-		is_cancel = 'N'
+		is_cancel = 'N',
+		is_click = 'Y'
 		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
 		and m_id = #{m_id}
+	</select>
+	
+	<select id="isClick" resultType="string">
+		select is_click from passenger
+		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
+		and m_id = #{m_id}
+	</select>
+	
+	<insert id="insertDriver">
+		insert into driver 
+			(driver_seq, m_id, driver_depart_location, driver_is_smoke, driver_comment, driver_depart_time)
+		values
+			(seq_driver.nextval, #{m_id}, #{driver_depart_location}, #{driver_is_smoke}, #{driver_comment}, #{driver_depart_time})
+	</insert>
+	
+	<select id="isDriver" resultType="_int">
+		select count(*) from driver
+		where to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
+		and m_id = #{m_id}
+	</select>
+	
+	<update id="updateDriver">
+		update driver set
+		driver_depart_location = #{driver_depart_location},
+		driver_is_smoke = #{driver_is_smoke},
+		driver_comment= #{driver_comment},
+		driver_depart_time = #{driver_depart_time}
+		where driver_seq = #{driver_seq}
+	</update>
+	
+	<delete id="deleteDriver">
+		delete from driver
+		where driver_seq = #{driver_seq}
+	</delete>
+	
+	<select id="getDriverInfo" resultType="DriverVo">
+		select * from driver
+		where driver_seq = #{driver_seq}
 	</select>
 	
 </mapper>

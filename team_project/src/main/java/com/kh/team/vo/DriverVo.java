@@ -11,6 +11,16 @@ public class DriverVo {
 	public DriverVo() {
 		super();
 	}
+	
+	public DriverVo(int driver_seq, String driver_depart_location, String driver_is_smoke, String driver_comment,
+			String driver_depart_time) {
+		super();
+		this.driver_seq = driver_seq;
+		this.driver_depart_location = driver_depart_location;
+		this.driver_is_smoke = driver_is_smoke;
+		this.driver_comment = driver_comment;
+		this.driver_depart_time = driver_depart_time;
+	}
 
 	public DriverVo(int driver_seq, String m_id, String driver_depart_location, String driver_is_smoke,
 			String driver_comment, String driver_depart_time) {

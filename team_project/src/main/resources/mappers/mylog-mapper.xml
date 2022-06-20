@@ -5,13 +5,6 @@
   
 <mapper namespace="com.kh.team.mappers.mylog">
 
-	<insert id="insertDriver">
-		insert into driver 
-			(driver_seq, m_id, driver_depart_location, driver_is_smoke, driver_comment, driver_depart_time)
-		values
-			(seq_driver.nextval, #{m_id}, #{driver_depart_location}, #{driver_is_smoke}, #{driver_comment}, #{driver_depart_time})
-	</insert>
-	
 	<insert id="insertPassenger">
 		insert into passenger
 			(passenger_seq, m_id, passenger_depart_location, passenger_depart_time, driver_seq)

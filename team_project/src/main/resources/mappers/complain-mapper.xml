@@ -65,6 +65,7 @@
 	
 	<select id="getAllFinishList" resultType="ComplainVo">
 	select * from complain where complain_is_finish ='Y'
+	order by complain_answer_date desc
 	<include refid="search"></include>
 	</select>
 	

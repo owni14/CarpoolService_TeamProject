@@ -20,11 +20,8 @@
 					<textarea id="message_content" class="form-control" readonly></textarea>
 				</div>
 				<div class="modal-footer">
-					<button type="button" id="mainMessage" class="btn" style="display: none;">다른 쪽지 보기</button>
 					<button type="button" id="reMessage" class="btn btn-success">답장하기</button>
-					<button type="button" id="readClose" class="btn btn-secondary" data-dismiss="modal">
-						닫기
-					</button>
+					<a id="readClose" class="btn btn-secondary"> 닫기</a>
 				</div>
 			</div>
 		</div>

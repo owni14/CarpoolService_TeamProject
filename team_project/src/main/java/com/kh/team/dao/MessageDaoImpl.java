@@ -101,4 +101,15 @@ public class MessageDaoImpl implements MessageDao {
 		return lastMessageList;
 	}
 
+	@Override
+	public int noneReadMCount(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "noneReadMCount", m_id);
+		return count;
+	}
+
+	@Override
+	public void openMessage(int message_seq) {
+		sqlSession.update(NAMESPACE + "openMessage", message_seq);
+	}
+
 }

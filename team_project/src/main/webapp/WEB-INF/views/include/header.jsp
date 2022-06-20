@@ -116,9 +116,10 @@ https://templatemo.com/tm-559-zay-shop
 	#sender {background-color: white;}
 	#message_content {background-color: white;}
 	
-	#th_receiver {width: 20%;}
-	#th_content {width: 60%;}
-	#th_senddate {width: 20%;}
+	.th_receiver {width: 20%;}
+	.th_content {width: 60%;}
+	.th_senddate {width: 20%;}
+	.ncount_message {color: gray; font-weight: bolder;}
 	/* message end */
     </style>
 </head>
@@ -153,45 +154,61 @@ $(document).ready(function(){
 		var url = "/message/lastMessageList";
 		$.post(url, function(rData) {
 			$("#lastTable tr").remove();
-// 			console.log(rData);
-			$.each(rData, function() {
-// 				console.log("rData : ", rData);
-// 				console.log($(this));
-				var tr = $("#clonetable tr").clone();
-				var span = tr.find("span");
-				if (this.SENDER_M_ID != null) {
-					span.eq(0).text(this.SENDER_M_ID);
-				} else {
-					span.eq(0).text(this.ADMIN_WORK);
-				}
-				// 날짜 구하기
-				var enddate=new Date(this.SENDDATE);
-				var startdate=new Date();
-				var diffMin = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60));
-				if (diffMin <= 60) {
-					span.eq(1).text(diffMin + "분 전");
-				} else if (diffMin > 60 && diffMin <= 1440) {
-					var diffHour = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60*60));
-					span.eq(1).text(diffHour + "시간 전");
-				} else if (diffMin > 1440 && diffMin <= 10080) {
-					var diffHour = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60*60*24));
-					span.eq(1).text(diffHour + "일 전");
-				} else if (diffMin > 10080) {
-					var diffHour = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60*60*24*7));
-					span.eq(1).text(diffHour + "주 전");
-				}
-				if(this.CONTENT.length >= 25) {
-					span.eq(2).text(this.CONTENT.substring(0,25) + ".....");
-					span.eq(2).attr("data-content", this.CONTENT);
-				} else {
-					span.eq(2).text(this.CONTENT);
-				}
-				$("#lastTable").append(tr);
-			});
+// 			console.log("rData: ", rData);
+			if (rData == "") {
+				var html = "<tr><td>새 쪽지가 없습니다.</td></tr>";
+				$("#lastTable").append(html);
+			} else {
+				$.each(rData, function() {
+// 					console.log("rData : ", rData);
+// 					console.log($(this));
+
+					// 읽음 처리 start
+					var url = "/message/openMessage";
+					var sData = {
+							"message_seq" : this.MESSAGE_SEQ
+					};
+					$.get(url, sData, function() {});
+					// 읽음 처리 end
+					
+					var tr = $("#clonetable tr").clone();
+					var span = tr.find("span");
+					if (this.SENDER_M_ID != null) {
+						span.eq(0).text(this.SENDER_M_ID);
+					} else {
+						span.eq(0).text(this.ADMIN_WORK);
+					}
+					// 날짜 구하기
+					var enddate=new Date(this.SENDDATE);
+					var startdate=new Date();
+					var diffMin = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60));
+					if (diffMin <= 60) {
+						span.eq(1).text(diffMin + "분 전");
+					} else if (diffMin > 60 && diffMin <= 1440) {
+						var diffHour = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60*60));
+						span.eq(1).text(diffHour + "시간 전");
+					} else if (diffMin > 1440 && diffMin <= 10080) {
+						var diffHour = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60*60*24));
+						span.eq(1).text(diffHour + "일 전");
+					} else if (diffMin > 10080) {
+						var diffHour = parseInt((startdate.getTime() - enddate.getTime()) / (1000*60*60*24*7));
+						span.eq(1).text(diffHour + "주 전");
+					}
+					if(this.CONTENT.length >= 25) {
+						span.eq(2).text(this.CONTENT.substring(0,25) + ".....");
+						span.eq(2).attr("data-content", this.CONTENT);
+					} else {
+						span.eq(2).text(this.CONTENT);
+					}
+					$("#lastTable").append(tr);
+				});
+			}
 		});
 		
-		var url2 = "/";
-		$.post
+		var url2 = "/message/noneReadMCount";
+		$.post(url2, function(rData) {
+			$(".ncount_message").text(rData);
+		});
 	});
 // 	메세지 아이콘 클릭 end
 
@@ -271,7 +288,7 @@ $(document).ready(function(){
 									<div style="height: 15%" id="m_dropdown_title">
 										<div class="row">
 											<div class="col-md-6">
-												<span class="span_message" style="margin: 10px;">새 쪽지</span>
+												<span class="span_message" style="margin: 10px;">새 쪽지</span> <span class="ncount_message"></span>
 											</div>
 											<div class="col-md-6" style="text-align: right;">
 												<a href="/message/recAdminMessagePage"><span class="span_message" style="margin: 10px;">쪽지함 ></span></a>
@@ -279,7 +296,7 @@ $(document).ready(function(){
 										</div>
 									</div>
 									<table class="table" id="lastTable" style="height: 85%">
-									
+										
 									</table>
 								</div>
 								

@@ -78,6 +78,18 @@ public class MessageServiceImpl implements MessageService {
 		return lastMessageList;
 	}
 
+	@Override
+	public int noneReadMCount(String m_id) {
+		int count = messageDao.noneReadMCount(m_id);
+		return count;
+	}
+
+	@Override
+	public void openMessage(int message_seq) {
+		messageDao.openMessage(message_seq);
+		
+	}
+
 	
 
 

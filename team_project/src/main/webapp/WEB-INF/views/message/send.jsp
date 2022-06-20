@@ -56,6 +56,13 @@ $(document).ready(function() {
 	$("#readClose").click(function() {
 		$("#message_read").modal('hide');
 	});
+	
+	$("#readClose").click(function() {
+		var pathname = $(location).attr("pathname");
+		var search	 = $(location).attr("search");
+		var href = pathname + search;
+		$(this).attr("href", href);
+	});
 });
 </script>
 
@@ -82,8 +89,8 @@ $(document).ready(function() {
 		</tr>
 		<c:forEach items="${sendMessageList}" var="MessageVo">
 		<tr class="m_content_tr">
-			<td id="td_receiver"><span>${MessageVo.receiver_m_id}</span></td>
-			<td id="td_content" data-mContent="${MessageVo.content}"><span>
+			<td class="td_receiver"><span>${MessageVo.receiver_m_id}</span></td>
+			<td class="td_content" data-mContent="${MessageVo.content}"><span>
 			<c:choose>
 			<c:when test="${MessageVo.content.length() >=30}">${MessageVo.content.substring(0,30)}...</c:when>
 			<c:otherwise>
@@ -91,7 +98,7 @@ $(document).ready(function() {
 			</c:otherwise>
 			
 			</c:choose></span></td>
-			<td id="td_senddate"><span>${MessageVo.senddate}</span></td>
+			<td class="td_senddate"><span>${MessageVo.senddate}</span></td>
 		</tr>
 		</c:forEach>
 	</table>

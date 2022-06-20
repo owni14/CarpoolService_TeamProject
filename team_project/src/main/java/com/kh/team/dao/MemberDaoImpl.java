@@ -362,5 +362,23 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean updateDriver(DriverVo driverVo) {
+		int count = sqlSession.update(NAMESPACE + "updateDriver", driverVo);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteDriver(int driver_seq) {
+		int count = sqlSession.delete(NAMESPACE + "deleteDriver", driver_seq);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
 	
 }

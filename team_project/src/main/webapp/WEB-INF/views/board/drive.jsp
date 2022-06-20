@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <script>
+	var isDriver = "${isDriver}";
 	$(document).ready(function() {
 		var m_company = "${loginVo.m_company}";
 // 		var driver_seq = "${driver_seq}";
@@ -113,11 +114,22 @@
 		var m_name = $(this).attr("data-m_name");
 		// 주소를 지도를 띄울 함수로 보냅니다.
 		showModalMap(address, m_name);
+	}); // $(".btnBoard").click(function() {})
+	
+	// 운전하기가 등록되어 있을 경우 기존 운전하기내용을 수정 및 삭제할 수 있는 버튼을 보여줍니다.
+	if (isDriver == "true") {
+		console.log("checked");
+		console.log($("#btnCheck").attr("style", "display:none;"));
+		$("#btnModify").attr("style", "false");
+		$("#btnDelete").attr("style", "false");
+	}
+	
+	$("#btnModify").click(function() {
+		console.log("clicked");
 	});
 	
 }); // $(document).ready(function(){})
 </script>
-
 <!-- 동승자 리스트 -->
 <div class="row"
 	<c:if test="${isDriver == false}">
@@ -223,7 +235,9 @@
 					<option value="50">50
 				</select>
 			</div>
-			<button id="btnCheck" type="submit" class="btn btn-primary">확인</button>
+			<button id="btnCheck" type="submit" class="btn btn-primary" style="display: ">확인</button>
+			<a id="btnModify" type="button" class="btn btn-warning" style="display: none;">운전수정</a>
+			<a href="/board/deleteDriver?driver_seq=${driver_seq}" id="btnDelete" type="button" class="btn btn-danger" style="display: none;">운전취소</a>
 		</form>
 	</div>
 	<div class="col-md-2"></div>

@@ -40,4 +40,6 @@ public interface MemberService {
 	public String getApproveState(String m_id); // 탑승자의 현재 신청상태 확인
 	public boolean addDriver(DriverVo driverVo); // 회원이 운전하기페이지에서 운전정보 등록
 	public boolean isDriver(String m_id); // 운전하기에 등록이 되어있는지 여부 확인
+	public boolean updateDriver(DriverVo driverVo); // 운전하기등록 수정
+	public boolean deleteDriver(int driver_seq); // 운전하기에서 삭제
 }

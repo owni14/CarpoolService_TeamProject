@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.kh.team.dao.MemberDao;
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.ComplainVo;
+import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 
@@ -159,6 +160,19 @@ public class MemberTest {
 	public void isDriverTest() {
 		String m_id = "user04@gmail.com";
 		boolean result = memberDao.isDriver(m_id);
+		System.out.println("result:" + result);
+	}
+	
+	@Test
+	public void updateDriverTest() {
+		DriverVo driverVo = new DriverVo(63, "울산 북구 아진로 75", "N", "updateTest", "07:30");
+		boolean result = memberDao.updateDriver(driverVo);
+		System.out.println("result:" + result);
+	}
+	
+	@Test
+	public void deleteDriverTest() {
+		boolean result = memberDao.deleteDriver(52);
 		System.out.println("result:" + result);
 	}
 }

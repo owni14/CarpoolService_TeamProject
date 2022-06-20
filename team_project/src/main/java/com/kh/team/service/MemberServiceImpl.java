@@ -214,4 +214,16 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@Override
+	public boolean updateDriver(DriverVo driverVo) {
+		boolean result = memberDao.updateDriver(driverVo);
+		return result;
+	}
+
+	@Override
+	public boolean deleteDriver(int driver_seq) {
+		boolean result = memberDao.deleteDriver(driver_seq);
+		return result;
+	}
+
 }

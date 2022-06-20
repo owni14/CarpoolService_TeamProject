@@ -254,12 +254,18 @@ public class BoardController {
 	}
 	
 	/*
-	@ResponseBody
-	@RequestMapping(value = "/approveState", method = RequestMethod.GET)
-	public String approveState(String m_id) {
-		System.out.println("m_id:" + m_id);
-		String state = memberService.approveState(m_id);
-		return state;
+	@RequestMapping(value = "/updateDriver", method = RequestMethod.GET)
+	public String updateDriver(DriverVo driverVo) {
+		boolean result = memberService.updateDriver(driverVo);
+		return "redirect:/board/reservation";
 	}
 	*/
+	
+	// 운전하기 삭제
+	@RequestMapping(value = "/deleteDriver", method = RequestMethod.GET)
+	public String deleteDriver(int driver_seq) {
+		boolean result = memberService.deleteDriver(driver_seq);
+		return "redirect:/board/reservation";
+	}
+	
 }

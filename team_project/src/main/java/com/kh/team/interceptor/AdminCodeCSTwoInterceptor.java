@@ -15,7 +15,10 @@ public class AdminCodeCSTwoInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		HttpSession session = request.getSession();
 		String url=request.getHeader("referer");
-		String targetUri=url.substring(16);
+		String targetUri=null;
+		if(url !=null) {
+			targetUri=url.substring(16);
+		}
 		System.out.println(targetUri);
 
 		String admin_code = (String)session.getAttribute("admin_code");

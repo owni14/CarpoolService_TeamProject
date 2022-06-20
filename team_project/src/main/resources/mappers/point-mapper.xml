@@ -32,4 +32,8 @@
 		select count(*) from point_history
 		where m_id = #{m_id}
 	</select>
+	
+	<select id="selectAllPointCodeList">
+			select * from point_code
+	</select>
 </mapper>

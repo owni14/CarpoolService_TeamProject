@@ -73,9 +73,9 @@ public class MessageController {
 	// 최신 쪽지 불러오기 (3개)
 	@ResponseBody
 	@RequestMapping(value="/lastMessageList", method= RequestMethod.POST)
-	public List<MessageVo> lastMessageList(HttpSession session) {
+	public List<Map<String, Object>> lastMessageList(HttpSession session) {
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
-		List<MessageVo> lastMessageList = messageService.lastMessageListById(loginVo.getM_id());
+		List<Map<String, Object>> lastMessageList = messageService.lastMessageListById(loginVo.getM_id());
 		return lastMessageList;
 	}
 	

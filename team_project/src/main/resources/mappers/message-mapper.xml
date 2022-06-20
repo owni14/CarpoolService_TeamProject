@@ -73,12 +73,13 @@
 		where sender_m_id = #{m_id}
 	</select>
 	
-	<select id="lastMessageListById" resultType="MessageVo">
+	<select id="lastMessageListById" resultType="Map">
 		select * from
 			(select rownum rnum, a.* from
 				(select * 
-					from message
+					from message m, admin a
 					where receiver_m_id = #{m_id}
+					and m.sender_admin_code = a.admin_code(+)
 					order by senddate desc) a)
 		where rnum &lt; 4
 	</select>

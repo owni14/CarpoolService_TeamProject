@@ -18,11 +18,11 @@
 		insert into event
 		(event_seq, event_name, 
 		 event_content,event_img,
-		event_max_count,event_point)
+		event_max_count,pc_code)
 		values
 		(#{event_seq}, #{event_name}, 
 		 #{event_content},#{event_img, jdbcType=VARCHAR},
-		#{event_max_count}, #{event_point})
+		#{event_max_count}, #{pc_code})
 	</insert>
 	
 	<update id="updateEvent">

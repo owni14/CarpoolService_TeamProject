@@ -49,7 +49,7 @@
 			}
 				frmApproveNotify.attr("action","/admin/modifyBlackPoint");
 				frmApproveNotify.attr("method","post");
-			//frmApproveNotify.submit();
+			frmApproveNotify.submit();
 		});
 		$("p.content").click(function(){
 			location.href="/admin/report_management";
@@ -210,13 +210,13 @@ const data = {
     backgroundColor: 'rgb(255, 99, 132)',
     borderColor: 'rgb(255, 99, 132)',
     data: [
-    	${dayPassengerCounts.get(6)},
-    	${dayPassengerCounts.get(5)},
-    	${dayPassengerCounts.get(4)},
-    	${dayPassengerCounts.get(3)},
-    	${dayPassengerCounts.get(2)},
-    	${dayPassengerCounts.get(1)},
-    	${dayPassengerCounts.get(0)},
+    	'${dayPassengerCounts.get(6)}',
+    	'${dayPassengerCounts.get(5)}',
+    	'${dayPassengerCounts.get(4)}',
+    	'${dayPassengerCounts.get(3)}',
+    	'${dayPassengerCounts.get(2)}',
+    	'${dayPassengerCounts.get(1)}',
+    	'${dayPassengerCounts.get(0)}',
     ],
   }  ]
   
@@ -393,9 +393,9 @@ const myChart = new Chart(
                                                                         <td>
                                                                             <p class="d-inline-block m-r-20 content">
                                                                             <c:choose>
-                                                                            <c:when test="${blackListVo.black_content.length() >=10}">
+                                                                            <c:when test="${blackListVo.black_content.length() >=30}">
                                                                           
-                                                                            ${blackListVo.black_content.substring(0,10)}...</c:when>
+                                                                            ${blackListVo.black_content.substring(0,30)}...</c:when>
                                                                             <c:otherwise> ${blackListVo.black_content}</c:otherwise>
                                                                             </c:choose>
                                                                            </p>

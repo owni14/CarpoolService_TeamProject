@@ -31,7 +31,7 @@
 		event_content=#{event_content},
 		event_is_finish=#{event_is_finish},
 		event_enddate=#{event_enddate, jdbcType=VARCHAR},
-		event_img=#{event_img, jdbcType=VARCHAR},
+		
 		event_max_count=#{event_max_count},
 		event_point=#{event_point}
 		where event_seq=#{event_seq}
@@ -87,10 +87,35 @@
 		select event_content from event where event_seq= #{event_seq}
 	</select>
 	
-	<select id="getWinnerId" resultType="String">
-		select m_id from Event_Participation_event_seq#{event_seq}
+	<select id="checkWinner" resultType="int">
+		select count(*) from event_participation_event_seq${event_seq}
 		where ep_is_winner = 'Y'
+		and m_id = #{m_id}
 	</select>
+	
+	<select id="couponPrice" resultType="int">
+		select event_coupon from event
+		where event_seq = #{event_seq}
+	</select>
+	
+	<select id="getEventPoint" resultType="int">
+		select p.pc_point from event e, point_code p
+		where e.pc_code = p.pc_code
+		and e.event_seq = #{event_seq}
+	</select>
+	
+	<select id="checkGoods" resultType="string">
+		select e_winner_is_get from event_winner
+		where m_id = #{m_id}
+		and event_seq = #{event_seq}
+	</select>
+	
+	<update id="sendGoods">
+		update event_winner set
+		e_winner_is_get = 'Y'
+		where m_id = #{m_id}
+		and event_seq = #{event_seq}
+	</update>
 	
 	<select id="createTableEvnet" parameterType="HashMap">
 	${createTableStr}
@@ -209,6 +234,16 @@ where m.m_id=ep${event_seq}.m_id
 	select count(*) from event_winner
 	where e_winner_is_get ='N'
 	</select>
+	
+	<select id="selectEventTopThree" resultType="EventVo">
+	select * from
+			(select rownum rnum, a.* from
+				(select * from event 
+				where event_is_finish = 'N'
+				order by event_startdate desc) a)
+		where rnum between 1 and 3
+	</select>
+	
 	<sql id="search">
 	<if test = "searchType != null">
 			<choose>

@@ -291,12 +291,25 @@
 	</select>
 	
 	<select id="selectM_idList" resultType="MemberVo">
-	select m_id from member order by m_joindate desc
+		select m_id from member order by m_joindate desc
+	</select>
+	
+	<select id="getMemberId" resultType="string">
+		select m_id from member
+		where m_name = #{m_name}
+		and m_company = #{m_company}
+		and m_cellphone = #{m_cellphone}
+	</select>
+	
+	<select id="getMemberPw" resultType="string">
+		select m_pw from member
+		where m_id = #{m_id}
+		and m_cellphone = #{m_cellphone}
 	</select>
 	
 	<select id="selectApproveCount" resultType="int">
-	select  count(*) from approve_driver
-	where ad_approve ='Y'
+		select  count(*) from approve_driver
+		where ad_approve ='Y'
 	</select>
 	
 </mapper>

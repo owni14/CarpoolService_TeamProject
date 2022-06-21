@@ -99,9 +99,45 @@ public class EventDaoImpl implements EventDao{
 	}
 	
 	@Override
-	public List<String> getWinnerId(int event_seq) {
-		List<String> winnerList = sqlSession.selectList(NAMESPACE + "getWinnerId", event_seq);
-		return winnerList;
+	public boolean checkWinner(String m_id, int event_seq) {
+		Map<String,Object> parameter = new HashMap<>();
+		parameter.put("m_id", m_id);
+		parameter.put("event_seq", event_seq);
+		int count = sqlSession.selectOne(NAMESPACE + "checkWinner", parameter);
+		System.out.println("count: " + count);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public int couponPrice(int event_seq) {
+		int couponPrice = sqlSession.selectOne(NAMESPACE + "couponPrice", event_seq);
+		return couponPrice;
+	}
+	
+	@Override
+	public int getEventPoint(int event_seq) {
+		int eventPoint = sqlSession.selectOne(NAMESPACE + "getEventPoint", event_seq);
+		return eventPoint;
+	}
+	
+	@Override
+	public String checkGoods(String m_id, int event_seq) {
+		Map<String,Object> parameter = new HashMap<>();
+		parameter.put("m_id", m_id);
+		parameter.put("event_seq", event_seq);
+		String result = sqlSession.selectOne(NAMESPACE + "checkGoods", parameter);
+		return result;
+	}
+	
+	@Override
+	public void sendGoods(String m_id, int event_seq) {
+		Map<String,Object> parameter = new HashMap<>();
+		parameter.put("m_id", m_id);
+		parameter.put("event_seq", event_seq);
+		sqlSession.update(NAMESPACE + "sendGoods", parameter);
 	}
 	
 //event participation
@@ -255,6 +291,11 @@ public class EventDaoImpl implements EventDao{
 		return sqlSession.selectOne(NAMESPACE+"selectCountWinnerNoGet");
 	}
 
+
+	@Override
+	public List<EventVo> selectEventTopThree() {
+		return sqlSession.selectList(NAMESPACE+"selectEventTopThree");
+	}
 
 
 	

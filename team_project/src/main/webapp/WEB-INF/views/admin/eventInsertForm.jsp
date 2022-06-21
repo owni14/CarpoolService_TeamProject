@@ -82,6 +82,8 @@
 			form.find("[name=event_enddate]").val(event_enddate);
 			form.find("[name=event_max_count]").val(event_max_count);
 			form.find("[name=pc_code]").val(pc_code);
+		
+		
 			var isSubmit=window.confirm("입력하신 내용 끝나는 날짜 :"+event_enddate+"\n 당첨 인원수 :"+event_max_count
 					+"명\n포인트 획득 :"+valPoint+"\n맞습니까?");
 			if(isSubmit){
@@ -101,12 +103,15 @@
 
 <!-- start Event inner header -->
 <!-- <img src="/admin/displayImage?filename=//192.168.0.232/ServerFolder/editor/multiupload/202206071905312924d017-f20d-49e2-bfda-8a2184b78627.jpg"> -->
-<form id="frmEvent" method="post" action="/admin/eventInsertRun">
+<form id="frmEvent" method="post" action="/admin/eventInsertRun"
+enctype="multipart/form-data">
+썸네일 넣기<input type="file" class="form-control-file" id="file" name="file" />
 <input type="hidden" name="event_name" >
 <input type="hidden" name="event_content" >
 <input type="hidden" name="event_enddate" >
 <input type="hidden" name="event_max_count" >
 <input type="hidden" name="pc_code" >
+<input type="hidden" name="fileImg" >
 </form>
 <div class="pcoded-inner-content">
 	<!-- Main-body start -->

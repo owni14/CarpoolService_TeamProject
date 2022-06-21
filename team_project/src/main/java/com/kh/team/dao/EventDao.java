@@ -24,7 +24,11 @@ public interface EventDao {
 	public List<EventVo> getEventFinishList(PagingDto pagingDto);
 	public void updateEventFinish(int event_seq);
 	public String getContent(int event_seq);
-	public List<String> getWinnerId(int event_seq); // 당첨자 확인
+	public boolean checkWinner(String m_id, int event_seq);
+	public int couponPrice(int event_seq);
+	public int getEventPoint(int event_seq);
+	public String checkGoods(String m_id, int event_seq);
+	public void sendGoods(String m_id, int event_seq);
 	//이벤트 참가 테이블
 	public void createTableEvnet(int event_seq);
 	public void createSeqParticipation(int event_seq);
@@ -46,6 +50,7 @@ public interface EventDao {
 	//이벤트 당첨자
 	public List<EventWinnerVo> selectWinnerIsGet(int event_seq);
 	public int selectCountWinnerNoGet();//총 미수령 갯수 시퀀스 상관x
+	public List<EventVo> selectEventTopThree();//탑3(최근) 이벤트 얻기
 	
 	
 }

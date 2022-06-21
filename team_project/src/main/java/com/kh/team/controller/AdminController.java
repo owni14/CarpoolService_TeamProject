@@ -4,6 +4,7 @@ package com.kh.team.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -26,6 +27,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.AdminService;
@@ -409,13 +411,13 @@ public class AdminController {
 		System.out.println("eventUpdate db_event_Content" +db_event_content);
 		//섬네일 파일 만들기
 		List<String> insertImgList=FileUploadHelper.eventFilnameExtraction(eventVo.getEvent_content(), SERVERIP);
-		if(insertImgList.size()>0) {
-			eventVo.setEvent_img(insertImgList.get(0));
-		}
-		//섬네일 파일 추가
-		else {
-			eventVo.setEvent_img(null);
-		}
+//		if(insertImgList.size()>0) {
+//			eventVo.setEvent_img(insertImgList.get(0));
+//		}
+//		//섬네일 파일 추가
+//		else {
+//			eventVo.setEvent_img(null);
+//		}
 		String contentStr=eventVo.getEvent_content();
 		List<String> contentFileList=FileUploadHelper.eventFilnameExtraction(contentStr, SERVERIP);
 		List<String> db_contentFileList=FileUploadHelper.eventFilnameExtraction(db_event_content, SERVERIP);
@@ -579,15 +581,24 @@ public class AdminController {
 
 	}
 	@RequestMapping(value = "/eventInsertRun", method = RequestMethod.POST)
-	public String insertRun(HttpSession session,EventVo eventVo,RedirectAttributes rttr) {
+	public String insertRun(HttpSession session,EventVo eventVo,RedirectAttributes rttr,MultipartFile file) throws IOException {
 		session.removeAttribute("event_seq");
-		
+		if(file.getOriginalFilename() !=null) {
+			String originalFilename=file.getOriginalFilename();
+			System.out.println("file name"+originalFilename);
+			String uploadPath=FileUploadHelper.getFileSaveFath(SERVERIP);
+			byte[] fileData=file.getBytes();
+			//최종 파일 복사후 저장되는 이름
+			String saveFilename=FileUploadHelper.uploadFile(uploadPath, originalFilename, fileData);
+			eventVo.setEvent_img(saveFilename);
+		}
 //		System.out.println("어드민 컨트롤 insertRun eventVo"+eventVo);
 		List<String> insertImgList=FileUploadHelper.eventFilnameExtraction(eventVo.getEvent_content(), SERVERIP);
 //		System.out.println("어드민 컨트롤 insertRun insertImgList"+insertImgList);
-		if(insertImgList.size()>0) {
-			eventVo.setEvent_img(insertImgList.get(0));
-		}
+//		if(insertImgList.size()>0) {
+//			//썸네일 이미지 만들기
+//			eventVo.setEvent_img(insertImgList.get(0));
+//		}
 		for(String sourceFileStr:insertImgList ) {
 			String[] tempPathStrs=sourceFileStr.split("tmpImages");
 			//정상적인 저장

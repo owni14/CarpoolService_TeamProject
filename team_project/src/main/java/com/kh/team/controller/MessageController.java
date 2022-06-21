@@ -104,6 +104,13 @@ public class MessageController {
 		return list;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/readMessage", method = RequestMethod.POST)
+	public String readMessage(String message_seq) {
+		boolean result = messageService.readMessage(message_seq);
+		return String.valueOf(result);
+	}
+	
 	//add event 메세지
 	@ResponseBody
 	@RequestMapping(value="/EventIsNoGet", method= RequestMethod.POST)

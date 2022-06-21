@@ -121,4 +121,13 @@ public class MessageDaoImpl implements MessageDao {
 		return list;
 	}
 
+	@Override
+	public boolean readMessage(String message_seq) {
+		int count = sqlSession.update(NAMESPACE + "readMessage", message_seq);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
 }

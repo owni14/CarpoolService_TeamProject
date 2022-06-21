@@ -20,5 +20,6 @@ public interface MessageDao {
 	public List<MessageVo> adminGetMessageList(String receiver_admin_code); // 관리자들 끼리 보낸 쪽지 중 받는 쪽지 리스트 확인
 	public List<MessageVo> adminSendMessageList(String sender_admin_code); // 관리자들 끼리 보낸 쪽지 중 보낸 쪽지 리스트 확인
 	public List<MessageVo> adminToMeMessageList(String sender_admin_code); // 관리자들 끼리 보낸 쪽지 중 받는 쪽지 중에서 자기 자신에게 보낸 쪽지 리스트 확인
+	public boolean readMessage(String message_seq); // 받은 쪽지를 읽은 경우 opendate update 해주기
 	
 }

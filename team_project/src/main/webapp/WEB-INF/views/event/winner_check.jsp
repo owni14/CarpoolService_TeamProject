@@ -55,7 +55,7 @@ $(document).ready(function() {
 				<li class="nav-item">
 					<a class="nav-link" href="/event/info">등급별 혜택</a>
 				</li>
-			</ul>
+			</ul>                                                                                                                                                                                                                    
 		</div>
 	</div>
 	<div class="col-md-2">

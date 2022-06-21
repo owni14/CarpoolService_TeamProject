@@ -12,6 +12,7 @@ tr.tr_table:hover {
 	background-color: aliceblue;
 }
 </style>
+
 <script>
 $(document).ready(function() {
 	var frmPaging = $("#frmPaging");
@@ -48,10 +49,11 @@ $(document).ready(function() {
 			$.each(rData, function() {
 					var tr = $("#table_clone tr").clone();
 					var tds = tr.find("td");
-					tds.eq(0).text(this.m_id);
+					$("#driver_drop").text(this.m_id);
 					tds.eq(1).text(this.passenger_depart_location);
 					tds.eq(2).text(this.passenger_depart_time);
 					$("#modal_body").append(tr);
+					tds.attr("data-receiver", this.m_id);
 			});
 		});
 	});
@@ -60,8 +62,26 @@ $(document).ready(function() {
 		$("#modal-container-678121").modal('hide');
 	});
 });
+
+$(document).on("click", ".black", function(e) {
+	e.preventDefault();
+	$("#modal-container-678121").modal("hide");
+	$("#black_modal").modal("show");
+	var receiver = $(".tds").attr("data-receiver");
+	$("#black_m_id").val(receiver);
+});
+
+$(document).on("click", ".message_form", function(e) {
+	e.preventDefault();
+	$("#modal-container-678121").modal("hide");
+	$("#message_form_modal").modal("show");
+	var receiver = $(".tds").attr("data-receiver");
+	$("#receiver_m_id").val(receiver);
+});
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp"%>
+<%@ include file ="/WEB-INF/views/message/message_form.jsp"%>
+<%@ include file ="/WEB-INF/views/customer/report_form.jsp" %>
 <div class="row">
 
 	<!-- modal start -->
@@ -90,7 +110,15 @@ $(document).ready(function() {
 						</table>
 						<table style="display:none;" id="table_clone">
 							<tr>
-								<td></td>
+								<td class="tds">
+									<button id="driver_drop" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+										
+				 					</button>
+				 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+										<a class="dropdown-item message_form" href="#" id="send_message" data-receiver="${passengerlogVo.DRIVER_ID}">쪽지보내기</a>
+										<a class="dropdown-item black" href="#" data-driver_id="${passengerlogVo.DRIVER_ID}">신고하기</a>
+									</div>
+								</td>
 								<td></td>
 								<td></td>				
 							</tr>

@@ -274,8 +274,8 @@ public class AdminController {
 	@RequestMapping(value="/checkMySendMessage", method = RequestMethod.GET)
 	public String checkMySendMessage(HttpSession session,Model model) {
 		String admin_code = (String)session.getAttribute("admin_code");
-//		System.out.println("admin_code : " + admin_code);
 		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code);
+//		System.out.println("sendMessageList : " + sendMessageList);
 		List<String> adminList = adminService.getAllAdminCode();
 		model.addAttribute("sendMessageList", sendMessageList);
 		model.addAttribute("adminList", adminList);
@@ -285,8 +285,8 @@ public class AdminController {
 	@RequestMapping(value="/checkSendToMeMessage", method = RequestMethod.GET)
 	public String checkSendToMeMessage(HttpSession session,Model model) {
 		String admin_code = (String)session.getAttribute("admin_code");
-//		System.out.println("admin_code : " + admin_code);
 		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code);
+//		System.out.println("sendToMeMessageList : " + sendToMeMessageList);
 		List<String> adminList = adminService.getAllAdminCode();
 		model.addAttribute("sendToMeMessageList", sendToMeMessageList);
 		model.addAttribute("adminList", adminList);

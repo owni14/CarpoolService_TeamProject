@@ -93,6 +93,13 @@ public class MessageTest {
 		System.out.println("list : " + list);
 	}
 	
+	@Test
+	public void readMessage() {
+		String message_seq = "124";
+		boolean result = messageDao.readMessage(message_seq);
+		System.out.println("result : " + result);
+	}
+	
 	
 	
 }

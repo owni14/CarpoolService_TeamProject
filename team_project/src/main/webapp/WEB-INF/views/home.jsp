@@ -143,7 +143,5 @@ $(document).ready(function() {
 		</a>
 	</div>
 	<!-- End Banner Hero -->
-
-	
 	
 	<%@ include file="/WEB-INF/views/include/footer.jsp"%>

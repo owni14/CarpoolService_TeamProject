@@ -108,6 +108,12 @@ public class MessageServiceImpl implements MessageService {
 
 	}
 
+	@Override
+	public boolean readMessage(String message_seq) {
+		boolean result = messageDao.readMessage(message_seq);
+		return result;
+	}
+
 	
 
 

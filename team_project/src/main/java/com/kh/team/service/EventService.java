@@ -18,11 +18,13 @@ public interface EventService {
 	public boolean deleteEvent(int event_seq);
 	public List<EventVo> isEndEventList(String event_is_finish);
 	public EventVo getEventByEseq(int event_seq);
-	public int getCountEvent(); // 이벤트 수 확인
+	public int getCountMainEvent(); // 진행중인 이벤트 수 확인
+	public int getCountFinishEvent(); // 종료된(당첨자) 이벤트 수 확인
 	public List<EventVo> getEventMainList(PagingDto pagingDto);
+	public List<EventVo> getEventFinishList(PagingDto pagingDto);
 	public void updateEventFinish(int event_seq);
 	public String getContent(int event_seq); 
-	
+	public List<String> getWinnerId(int event_seq);
 	//이벤트 참가 테이블
 	public void createTableEvnet(int event_seq);
 

@@ -67,7 +67,7 @@ $(document).ready(function() {
 					<div class="row p-5">
 						<div class="mx-auto col-md-12 col-lg-12 order-lg-last" >
 							
-							<img class="img-fluid" src="/resources/images/event/eventlogo1.png"
+							<img class="img-fluid" src="/event/displayImage?filename=${eventList.get(0).event_img}"
 								alt="" style="max-height: 610px" width="1100px">
 								
 						</div>
@@ -85,7 +85,7 @@ $(document).ready(function() {
 				<div class="container">
 					<div class="row p-5">
 						<div class="mx-auto col-md-12 col-lg-12 order-lg-last">
-							<img class="img-fluid" src="/resources/images/event/eventLogo3.png"
+							<img class="img-fluid" src="/event/displayImage?filename=${eventList.get(1).event_img}"
 								alt="" style="max-height: 610px" width="1100px">
 						</div>
 					
@@ -100,7 +100,7 @@ $(document).ready(function() {
 				<div class="container">
 					
 						<div class="mx-auto col-md-12 col-lg-12 order-lg-last">
-							<img class="img-fluid" src="/resources/images/event/eventLogo4.png"
+							<img class="img-fluid" src="/event/displayImage?filename=${eventList.get(2).event_img}"
 								alt="" style="max-height: 610px" width="1100px">
 						</div>
 						

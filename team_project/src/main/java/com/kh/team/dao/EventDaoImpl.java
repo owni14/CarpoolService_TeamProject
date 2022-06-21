@@ -255,7 +255,10 @@ public class EventDaoImpl implements EventDao{
 		return sqlSession.selectOne(NAMESPACE+"selectCountWinnerNoGet");
 	}
 
-
+	@Override
+	public List<EventVo> selectEventTopThree() {
+		return sqlSession.selectList(NAMESPACE+"selectEventTopThree");
+	}
 
 	
 

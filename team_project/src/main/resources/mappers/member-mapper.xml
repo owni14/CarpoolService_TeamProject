@@ -36,6 +36,7 @@
 		            and a.m_id = m.m_id
 		            and a.ad_approve = 'Y'
 		            and m.m_company = #{m_company}
+		            and to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
 		            order by d.driver_depart_time, d.driver_seq asc) a)
 		where rnum between #{startRow} and #{endRow}
 	</select>
@@ -85,6 +86,7 @@
 		where m.m_id = d.m_id
 		and m.m_company = #{m_company}
 		and m.m_id = #{m_id}
+		and to_char(d.apply_date, 'yyyy/mm/dd') = #{formattedToday}
 	</select>
 	
 	<select id="insertDriverLicense">
@@ -174,14 +176,15 @@
         where d.m_id = m.m_id
         and a.m_id = m.m_id
         and a.ad_approve = 'Y'
-        and m.m_company = 'SAMSUNG')a)
+        and m.m_company = #{m_company}
+        and to_char(d.apply_date, 'yyyy/mm/dd') = #{formattedToday} ) a)
 	</select>
 	
 	<select id="getPassengerList" resultType="Map">
-		select p.m_id, m.m_name, m.m_dept, p.passenger_depart_time, p.passenger_depart_location
+		select p.m_id, m.m_name, m.m_dept, p.passenger_depart_time, p.passenger_depart_location, p.is_approve
 			from member m, passenger p
 			where m.m_id = p.m_id
-			and to_char(apply_date, 'yyyy/mm/dd') = #{formattedToday}
+			and to_char(p.apply_date, 'yyyy/mm/dd') = #{formattedToday}
 			and p.is_cancel = 'N'
 			and p.driver_seq = #{driver_seq}
 			and m_company = #{m_company}

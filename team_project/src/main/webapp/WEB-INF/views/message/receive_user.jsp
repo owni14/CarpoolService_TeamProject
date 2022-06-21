@@ -27,6 +27,18 @@ $(document).ready(function() {
 	});
 	
 	$(".m_content_tr").click(function() {
+		var td = $(this).find("td.td_receiver");
+		var message_seq = td.attr("data-seq");
+		var message_opendate = td.attr("data-opendate");
+		if (message_opendate == "") {
+			var url = "/message/openMessage";
+			var sData = {
+					"message_seq" : message_seq
+			};
+			$.get(url, sData, function(){
+				td.attr("data-opendate", "already");
+			});
+		}
 		$("#message_read").modal('show');
 		var sender = $(this).children().eq(0).text();
 		var content = $(this).children().eq(1).attr("data-mContent");
@@ -46,6 +58,13 @@ $(document).ready(function() {
 	
 	$("#readClose").click(function() {
 		$("#message_read").modal('hide');
+	});
+	
+	$("#readClose").click(function() {
+		var pathname = $(location).attr("pathname");
+		var search	 = $(location).attr("search");
+		var href = pathname + search;
+		$(this).attr("href", href);
 	});
 });
 </script>
@@ -84,16 +103,20 @@ $(document).ready(function() {
 			</tr>
 		
 			<c:forEach items="${recUserMessageList}" var="MessageVo">
-			<tr class="m_content_tr">
-				<td id="td_receiver">${MessageVo.sender_m_id}</td>
-				<td id="td_content" data-mContent="${MessageVo.content}">
+			<tr class="m_content_tr"
+				<c:if test="${MessageVo.opendate eq null }">
+					style="color: blue;"
+				</c:if>
+			>
+				<td class="td_receiver" data-seq="${MessageVo.message_seq}" data-opendate="${MessageVo.opendate}">${MessageVo.sender_m_id}</td>
+				<td class="td_content" data-mContent="${MessageVo.content}">
 				<c:choose>
  				<c:when test="${MessageVo.content.length() >=30}">${MessageVo.content.substring(0,30)}...</c:when> 
 				<c:otherwise>
 				${MessageVo.content}
 				</c:otherwise>
 				</c:choose></td>
-				<td id="td_senddate">${MessageVo.senddate}</td>
+				<td class="td_senddate">${MessageVo.senddate}</td>
 			</tr>
 			</c:forEach>
 		</table>

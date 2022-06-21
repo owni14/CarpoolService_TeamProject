@@ -247,8 +247,40 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/checkMyMessage", method = RequestMethod.GET)
-	public String checkMyMessage() {
+	public String checkMyMessage(HttpSession session,Model model) {
+		String admin_code = (String)session.getAttribute("admin_code");
+//		System.out.println("admin_code : " + admin_code);
+		List<MessageVo> getMessageList = messageService.adminGetMessageList(admin_code);
+		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code);
+		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code);
+		List<String> adminList = adminService.getAllAdminCode();
+		model.addAttribute("getMessageList",getMessageList);
+		model.addAttribute("sendMessageList", sendMessageList);
+		model.addAttribute("sendToMeMessageList", sendToMeMessageList);
+		model.addAttribute("adminList", adminList);
 		return "admin/checkMyMessage";
+	}
+	
+	@RequestMapping(value="/checkMySendMessage", method = RequestMethod.GET)
+	public String checkMySendMessage(HttpSession session,Model model) {
+		String admin_code = (String)session.getAttribute("admin_code");
+//		System.out.println("admin_code : " + admin_code);
+		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code);
+		List<String> adminList = adminService.getAllAdminCode();
+		model.addAttribute("sendMessageList", sendMessageList);
+		model.addAttribute("adminList", adminList);
+		return "admin/checkMySendMessage";
+	}
+	
+	@RequestMapping(value="/checkSendToMeMessage", method = RequestMethod.GET)
+	public String checkSendToMeMessage(HttpSession session,Model model) {
+		String admin_code = (String)session.getAttribute("admin_code");
+//		System.out.println("admin_code : " + admin_code);
+		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code);
+		List<String> adminList = adminService.getAllAdminCode();
+		model.addAttribute("sendToMeMessageList", sendToMeMessageList);
+		model.addAttribute("adminList", adminList);
+		return "admin/checkSendToMeMessage";
 	}
 	
 	@RequestMapping(value = "/approveDriver_management", method = RequestMethod.GET)
@@ -513,6 +545,7 @@ public class AdminController {
 	@RequestMapping(value = "/displayImage", method = RequestMethod.GET)
 	@ResponseBody
 	public byte[] displayImage(String filename) throws Exception {
+		
 		FileInputStream fis = null;
 		fis = new FileInputStream(filename);
 		byte[] data = IOUtils.toByteArray(fis);

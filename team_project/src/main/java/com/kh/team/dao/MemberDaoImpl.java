@@ -50,9 +50,14 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<Map<String, Object>> getDriverList(String m_company, PagingDto pagingDto) {
 		Map<String, Object> map = new HashMap<>();
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
 		map.put("m_company", m_company);
 		map.put("startRow", pagingDto.getStartRow());
 		map.put("endRow", pagingDto.getEndRow());
+		map.put("formattedToday", formattedToday);
 		List<Map<String, Object>> list = sqlSession.selectList(NAMESPACE + "getDriverList", map);
 		return list;
 	}
@@ -66,8 +71,13 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public Map<String, Object> getDriverById(String m_id, String m_company) {
 		Map<String, String> map = new HashMap<>();
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
 		map.put("m_id", m_id);
 		map.put("m_company", m_company);
+		map.put("formattedToday", formattedToday);
 		Map<String, Object> mapDriverInfo = sqlSession.selectOne(NAMESPACE + "getDriverById", map);
 		return mapDriverInfo;
 	}
@@ -212,7 +222,14 @@ public class MemberDaoImpl implements MemberDao {
 	
 
 	public int getTotalDriverCount(String m_company) {
-		int count = sqlSession.selectOne(NAMESPACE + "getTotalDriverCount", m_company);
+		Map<String, Object> map = new HashMap<>();
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
+		map.put("m_company", m_company);
+		map.put("formattedToday", formattedToday);
+		int count = sqlSession.selectOne(NAMESPACE + "getTotalDriverCount", map);
 		return count;
 	}
 
@@ -362,7 +379,7 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public boolean updateDriver(DriverVo driverVo) {
 		int count = sqlSession.update(NAMESPACE + "updateDriver", driverVo);

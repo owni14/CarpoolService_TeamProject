@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.team.dao.MessageDao;
 import com.kh.team.service.MessageService;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.MessageVo;
@@ -30,10 +31,13 @@ public class MessageController {
 	public String receivedMessagePage(HttpSession session, PagingDto pagingDto)	{
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
 		String m_id = loginVo.getM_id();
+		int count = messageService.noneReadMCount(m_id);
+		session.setAttribute("noneReadMCount", count);
+		
 		pagingDto.setCount(messageService.recAdminMessageCountById(m_id));
 		pagingDto.setPage(pagingDto.getPage());
 		List<Map<String, Object>> recAdminMessageList = messageService.recAdminMessageListById(m_id, pagingDto);
-		System.out.println("recAdminMessageList : " + recAdminMessageList);
+//		System.out.println("recAdminMessageList : " + recAdminMessageList);
 		session.setAttribute("recAdminMessageList", recAdminMessageList);
 		return "/message/receive_admin";
 	}
@@ -42,6 +46,9 @@ public class MessageController {
 	public String recUserMessagePage(HttpSession session, PagingDto pagingDto)	{
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
 		String m_id = loginVo.getM_id();
+		int count = messageService.noneReadMCount(m_id);
+		session.setAttribute("noneReadMCount", count);
+		
 		pagingDto.setCount(messageService.recUserMessageCountById(m_id));
 		pagingDto.setPage(pagingDto.getPage());
 		List<MessageVo> recUserMessageList = messageService.recUserMessageListById(m_id, pagingDto);
@@ -53,6 +60,9 @@ public class MessageController {
 	public String sendMessagePage(HttpSession session, PagingDto pagingDto)	{
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
 		String m_id = loginVo.getM_id();
+		int count = messageService.noneReadMCount(m_id);
+		session.setAttribute("noneReadMCount", count);
+		
 		pagingDto.setCount(messageService.sendMessageCountById(m_id));
 		pagingDto.setPage(pagingDto.getPage());
 		List<MessageVo> sendMessageList = messageService.sendMessageListById(m_id, pagingDto);
@@ -70,13 +80,30 @@ public class MessageController {
 		return "redirect:" + prevUri;
 	}
 	
-	// 최신 쪽지 불러오기 (3개)
+	// 쪽지 읽음 처리
+	@RequestMapping(value="/openMessage", method= RequestMethod.GET)
+	@ResponseBody
+	public void openMessage(String message_seq) {
+		int seq = Integer.parseInt(message_seq);
+		messageService.openMessage(seq);
+	}
+	
+	// 최근 쪽지 불러오기 (3개)
 	@ResponseBody
 	@RequestMapping(value="/lastMessageList", method= RequestMethod.POST)
 	public List<Map<String, Object>> lastMessageList(HttpSession session) {
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
 		List<Map<String, Object>> lastMessageList = messageService.lastMessageListById(loginVo.getM_id());
 		return lastMessageList;
+	}
+	
+	// 안읽은 쪽지 개수 불러오기
+	@ResponseBody
+	@RequestMapping(value="/noneReadMCount", method= RequestMethod.POST)
+	public int noneReadMCount(HttpSession session) {
+		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
+		int count = messageService.noneReadMCount(loginVo.getM_id());
+		return count;
 	}
 	
 	@ResponseBody
@@ -110,5 +137,17 @@ public class MessageController {
 		System.out.println("messageVo : " + messageVo);
 		boolean result = messageService.insertNoBlackMessage(messageVo);
 		return String.valueOf(result);
+	}
+	
+	@RequestMapping(value="/sendMessageBetweenAdmins", method = RequestMethod.POST)
+	public String sendMessageBetweenAdmins(MessageVo messageVo) {
+//		System.out.println("messageVo : " + messageVo);
+		String receiver_admin_codes = messageVo.getReceiver_admin_code();
+		String[] codes = receiver_admin_codes.split(",");
+		for (String code : codes) {
+			messageVo.setReceiver_admin_code(code);
+			messageService.insertNoBlackMessage(messageVo);
+		}
+		return "redirect:/admin/checkMyMessage";
 	}
 }

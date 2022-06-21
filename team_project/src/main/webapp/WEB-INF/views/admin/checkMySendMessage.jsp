@@ -298,7 +298,7 @@
 								<a href="/admin/home"><i class="icofont icofont-home"></i></a>
 								</li>
 								<li class="breadcrumb-item"><a href="#!">관리자 페이지</a></li>
-								<li class="breadcrumb-item"><a href="#!">받은 쪽지함</a></li>
+								<li class="breadcrumb-item"><a href="#!">보낸 쪽지함</a></li>
 							</ul>
 						</div>
 					</div>
@@ -346,7 +346,7 @@
 			<!-- Basic table card start -->
 			<div class="card">
 					<div class="card-header">
-						<h5>받은 쪽지함</h5>
+						<h5>보낸 쪽지함</h5>
 						<h5>
 							<select id="searchTypeSelector" name="searchTypeSelector" style="height:25px">
 								<option value="i"
@@ -425,23 +425,25 @@
 					</div>
 					<div class="card-block table-border-style">
 						<div class="table-responsive">
-							<a id="tag1"></a>
+							<a id="tag2"></a>
 							<table class="table" id="memberTable">
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>보낸 사람</th>
+										<th>받는 사람</th>
 										<th>내용</th>
-										<th>날짜</th>
+										<th>보낸 날짜</th>
+										<th>읽은 날짜</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="messageVo" items="${getMessageList}" varStatus="status">
+									<c:forEach var="messageVo" items="${sendMessageList}" varStatus="status">
 									<tr>	
 										<th scope="row">${status.count}</th>
-										<td>${messageVo.sender_admin_code}</td>
+										<td>${messageVo.receiver_admin_code}</td>
 										<td>${messageVo.content}</td>
 										<td>${messageVo.senddate}</td>
+										<td>${messageVo.opendate}</td>
 									</tr>
 									</c:forEach>
 								</tbody>

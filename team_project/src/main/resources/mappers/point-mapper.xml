@@ -9,7 +9,7 @@
 		insert into point_code (pc_code, pc_desc, pc_point) values (#{pc_code}, #{pc_desc}, #{pc_point})
 	</insert>
 	<insert id="insertPointHistory">
-		insert into point_history (p_seq, m_id, pc_code) values (#{p_seq}, #{m_id}, #{pc_code})
+		insert into point_history (p_seq, m_id, pc_code) values (SEQ_POINT_HISTORY.nextval, #{m_id}, #{pc_code})
 	</insert>
 	
 	<select id="getPointHistoryById" resultType="PointHistoryVo">

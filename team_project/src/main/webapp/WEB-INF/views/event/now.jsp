@@ -11,6 +11,8 @@
 .e_content { text-align: center;}
 .e_date { text-align: center;}
 .e_finish { text-align: center; width: 70px;}
+
+.e_tr:hover { background-color: aliceblue; cursor: pointer; }
 </style>
 
 <script>
@@ -25,20 +27,39 @@ $(document).ready(function() {
 		frmPaging.attr("method","get");
 		frmPaging.submit();
 	});
+	
+	$(".e_tr").click(function() {
+		var event_seq = $(this).attr("data-seq");
+		$("#frm_detail").find("input[name=event_seq]").val(event_seq);
+		$("#frm_detail").submit();
+	});
+	
 });
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp" %>
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="row">
 			<div class="col-md-2">
 			</div>
 			<div class="col-md-8">
+				<form id="frm_detail" action="/event/detail" method="get">
+					<input type="hidden" name="event_seq">
 				<table class="table">
 					<c:forEach items="${eventList}" var="eventVo">
-						<tr class="e_tr">
+						<tr class="e_tr" data-seq="${eventVo.event_seq}">
 							<td class="align-middle">
-								<img class="e_img" src="/resources/assets/img/event.jpg" alt="">
+								<img class="e_img" 
+								<c:choose>
+									<c:when test="${not empty eventVo.event_img}">
+										src="/event/displayImage?filename=${eventVo.event_img}" 
+									</c:when>
+									<c:otherwise>
+										src="/resources/images/banner/default_banner.jpg"
+									</c:otherwise>
+								</c:choose>
+								alt="">
 							</td>
 							<td class="align-middle">
 								<p class="e_content">${eventVo.event_name}</p>
@@ -57,6 +78,7 @@ $(document).ready(function() {
 						</tr>
 					</c:forEach>
 				</table>
+				</form>
 				<nav>
 				<ul class="pagination justify-content-center">
 					<c:if test="${pagingDto.startPage != 1}">

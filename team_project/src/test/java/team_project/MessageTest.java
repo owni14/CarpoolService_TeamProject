@@ -39,7 +39,7 @@ public class MessageTest {
 			MessageVo messageVo = new MessageVo();
 			messageVo.setReceiver_m_id("hong@naver.com");
 			messageVo.setSender_admin_code("1001");
-			messageVo.setContent("신고 접수가 완료되어 벌점 " + i + "a점이 추가 되었습니다.");
+			messageVo.setContent("신고 접수가 완료되어 벌점 " + i + "점이 추가 되었습니다.");
 			System.out.println("messageVo : " + messageVo);
 			messageDao.insertNoBlackMessage(messageVo);
 		}

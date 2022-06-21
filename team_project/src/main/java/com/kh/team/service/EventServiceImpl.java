@@ -51,13 +51,23 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public int getCountEvent() {
-		return eventDao.getCountEvent();
+	public int getCountMainEvent() {
+		return eventDao.getCountMainEvent();
+	}
+	
+	@Override
+	public int getCountFinishEvent() {
+		return eventDao.getCountFinishEvent();
 	}
 
 	@Override
 	public List<EventVo> getEventMainList(PagingDto pagingDto) {
 		return eventDao.getEventMainList(pagingDto);
+	}
+	
+	@Override
+	public List<EventVo> getEventFinishList(PagingDto pagingDto) {
+		return eventDao.getEventFinishList(pagingDto);
 	}
 
 	@Override
@@ -68,6 +78,11 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public String getContent(int event_seq) {
 		return eventDao.getContent(event_seq);
+	}
+	
+	@Override
+	public List<String> getWinnerId(int event_seq) {
+		return eventDao.getWinnerId(event_seq);
 	}
 
 	@Override
@@ -168,4 +183,8 @@ public class EventServiceImpl implements EventService {
 	public int selectCountWinnerNoGet() {
 		return eventDao.selectCountWinnerNoGet();
 	}
+
+	
+
+	
 }

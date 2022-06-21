@@ -50,16 +50,32 @@
 	select * from event where event_seq=#{event_seq}
 	</select>
 	
-	<select id="getCountEvent" resultType="int">
+	<select id="getCountMainEvent" resultType="int">
 		select count(*) from event
+		where event_is_finish = 'N'
+	</select>
+	
+	<select id="getCountFinishEvent" resultType="int">
+		select count(*) from event
+		where event_is_finish = 'Y'
 	</select>
 	
 	<select id="getEventMainList" resultType="EventVo">
 		select * from
 			(select rownum rnum, a.* from
 				(select * from event 
-				order by event_is_finish asc, event_seq desc) a)
+				where event_is_finish = 'N'
+				order by event_startdate desc) a)
 		where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="getEventFinishList" resultType="EventVo">
+		select * from
+			(select rownum rnum, a.* from
+				(select * from event 
+				where event_is_finish = 'Y'
+				order by event_startdate desc) a)
+		where rnum between #{startRow} and #{endRow}	
 	</select>
 	
 	<update id="updateEventFinish">
@@ -68,7 +84,12 @@
 	</update>
 	
 	<select id="getContent" resultType="string">
-	select event_content from event where event_seq= #{event_seq}
+		select event_content from event where event_seq= #{event_seq}
+	</select>
+	
+	<select id="getWinnerId" resultType="String">
+		select m_id from Event_Participation_event_seq#{event_seq}
+		where ep_is_winner = 'Y'
 	</select>
 	
 	<select id="createTableEvnet" parameterType="HashMap">
@@ -105,6 +126,8 @@
 (select * from event where event_is_finish ='N' order by event_seq desc ) a)
 where rnum =1
 	</select>
+	
+	
 	
 	<!-- 이벤트 시퀀스로 이벤트 네임과 참가 테이블 조인 -->
 	<select id="getJoinEventData" resultType="map">

@@ -54,4 +54,16 @@ private EvlDao evlDao;
 		}
 		return false;
 		}
+	
+	@Override
+		public boolean transactionGivingSixPoint(Is_Update_PointVo is_Update_PointVo) {
+		boolean isgive=evlDao.updatePointPassengerByEvl();//모든 승객 포인트 업데이트
+		boolean isInsert=evlDao.insertEvlUpdate(is_Update_PointVo);
+		System.out.println("서비스 실행중 isInsert "+isInsert);
+		if(isgive && isInsert) {
+			System.out.println("서비스 트랜잭션 완료 ");
+			return true;
+		}
+		return false;
+		}
 }

@@ -79,6 +79,17 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
+	public int noneReadMCount(String m_id) {
+		int count = messageDao.noneReadMCount(m_id);
+		return count;
+	}
+
+	@Override
+	public void openMessage(int message_seq) {
+		messageDao.openMessage(message_seq);
+	}
+	
+	@Override	
 	public List<MessageVo> adminGetMessageList(String receiver_admin_code) {
 		List<MessageVo> list = messageDao.adminGetMessageList(receiver_admin_code);
 		return list;
@@ -94,6 +105,7 @@ public class MessageServiceImpl implements MessageService {
 	public List<MessageVo> adminToMeMessageList(String sender_admin_code) {
 		List<MessageVo> list = messageDao.adminToMeMessageList(sender_admin_code);
 		return list;
+
 	}
 
 	@Override

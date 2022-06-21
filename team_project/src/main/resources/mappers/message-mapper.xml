@@ -33,7 +33,7 @@
 			    where receiver_m_id = #{m_id}
 			    and m.sender_admin_code is not null
 			    and m.sender_admin_code = a.admin_code
-			    order by opendate nulls first, senddate desc) b)
+			    order by senddate desc) b)
 		where rnum between #{startRow} and #{endRow}
 	</select>
 	
@@ -43,7 +43,7 @@
 				(select * from message
 				where receiver_m_id = #{m_id}
 				and sender_m_id is not null
-				order by opendate nulls first, senddate desc) b)
+				order by senddate desc) b)
 		where rnum between #{startRow} and #{endRow}
 	</select>
 	
@@ -80,10 +80,26 @@
 					from message m, admin a
 					where receiver_m_id = #{m_id}
 					and m.sender_admin_code = a.admin_code(+)
+					and m.opendate is null
 					order by senddate desc) a)
 		where rnum &lt; 4
 	</select>
 	
+
+	<!-- 안읽은 쪽지 개수 -->
+	<select id="noneReadMCount" resultType="int">
+		select count(*) from message
+		where receiver_m_id = #{m_id}
+		and opendate is null
+	</select>
+	
+	<!-- 쪽지 읽음 처리 -->
+	<update id="openMessage">
+		update message set 
+		opendate = sysdate
+		where message_seq = #{message_seq}
+	</update>
+
 	<select id="adminGetMessageList" resultType="MessageVo">
 		select * from message
 		where receiver_admin_code = #{receiver_admin_code} and sender_admin_code != #{receiver_admin_code}
@@ -103,10 +119,13 @@
 		receiver_admin_code = #{sender_admin_code}
 		order by senddate desc
 	</select>
-	
+
 	<update id="readMessage">
 		update message set
 		opendate = sysdate
 		where message_seq = #{message_seq}
 	</update>
+
+
+
 </mapper>

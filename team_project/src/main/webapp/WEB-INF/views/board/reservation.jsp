@@ -531,7 +531,7 @@ $(document).ready(function() {
 			</div>
 			<div class="form-group" style="margin-bottom: 10px;">
 				<h3 style="text-align: center;">운전자 위치를 확인하시고, 탑승할 위치<span style="color: blue;">(도로명 주소기준)</span>를 클릭해주세요.</h3>
-				<h4 style="text-align: center;">운전자로 등록되어 있는 경우 <span style="color:#ff8c00; font-weight: bold;">주황색</span>으로 표시됩니다.</h4>
+				<h4 style="text-align: center;">회원님이 현재 운전자로 등록되어 있는 경우 <span style="color:#ff8c00; font-weight: bold;">주황색</span>으로 표시됩니다.</h4>
 					<label for="startLocation"> 탑승 위치 </label> 
 				<input type="text" class="form-control" id="boardLoct" name="boardLoct" readonly="readonly"/>
 			</div>

@@ -103,6 +103,17 @@ public class MessageDaoImpl implements MessageDao {
 	}
 
 	@Override
+	public int noneReadMCount(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "noneReadMCount", m_id);
+		return count;
+	}
+
+	@Override
+	public void openMessage(int message_seq) {
+		sqlSession.update(NAMESPACE + "openMessage", message_seq);
+	}
+	
+	@Override
 	public List<MessageVo> adminGetMessageList(String receiver_admin_code) {
 		List<MessageVo> list = sqlSession.selectList(NAMESPACE + "adminGetMessageList", receiver_admin_code);
 		return list;
@@ -119,6 +130,7 @@ public class MessageDaoImpl implements MessageDao {
 	public List<MessageVo> adminToMeMessageList(String sender_admin_code) {
 		List<MessageVo> list = sqlSession.selectList(NAMESPACE+ "adminToMeMessageList", sender_admin_code);
 		return list;
+
 	}
 
 	@Override

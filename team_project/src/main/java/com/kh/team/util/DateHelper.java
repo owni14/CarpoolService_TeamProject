@@ -1,6 +1,7 @@
 package com.kh.team.util;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,7 +18,7 @@ public class DateHelper {
 		//첫째날 셋팅
 		Date now=new Date(System.currentTimeMillis());
 		SimpleDateFormat sdf=new SimpleDateFormat("dd");
-		String nowDayStr=sdf.format(now);
+		String nowDayStr=sdf.format(now);//여기에 now냐 oneDate냐 따라 실행 결과가 바뀐다
 		//현재날 셋팅
 		System.out.println("now day "+nowDayStr);
 		if(nowDayStr !=null && nowDayStr.equals("01") ) {
@@ -34,7 +35,7 @@ public class DateHelper {
 		Calendar cal=Calendar.getInstance();
 		cal.clear();
 		cal.setTime(now);
-		cal.set(Calendar.DAY_OF_MONTH,cal.getMinimum(Calendar.DAY_OF_YEAR));
+//		cal.set(Calendar.DAY_OF_MONTH,cal.getMinimum(Calendar.DAY_OF_YEAR));
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
 		java.util.Date date=cal.getTime();
 		formattedToday=sdf.format(date);
@@ -67,38 +68,19 @@ public class DateHelper {
 		return iup_date;
 		
 	}
-	//캘린더 월 값에 따른 포인트 업데이트 유무 브이오 만들기
-	public static List<Is_Update_PointVo> getIsUPdatePointVoList(String iup_what) {
-		List<Is_Update_PointVo> isUpdatePointList=new ArrayList<Is_Update_PointVo>();
-		for(int i=0; i<=1; i++ ) {
-			Date iup_date=getSixMonthDate(i*6);
-			Is_Update_PointVo is_Update_PointVo=new Is_Update_PointVo(0, iup_date, iup_what);
-			isUpdatePointList.add(is_Update_PointVo);
-		}		
-		return isUpdatePointList;
-	}
-	//캘린더 xxxx0701, xxxx0101 포맷 만들기
-	public static List<String> getforamttedSixMonthStr(List<Is_Update_PointVo>  isUpdatePointList) {
-		List<String> formattedTodays=new ArrayList<>();
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
-		for(Is_Update_PointVo is_Update_PointVo:isUpdatePointList) {
-			String formattedToday=sdf.format(is_Update_PointVo.getIup_date());
-			formattedTodays.add(formattedToday);
-		}
-		System.out.println("DateHelper formattedTodays "+formattedTodays);
-		return formattedTodays;
-	}
+	
+	
 	
 	//포인트 지급날인가 승객(모든 유저)용
 	public static boolean isPointSixMonthDay() {
-		Calendar cal=Calendar.getInstance();
-		cal.set(Calendar.DAY_OF_MONTH,cal.getActualMinimum(Calendar.DAY_OF_MONTH));
-		cal.set(Calendar.MONTH, 6);
-		java.util.Date oneDate=cal.getTime();
+//		Calendar cal=Calendar.getInstance();
+//		cal.set(Calendar.DAY_OF_MONTH,cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+//		cal.set(Calendar.MONTH, 0);
+//		java.util.Date oneDate=cal.getTime();
 		//첫째날 여섯달째셋팅
 		Date now=new Date(System.currentTimeMillis());
 		SimpleDateFormat sdf=new SimpleDateFormat("MMdd");
-		String nowDayStr=sdf.format(oneDate);
+		String nowDayStr=sdf.format(now);//인자 값에 따라 달라짐 배포시 now 쓸것
 		//현재날 셋팅
 		System.out.println("now day "+nowDayStr);
 		if(
@@ -110,7 +92,17 @@ public class DateHelper {
 		}
 		return false;
 	}
-	public static Date castSqlDate(java.util.Date sourceDate) {
+	//포맷이 입력된 문자열에서 sql Date로 변환
+	public static Date castSqlDate(String formmated) {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+		
+		java.util.Date sourceDate=null;
+		try {
+			sourceDate = sdf.parse(formmated);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Calendar cal=Calendar.getInstance();
 		cal.clear();
 		cal.setTime(sourceDate);
@@ -118,4 +110,22 @@ public class DateHelper {
 		Date targetDate=new Date(targetLongTime);
 		return targetDate;
 	}
+	//포맷 xxxx0701 or xxxx0101 or 현재날에 대한 포맷문자열 
+		public static String getforamttedSixStr() {
+			String formattedToday=null;
+			
+			Date now=new Date(System.currentTimeMillis());
+			Calendar cal=Calendar.getInstance();
+			cal.clear();
+			cal.setTime(now);
+			//0701로 셋팅
+//			cal.set(Calendar.DAY_OF_MONTH,cal.getMinimum(Calendar.DAY_OF_YEAR));
+//			cal.set(Calendar.MONTH, 6);
+			//
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+			java.util.Date date=cal.getTime();
+			formattedToday=sdf.format(date);
+			System.out.println("DateHelper formattedToday "+formattedToday);
+			return formattedToday;
+		}
 }

@@ -39,7 +39,7 @@ public class MessageTest {
 			MessageVo messageVo = new MessageVo();
 			messageVo.setReceiver_m_id("hong@naver.com");
 			messageVo.setSender_admin_code("1001");
-			messageVo.setContent("신고 접수가 완료되어 벌점 " + i + "a점이 추가 되었습니다.");
+			messageVo.setContent("신고 접수가 완료되어 벌점 " + i + "점이 추가 되었습니다.");
 			System.out.println("messageVo : " + messageVo);
 			messageDao.insertNoBlackMessage(messageVo);
 		}
@@ -73,10 +73,26 @@ public class MessageTest {
 	// MainPage message insert 하기 End
 	
 	@Test
-	public void adminCheckSendedMessage() {
-		List<Integer> list = messageDao.adminCheckSendedMessage();
+	public void adminGetMessageList() {
+		String receiver_admin_code = "1004";
+		List<MessageVo> list = messageDao.adminGetMessageList(receiver_admin_code);
 		System.out.println("list : " + list);
 	}
+	
+	@Test
+	public void adminSendMessageList() {
+		String sender_admin_code = "1004";
+		List<MessageVo> list = messageDao.adminSendMessageList(sender_admin_code);
+		System.out.println("list : " + list);
+	}
+	
+	@Test
+	public void adminToMeMessageList() {
+		String sender_admin_code = "1004";
+		List<MessageVo> list = messageDao.adminToMeMessageList(sender_admin_code);
+		System.out.println("list : " + list);
+	}
+	
 	
 	
 }

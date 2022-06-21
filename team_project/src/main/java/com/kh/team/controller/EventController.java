@@ -1,15 +1,18 @@
 package com.kh.team.controller;
 
+import java.io.FileInputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.team.service.EventService;
 import com.kh.team.vo.EventVo;
@@ -46,5 +49,26 @@ public class EventController {
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public String info() {
 		return "event/info";
+	}
+	
+	// 이벤트 상세 정보
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public String detail(String event_seq) {
+		System.out.println("event_seq: " + event_seq);
+		
+		return "event/detail";
+	}
+	
+	// 썸네일 불러오기
+	@RequestMapping(value = "/displayImage", method = RequestMethod.GET)
+	@ResponseBody
+	public byte[] displayImage(String filename) throws Exception {
+		System.out.println("displayImage 호출됨");
+		FileInputStream fis = null;
+		fis = new FileInputStream(filename);
+		byte[] data = IOUtils.toByteArray(fis);
+		fis.close();
+		return data;
+
 	}
 }

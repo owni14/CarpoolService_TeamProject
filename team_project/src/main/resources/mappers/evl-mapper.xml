@@ -23,6 +23,7 @@
 	select g_code from grade_benefit
 	</select>
 	
+	<!-- drive등급에 따른 포인트 지급 -->
 	<update id="updatePointByEvl">
 	update (select m.m_id, m.m_point, de.g_code,gb.g_benefit from member m, driver_evl de , grade_benefit gb
 where m.m_id = de.m_id and  de.g_code = gb.g_code
@@ -37,11 +38,21 @@ where m.m_id = de.m_id and  de.g_code = gb.g_code
 	where to_char(iup_date, 'yyyymmdd') = #{formattedToday}
 	and iup_what = #{iup_what}
 	</select>
-	
+	<!-- iup what 에 따른 인서트 -->
 	<insert id="insertEvlUpdate">
 	insert into is_update_point
 	(iup_seq, iup_date, iup_what)
 	values
 	(seq_is_update_point.nextval, #{iup_date}, #{iup_what})
 	</insert>
+	
+	<!-- drive등급에 따른 포인트 지급 -->
+	<update id="updatePointPassengerByEvl">
+	update (select m.m_id, m.m_point, pe.g_code, gb.g_benefit from member m, passenger_evl pe , grade_benefit gb
+where m.m_id = pe.m_id and  pe.g_code = gb.g_code
+) b
+	set b.m_point = b.m_point + b.g_benefit
+
+	</update>
+	
 </mapper>

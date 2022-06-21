@@ -65,4 +65,13 @@ private final String NAMESPACE="com.kh.team.mappers.evl.";
 		}
 		return false; 
 		}
+
+	@Override
+	public boolean updatePointPassengerByEvl() {
+		int count=sqlSession.update(NAMESPACE+"updatePointPassengerByEvl");
+		if(count >0) {
+			return true;
+		}
+		return false;
+	}
 }

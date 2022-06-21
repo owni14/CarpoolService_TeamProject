@@ -43,6 +43,7 @@ import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.ComplainVo;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.EventWinnerVo;
+import com.kh.team.vo.Is_Update_PointVo;
 import com.kh.team.vo.MemberUpdateVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.MessageVo;
@@ -65,7 +66,8 @@ public class AdminController {
 	MemberUpdateService memberUpdateService;
 	@Autowired
 	MessageService messageService;
-	
+	@Autowired
+	EvlService evlService;
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin(Model model,HttpSession session,PagingDto pagingDto) {
@@ -126,13 +128,35 @@ public class AdminController {
 		dayPassengerCounts.add(daycount);
 		strList.add(targetDateStr);
 		}//end for
-//		//모든 유저에게 한달후 포인트 자동으로 등급에 따라 지급
-//
-//		boolean isgivingDay=DateHelper.isPointMonthDay();
-//		if(isgivingDay) {
-//			evlService.updatePointByEvl();
-//		}
+//		//모든 유저에게 한달후 포인트 자동으로 등급에 따라 지급 드라이버
+
+		boolean isgivingDay=DateHelper.isPointMonthDay();//포인트 지급날 매달 첫째날임
+		String formattedToday=DateHelper.getforamttedStr();
+		String iup_what="D";
+		int isPointUpdateCount=evlService.selectCountIsUpdate(formattedToday, iup_what);
+		System.out.println("isPointUpdateCount amdinController "+isPointUpdateCount);
+		if(isgivingDay && isPointUpdateCount<=0 ) {
+			Is_Update_PointVo is_Update_PointVo=
+					DateHelper.getIsUPdatePointVo("D");//드라이버용
+			evlService.transactionGivingPoint(is_Update_PointVo);
+		}
 //        // 포인트 자동 지급 끝
+		
+		//모든 유저에게 자동으로 포인트 지급 패신저
+		// 7월 1일 이랑 1월 1일 에 모든 유저들에게 포인트 지급
+		List<Is_Update_PointVo> listSixMonthOneDay=DateHelper.getIsUPdatePointVoList("P");
+		List<String> formattedDates=DateHelper.getforamttedSixMonthStr(listSixMonthOneDay);
+		for(String formmated:formattedDates) {
+			int isPointUpdateCountPassenger=evlService.selectCountIsUpdate(formmated, "P");
+			boolean isgivingSixMonth=DateHelper.isPointSixMonthDay();
+			System.out.println("어드민 컨트롤 formmated "+formmated);
+			System.out.println("어드민 컨트롤 isPointUpdateCountPassenger "+isPointUpdateCountPassenger);
+			if(isPointUpdateCountPassenger <=0 && isgivingSixMonth ) {
+				//포인트 트랜잭셕 들어갈곳
+			}
+		}
+		
+		//모든유저에게 포인트 자동지급 끝
 		model.addAttribute("top5List", top5List);
 		model.addAttribute("noEventGetCount", noEventGetCount);
 		model.addAttribute("noAnswer", noAnswer);
@@ -217,8 +241,40 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/checkMyMessage", method = RequestMethod.GET)
-	public String checkMyMessage() {
+	public String checkMyMessage(HttpSession session,Model model) {
+		String admin_code = (String)session.getAttribute("admin_code");
+//		System.out.println("admin_code : " + admin_code);
+		List<MessageVo> getMessageList = messageService.adminGetMessageList(admin_code);
+		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code);
+		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code);
+		List<String> adminList = adminService.getAllAdminCode();
+		model.addAttribute("getMessageList",getMessageList);
+		model.addAttribute("sendMessageList", sendMessageList);
+		model.addAttribute("sendToMeMessageList", sendToMeMessageList);
+		model.addAttribute("adminList", adminList);
 		return "admin/checkMyMessage";
+	}
+	
+	@RequestMapping(value="/checkMySendMessage", method = RequestMethod.GET)
+	public String checkMySendMessage(HttpSession session,Model model) {
+		String admin_code = (String)session.getAttribute("admin_code");
+//		System.out.println("admin_code : " + admin_code);
+		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code);
+		List<String> adminList = adminService.getAllAdminCode();
+		model.addAttribute("sendMessageList", sendMessageList);
+		model.addAttribute("adminList", adminList);
+		return "admin/checkMySendMessage";
+	}
+	
+	@RequestMapping(value="/checkSendToMeMessage", method = RequestMethod.GET)
+	public String checkSendToMeMessage(HttpSession session,Model model) {
+		String admin_code = (String)session.getAttribute("admin_code");
+//		System.out.println("admin_code : " + admin_code);
+		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code);
+		List<String> adminList = adminService.getAllAdminCode();
+		model.addAttribute("sendToMeMessageList", sendToMeMessageList);
+		model.addAttribute("adminList", adminList);
+		return "admin/checkSendToMeMessage";
 	}
 	
 	@RequestMapping(value = "/approveDriver_management", method = RequestMethod.GET)
@@ -483,6 +539,7 @@ public class AdminController {
 	@RequestMapping(value = "/displayImage", method = RequestMethod.GET)
 	@ResponseBody
 	public byte[] displayImage(String filename) throws Exception {
+		
 		FileInputStream fis = null;
 		fis = new FileInputStream(filename);
 		byte[] data = IOUtils.toByteArray(fis);

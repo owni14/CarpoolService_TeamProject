@@ -90,20 +90,20 @@ public class MessageServiceImpl implements MessageService {
 	}
 	
 	@Override	
-	public List<MessageVo> adminGetMessageList(String receiver_admin_code) {
-		List<MessageVo> list = messageDao.adminGetMessageList(receiver_admin_code);
+	public List<MessageVo> adminGetMessageList(String receiver_admin_code,PagingDto pagingDto) {
+		List<MessageVo> list = messageDao.adminGetMessageList(receiver_admin_code,pagingDto);
 		return list;
 	}
 
 	@Override
-	public List<MessageVo> adminSendMessageList(String sender_admin_code) {
-		List<MessageVo> list = messageDao.adminSendMessageList(sender_admin_code);
+	public List<MessageVo> adminSendMessageList(String sender_admin_code,PagingDto pagingDto) {
+		List<MessageVo> list = messageDao.adminSendMessageList(sender_admin_code,pagingDto);
 		return list;
 	}
 
 	@Override
-	public List<MessageVo> adminToMeMessageList(String sender_admin_code) {
-		List<MessageVo> list = messageDao.adminToMeMessageList(sender_admin_code);
+	public List<MessageVo> adminToMeMessageList(String sender_admin_code,PagingDto pagingDto) {
+		List<MessageVo> list = messageDao.adminToMeMessageList(sender_admin_code,pagingDto);
 		return list;
 
 	}
@@ -112,6 +112,24 @@ public class MessageServiceImpl implements MessageService {
 	public boolean readMessage(String message_seq) {
 		boolean result = messageDao.readMessage(message_seq);
 		return result;
+	}
+
+	@Override
+	public int countAdminGetMessage(String receiver_admin_code, PagingDto pagingDto) {
+		int count = messageDao.countAdminGetMessage(receiver_admin_code, pagingDto);
+		return count;
+	}
+
+	@Override
+	public int countAdminSendMessage(String sender_admin_code, PagingDto pagingDto) {
+		int count = messageDao.countAdminSendMessage(sender_admin_code, pagingDto);
+		return count;
+	}
+
+	@Override
+	public int countAdminToMeMessage(String sender_admin_code, PagingDto pagingDto) {
+		int count = messageDao.countAdminToMeMessage(sender_admin_code, pagingDto);
+		return count;
 	}
 
 	

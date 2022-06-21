@@ -27,7 +27,7 @@ tbody > tr:hover {background-color: aliceblue;}
 			var pageValue = $(this).attr("href");
 			var page = frmPaging.find("input[name=page]");
 			page.val(pageValue);
-			frmPaging.attr("action","/admin/member_management");
+			frmPaging.attr("action","/admin/checkMySendMessage");
 			frmPaging.attr("method","get");
 			frmPaging.submit();
 		});
@@ -41,7 +41,7 @@ tbody > tr:hover {background-color: aliceblue;}
 			var keyword = frmPaging.find("input[name=keyword]");
 			keyword.val(keywordValue);
 			frmPaging.find("input[name=page]").val(1);
-			frmPaging.attr("action","/admin/member_management");
+			frmPaging.attr("action","/admin/checkMySendMessage");
 			frmPaging.attr("method","get");
 			frmPaging.submit();
 		});
@@ -374,41 +374,16 @@ tbody > tr:hover {background-color: aliceblue;}
 						<h5>보낸 쪽지함</h5>
 						<h5>
 							<select id="searchTypeSelector" name="searchTypeSelector" style="height:25px">
-								<option value="i"
-									<c:if test="${pagingDto.searchType == 'i'}">
+								<option value="p"
+									<c:if test="${pagingDto.searchType == 'p'}">
 										selected
 									</c:if>
-								>회원 아이디</option>
-								<option value="n"
-									<c:if test="${pagingDto.searchType == 'n'}">
-										selected
-									</c:if>
-								>이름</option>
-								<option value="g"
-									<c:if test="${pagingDto.searchType == 'g'}">
-										selected
-									</c:if>
-								>성별</option>
+								>받는 사람</option>
 								<option value="c"
 									<c:if test="${pagingDto.searchType == 'c'}">
 										selected
 									</c:if>
-								>회사</option>
-								<option value="a"
-									<c:if test="${pagingDto.searchType == 'a'}">
-										selected
-									</c:if>
-								>주소</option>
-								<option value="t"
-									<c:if test="${pagingDto.searchType == 't'}">
-										selected
-									</c:if>
-								>연락처</option>
-								<option value="w"
-									<c:if test="${pagingDto.searchType == 'w'}">
-										selected
-									</c:if>
-								>회사 탈퇴 여부</option>
+								>내용</option>
 							</select>
 						
 							<input type="text" id="adminKeyword" name="adminKeyword" style="height:25px">
@@ -495,7 +470,7 @@ tbody > tr:hover {background-color: aliceblue;}
 						</nav>
 					</div>
 				</div>
-				
+				<!-- end pagination -->
 				
 				</div>
 				<!-- Basic table card end -->

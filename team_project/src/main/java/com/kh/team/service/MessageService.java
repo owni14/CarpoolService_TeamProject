@@ -19,9 +19,12 @@ public interface MessageService {
 	public List<Map<String, Object>> lastMessageListById(String m_id); // 최근 쪽지 목록
 	public int noneReadMCount(String m_id); // 안읽은 쪽지 개수
 	public void openMessage(int message_seq); // 쪽지 읽음 처리
-	public List<MessageVo> adminGetMessageList(String receiver_admin_code); // 관리자들 끼리 보낸 쪽지 중 받는 쪽지 리스트 확인
-	public List<MessageVo> adminSendMessageList(String sender_admin_code); // 관리자들 끼리 보낸 쪽지 중 보낸 쪽지 리스트 확인
-	public List<MessageVo> adminToMeMessageList(String sender_admin_code); // 관리자들 끼리 보낸 쪽지 중 받는 쪽지 중에서 자기 자신에게 보낸 쪽지 리스트 확인
+	public int countAdminGetMessage(String receiver_admin_code,PagingDto pagingDto); // 관리자들 끼리 받은 쪽지 갯수
+	public int countAdminSendMessage(String sender_admin_code, PagingDto pagingDto); // 관리자들 끼리 보낸 쪽지 갯수
+	public int countAdminToMeMessage(String sender_admin_code, PagingDto pagingDto); // 관리자들 끼리 받는 쪽지 중에서 자기 자신에게 보낸 쪽지 리스트 확인
+	public List<MessageVo> adminGetMessageList(String receiver_admin_code, PagingDto pagingDto); // 관리자들 끼리 보낸 쪽지 중 받는 쪽지 리스트 확인
+	public List<MessageVo> adminSendMessageList(String sender_admin_code, PagingDto pagingDto); // 관리자들 끼리 보낸 쪽지 중 보낸 쪽지 리스트 확인
+	public List<MessageVo> adminToMeMessageList(String sender_admin_code, PagingDto pagingDto); // 관리자들 끼리 보낸 쪽지 중 받는 쪽지 중에서 자기 자신에게 보낸 쪽지 리스트 확인
 	public boolean readMessage(String message_seq); // 받은 쪽지를 읽은 경우 opendate update 해주기
 
 

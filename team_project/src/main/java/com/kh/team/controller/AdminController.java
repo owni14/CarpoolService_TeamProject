@@ -247,25 +247,28 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/checkMyMessage", method = RequestMethod.GET)
-	public String checkMyMessage(HttpSession session,Model model) {
+	public String checkMyMessage(HttpSession session,Model model,PagingDto pagingDto) {
 		String admin_code = (String)session.getAttribute("admin_code");
 //		System.out.println("admin_code : " + admin_code);
-		List<MessageVo> getMessageList = messageService.adminGetMessageList(admin_code);
-		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code);
-		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code);
+		pagingDto.setCount(messageService.countAdminGetMessage(admin_code, pagingDto));
+		pagingDto.setPage(pagingDto.getPage());
+		System.out.println("pagingDto1 : " + pagingDto);
+		List<MessageVo> getMessageList = messageService.adminGetMessageList(admin_code,pagingDto);
 		List<String> adminList = adminService.getAllAdminCode();
 		model.addAttribute("getMessageList",getMessageList);
-		model.addAttribute("sendMessageList", sendMessageList);
-		model.addAttribute("sendToMeMessageList", sendToMeMessageList);
 		model.addAttribute("adminList", adminList);
 		return "admin/checkMyMessage";
 	}
 	
 	@RequestMapping(value="/checkMySendMessage", method = RequestMethod.GET)
-	public String checkMySendMessage(HttpSession session,Model model) {
+	public String checkMySendMessage(HttpSession session,Model model,PagingDto pagingDto) {
 		String admin_code = (String)session.getAttribute("admin_code");
-		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code);
+		pagingDto.setCount(messageService.countAdminSendMessage(admin_code, pagingDto));
+		pagingDto.setPage(pagingDto.getPage());
+//		System.out.println("pagingDto2 : " + pagingDto);
+		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code,pagingDto);
 //		System.out.println("sendMessageList : " + sendMessageList);
+//		System.out.println("보낸 메세지 갯수 확인 : " + messageService.countAdminSendMessage(admin_code, pagingDto));
 		List<String> adminList = adminService.getAllAdminCode();
 		model.addAttribute("sendMessageList", sendMessageList);
 		model.addAttribute("adminList", adminList);
@@ -273,9 +276,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/checkSendToMeMessage", method = RequestMethod.GET)
-	public String checkSendToMeMessage(HttpSession session,Model model) {
+	public String checkSendToMeMessage(HttpSession session,Model model,PagingDto pagingDto) {
 		String admin_code = (String)session.getAttribute("admin_code");
-		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code);
+		pagingDto.setCount(messageService.countAdminToMeMessage(admin_code, pagingDto));
+		pagingDto.setPage(pagingDto.getPage());
+		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code,pagingDto);
 //		System.out.println("sendToMeMessageList : " + sendToMeMessageList);
 		List<String> adminList = adminService.getAllAdminCode();
 		model.addAttribute("sendToMeMessageList", sendToMeMessageList);

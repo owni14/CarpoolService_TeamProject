@@ -408,5 +408,9 @@ public class MemberDaoImpl implements MemberDao {
 	public List<MemberVo> selectM_idList() {
 		return sqlSession.selectList(NAMESPACE+"selectM_idList");
 	}
+	@Override
+	public int selectApproveCount() {
+		return sqlSession.selectOne(NAMESPACE+"selectApproveCount");
+	}
 	
 }

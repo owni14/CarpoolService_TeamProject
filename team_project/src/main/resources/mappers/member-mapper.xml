@@ -294,4 +294,9 @@
 	select m_id from member order by m_joindate desc
 	</select>
 	
+	<select id="selectApproveCount" resultType="int">
+	select  count(*) from approve_driver
+	where ad_approve ='Y'
+	</select>
+	
 </mapper>

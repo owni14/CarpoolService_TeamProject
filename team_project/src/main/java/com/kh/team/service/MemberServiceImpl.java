@@ -235,4 +235,9 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberVo> selectM_idList() {
 		return memberDao.selectM_idList();
 	}
+	
+	@Override
+	public int selectApproveCount() {
+		return memberDao.selectApproveCount();
+	}
 }

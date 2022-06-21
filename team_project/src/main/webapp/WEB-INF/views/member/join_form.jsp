@@ -18,7 +18,7 @@ $("#select").selectpicker();
 </script>
 <div class="row">
 	<div class="col-md-12">
-		<div class="row" style="display: flex; height:1000px;">
+		<div class="row" style="display: flex; height:1000px; margin-bottom: 150px;">
 			<div class="col-md-4"></div>
 			<div class="col-md-4" style="margin-top: 50px;">
 				<form role="form" action="join_run" method="post">
@@ -51,16 +51,16 @@ $("#select").selectpicker();
 						<label for="m_company">회사</label>
 						<select class="form-control btn" name="m_company">
 							<option>회사를 선택해주세요</option>
-							<option value="samsung">삼성</option>
-							<option value="hyundai">현대</option>
-							<option value="sk">SK</option>
-							<option value="kakao">KAKAO</option>
-							<option value="naver">NAVER</option>
-							<option value="nexen">NEXEN</option>
-							<option value="lg">LG</option>
-							<option value="kt">KT</option>
-							<option value="hanwha">한화</option>
-							<option value="doosan">두산</option>
+							<option value="SAMSUNG">삼성</option>
+							<option value="HYUNDAI">현대</option>
+							<option value="SK">SK</option>
+							<option value="KAKAO">KAKAO</option>
+							<option value="NAVER">NAVER</option>
+							<option value="NEXEN">NEXEN</option>
+							<option value="LG">LG</option>
+							<option value="KT">KT</option>
+							<option value="HANWHA">한화</option>
+							<option value="DOOSAN">두산</option>
 						</select>
 					</div>
 					<div class="form-group">
@@ -75,6 +75,17 @@ $("#select").selectpicker();
 						<label style="margin-right: 15px;">흡연 여부</label>
 						<input type="radio" name="m_is_smoke" style="margin-right:10px;" value="Y"><label style="margin-right: 15px;">흡연자</label>
 						<input type="radio" name="m_is_smoke" style="margin-right:10px;" value="N" checked>비흡연자
+					</div>
+					<div class="form-group">
+						<label style="margin-right: 15px;">캐릭터 설정</label><br>
+						<div style="text-align: center;">
+							<input type="radio" name="character" value="male"><img alt="male.png" src="/resources/images/character/male.png" width="70px;" height="70px;">
+							<input type="radio" name="character" value="male2"><img alt="male1.png" src="/resources/images/character/male2.png" width="70px;" height="70px;">
+							<input type="radio" name="character" value="male3"><img alt="male2.png" src="/resources/images/character/male3.png" width="70px;" height="70px;">
+							<input type="radio" name="character" value="female"><img alt="female.png" src="/resources/images/character/female.png" width="70px;" height="70px;">
+							<input type="radio" name="character" value="female2"><img alt="female2.png" src="/resources/images/character/female2.png" width="70px;" height="70px;">
+							<input type="radio" name="character" value="female3"><img alt="female3.png" src="/resources/images/character/female3.png" width="70px;" height="70px;">
+						</div>
 					</div>
 					<button type="submit" class="btn btn-primary" style="width:100%; height:50px; margin-top:20px;">
 						회원 가입

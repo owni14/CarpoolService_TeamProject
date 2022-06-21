@@ -148,6 +148,7 @@
 		$("#btnCheck").attr("style", "display:none;")
 		$("#btnModify").attr("style", "false");
 		$("#btnDelete").attr("style", "false");
+		$("#txtList").attr("style", "display: false; text-align: center;");
 	}
 	
 	$("#btnModify").click(function() {
@@ -158,7 +159,7 @@
 	
 }); // $(document).ready(function(){})
 </script>
-<h3 style="text-align: center;">탑승자 리스트</h3>
+<h3 id="txtList" style="display: none;">탑승자 리스트</h3>
 <!-- 동승자 리스트 -->
 <div class="row"
 	<c:if test="${isDriver == false}">
@@ -183,15 +184,17 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${passengerList}" var="v" varStatus="status">
-						<tr>	
-							<td>${status.count}</td>
-							<td>${v.M_NAME}</td>
-							<td>${v.M_DEPT}</td>
-							<td>${v.PASSENGER_DEPART_TIME}</td>
-							<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
-							<td><a href="/board/approvePassenger?m_id=${v.M_ID}" class="btn btn-success btn-sm approve">승인</a></td>
-							<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">거부</a></td>
-						</tr>	
+						<c:if test="${!(v.IS_APPROVE == 'C' || v.IS_APPROVE == 'Y')}">
+							<tr>	
+								<td>${status.count}</td>
+								<td>${v.M_NAME}</td>
+								<td>${v.M_DEPT}</td>
+								<td>${v.PASSENGER_DEPART_TIME}</td>
+								<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
+								<td><a href="/board/approvePassenger?m_id=${v.M_ID}" class="btn btn-success btn-sm approve">승인</a></td>
+								<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">거부</a></td>
+							</tr>	
+						</c:if>
 					</c:forEach>
 				</tbody>
 			</table>
@@ -201,6 +204,49 @@
 	<div class="col-md-2"></div>
 </div>
 <!-- // 동승자 리스트 -->
+
+<h3 id="txtList" style="text-align: center; color: green;">승인 리스트</h3>
+<!-- 동승자 리스트 -->
+<div class="row"
+	<c:if test="${isDriver == false}">
+		style="display: none;"
+	</c:if>
+>
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<div class="row">
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>탑승자</th>
+						<th>부서</th>
+						<th>탑승시간</th>
+						<th>탑승위치</th>
+						<th>승인취소</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${passengerList}" var="v" varStatus="status">
+						<c:if test="${(v.IS_APPROVE == 'Y')}">
+							<tr>	
+								<td>${status.count}</td>
+								<td>${v.M_NAME}</td>
+								<td>${v.M_DEPT}</td>
+								<td>${v.PASSENGER_DEPART_TIME}</td>
+								<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
+								<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">취소</a></td>
+							</tr>
+						</c:if>	
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</div>
+	<div class="col-md-2"></div>
+</div>
 
 <!-- 카카오 지도 api -->
 <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
@@ -310,8 +356,8 @@
 				</select>
 			</div>
 			<button id="btnCheck" type="submit" class="btn btn-primary" style="display: ">확인</button>
-			<button id="btnModify" type="button" class="btn btn-warning" style="display: none;">운전수정</button>
-			<a href="/board/deleteDriver?driver_seq=${driver_seq}" id="btnDelete" type="button" class="btn btn-danger" style="display: none;">운전취소</a>
+			<button id="btnModify" type="button" class="btn btn-warning" style="display: none;">운전정보수정</button>
+			<a href="/board/deleteDriver?driver_seq=${driver_seq}" id="btnDelete" type="button" class="btn btn-danger btn-sm" style="display: none;">운전취소</a>
 		</form>
 	</div>
 	<div class="col-md-2"></div>

@@ -33,12 +33,16 @@ $(document).ready(function() {
 		frmPaging.submit();
 	});
 	
-	$("#black").click(function(e) {
+	$(".black").click(function(e) {
 		e.preventDefault();
 		$("#modal-container-678121").modal('show');
-		var driver_id = $("#driver_id").text();
-		console.log("driver_id: ", driver_id);
+		var driver_id = $(this).attr("data-driver_id");
 		$("#black_m_id").val(driver_id.trim());
+	});
+	
+	$(".evaluation").click(function(e){
+		e.preventDefault();
+		console.log("clicked");
 	});
 	
 	$("#modalClose").click(function() {
@@ -132,12 +136,13 @@ $(document).ready(function() {
 				<tr> 
 				<td>${passengerlogVo.PASSENGER_SEQ}</td> 
 					<td>
-					<button class="btn dropdown-toggle" type="button" id="driver_id" data-toggle="dropdown">
+					<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
 						${passengerlogVo.DRIVER_ID}
  					</button>
  					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<a class="dropdown-item" href="#">쪽지보내기</a>
-						<a id="black" class="dropdown-item" href="#">신고하기</a>
+						<a class="dropdown-item black" href="#" data-driver_id="${passengerlogVo.DRIVER_ID}">신고하기</a>
+						<a class="dropdown-item evaluation" href="#">평가하기</a>
 					</div>
 					
 					

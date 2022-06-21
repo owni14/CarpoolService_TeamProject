@@ -50,10 +50,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<Map<String, Object>> getDriverList(String m_company, PagingDto pagingDto) {
 		Map<String, Object> map = new HashMap<>();
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
+		String formattedToday = todayDate();
 		map.put("m_company", m_company);
 		map.put("startRow", pagingDto.getStartRow());
 		map.put("endRow", pagingDto.getEndRow());
@@ -71,10 +68,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public Map<String, Object> getDriverById(String m_id, String m_company) {
 		Map<String, String> map = new HashMap<>();
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
+		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("m_company", m_company);
 		map.put("formattedToday", formattedToday);
@@ -132,11 +126,7 @@ public class MemberDaoImpl implements MemberDao {
 	public String getDriverSeqFromPassenger(String m_id) {
 		Map<String, String> map = new HashMap<>();
 		
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
-		
+		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("formattedToday", formattedToday);
 //		System.out.println("MemberDaoImpl getDriverSeq, m_id:" + m_id);
@@ -172,11 +162,7 @@ public class MemberDaoImpl implements MemberDao {
 	public boolean isApplication(String m_id) {
 		Map<String, String> map = new HashMap<>();
 		
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
-		
+		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("formattedToday", formattedToday);
 		System.out.println(map);
@@ -192,11 +178,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean deletePassenger(String m_id, String driver_seq) {
 		Map<String, String> map = new HashMap<>();
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
-		
+		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("driver_seq", driver_seq);
 		map.put("formattedToday", formattedToday);
@@ -223,10 +205,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	public int getTotalDriverCount(String m_company) {
 		Map<String, Object> map = new HashMap<>();
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
+		String formattedToday = todayDate();
 		map.put("m_company", m_company);
 		map.put("formattedToday", formattedToday);
 		int count = sqlSession.selectOne(NAMESPACE + "getTotalDriverCount", map);
@@ -241,10 +220,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	public List<Map<String, Object>> getPassengerList(String driver_seq, String m_company) {
 		Map<String, Object> map = new HashMap<>();
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
+		String formattedToday = todayDate();
 		map.put("driver_seq", driver_seq);
 		map.put("m_company", m_company);
 		map.put("formattedToday", formattedToday);
@@ -255,11 +231,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public String getDriverSeqFromDriver(String m_id) {
 		Map<String, String> map = new HashMap<>();
-		
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
+		String formattedToday = todayDate();
 		map.put("formattedToday", formattedToday);
 		map.put("m_id", m_id);
 		String driver_seq = sqlSession.selectOne(NAMESPACE + "getDriverSeqFromDriver", map);
@@ -270,12 +242,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean approvePassenger(String m_id) {
 		Map<String, String> map = new HashMap<>();
-		
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
-		
+		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("formattedToday", formattedToday);
 		int count = sqlSession.update(NAMESPACE + "approvePassenger", map);
@@ -288,12 +255,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean rejectPassenger(String m_id) {
 		Map<String, String> map = new HashMap<>();
-		
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
-		
+		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("formattedToday", formattedToday);
 		int count = sqlSession.update(NAMESPACE + "rejectPassenger", map);
@@ -307,10 +269,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public String getApproveState(String m_id) {
 		Map<String, String> map = new HashMap<>();
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
+		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("formattedToday", formattedToday);
 		String approveState = sqlSession.selectOne(NAMESPACE + "getApproveState", map);
@@ -320,10 +279,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean changeDeletionState(String m_id, String boardLoct, String boardTime, String driver_seq) {
 		Map<String, String> map = new HashMap<>();
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
+		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("formattedToday", formattedToday);
 		map.put("boardLoct", boardLoct);
@@ -339,10 +295,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean isClick(String m_id) {
 		Map<String, String> map = new HashMap<>();
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
+		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("formattedToday", formattedToday);
 		String result = sqlSession.selectOne(NAMESPACE + "isClick", map);
@@ -367,10 +320,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean isDriver(String m_id) {
 		Map<String, String> map = new HashMap<>();
-		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
-		LocalDate today = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String formattedToday = today.format(formatter);
+		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("formattedToday", formattedToday);
 		int count = sqlSession.selectOne(NAMESPACE + "isDriver", map);
@@ -407,6 +357,28 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<MemberVo> selectM_idList() {
 		return sqlSession.selectList(NAMESPACE+"selectM_idList");
+	}
+	
+	
+	// 오늘 날짜를 얻어오는 메서드
+	private String todayDate() {
+		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String formattedToday = today.format(formatter);
+		return formattedToday;
+	}
+
+	@Override
+	public String getMemberId(MemberVo memberVo) {
+		String m_id = sqlSession.selectOne(NAMESPACE + "getMemberId", memberVo);
+		return m_id;
+	}
+
+	@Override
+	public String getMemberPw(MemberVo memberVo) {
+		String m_pw = sqlSession.selectOne(NAMESPACE + "getMemberPw", memberVo);
+		return m_pw;
 	}
 	
 }

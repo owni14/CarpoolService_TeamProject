@@ -235,4 +235,16 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberVo> selectM_idList() {
 		return memberDao.selectM_idList();
 	}
+
+	@Override
+	public String getMemberId(MemberVo memberVo) {
+		String m_id = memberDao.getMemberId(memberVo);
+		return m_id;
+	}
+
+	@Override
+	public String getMemberPw(MemberVo memberVo) {
+		String m_pw = memberDao.getMemberPw(memberVo);
+		return m_pw;
+	}
 }

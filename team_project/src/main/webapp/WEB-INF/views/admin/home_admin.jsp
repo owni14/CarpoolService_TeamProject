@@ -34,10 +34,10 @@
 			e.preventDefault();
 			var blacklist_seqValue = $(this).attr("data-blacklistSeq");
 			var admin_checkValue = $(this).attr("data-value");
-			var blackScoreValue = $(this).attr("data-bScore");
+			var blackScoreValue = $("#spanBlackPoint").attr("data-blackpoint");
 			var black_m_id = $(this).attr("data-blackid");
 			console.log(admin_checkValue); // 반려 : C, 반려 취소 : N, 승인 : Y
-			frmApproveNotify.find("input[name=refresh]").val(1);
+// 			frmApproveNotify.find("input[name=refresh]").val(1);
 			frmApproveNotify.find("input[name=blacklist_seq]").val(blacklist_seqValue);
 			frmApproveNotify.find("input[name=admin_check]").val(admin_checkValue);
 			if (admin_checkValue == "N" || admin_checkValue == "C") {
@@ -53,6 +53,20 @@
 		});
 		$("p.content").click(function(){
 			location.href="/admin/report_management";
+		});
+		
+		$(".blackPointImg").click(function () {
+			var blackPoint = $(this).attr("data-blackpoint");
+			if (blackPoint == 3) {
+				$("#spanBlackPoint").text(blackPoint).css("color","red");
+				$("#spanBlackPoint").attr("data-blackpoint",blackPoint);
+			} else if (blackPoint == 2) {
+				$("#spanBlackPoint").text(blackPoint).css("color","green");
+				$("#spanBlackPoint").attr("data-blackpoint",blackPoint);
+			} else {
+				$("#spanBlackPoint").text(blackPoint).css("color","blue");
+				$("#spanBlackPoint").attr("data-blackpoint",blackPoint);
+			}
 		});
 	});
 </script>
@@ -279,8 +293,20 @@ const myChart = new Chart(
                                             <div class="col-md-12 col-xl-6">
                                                 <div class="card project-task" style="height:480px">
                                                     <div class="card-header">
+                                                                              <!-- dropdown start -->
+						<button class="btn dropdown-toggle" type="button"
+							style="background-color: white;  color: red; float: right;"
+							id="dropdownMenuButton1" data-toggle="dropdown">
+							벌점</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/anger.jpg" height="120px" data-blackpoint="3"><b style="color:red; float:right;">3점</b>
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/disgust.jpg" height="120px" data-blackpoint="2"><b style="color:green; float:right;">2점</b>
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/sadness.jpg" height="120px" data-blackpoint="1"><b style="color:blue; float:right;">1점</b>
+							</div>
                                                         <div class="card-header-left ">
                                                             <h3 id="test">신고자 리스트</h3>
+                                                            
+                                                            
                                                         </div>
                                                         <div class="card-header-right">
 <!--                                                             <ul class="list-unstyled card-option"> -->
@@ -292,8 +318,15 @@ const myChart = new Chart(
 <!--                                                             </ul> -->
                                                         </div>
                                                     </div>
+                                                    
                                                     <div class="card-block p-b-10">
+                          
+							<div>
+								<b style="float:left; font-size: 20px;"><span>벌점 : </span><span id="spanBlackPoint" style="color:red" data-blackpoint="3">3</span><span>점</span></b>
+							</div>
+						<!-- dropdown end -->
                                                         <div class="table-responsive">
+                                                        
                                                             <table class="table table">
                                                                 <thead>
                                                                     <tr>
@@ -392,9 +425,9 @@ const myChart = new Chart(
                                                                         <td>
                                                                             <p class="d-inline-block m-r-20 content">
                                                                             <c:choose>
-                                                                            <c:when test="${blackListVo.black_content.length() >=30}">
+                                                                            <c:when test="${blackListVo.black_content.length() >=25}">
                                                                           
-                                                                            ${blackListVo.black_content.substring(0,30)}...</c:when>
+                                                                            ${blackListVo.black_content.substring(0,25)}...</c:when>
                                                                             <c:otherwise> ${blackListVo.black_content}</c:otherwise>
                                                                             </c:choose>
                                                                            </p>

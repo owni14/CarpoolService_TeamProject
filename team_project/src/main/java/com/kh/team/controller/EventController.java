@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.team.service.EventService;
+import com.kh.team.service.MessageService;
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.MessageVo;
 import com.kh.team.vo.PagingDto;
 
 @Controller
@@ -24,6 +26,8 @@ public class EventController {
 	
 	@Autowired
 	private EventService eventService;
+	@Autowired
+	private MessageService messageService;
 	
 	// 현재 진행중인 이벤트로 이동
 	@RequestMapping(value = "/now", method = RequestMethod.GET)
@@ -67,10 +71,10 @@ public class EventController {
 	// 이벤트 당첨자 확인
 	@RequestMapping(value = "/winnerCheck", method = RequestMethod.GET)
 	public String winnerCheck(int event_seq, Model model) {
+		System.out.println("event_seq: " + event_seq);
 		String content = eventService.getContent(event_seq);
-		List<String> winnerList = eventService.getWinnerId(event_seq);
 		model.addAttribute("content", content);
-		model.addAttribute("winnerList", winnerList);
+		model.addAttribute("event_seq", event_seq);
 		return "event/winner_check";
 	}
 	
@@ -85,5 +89,44 @@ public class EventController {
 		fis.close();
 		return data;
 
+	}
+	
+	// 당첨자 확인하기
+	@ResponseBody
+	@RequestMapping(value = "/checkWinner", method = RequestMethod.GET)
+	public String checkWinner(String m_id, int event_seq) {
+		boolean winnerResult = eventService.checkWinner(m_id, event_seq);
+		if (winnerResult) {
+			String goodsResult = eventService.checkGoods(m_id, event_seq);
+			if (goodsResult.equals("Y")) {
+				System.out.println("goodsResult : " + goodsResult);
+				return "already";
+			}
+			return "true";
+		}
+		return "false";
+	}
+	
+	// 당첨자 쪽지 발송
+	@ResponseBody
+	@RequestMapping(value = "/winnerMessage", method = RequestMethod.POST)
+	public void winnerMessage(String m_id, int event_seq) {
+		int couponPrice = eventService.couponPrice(event_seq);
+		int eventPoint = eventService.getEventPoint(event_seq);
+		System.out.println("eventPoint:" + eventPoint);
+		String content = "";
+		if (couponPrice > 0) {
+			content += "주유 쿠폰 " + couponPrice + "만원 권 지급되었습니다.\n";
+		} 
+		if (eventPoint > 0) {
+			content += "이벤트에 당첨되어 " + eventPoint + "point가 충전되었습니다.";
+		}
+		System.out.println("content: " + content); 
+		MessageVo messageVo = new MessageVo();
+		messageVo.setReceiver_m_id(m_id);
+		messageVo.setSender_admin_code("1002");
+		messageVo.setContent(content);
+		messageService.insertNoBlackMessage(messageVo);
+		eventService.sendGoods(m_id, event_seq);
 	}
 }

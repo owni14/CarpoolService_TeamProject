@@ -42,5 +42,7 @@ public interface MemberService {
 	public boolean deleteDriver(int driver_seq); // 운전하기에서 삭제
 	public DriverVo getDriverInfo(int driver_seq); // 운전하기에 등록한 정보 가져오기
 	public List<MemberVo> selectM_idList();//모든 멤버 아이디 들고오기
+	public String getMemberId(MemberVo memberVo); // 멤버 아이디 찾기
+	public String getMemberPw(MemberVo memberVo); // 멤버 비밀번호 찾기
 	public int selectApproveCount();//모든 승인된 드라이버 수 가져오기
 }

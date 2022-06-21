@@ -87,10 +87,35 @@
 		select event_content from event where event_seq= #{event_seq}
 	</select>
 	
-	<select id="getWinnerId" resultType="String">
-		select m_id from Event_Participation_event_seq#{event_seq}
+	<select id="checkWinner" resultType="int">
+		select count(*) from event_participation_event_seq${event_seq}
 		where ep_is_winner = 'Y'
+		and m_id = #{m_id}
 	</select>
+	
+	<select id="couponPrice" resultType="int">
+		select event_coupon from event
+		where event_seq = #{event_seq}
+	</select>
+	
+	<select id="getEventPoint" resultType="int">
+		select p.pc_point from event e, point_code p
+		where e.pc_code = p.pc_code
+		and e.event_seq = #{event_seq}
+	</select>
+	
+	<select id="checkGoods" resultType="string">
+		select e_winner_is_get from event_winner
+		where m_id = #{m_id}
+		and event_seq = #{event_seq}
+	</select>
+	
+	<update id="sendGoods">
+		update event_winner set
+		e_winner_is_get = 'Y'
+		where m_id = #{m_id}
+		and event_seq = #{event_seq}
+	</update>
 	
 	<select id="createTableEvnet" parameterType="HashMap">
 	${createTableStr}

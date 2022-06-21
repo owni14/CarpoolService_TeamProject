@@ -2,6 +2,7 @@ package com.kh.team.dao;
 
 
 
+import java.io.ObjectOutputStream.PutField;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,21 +115,51 @@ public class MessageDaoImpl implements MessageDao {
 	}
 	
 	@Override
-	public List<MessageVo> adminGetMessageList(String receiver_admin_code) {
-		List<MessageVo> list = sqlSession.selectList(NAMESPACE + "adminGetMessageList", receiver_admin_code);
+	public List<MessageVo> adminGetMessageList(String receiver_admin_code, PagingDto pagingDto) {
+		int startRow = pagingDto.getStartRow();
+		int endRow = pagingDto.getEndRow();
+		String searchType = pagingDto.getSearchType();
+		String keyword = pagingDto.getKeyword();
+		Map<String, Object> map = new HashMap<>();
+		map.put("receiver_admin_code", receiver_admin_code);
+		map.put("startRow",startRow);
+		map.put("endRow",endRow);
+		map.put("searchType",searchType);
+		map.put("keyword",keyword);
+		List<MessageVo> list = sqlSession.selectList(NAMESPACE + "adminGetMessageList", map);
 		return list;
 	}
 
 
 	@Override
-	public List<MessageVo> adminSendMessageList(String sender_admin_code) {
-		List<MessageVo> list = sqlSession.selectList(NAMESPACE + "adminSendMessageList", sender_admin_code);
+	public List<MessageVo> adminSendMessageList(String sender_admin_code, PagingDto pagingDto) {
+		int startRow = pagingDto.getStartRow();
+		int endRow = pagingDto.getEndRow();
+		String searchType = pagingDto.getSearchType();
+		String keyword = pagingDto.getKeyword();
+		Map<String, Object> map = new HashMap<>();
+		map.put("sender_admin_code", sender_admin_code);
+		map.put("startRow",startRow);
+		map.put("endRow",endRow);
+		map.put("searchType",searchType);
+		map.put("keyword",keyword);
+		List<MessageVo> list = sqlSession.selectList(NAMESPACE + "adminSendMessageList", map);
 		return list;
 	}
 
 	@Override
-	public List<MessageVo> adminToMeMessageList(String sender_admin_code) {
-		List<MessageVo> list = sqlSession.selectList(NAMESPACE+ "adminToMeMessageList", sender_admin_code);
+	public List<MessageVo> adminToMeMessageList(String sender_admin_code, PagingDto pagingDto) {
+		int startRow = pagingDto.getStartRow();
+		int endRow = pagingDto.getEndRow();
+		String searchType = pagingDto.getSearchType();
+		String keyword = pagingDto.getKeyword();
+		Map<String, Object> map = new HashMap<>();
+		map.put("sender_admin_code", sender_admin_code);
+		map.put("startRow",startRow);
+		map.put("endRow",endRow);
+		map.put("searchType",searchType);
+		map.put("keyword",keyword);
+		List<MessageVo> list = sqlSession.selectList(NAMESPACE+ "adminToMeMessageList", map);
 		return list;
 
 	}
@@ -140,6 +171,42 @@ public class MessageDaoImpl implements MessageDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int countAdminGetMessage(String receiver_admin_code,PagingDto pagingDto) {
+		String searchType = pagingDto.getSearchType();
+		String keyword = pagingDto.getKeyword();
+		Map<String, Object> map = new HashMap<>();
+		map.put("receiver_admin_code", receiver_admin_code);
+		map.put("searchType",searchType);
+		map.put("keyword",keyword);
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countAdminGetMessage", map);
+		return count;
+	}
+
+	@Override
+	public int countAdminSendMessage(String sender_admin_code, PagingDto pagingDto) {
+		String searchType = pagingDto.getSearchType();
+		String keyword = pagingDto.getKeyword();
+		Map<String, Object> map = new HashMap<>();
+		map.put("sender_admin_code", sender_admin_code);
+		map.put("searchType",searchType);
+		map.put("keyword",keyword);
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countAdminSendMessage", map);
+		return count;
+	}
+
+	@Override
+	public int countAdminToMeMessage(String sender_admin_code, PagingDto pagingDto) {
+		String searchType = pagingDto.getSearchType();
+		String keyword = pagingDto.getKeyword();
+		Map<String, Object> map = new HashMap<>();
+		map.put("sender_admin_code", sender_admin_code);
+		map.put("searchType",searchType);
+		map.put("keyword",keyword);
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countAdminToMeMessage", map);
+		return count;
 	}
 
 }

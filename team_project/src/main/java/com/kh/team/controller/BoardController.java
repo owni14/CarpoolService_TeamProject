@@ -99,16 +99,6 @@ public class BoardController {
 		// 현재 페이지의 수를 얻어와 페이지 설정
 		pagingDto.setPage(pagingDto.getPage());
 		
-//		System.out.println("BoardController passengerReservation, page :" + pagingDto.getPage());
-		
-		/* 초반에 설정했었는데 코드 분석을 하다보니 동기로 운전자리스트를 가져올 필요가 있나 싶은데 혹시 몰라서 남겨둡니다. 
-		List<Map<String, Object>> driverList = memberService.getDriverList(m_company, pagingDto);
-		if (driverList != null) {
-			model.addAttribute("driverList", driverList);
-		}
-		*/
-		
-		
 		model.addAttribute("pagingDto", pagingDto);
 		return "board/reservation";
 	}

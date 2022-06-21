@@ -6,8 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.team.service.MemberService;
 import com.kh.team.vo.MemberVo;
@@ -71,5 +73,31 @@ public class MemberController {
 		session.removeAttribute("loginVo");
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/findId", method = RequestMethod.GET)
+	public String findId() {
+		return "member/findId";
+	}
+	
+	@RequestMapping(value = "/findId_run", method = RequestMethod.POST)
+	public String findId_run(MemberVo memberVo, Model model) {
+		String m_id = memberService.getMemberId(memberVo);
+		System.out.println("m_id:" + m_id);
+		model.addAttribute("m_id", m_id);
+		return "member/foundId";
+	}
+	
+	@RequestMapping(value = "/findPw", method = RequestMethod.GET)
+	public String findPw() {
+		return "member/findPw";
+	}
+	
+	@RequestMapping(value = "/findPw_run", method = RequestMethod.POST)
+	public String findPw_run(MemberVo memberVo, Model model) {
+		String m_pw = memberService.getMemberPw(memberVo);
+		model.addAttribute("m_pw", m_pw);
+		return "member/foundPw";
+	}
+	
 	
 }

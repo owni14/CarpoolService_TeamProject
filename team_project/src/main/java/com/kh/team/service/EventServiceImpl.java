@@ -81,13 +81,33 @@ public class EventServiceImpl implements EventService {
 	}
 	
 	@Override
-	public List<String> getWinnerId(int event_seq) {
-		return eventDao.getWinnerId(event_seq);
+	public boolean checkWinner(String m_id, int event_seq) {
+		return eventDao.checkWinner(m_id, event_seq);
+	}
+	
+	@Override
+	public int couponPrice(int event_seq) {
+		return eventDao.couponPrice(event_seq);
+	}
+	
+	@Override
+	public int getEventPoint(int event_seq) {
+		return eventDao.getEventPoint(event_seq);
+	}
+	
+	@Override
+	public String checkGoods(String m_id, int event_seq) {
+		return eventDao.checkGoods(m_id, event_seq);
+	}
+	
+	@Override
+	public void sendGoods(String m_id, int event_seq) {
+		eventDao.sendGoods(m_id, event_seq);
 	}
 
 	@Override
 	public void createTableEvnet(int event_seq) {
-			eventDao.createTableEvnet(event_seq);
+		eventDao.createTableEvnet(event_seq);
 	}
 
 	@Override
@@ -188,6 +208,16 @@ public class EventServiceImpl implements EventService {
 	public List<EventVo> selectEventTopThree() {
 		return eventDao.selectEventTopThree();
 	}
+
+	
+
+	
+
+	
+
+	
+
+	
 
 	
 }

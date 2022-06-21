@@ -22,7 +22,7 @@ $(document).ready(function() {
 			<div class="col-md-4" style="margin-top: 100px;">
 			
 				<form role="form" method="post" action="/member/loginRun">
-					<span style="font-size: 50px;">통합회원 로그인</span>
+					<span style="font-size: 50px;" >통합회원 로그인</span>
 					<div class="m_id">
 						<input style="margin-top: 40px; width:100%" type="email" class="form-control inputLogin" value="${cookie.saveid.value}" name="m_id" id="m_id" placeholder="아이디(이메일)을 입력해주세요"/>
 					</div>
@@ -40,8 +40,8 @@ $(document).ready(function() {
 					</div> 
 					<button type="submit" class="btn btn-primary" style="width:100%; height:50px; margin-top: 20px; margin-bottom: 20px;">로그인	</button>
 					<div>
-						<a class="a_style" href="#">아이디 찾기</a> |
-						<a class="a_style" href="#">비밀번호 찾기</a> |
+						<a class="a_style" href="/member/findId">아이디 찾기</a>
+						<a class="a_style" href="/member/findPw">비밀번호 찾기</a>
 						<a class="a_style" href="/member/joinForm">회원가입</a>
 					</div>
 				</form>

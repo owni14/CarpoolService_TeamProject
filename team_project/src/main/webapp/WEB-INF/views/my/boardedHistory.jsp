@@ -3,10 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <%@ include file="/WEB-INF/views/my/my_header.jsp"%>
-<style>
-#black_m_id { display: inline-block; width: 300px;}
-#black_content { margin-top: 20px; height: 100px;}
-</style>
+
 <script>
 $(document).ready(function() {
 	var frmPaging = $("#frmPaging");
@@ -33,55 +30,30 @@ $(document).ready(function() {
 		frmPaging.submit();
 	});
 	
-	$(".black").click(function(e) {
-		e.preventDefault();
-		$("#modal-container-678121").modal('show');
-		var driver_id = $(this).attr("data-driver_id");
-		$("#black_m_id").val(driver_id.trim());
-	});
+	
 	
 	$(".evaluation").click(function(e){
 		e.preventDefault();
 		console.log("clicked");
 	});
 	
-	$("#modalClose").click(function() {
-		$("#modal-container-678121").modal('hide');
+	
+	
+	$(".message_form").click(function(e) {
+		e.preventDefault();
+		$("#message_form_modal").modal("show");
+		var receiver = $(this).attr("data-receiver");
+		$("#receiver_m_id").val(receiver);
+		
 	});
 });
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp"%>
+<%@ include file ="/WEB-INF/views/message/message_form.jsp"%>
+<%@ include file ="/WEB-INF/views/customer/report_form.jsp" %>
 <div class="row">
 
-	<!-- modal start -->
-	<form action="/customer/black_report" method="post">
- 	<input type="hidden" name="m_id" value="${loginVo.m_id}">
-	<div class="col-md-12">
-		<div class="modal fade" id="modal-container-678121" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="myModalLabel">
-							신고 하기
-						</h5>
-					</div>
-					<div class="modal-body">
-						신고 대상자 : <input type="text" class="form-control" id="black_m_id" name="black_m_id" readonly>
-						<textarea id="black_content" class="form-control" name="black_content" placeholder="신고내용을 입력해 주세요"></textarea>
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-danger">신고하기</button>
-						<button type="button" id="modalClose" class="btn btn-secondary" data-dismiss="modal">
-							닫기
-						</button>
-					
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	</form>
-	<!-- modal end -->
+	
 	
 	<div class="col-md-2">
 	</div>
@@ -140,7 +112,7 @@ $(document).ready(function() {
 						${passengerlogVo.DRIVER_ID}
  					</button>
  					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="#">쪽지보내기</a>
+						<a class="dropdown-item message_form" href="#" id="send_message" data-receiver="${passengerlogVo.DRIVER_ID}">쪽지보내기</a>
 						<a class="dropdown-item black" href="#" data-driver_id="${passengerlogVo.DRIVER_ID}">신고하기</a>
 						<a class="dropdown-item evaluation" href="#">평가하기</a>
 					</div>

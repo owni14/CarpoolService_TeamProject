@@ -30,7 +30,7 @@ $(document).ready(function() {
 		$("#message_form_modal").modal('show');
 	});
 	
-	$("#modalClose").click(function() {
+	$(".modalClose").click(function() {
 		$("#message_form_modal").modal('hide');
 	});
 });
@@ -63,7 +63,7 @@ $(document).ready(function() {
 					<textarea id="modal_content" class="form-control" name="content" placeholder="쪽지 내용을 입력해 주세요" required></textarea>
 				</div>
 				<div class="modal-footer">
-					<button type="button" id="modalClose" class="btn btn-secondary" data-dismiss="modal">
+					<button type="button" class="btn btn-secondary modalClose" data-dismiss="modal">
 						취소
 					</button>
 					<button type="submit" class="btn btn-success">보내기</button>

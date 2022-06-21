@@ -158,7 +158,9 @@ var nav = $('.fixed-button');
                 <div class="navbar-wrapper">
 
                     <div class="navbar-logo" style="background-color:white">
+                    <a href="/admin/home">
                         <img src="/resources/images/companyLogo/logo.jpg" width="120" height="47.65" alt="로고이미지">
+                        </a>
                         <a class="mobile-menu" id="mobile-collapse" >
                             <i class="ti-menu" style="color:black"></i>
                         </a>

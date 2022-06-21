@@ -6,9 +6,9 @@
 <mapper namespace="com.kh.team.mappers.member">
 	<insert id="insertMember">
 		insert into member
-			(m_id, m_name, m_pw, gender, m_company, m_dept, m_is_smoke, m_address, m_cellphone)
+			(m_id, m_name, m_pw, gender, m_company, m_dept, m_is_smoke, m_address, m_cellphone, character)
 		values 
-			(#{m_id}, #{m_name}, #{m_pw}, #{gender}, #{m_company}, #{m_dept}, #{m_is_smoke}, #{m_address}, #{m_cellphone})
+			(#{m_id}, #{m_name}, #{m_pw}, #{gender}, #{m_company}, #{m_dept}, #{m_is_smoke}, #{m_address}, #{m_cellphone}, #{character})
 	</insert>
 	
 	<select id="getMemberByIdAndPw" resultType="MemberVo">

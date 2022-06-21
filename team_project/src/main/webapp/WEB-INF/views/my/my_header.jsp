@@ -12,37 +12,61 @@
 <script>
 $(document).ready(function() {
 	var m_company = "${loginVo.m_company}";
-	var img = $("#companyImg");
+	var character = "${loginVo.character}";
+	var companyImg = $("#companyImg");
+	var characterImg = $("#characterImg");
+	
 	switch(m_company) {
 	case "DOOSAN":
-		img.attr("src", "/resources/images/companyLogo/DOOSAN.png");
+		companyImg.attr("src", "/resources/images/companyLogo/DOOSAN.png");
 		break;
 	case "HANWHA":
-		img.attr("src", "/resources/images/companyLogo/HANWHA.png");
+		companyImg.attr("src", "/resources/images/companyLogo/HANWHA.png");
 		break;
 	case "HYUNDAI":
-		img.attr("src", "/resources/images/companyLogo/HYUNDAI.png");
+		companyImg.attr("src", "/resources/images/companyLogo/HYUNDAI.png");
 		break;
 	case "KAKAO":
-		img.attr("src", "/resources/images/companyLogo/KAKAO.jpg");
+		companyImg.attr("src", "/resources/images/companyLogo/KAKAO.jpg");
 		break;
 	case "KT":
-		img.attr("src", "/resources/images/companyLogo/KT.png");
+		companyImg.attr("src", "/resources/images/companyLogo/KT.png");
 		break;
 	case "LG":
-		img.attr("src", "/resources/images/companyLogo/LG.png");
+		companyImg.attr("src", "/resources/images/companyLogo/LG.png");
 		break;
 	case "NAVER":
-		img.attr("src", "/resources/images/companyLogo/NAVER.png");
+		companyImg.attr("src", "/resources/images/companyLogo/NAVER.png");
 		break;
 	case "NEXEN":
-		img.attr("src", "/resources/images/companyLogo/NEXEN.jpg");
+		companyImg.attr("src", "/resources/images/companyLogo/NEXEN.jpg");
 		break;
 	case "SAMSUNG":
-		img.attr("src", "/resources/images/companyLogo/SAMSUNG.png");
+		companyImg.attr("src", "/resources/images/companyLogo/SAMSUNG.png");
 		break;
 	case "SK":
-		img.attr("src", "/resources/images/companyLogo/SK.png");
+		companyImg.attr("src", "/resources/images/companyLogo/SK.png");
+		break;
+	}
+	
+	switch(character) {
+	case "female":
+		characterImg.attr("src", "/resources/images/character/female.png");
+		break;
+	case "female2":
+		characterImg.attr("src", "/resources/images/character/female2.png");
+		break;
+	case "female3":
+		characterImg.attr("src", "/resources/images/character/female3.png");
+		break;
+	case "male":
+		characterImg.attr("src", "/resources/images/character/male.png");
+		break;
+	case "male2":
+		characterImg.attr("src", "/resources/images/character/male2.png");
+		break;
+	case "male3":
+		characterImg.attr("src", "/resources/images/character/male3.png");
 		break;
 	}
 });
@@ -53,7 +77,7 @@ $(document).ready(function() {
 	<div class="col-md-8">
 		<div class="row">
 			<div class="col-md-6 my_card">
-				<img src="/resources/assets/img/man_default.jpg" class="rounded-circle">
+				<img id="characterImg" src="/resources/images/character/default.png" width="400px;" height="250px;">
 			</div>
 			<div class="col-md-6 my_card">
 				<div>

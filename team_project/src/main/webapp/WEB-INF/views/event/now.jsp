@@ -84,7 +84,7 @@ $(document).ready(function() {
 					<c:forEach items="${eventList}" var="eventVo">
 						<tr class="e_tr" data-seq="${eventVo.event_seq}">
 							<td class="align-middle">
-								<img class="e_img" 
+								<img class="e_img"
 								<c:choose>
 									<c:when test="${not empty eventVo.event_img}">
 										src="/event/displayImage?filename=${eventVo.event_img}" 

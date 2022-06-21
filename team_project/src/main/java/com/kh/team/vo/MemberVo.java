@@ -18,6 +18,7 @@ public class MemberVo {
 	private String m_is_smoke;
 	private String m_address;
 	private String m_cellphone;
+	private String character;
 	
 	public MemberVo() {
 		super();
@@ -73,6 +74,28 @@ public class MemberVo {
 		this.m_address = m_address;
 		this.m_cellphone = m_cellphone;
 	}
+	
+	public MemberVo(String m_id, String m_name, String m_pw, String gender, String m_company, String m_dept,
+			String m_is_drop, int m_point, int m_evl, int m_blackpoint, Date m_joindate, String m_is_smoke,
+			String m_address, String m_cellphone, String character) {
+		super();
+		this.m_id = m_id;
+		this.m_name = m_name;
+		this.m_pw = m_pw;
+		this.gender = gender;
+		this.m_company = m_company;
+		this.m_dept = m_dept;
+		this.m_is_drop = m_is_drop;
+		this.m_point = m_point;
+		this.m_evl = m_evl;
+		this.m_blackpoint = m_blackpoint;
+		this.m_joindate = m_joindate;
+		this.m_is_smoke = m_is_smoke;
+		this.m_address = m_address;
+		this.m_cellphone = m_cellphone;
+		this.character = character;
+	}
+
 
 
 	public String getM_id() {
@@ -186,21 +209,24 @@ public class MemberVo {
 	public void setM_cellphone(String m_cellphone) {
 		this.m_cellphone = m_cellphone;
 	}
+	
+	public String getCharacter() {
+		return character;
+	}
 
 
+
+	public void setCharacter(String character) {
+		this.character = character;
+	}
 
 	@Override
 	public String toString() {
 		return "MemberVo [m_id=" + m_id + ", m_name=" + m_name + ", m_pw=" + m_pw + ", gender=" + gender
 				+ ", m_company=" + m_company + ", m_dept=" + m_dept + ", m_is_drop=" + m_is_drop + ", m_point="
 				+ m_point + ", m_evl=" + m_evl + ", m_blackpoint=" + m_blackpoint + ", m_joindate=" + m_joindate
-				+ ", m_is_smoke=" + m_is_smoke + ", m_address=" + m_address + ", m_cellphone=" + m_cellphone + "]";
+				+ ", m_is_smoke=" + m_is_smoke + ", m_address=" + m_address + ", m_cellphone=" + m_cellphone
+				+ ", character=" + character + "]";
 	}
 
-
-
-	
-
-	
-	
 }

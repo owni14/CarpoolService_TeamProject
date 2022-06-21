@@ -84,5 +84,10 @@ public class NotifyDaoImpl implements NotifyDao{
 		return cNotifyCount;
 	}
 
+	@Override
+	public void updateBlackPoint(BlackListVo blackListVo) {
+		sqlSession.update(NAMESPACE + "updateBlackPoint", blackListVo);
+	}
+
 }
 

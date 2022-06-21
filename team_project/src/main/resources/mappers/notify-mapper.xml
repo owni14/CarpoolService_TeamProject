@@ -94,4 +94,10 @@
 		</if>
 	</sql>
 	
+	<update id="updateBlackPoint">
+		update blacklist set
+		black_score = black_score + #{black_score}
+		where blacklist_seq = #{blacklist_seq}
+	</update>
+	
 </mapper>

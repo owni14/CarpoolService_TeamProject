@@ -24,7 +24,11 @@ public interface EventService {
 	public List<EventVo> getEventFinishList(PagingDto pagingDto);
 	public void updateEventFinish(int event_seq);
 	public String getContent(int event_seq); 
-	public List<String> getWinnerId(int event_seq);
+	public boolean checkWinner(String m_id, int event_seq);
+	public int couponPrice(int event_seq);
+	public int getEventPoint(int event_seq);
+	public String checkGoods(String m_id, int event_seq);
+	public void sendGoods(String m_id, int event_seq);
 	//이벤트 참가 테이블
 	public void createTableEvnet(int event_seq);
 

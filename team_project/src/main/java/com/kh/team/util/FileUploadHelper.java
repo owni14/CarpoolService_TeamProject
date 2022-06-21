@@ -24,7 +24,10 @@ public class FileUploadHelper {
 		UUID uuid=UUID.randomUUID();
 		String saveFilename = uploadPath+"/"+uuid+"_"+originalFilename;
 		System.out.println("save saveFilename :"+saveFilename);
-		
+		File tmpdir=new File(uploadPath);
+		if(!tmpdir.exists()) {
+			tmpdir.mkdir();
+		}
 		File ftarget=new File(saveFilename);
 		try {
 			FileCopyUtils.copy(fileData, ftarget);

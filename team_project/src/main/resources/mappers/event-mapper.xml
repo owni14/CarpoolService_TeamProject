@@ -31,7 +31,7 @@
 		event_content=#{event_content},
 		event_is_finish=#{event_is_finish},
 		event_enddate=#{event_enddate, jdbcType=VARCHAR},
-		event_img=#{event_img, jdbcType=VARCHAR},
+		
 		event_max_count=#{event_max_count},
 		event_point=#{event_point}
 		where event_seq=#{event_seq}

@@ -247,4 +247,9 @@ public class MemberServiceImpl implements MemberService {
 		String m_pw = memberDao.getMemberPw(memberVo);
 		return m_pw;
 	}
+	
+	@Override
+	public int selectApproveCount() {
+		return memberDao.selectApproveCount();
+	}
 }

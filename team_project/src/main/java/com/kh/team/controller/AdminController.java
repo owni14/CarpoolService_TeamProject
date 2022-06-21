@@ -36,6 +36,7 @@ import com.kh.team.service.MemberService;
 import com.kh.team.service.MemberUpdateService;
 import com.kh.team.service.MessageService;
 import com.kh.team.service.NotifyService;
+import com.kh.team.util.CodeEnum;
 import com.kh.team.util.DateHelper;
 import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.AdminVo;
@@ -133,12 +134,15 @@ public class AdminController {
 		boolean isgivingDay=DateHelper.isPointMonthDay();//포인트 지급날 매달 첫째날임
 		String formattedToday=DateHelper.getforamttedStr();
 		String iup_what="D";
+		
 		int isPointUpdateCount=evlService.selectCountIsUpdate(formattedToday, iup_what);
 		System.out.println("isPointUpdateCount amdinController "+isPointUpdateCount);
 		if(isgivingDay && isPointUpdateCount<=0 ) {
 			Is_Update_PointVo is_Update_PointVo=
 					DateHelper.getIsUPdatePointVo("D");//드라이버용
 			evlService.transactionGivingPoint(is_Update_PointVo);
+			AddAllMemberHistoryNMessage(CodeEnum.SYSTEMDRIVERPOINT.getCode());
+			
 		}
 //        // 포인트 자동 지급 끝
 		
@@ -158,17 +162,23 @@ public class AdminController {
 				Is_Update_PointVo is_Update_PointVo=new Is_Update_PointVo(0, iup_date, "P");
 				System.out.println("home Admin 6개월 if문 실행 :is_Update_PointVo "+is_Update_PointVo);
 				evlService.transactionGivingSixPoint(is_Update_PointVo);
-				
+				AddAllMemberHistoryNMessage(CodeEnum.SYSTEMALL.getCode());
 			}
 		
 		
 		//모든유저에게 포인트 자동지급 끝
+		
+		//드라이버 몇명?
+		int approve_count=memberService.selectApproveCount();
+		int totalMember=memberService.adminGetCount(null);
 		model.addAttribute("top5List", top5List);
 		model.addAttribute("noEventGetCount", noEventGetCount);
 		model.addAttribute("noAnswer", noAnswer);
 		model.addAttribute("dayPassengerCounts", dayPassengerCounts);
 		model.addAttribute("blackLists", blackLists);
 		model.addAttribute("strList", strList);
+		model.addAttribute("approve_count", approve_count);
+		model.addAttribute("totalMember", totalMember);
 		return "admin/home_admin";
 	}
 	
@@ -247,25 +257,28 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/checkMyMessage", method = RequestMethod.GET)
-	public String checkMyMessage(HttpSession session,Model model) {
+	public String checkMyMessage(HttpSession session,Model model,PagingDto pagingDto) {
 		String admin_code = (String)session.getAttribute("admin_code");
 //		System.out.println("admin_code : " + admin_code);
-		List<MessageVo> getMessageList = messageService.adminGetMessageList(admin_code);
-		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code);
-		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code);
+		pagingDto.setCount(messageService.countAdminGetMessage(admin_code, pagingDto));
+		pagingDto.setPage(pagingDto.getPage());
+		System.out.println("pagingDto1 : " + pagingDto);
+		List<MessageVo> getMessageList = messageService.adminGetMessageList(admin_code,pagingDto);
 		List<String> adminList = adminService.getAllAdminCode();
 		model.addAttribute("getMessageList",getMessageList);
-		model.addAttribute("sendMessageList", sendMessageList);
-		model.addAttribute("sendToMeMessageList", sendToMeMessageList);
 		model.addAttribute("adminList", adminList);
 		return "admin/checkMyMessage";
 	}
 	
 	@RequestMapping(value="/checkMySendMessage", method = RequestMethod.GET)
-	public String checkMySendMessage(HttpSession session,Model model) {
+	public String checkMySendMessage(HttpSession session,Model model,PagingDto pagingDto) {
 		String admin_code = (String)session.getAttribute("admin_code");
-		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code);
+		pagingDto.setCount(messageService.countAdminSendMessage(admin_code, pagingDto));
+		pagingDto.setPage(pagingDto.getPage());
+//		System.out.println("pagingDto2 : " + pagingDto);
+		List<MessageVo> sendMessageList = messageService.adminSendMessageList(admin_code,pagingDto);
 //		System.out.println("sendMessageList : " + sendMessageList);
+//		System.out.println("보낸 메세지 갯수 확인 : " + messageService.countAdminSendMessage(admin_code, pagingDto));
 		List<String> adminList = adminService.getAllAdminCode();
 		model.addAttribute("sendMessageList", sendMessageList);
 		model.addAttribute("adminList", adminList);
@@ -273,9 +286,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/checkSendToMeMessage", method = RequestMethod.GET)
-	public String checkSendToMeMessage(HttpSession session,Model model) {
+	public String checkSendToMeMessage(HttpSession session,Model model,PagingDto pagingDto) {
 		String admin_code = (String)session.getAttribute("admin_code");
-		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code);
+		pagingDto.setCount(messageService.countAdminToMeMessage(admin_code, pagingDto));
+		pagingDto.setPage(pagingDto.getPage());
+		List<MessageVo> sendToMeMessageList = messageService.adminToMeMessageList(admin_code,pagingDto);
 //		System.out.println("sendToMeMessageList : " + sendToMeMessageList);
 		List<String> adminList = adminService.getAllAdminCode();
 		model.addAttribute("sendToMeMessageList", sendToMeMessageList);
@@ -774,6 +789,13 @@ public class AdminController {
 		return "admin/complainCompleteForm";
 					
 	} 
-	
-	
+	//포인트 코드 에 따른 메세지 전송및 히스토리 입력
+	private void AddAllMemberHistoryNMessage(String pc_code) {
+		
+		List<MemberVo> memberIdList=memberService.selectM_idList();
+		for(MemberVo memberVo:memberIdList) {
+			evlService.transactionPointHistoryNMessage(memberVo.getM_id(), pc_code);
+		}
+		
+	}
 }

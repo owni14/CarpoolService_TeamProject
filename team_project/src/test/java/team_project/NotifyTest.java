@@ -96,6 +96,15 @@ public class NotifyTest {
 	}
 	// test ok,
 	
+	@Test
+	public void updateBlackPoint() {
+		BlackListVo blackListVo = new BlackListVo();
+		blackListVo.setBlack_score(3);
+		blackListVo.setBlacklist_seq(5);
+		notifyDao.updateBlackPoint(blackListVo);
+	}
+	// test ok,
+	
 	
 }
 

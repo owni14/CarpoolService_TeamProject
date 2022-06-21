@@ -204,7 +204,10 @@ public class EventServiceImpl implements EventService {
 		return eventDao.selectCountWinnerNoGet();
 	}
 
-	
+	@Override
+	public List<EventVo> selectEventTopThree() {
+		return eventDao.selectEventTopThree();
+	}
 
 	
 

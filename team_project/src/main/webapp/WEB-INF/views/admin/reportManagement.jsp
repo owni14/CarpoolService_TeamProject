@@ -12,10 +12,11 @@
 			e.preventDefault();
 			var blacklist_seqValue = $(this).attr("data-blacklistSeq");
 			var admin_checkValue = $(this).attr("data-value");
-			var blackScoreValue = $(this).attr("data-bScore");
+			var blackScoreValue = $("#spanBlackPoint").attr("data-blackpoint");
 			var black_m_id = $(this).attr("data-blackid");
 			console.log(admin_checkValue); // 반려 : C, 반려 취소 : N, 승인 : Y
-			frmApproveNotify.find("input[name=refresh]").val(1);
+// 			console.log("벌점 : " + blackScoreValue);
+// 			frmApproveNotify.find("input[name=refresh]").val(1);
 			frmApproveNotify.find("input[name=blacklist_seq]").val(blacklist_seqValue);
 			frmApproveNotify.find("input[name=admin_check]").val(admin_checkValue);
 			if (admin_checkValue == "N" || admin_checkValue == "C") {
@@ -27,7 +28,7 @@
 			}
 				frmApproveNotify.attr("action","/admin/modifyBlackPoint");
 				frmApproveNotify.attr("method","post");
-			frmApproveNotify.submit();
+				frmApproveNotify.submit();
 		});
 		
 		$("#btnSearch").click(function () {
@@ -42,6 +43,20 @@
 			frmPaging.attr("action","/admin/report_management");
 			frmPaging.attr("method","get");
 			frmPaging.submit();
+		});
+		
+		$(".blackPointImg").click(function () {
+			var blackPoint = $(this).attr("data-blackpoint");
+			if (blackPoint == 3) {
+				$("#spanBlackPoint").text(blackPoint).css("color","red");
+				$("#spanBlackPoint").attr("data-blackpoint",blackPoint);
+			} else if (blackPoint == 2) {
+				$("#spanBlackPoint").text(blackPoint).css("color","green");
+				$("#spanBlackPoint").attr("data-blackpoint",blackPoint);
+			} else {
+				$("#spanBlackPoint").text(blackPoint).css("color","blue");
+				$("#spanBlackPoint").attr("data-blackpoint",blackPoint);
+			}
 		});
 		
 	});
@@ -216,7 +231,25 @@
 						
 							<input type="text" id="adminKeyword" name="adminKeyword" style="height:25px">
 							<button id="btnSearch" style="background-color:white; border-color: #d2d2d2">검색&nbsp;&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
+						
+
+
+						<!-- dropdown start -->
+						<button class="btn dropdown-toggle" type="button"
+							style="background-color: white; padding-top: 20px; color: red; margin-left:400px"
+							id="dropdownMenuButton1" data-toggle="dropdown">
+							벌점</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/anger.jpg" height="120px" data-blackpoint="3"><b style="color:red; float:right;">3점</b>
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/disgust.jpg" height="120px" data-blackpoint="2"><b style="color:green; float:right;">2점</b>
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/sadness.jpg" height="120px" data-blackpoint="1"><b style="color:blue; float:right;">1점</b>
+							</div>
+							<div>
+								<b style="margin-left:820px"><span>벌점 : </span><span id="spanBlackPoint" style="color:red" data-blackpoint="3">3</span><span>점</span></b>
+							</div>
+						<!-- dropdown end -->
 						</h6>
+						
 						<!-- search end -->
 						<!-- Basic table card start -->
 <!-- 					<div class="card"> -->
@@ -246,7 +279,7 @@
 												id="dropdownMenuButton1" data-toggle="dropdown">
 												${blackListVo.black_is_processed}</button>
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-bScore="${blackListVo.black_score}" data-blackid="${blackListVo.black_m_id}">승인</a> 
+												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-blackid="${blackListVo.black_m_id}">승인</a> 
 												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a>
 											</div> 
 											<!-- dropdown end -->

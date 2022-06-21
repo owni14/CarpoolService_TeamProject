@@ -308,7 +308,7 @@ public class AdminController {
 	@RequestMapping(value = "/report_management", method = RequestMethod.GET)
 	public String reportManagement(Model model, BlackListVo blackListVo,PagingDto pagingDto) {
 		
-		System.out.println("blackListVo : " + blackListVo);
+//		System.out.println("blackListVo : " + blackListVo);
 		List<BlackListVo> notifyList = notifyService.notifyList();
 		List<BlackListVo> nNotifyList = notifyService.nNotifyList(pagingDto);
 		List<BlackListVo> dayNotifyList = notifyService.dayNotifyList();
@@ -347,6 +347,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/modifyBlackPoint", method = RequestMethod.POST)
 	public String modifyBlackPoint(BlackListVo blackListVo) {
+		System.out.println("modifyBlackPoint blackListVo : " + blackListVo);
 		if (blackListVo.getBlacklist_seq() > 0 && 
 				blackListVo.getBlack_score() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
 				notifyService.modifyApprovement(blackListVo);			

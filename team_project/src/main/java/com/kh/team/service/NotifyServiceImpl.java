@@ -71,6 +71,7 @@ public class NotifyServiceImpl implements NotifyService{
 	public void modifyApprovement(BlackListVo blackListVo) {
 		if (blackListVo.getBlack_m_id() != null && blackListVo.getBlack_score() != 0) {
 			memberDao.adminupdateBlackScore(blackListVo);
+			notifyDao.updateBlackPoint(blackListVo);
 		}
 		notifyDao.modifyApprovement(blackListVo);
 		

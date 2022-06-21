@@ -14,4 +14,5 @@ public interface EvlService {
 	public int selectCountIsUpdate(String formattedToday, String iup_what);// 포인트 업데이트 유무
 	public boolean insertEvlUpdate(Is_Update_PointVo is_Update_PointVo);
 	public boolean transactionGivingPoint(Is_Update_PointVo is_Update_PointVo);
+	public boolean transactionGivingSixPoint(Is_Update_PointVo is_Update_PointVo);//6달후 포인트 지급 트랜잭션
 }

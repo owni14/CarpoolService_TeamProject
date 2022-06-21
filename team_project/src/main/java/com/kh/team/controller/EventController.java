@@ -25,15 +25,14 @@ public class EventController {
 	@Autowired
 	private EventService eventService;
 	
-	// 이벤트 & 혜택 페이지로 이동
 	// 현재 진행중인 이벤트로 이동
 	@RequestMapping(value = "/now", method = RequestMethod.GET)
 	public String now(Model model, PagingDto pagingDto) {
-		pagingDto.setCount(eventService.getCountEvent());
-		pagingDto.setPerPage(3); // 한 페이지에 나오는 이벤트 개수
+		pagingDto.setCount(eventService.getCountMainEvent());
+		pagingDto.setPerPage(5); // 한 페이지에 나오는 이벤트 개수
 		pagingDto.setPage(pagingDto.getPage());
 		List<EventVo> eventList = eventService.getEventMainList(pagingDto);
-//		System.out.println("eventList: " + eventList);
+		System.out.println("eventList: " + eventList);
 		model.addAttribute("eventList", eventList);
 		model.addAttribute("pagingDto", pagingDto);
 		return "event/now";
@@ -41,7 +40,13 @@ public class EventController {
 	
 	// 당첨자 발표 페이지로 이동
 	@RequestMapping(value = "/winner", method = RequestMethod.GET)
-	public String winner() {
+	public String winner(Model model, PagingDto pagingDto) {
+		pagingDto.setCount(eventService.getCountFinishEvent());
+		pagingDto.setPerPage(5);
+		pagingDto.setPage(pagingDto.getPage());
+		List<EventVo> finishList = eventService.getEventFinishList(pagingDto);
+		model.addAttribute("finishList", finishList);
+		model.addAttribute("pagingDto", pagingDto);
 		return "event/winner";
 	}
 	
@@ -53,10 +58,20 @@ public class EventController {
 	
 	// 이벤트 상세 정보
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String detail(String event_seq) {
-		System.out.println("event_seq: " + event_seq);
-		
+	public String detail(int event_seq, Model model) {
+		String content = eventService.getContent(event_seq);
+		model.addAttribute("content", content);
 		return "event/detail";
+	}
+	
+	// 이벤트 당첨자 확인
+	@RequestMapping(value = "/winnerCheck", method = RequestMethod.GET)
+	public String winnerCheck(int event_seq, Model model) {
+		String content = eventService.getContent(event_seq);
+		List<String> winnerList = eventService.getWinnerId(event_seq);
+		model.addAttribute("content", content);
+		model.addAttribute("winnerList", winnerList);
+		return "event/winner_check";
 	}
 	
 	// 썸네일 불러오기

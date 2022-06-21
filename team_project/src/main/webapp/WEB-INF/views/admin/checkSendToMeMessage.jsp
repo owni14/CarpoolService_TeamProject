@@ -5,7 +5,10 @@
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 <%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
 <style>
-/* 	tbody > tr:hover {background-color: aliceblue;} */
+.tdContents:hover {cursor: pointer;}
+tbody > tr:hover {background-color: aliceblue;}  
+#trNoHover:hover {background-color: white;}
+#spanClose:hover {cursor: pointer;}
 </style>
 <script>
 	$(document).ready(function () {
@@ -199,9 +202,22 @@
 			var commaIndex = admins.lastIndexOf(",");
 			$("#inputSendToMe").val(admins.substring(0,commaIndex));
 		});
-		$("#btnbtnCancel").click(function () {
+		$("#btnCancel").click(function () {
 			$("#adminPlus").text("");
 			$("#taAdminCodes").text("");
+			$("#spanCount").text(0).css("color","black");
+			
+		});
+		
+		$(".tdContents").click(function () {
+			var content = $(this).attr("data-content");
+			$("#divMessage").show("slow");
+			$("#spanMessage").text("");
+			$("#spanMessage").text(content);
+		}); 
+		
+		$("#spanClose").click(function () {
+			$("#divMessage").hide("slow");
 		});
 	});
 </script>
@@ -308,7 +324,7 @@
 			<!-- Page-body start -->
 			<div class="page-body">
 			<!-- 쪽지 보내기 card start -->
-			<div class="card col-lg-5">
+			<div class="card col-md-12 col-xl-5" style="display:inline-block;">
 				<div class="card-header">
 				<form id="frmMessage" action="/message/sendMessageBetweenAdmins" method="post">
 				<input type="hidden" name="sender_admin_code" value="${admin_code}">
@@ -316,7 +332,7 @@
 					<tr style=" height: 40px; border-bottom: 1px;">
 						<td colspan="5" style="background-color:#34495E;"><h5 style="color:white; margin-left:10px">새 쪽지</h5></td>
 					</tr>
-					<tr>
+					<tr id="trNoHover">
 						<td><h5>받는 사람</h5></td>
 						<td style="padding-left:15px">
 						<div class="checkbox-fade fade-in-primary d-block" style="margin-right:0px">
@@ -343,6 +359,15 @@
 				</div>
 			</div>
 			<!-- 쪽지 보내기 card end -->
+			<!-- 쪽지 읽기 card start -->
+			<div  class="col-md-12 col-xl-3" style="display:inline-block; margin-left:20px">
+				<div id="divMessage" class="card-header" style="display:none; background-color:white">
+					<span><b>내용</b></span>
+					<span id="spanClose" style="float:right"><b>x</b></span><br><br>
+					<span id="spanMessage"></span>
+				</div>
+			</div>
+			<!-- 쪽지 읽기 card end -->
 			<!-- Basic table card start -->
 			<div class="card">
 					<div class="card-header">
@@ -389,39 +414,6 @@
 							<input type="text" id="adminKeyword" name="adminKeyword" style="height:25px">
 							<button id="btnSearch" style="background-color:white; border-color: #d2d2d2">검색&nbsp;&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
 						</h5>
-						<div class="card-header-right">
-							<ul class="list-unstyled card-option">
-								<li><i class="icofont icofont-simple-left "></i></li>
-								<li>
-									<select name="perPageSelector" id="perPageSelector" style="height:20px; display:inline-block;">
-										<c:forEach var="v" begin="5" end="25" step="5">
-										<option value="${v}"
-											<c:choose>
-												<c:when test="${v == 10}">
-													selected
-												</c:when>
-											</c:choose>
-										>
-										${v}줄 보기</option>
-										</c:forEach>
-									</select>
-								</li>
-<!-- 								<li> -->
-<!-- 									<select name="searchType" id="searchType"> -->
-<!-- 										<option>회원 아이디</option> -->
-<!-- 										<option>이름</option> -->
-<!-- 										<option>성별</option> -->
-<!-- 										<option>회사</option> -->
-<!-- 										<option>연락처</option> -->
-<!-- 										<option>회원 탈퇴 여부</option> -->
-<!-- 									</select> -->
-<!-- 								</li> -->
-<!-- 								<li> -->
-<!-- 									<input type="text" id="keyword" name="keyword"/> -->
-<!-- 								</li> -->
-								<li><i class="icofont icofont-error close-card"></i></li>
-							</ul>
-						</div>
 					</div>
 					<div class="card-block table-border-style">
 						<div class="table-responsive">
@@ -430,17 +422,24 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>보낸 사람</th>
 										<th>내용</th>
 										<th>날짜</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="messageVo" items="${getMessageList}" varStatus="status">
+									<c:forEach var="messageVo" items="${sendToMeMessageList}" varStatus="status">
 									<tr>	
 										<th scope="row">${status.count}</th>
-										<td>${messageVo.sender_admin_code}</td>
-										<td>${messageVo.content}</td>
+										<td class="tdContents" data-content="${messageVo.content}">
+										<c:choose>
+											<c:when test="${messageVo.content.length() < 30}">
+												${messageVo.content}
+											</c:when>
+											<c:otherwise>
+												${messageVo.content.substring(0,30)} ......
+											</c:otherwise>
+										</c:choose>
+										</td>
 										<td>${messageVo.senddate}</td>
 									</tr>
 									</c:forEach>

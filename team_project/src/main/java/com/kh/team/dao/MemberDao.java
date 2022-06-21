@@ -44,4 +44,5 @@ public interface MemberDao {
 	public boolean updateDriver(DriverVo driverVo); // 운전하기등록 수정
 	public boolean deleteDriver(int driver_seq); // 운전하기에서 삭제
 	public DriverVo getDriverInfo(int driver_seq); // 운전하기에 등록한 정보 가져오기
+	public List<MemberVo> selectM_idList();//모든 멤버 아이디 들고오기
 }

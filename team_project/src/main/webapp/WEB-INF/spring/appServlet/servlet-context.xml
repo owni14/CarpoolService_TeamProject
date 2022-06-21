@@ -42,6 +42,7 @@
  			<exclude-mapping path="/admin/admin_login"/>
  			<exclude-mapping path="/admin/checkAdminLogin"/>
  			
+			<exclude-mapping path="/admin/displayImage*"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 	</interceptors>
@@ -74,7 +75,6 @@
 		<interceptor>
 			<mapping path="/admin/member*"/>
 			<mapping path="/admin/approve*"/>
-			
 			
 			<beans:ref bean="adminCodeGM"/>
 		</interceptor>

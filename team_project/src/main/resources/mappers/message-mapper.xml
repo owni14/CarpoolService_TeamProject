@@ -102,7 +102,7 @@
 
 	<select id="adminGetMessageList" resultType="MessageVo">
 		select * from message
-		where receiver_admin_code = #{receiver_admin_code}
+		where receiver_admin_code = #{receiver_admin_code} and sender_admin_code != #{receiver_admin_code}
 		order by senddate desc
 	</select>
 	
@@ -119,5 +119,13 @@
 		receiver_admin_code = #{sender_admin_code}
 		order by senddate desc
 	</select>
+
+	<update id="readMessage">
+		update message set
+		opendate = sysdate
+		where message_seq = #{message_seq}
+	</update>
+
+
 
 </mapper>

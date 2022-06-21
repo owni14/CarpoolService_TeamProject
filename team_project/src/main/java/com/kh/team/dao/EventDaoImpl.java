@@ -64,14 +64,26 @@ public class EventDaoImpl implements EventDao{
 	}
 
 	@Override
-	public int getCountEvent() {
-		int count = (int)sqlSession.selectOne(NAMESPACE + "getCountEvent"); 
+	public int getCountMainEvent() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "getCountMainEvent"); 
+		return count;
+	}
+	
+	@Override
+	public int getCountFinishEvent() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "getCountFinishEvent"); 
 		return count;
 	}
 
 	@Override
 	public List<EventVo> getEventMainList(PagingDto pagingDto) {
-		List<EventVo> eventList=sqlSession.selectList(NAMESPACE+"getEventMainList", pagingDto);
+		List<EventVo> eventList = sqlSession.selectList(NAMESPACE + "getEventMainList", pagingDto);
+		return eventList;
+	}
+	
+	@Override
+	public List<EventVo> getEventFinishList(PagingDto pagingDto) {
+		List<EventVo> eventList = sqlSession.selectList(NAMESPACE + "getEventFinishList", pagingDto);
 		return eventList;
 	}
 
@@ -82,9 +94,16 @@ public class EventDaoImpl implements EventDao{
 
 	@Override
 	public String getContent(int event_seq) {
-		String event_content=sqlSession.selectOne(NAMESPACE+"getContent",event_seq );
+		String event_content = sqlSession.selectOne(NAMESPACE+"getContent",event_seq );
 		return event_content;
 	}
+	
+	@Override
+	public List<String> getWinnerId(int event_seq) {
+		List<String> winnerList = sqlSession.selectList(NAMESPACE + "getWinnerId", event_seq);
+		return winnerList;
+	}
+	
 //event participation
 	@Override
 	public void createTableEvnet(int event_seq) {
@@ -235,5 +254,9 @@ public class EventDaoImpl implements EventDao{
 
 		return sqlSession.selectOne(NAMESPACE+"selectCountWinnerNoGet");
 	}
+
+
+
+	
 
 }

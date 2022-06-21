@@ -231,5 +231,8 @@ public class MemberServiceImpl implements MemberService {
 		DriverVo driverVo = memberDao.getDriverInfo(driver_seq);
 		return driverVo;
 	}
-
+	@Override
+	public List<MemberVo> selectM_idList() {
+		return memberDao.selectM_idList();
+	}
 }

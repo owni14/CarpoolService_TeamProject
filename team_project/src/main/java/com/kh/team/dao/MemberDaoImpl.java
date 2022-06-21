@@ -387,4 +387,9 @@ public class MemberDaoImpl implements MemberDao {
 		return driverVo;
 	}
 	
+	@Override
+	public List<MemberVo> selectM_idList() {
+		return sqlSession.selectList(NAMESPACE+"selectM_idList");
+	}
+	
 }

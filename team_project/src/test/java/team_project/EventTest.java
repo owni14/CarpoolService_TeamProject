@@ -10,14 +10,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.team.dao.EventDao;
+import com.kh.team.dao.MemberDao;
 import com.kh.team.vo.EventVo;
+import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/**/*.xml")
 public class EventTest {
 	@Autowired
 	EventDao eventDao;
-	
+	@Autowired
+	MemberDao memberDao;
 	@Test
 	public void eventInsertTest() {
 		EventVo eventVo=new EventVo(0, "test2", null, null, "테스트2", "Y", null, 60, 95);	
@@ -68,12 +71,13 @@ public class EventTest {
 	
 	@Test
 	public void testinsertParticipaton() {
-		int event_seq=67;
-		for(int i=1; i<=40; i++) {
-			String m_id="user0"+i+"@gmail.com";	
-			
-			eventDao.insertParticipation(m_id, event_seq);
+		int event_seq=68;
+		List<MemberVo> memberList=memberDao.selectM_idList();
+		for(MemberVo memberVo:memberList) {
+			eventDao.insertParticipation(memberVo.getM_id(), event_seq);
 		}
+			
+		
 //		System.out.println(eventDao.insertParticipation(m_id, event_seq));
 		//testOk
 	}

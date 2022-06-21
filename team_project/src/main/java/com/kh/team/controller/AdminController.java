@@ -144,17 +144,23 @@ public class AdminController {
 		
 		//모든 유저에게 자동으로 포인트 지급 패신저
 		// 7월 1일 이랑 1월 1일 에 모든 유저들에게 포인트 지급
-		List<Is_Update_PointVo> listSixMonthOneDay=DateHelper.getIsUPdatePointVoList("P");
-		List<String> formattedDates=DateHelper.getforamttedSixMonthStr(listSixMonthOneDay);
-		for(String formmated:formattedDates) {
-			int isPointUpdateCountPassenger=evlService.selectCountIsUpdate(formmated, "P");
+		
+			String formmatedSixStr=DateHelper.getforamttedSixStr();
+			int isPointUpdateCountPassenger=evlService.selectCountIsUpdate(formmatedSixStr, "P");
 			boolean isgivingSixMonth=DateHelper.isPointSixMonthDay();
-			System.out.println("어드민 컨트롤 formmated "+formmated);
+			System.out.println("어드민 컨트롤 formmated "+formmatedSixStr);
 			System.out.println("어드민 컨트롤 isPointUpdateCountPassenger "+isPointUpdateCountPassenger);
+			//오늘이 1월 1일 7월1일 일때 테이블에 해당하는 데이터가 없으면 포인트 업데이트및 테이블 데이터입력
+			//한번만 돌아가야 하는 부분
 			if(isPointUpdateCountPassenger <=0 && isgivingSixMonth ) {
+				Date iup_date=DateHelper.castSqlDate(formmatedSixStr);
 				//포인트 트랜잭셕 들어갈곳
+				Is_Update_PointVo is_Update_PointVo=new Is_Update_PointVo(0, iup_date, "P");
+				System.out.println("home Admin 6개월 if문 실행 :is_Update_PointVo "+is_Update_PointVo);
+				evlService.transactionGivingSixPoint(is_Update_PointVo);
+				
 			}
-		}
+		
 		
 		//모든유저에게 포인트 자동지급 끝
 		model.addAttribute("top5List", top5List);
@@ -552,7 +558,14 @@ public class AdminController {
 		//boolean resultParticipation= eventService.createTableEvnet();
 		eventService.createTableEvnet(eventVo.getEvent_seq());
 		eventService.createSeqParticipation(eventVo.getEvent_seq());
+		
 		System.out.println("시퀀스와 테이블 생성 성공");
+		//완성된 테이블에 모든 멤버 집어넣기
+		List<MemberVo> memberIdList=memberService.selectM_idList();
+		for(MemberVo memberVo:memberIdList) {
+			eventService.insertParticipation(memberVo.getM_id(), eventVo.getEvent_seq());
+		}
+		System.out.println("이벤트 번호 :"+eventVo.getEvent_seq()+"모든 유저 참가 완료");
 		rttr.addFlashAttribute("insert_result",String.valueOf(insert_result));
 		return "redirect:/admin/event";
 	}

@@ -75,7 +75,7 @@ if(insert_result){
 							<th>#</th>
 							<th>이벤트 이름</th>
 							<th>진행날짜</th>
-							<th>참석자수</th>
+							<th>최대 당첨인원</th>
 							<th>종료여부</th>
 						</tr>
 					</thead>

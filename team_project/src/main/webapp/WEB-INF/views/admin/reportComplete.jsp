@@ -12,7 +12,7 @@
 			var admin_checkValue = $(this).attr("data-value");
 			var blackScoreValue = $(this).attr("data-bScore");
 			var black_m_id = $(this).attr("data-blackid");
-			frmApproveNotify.find("input[name=refresh]").val(1);
+// 			frmApproveNotify.find("input[name=refresh]").val(1);
 			frmApproveNotify.find("input[name=blacklist_seq]").val(blacklist_seqValue);
 			frmApproveNotify.find("input[name=admin_check]").val(admin_checkValue);
 			frmApproveNotify.find("input[name=black_m_id]").val(black_m_id);
@@ -32,7 +32,10 @@
 			$("#thReporter").text(reporter);
 			$("#thNotifiedId").text(notifiedId);
 			$("#btnModalSend").attr("data-blacklistseq",blacklist_seq);
-			$("#txtReportContent").prepend("신고 내용 : " + black_content);
+			$("#txtReportContent").val("신고 내용 : " + black_content + "<br>신고 완료가 정상 처리 되었습니다.");
+			var str = $("#txtReportContent").val();
+			str = str.split("<br>").join("\r\n");
+			$("#txtReportContent").val(str);
 		});
 		
 		$("#btnModalSend").click(function () {
@@ -56,6 +59,10 @@
 					checkSended();
 				}
 			});
+		});
+		
+		$("#btnCancel").click(function () {
+// 			$("#txtReportContent").text("");
 		});
 		
 		function checkSended () {
@@ -101,8 +108,7 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<textarea id="txtReportContent" class="form-control">
-							신고 완료가 정상 처리 되었습니다.</textarea>
+							<textarea id="txtReportContent" class="form-control"></textarea>
 							<table style="margin-top: 20px; float: right;">
 								<thead>
 								<tr>
@@ -122,7 +128,7 @@
 							<button type="button" class="btn btn-primary" id="btnModalSend" data-dismiss="modal">
 								전송
 							</button> 
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+							<button type="button" class="btn btn-secondary" id="btnCancel" data-dismiss="modal">
 								닫기
 							</button>
 						</div>

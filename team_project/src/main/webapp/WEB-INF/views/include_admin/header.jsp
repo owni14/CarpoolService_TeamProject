@@ -157,76 +157,34 @@ var nav = $('.fixed-button');
             <nav class="navbar header-navbar pcoded-header">
                 <div class="navbar-wrapper">
 
-                    <div class="navbar-logo">
-                        <a class="mobile-menu" id="mobile-collapse">
-                            <i class="ti-menu"></i>
+                    <div class="navbar-logo" style="background-color:white">
+                        <img src="/resources/images/companyLogo/logo.jpg" width="120" height="47.65" alt="로고이미지">
+                        <a class="mobile-menu" id="mobile-collapse" >
+                            <i class="ti-menu" style="color:black"></i>
                         </a>
                         <a class="mobile-search morphsearch-search" >
                             <i class="ti-search"></i>
                         </a>
                         <a href="/admin/home">
-                            <img src="#" alt="얻어타다" />
+                         
                         </a>
-                        <a class="mobile-options">
+                        
+                        <a class="mobile-options" >
                             <i class="ti-more"></i>
                         </a>
                     </div>
 
                     <div class="navbar-container container-fluid">
-                        <ul class="nav-left">
-                            <li>
-                                <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
-                            </li>
+                        <ul class="nav-left" style="width:50%;">
+                         
 
                             <li>
-                                <a onclick="javascript:toggleFullScreen()">
-                                    <i class="ti-fullscreen"></i>&nbsp &nbsp 전체화면
-                                </a>
+                            
+                               
                             </li>
                         </ul>
                         <ul class="nav-right">
-                            <li class="header-notification">
-                                <a>
-                                    <i class="ti-bell"></i>
-                                    <span class="badge bg-c-pink"></span>
-                                </a>
-                                <ul class="show-notification">
-                                    <li>
-                                        <h6>쪽지목록</h6>
-                                        <label class="label label-danger">New</label>
-                                    </li>
-                                    <li>
-                                        <div class="media">
-                                            <img class="d-flex align-self-center img-radius" src="/resources/admin/assets/images/avatar-4.jpg" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="notification-user">김관우</h5>
-                                                <p class="notification-msg">쪽지가 왔어요</p>
-                                                <span class="notification-time">30 minutes ago</span>
-                                            </div>
-                                        </div>
-                                    </li>
-<!--                                     <li> -->
-<!--                                         <div class="media"> -->
-<!--                                             <img class="d-flex align-self-center img-radius" src="/resources/admin/assets/images/avatar-3.jpg" alt="Generic placeholder image"> -->
-<!--                                             <div class="media-body"> -->
-<!--                                                 <h5 class="notification-user">Joseph William</h5> -->
-<!--                                                 <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p> -->
-<!--                                                 <span class="notification-time">30 minutes ago</span> -->
-<!--                                             </div> -->
-<!--                                         </div> -->
-<!--                                     </li> -->
-<!--                                     <li> -->
-<!--                                         <div class="media"> -->
-<!--                                             <img class="d-flex align-self-center img-radius" src="/resources/admin/assets/images/avatar-4.jpg" alt="Generic placeholder image"> -->
-<!--                                             <div class="media-body"> -->
-<!--                                                 <h5 class="notification-user">Sara Soudein</h5> -->
-<!--                                                 <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p> -->
-<!--                                                 <span class="notification-time">30 minutes ago</span> -->
-<!--                                             </div> -->
-<!--                                         </div> -->
-<!--                                     </li> -->
-                                </ul>
-                            </li>
+                          
                             <li class="user-profile header-notification">
                                 <a>
                                     <img class="img-radius" alt="프로필"
@@ -254,11 +212,7 @@ var nav = $('.fixed-button');
 <!--                                             <i class="ti-settings"></i> Settings -->
 <!--                                         </a> -->
 <!--                                     </li> -->
-                                    <li>
-                                        <a >
-                                            <i class="ti-user"></i> Profile
-                                        </a>
-                                    </li>
+                                   
                                     <li>
                                         <a href="/admin/checkMyMessage">
                                             <i class="ti-email"></i>
@@ -278,6 +232,7 @@ var nav = $('.fixed-button');
                                 </ul>
                             </li>
                         </ul>
+                        
                     </div>
                 </div>
             </nav>

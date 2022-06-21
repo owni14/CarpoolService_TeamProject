@@ -50,6 +50,7 @@ public interface EventDao {
 	//이벤트 당첨자
 	public List<EventWinnerVo> selectWinnerIsGet(int event_seq);
 	public int selectCountWinnerNoGet();//총 미수령 갯수 시퀀스 상관x
+	public List<EventVo> selectEventTopThree();//탑3(최근) 이벤트 얻기
 	
 	
 }

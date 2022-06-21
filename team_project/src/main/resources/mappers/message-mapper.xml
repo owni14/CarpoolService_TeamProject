@@ -99,25 +99,107 @@
 		opendate = sysdate
 		where message_seq = #{message_seq}
 	</update>
-
+	
+	<select id="countAdminGetMessage" resultType="int">
+		select count(*) from message
+		where receiver_admin_code = #{receiver_admin_code} 
+		<include refid="searchGetMessage"></include>
+		and sender_admin_code != #{receiver_admin_code}
+	</select>
+	
 	<select id="adminGetMessageList" resultType="MessageVo">
-		select * from message
-		where receiver_admin_code = #{receiver_admin_code}
-		order by senddate desc
+		select * from
+		(select rownum rnum, a.* from
+		(select * from message
+		where receiver_admin_code = #{receiver_admin_code} 
+		<include refid="searchGetMessage"></include>
+		and sender_admin_code != #{receiver_admin_code}
+		order by senddate desc) a)
+		where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<sql id="searchGetMessage">
+		<if test = "searchType != null and keyword != null">
+			<choose>
+				<when test='searchType == "p"'>
+					and sender_admin_code like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "c"'>
+					and content like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</sql>
+	
+	<select id="countAdminSendMessage" resultType="int">
+		select count(*) from message
+		where sender_admin_code = #{sender_admin_code}
+		<include refid="searchSendMessage"></include>
+		and receiver_admin_code is not null and receiver_admin_code != #{sender_admin_code}
 	</select>
 	
 	<select id="adminSendMessageList" resultType="MessageVo">
-		select * from message
+		select * from
+			(select rownum rnum, a.* from
+			(select * from message
+			where sender_admin_code = #{sender_admin_code}
+			<include refid="searchSendMessage"></include>
+			and receiver_admin_code is not null and receiver_admin_code !=
+			#{sender_admin_code}
+			order by senddate desc) a)
+			where rnum between #{startRow} and #{endRow}
+	</select>
+	
+	<sql id="searchSendMessage">
+		<if test = "searchType != null and keyword != null">
+			<choose>
+				<when test='searchType == "p"'>
+					and receiver_admin_code like '%' || #{keyword} || '%'
+				</when>
+				<when test='searchType == "c"'>
+					and content like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</sql>
+	<select id="countAdminToMeMessage" resultType="int">
+		select count(*) from message
 		where sender_admin_code = #{sender_admin_code} 
-		and receiver_admin_code is not null and receiver_admin_code != #{sender_admin_code}
-		order by senddate desc
+		<include refid="searchSendtoMeMessage"></include>
+		and receiver_admin_code is not null and
+		receiver_admin_code = #{sender_admin_code}
 	</select>
 	
 	<select id="adminToMeMessageList" resultType="MessageVo">
-		select * from message
-		where sender_admin_code = #{sender_admin_code} and receiver_admin_code is not null and
+		select * from
+		(select rownum rnum, a.* from
+		(select * from message
+		where sender_admin_code = #{sender_admin_code} 
+		<include refid="searchSendtoMeMessage"></include>
+		and receiver_admin_code is not null and
 		receiver_admin_code = #{sender_admin_code}
-		order by senddate desc
+		order by senddate desc) a)
+		where rnum between #{startRow} and #{endRow}
 	</select>
+	
+	<sql id="searchSendtoMeMessage">
+		<if test = "searchType != null and keyword != null">
+			<choose>
+				<when test='searchType == "c"'>
+					and content like '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</sql>
+
+	
+	<update id="readMessage">
+		update message set
+		opendate = sysdate
+		where message_seq = #{message_seq}
+	</update>
+
+
+
 
 </mapper>

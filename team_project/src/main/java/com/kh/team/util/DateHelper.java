@@ -12,9 +12,9 @@ import com.kh.team.vo.Is_Update_PointVo;
 public class DateHelper {
 	//포인트 지급날인가 드라이버용
 	public static boolean isPointMonthDay() {
-		Calendar cal=Calendar.getInstance();
-		cal.set(Calendar.DAY_OF_MONTH,cal.getActualMinimum(Calendar.DAY_OF_MONTH));
-		java.util.Date oneDate=cal.getTime();
+//		Calendar cal=Calendar.getInstance();
+//		cal.set(Calendar.DAY_OF_MONTH,cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+//		java.util.Date oneDate=cal.getTime();
 		//첫째날 셋팅
 		Date now=new Date(System.currentTimeMillis());
 		SimpleDateFormat sdf=new SimpleDateFormat("dd");
@@ -27,7 +27,7 @@ public class DateHelper {
 		}
 		return false;
 	}
-	//포맷 문자열 
+	//포맷 문자열 한달 단위 현재 날짜를 포맷문자열로 변환
 	public static String getforamttedStr() {
 		String formattedToday=null;
 		
@@ -35,6 +35,7 @@ public class DateHelper {
 		Calendar cal=Calendar.getInstance();
 		cal.clear();
 		cal.setTime(now);
+		//강제로 1일 만들기
 //		cal.set(Calendar.DAY_OF_MONTH,cal.getMinimum(Calendar.DAY_OF_YEAR));
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
 		java.util.Date date=cal.getTime();

@@ -86,7 +86,6 @@
 	</div>
 </div>
 <!-- modal end -->
-${dayPassengerCounts}
                            <div class="main-body">
                                 <div class="page-wrapper">
 
@@ -97,8 +96,8 @@ ${dayPassengerCounts}
                                                 <div class="card widget-card-1">
                                                     <div class="card-block-small">
                                                         <i class="ti-pie-chart card1-icon bg-c-blue"></i>
-                                                        <span class="text-c-blue f-w-600">오늘의 접속자수</span>
-                                                        <h4> 43(수를 기입)</h4>
+                                                        <span class="text-c-blue f-w-600">총 가입 회원 수</span>
+                                                        <h4> ${totalMember}명이 이용중입니다</h4>
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
                                                            
@@ -115,8 +114,8 @@ ${dayPassengerCounts}
                                                 <div class="card widget-card-1">
                                                     <div class="card-block-small">
                                                         <i class="ti-car bg-c-green card1-icon"></i>
-                                                        <span class="text-c-green f-w-600">이용현황</span>
-                                                        <h4>운전자수 33</h4>
+                                                        <span class="text-c-green f-w-600">운전현황</span>
+                                                        <h4>운전자수  ${approve_count}명이 있습니다</h4>
                                                         <div>
                                                             <span class="f-left m-t-10 text-muted">
                                                             <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>driver count
@@ -298,6 +297,7 @@ const myChart = new Chart(
                                                             <table class="table table">
                                                                 <thead>
                                                                     <tr>
+                                                                        <th class="text-center">#</th>
                                                                         <th>신고 처리 대상</th>
                                                                         <th>신고 내용</th>
                                                                     </tr>
@@ -377,18 +377,17 @@ const myChart = new Chart(
 <!--                                                                             </div> -->
 <!--                                                                         </td> -->
 <!--                                                                     </tr> -->
-								<c:forEach items="${blackLists}" var="blackListVo" begin="0" end="2" step="1">
+								<c:forEach items="${blackLists}" var="blackListVo" begin="0" end="3" step="1" varStatus="i">
 																
 																<tr class="trBlackLists">
 																<td>
-                                                                            <div class="task-contain">
-                                                                                <h6 <c:choose>
-                                                                                <c:when test="${blackListVo.black_score eq 3}">class="bg-c-pink d-inline-block text-center"</c:when>
-                                                                                <c:when test="${blackListVo.black_score eq 2}">class="bg-c-yellow d-inline-block text-center"</c:when>
-                                                                                <c:when test="${blackListVo.black_score eq 1}">class="bg-c-green d-inline-block text-center"</c:when></c:choose>
-                                                                                >${blackListVo.black_score}</h6>
-                                                                                <p class="d-inline-block m-l-20">${blackListVo.black_m_id}</p>
-                                                                            </div>
+																<div class="task-contain">
+																<h6 class="bg-c-pink d-inline-block text-center">${i.count}</h6>
+																</div>
+																</td>
+																<td>
+                                                               ${blackListVo.black_m_id}
+                                                                           
                                                                         </td>
                                                                         <td>
                                                                             <p class="d-inline-block m-r-20 content">

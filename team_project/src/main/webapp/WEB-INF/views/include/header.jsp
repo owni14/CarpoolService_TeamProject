@@ -6,7 +6,7 @@
 <html lang="en">
 
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>얻어타다</title>
     <meta charset="utf-8">
 <!--     <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
@@ -256,7 +256,7 @@ $(document).ready(function(){
         <div class="container d-flex justify-content-between align-items-center">
 
             <a class="navbar-brand text-success logo h1 align-self-center" href="/">
-                Zay
+                	<img alt="companyLogo.png" src="/resources/images/companyLogo/logo.jpg" width="150" height="50">
             </a>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -293,9 +293,10 @@ $(document).ready(function(){
                             </div>
                         </div>
                     </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
+                    <!-- 찾기 버튼 -->
+<!--                     <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search"> -->
+<!--                         <i class="fa fa-fw fa-search text-dark mr-2"></i> -->
+<!--                     </a> -->
                     <c:choose>
                     	<c:when test="${not empty loginVo}">
                     		 

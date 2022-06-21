@@ -15,4 +15,6 @@ public interface EvlService {
 	public boolean insertEvlUpdate(Is_Update_PointVo is_Update_PointVo);
 	public boolean transactionGivingPoint(Is_Update_PointVo is_Update_PointVo);
 	public boolean transactionGivingSixPoint(Is_Update_PointVo is_Update_PointVo);//6달후 포인트 지급 트랜잭션
+	//메세지 포인트 내역추가 트랜잭션
+	public void transactionPointHistoryNMessage(String m_id,String pc_code);
 }

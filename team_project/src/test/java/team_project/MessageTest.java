@@ -72,25 +72,32 @@ public class MessageTest {
 	
 	// MainPage message insert 하기 End
 	
-	@Test
-	public void adminGetMessageList() {
-		String receiver_admin_code = "1004";
-		List<MessageVo> list = messageDao.adminGetMessageList(receiver_admin_code);
-		System.out.println("list : " + list);
-	}
+//	@Test
+//	public void adminGetMessageList() {
+//		String receiver_admin_code = "1004";
+//		List<MessageVo> list = messageDao.adminGetMessageList(receiver_admin_code);
+//		System.out.println("list : " + list);
+//	}
+	
+//	@Test
+//	public void adminSendMessageList() {
+//		String sender_admin_code = "1004";
+//		List<MessageVo> list = messageDao.adminSendMessageList(sender_admin_code);
+//		System.out.println("list : " + list);
+//	}
+	
+//	@Test
+//	public void adminToMeMessageList() {
+//		String sender_admin_code = "1004";
+//		List<MessageVo> list = messageDao.adminToMeMessageList(sender_admin_code);
+//		System.out.println("list : " + list);
+//	}
 	
 	@Test
-	public void adminSendMessageList() {
-		String sender_admin_code = "1004";
-		List<MessageVo> list = messageDao.adminSendMessageList(sender_admin_code);
-		System.out.println("list : " + list);
-	}
-	
-	@Test
-	public void adminToMeMessageList() {
-		String sender_admin_code = "1004";
-		List<MessageVo> list = messageDao.adminToMeMessageList(sender_admin_code);
-		System.out.println("list : " + list);
+	public void readMessage() {
+		String message_seq = "124";
+		boolean result = messageDao.readMessage(message_seq);
+		System.out.println("result : " + result);
 	}
 	
 	

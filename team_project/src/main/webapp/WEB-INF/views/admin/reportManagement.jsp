@@ -371,6 +371,7 @@
 													${blackListVo.black_is_processed}</button>
 												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 													<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="N">반려 취소</a> 
+													<a class="dropdown-item" href="#" >반려 완료</a> 
 												</div> 
 												<!-- dropdown end -->
 											</td>

@@ -384,5 +384,14 @@ public class MemberDaoImpl implements MemberDao {
 		String m_pw = sqlSession.selectOne(NAMESPACE + "getMemberPw", memberVo);
 		return m_pw;
 	}
-	
+
+	@Override
+	public boolean isApproveDriver(String m_id) {
+		String approveState = sqlSession.selectOne(NAMESPACE + "isApproveDriver", m_id);
+		if (approveState.equals("Y")) {
+			return true;
+		}
+		return false;
+	}
+
 }

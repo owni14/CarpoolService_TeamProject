@@ -48,4 +48,5 @@ public interface MemberDao {
 	public String getMemberId(MemberVo memberVo); // 멤버 아이디 찾기
 	public String getMemberPw(MemberVo memberVo); // 멤버 비밀번호 찾기
 	public int selectApproveCount();//모든 승인된 드라이버 수 가져오기
+	public boolean isApproveDriver(String m_id); // 운전자등록이 되었는지 여부 확인
 }

@@ -17,7 +17,13 @@ public class MessageVo {
 	public MessageVo() {
 		super();
 	}
-
+	
+	public MessageVo(String receiver_m_id, String sender_admin_code, String content) {
+		super();
+		this.receiver_m_id = receiver_m_id;
+		this.sender_admin_code = sender_admin_code;
+		this.content = content;
+	}
 
 	public MessageVo(String receiver_m_id, String receiver_admin_code, String sender_m_id, String sender_admin_code,
 			String content) {

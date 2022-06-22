@@ -6,11 +6,15 @@
 	var isDriver = "${isDriver}";
 	var updateResult = "${updateResult}";
 	var deleteResult = "${deleteResult}";
+	var approve_result = "${approve_result}";
 	if (updateResult == "true") {
 		alert("수정이 완료되었습니다.");
 	}
 	if (deleteResult == "true") {
 		alert("삭제가 완료되었습니다.");
+	}
+	if (approve_result == "false") {
+		alert("아직 운전자 등록이 승인되지 않았습니다. \n승인이 계속 안될 경우 고객센터로 문의부탁드립니다.");
 	}
 	$(document).ready(function() {
 		var m_company = "${loginVo.m_company}";
@@ -159,104 +163,103 @@
 	
 }); // $(document).ready(function(){})
 </script>
-<h3 id="txtList" style="display: none;">탑승자 리스트</h3>
-<!-- 동승자 리스트 -->
-<div class="row"
-	<c:if test="${isDriver == false}">
-		style="display: none;"
+<div
+	<c:if test="${passengerList == '[]' || passengerList == null}">
+		style="display: none"
 	</c:if>
 >
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
-		<div class="row">
-		<div class="col-md-12">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>탑승자</th>
-						<th>부서</th>
-						<th>탑승시간</th>
-						<th>탑승위치</th>
-						<th>승인</th>
-						<th>거부</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${passengerList}" var="v" varStatus="status">
-						<c:if test="${!(v.IS_APPROVE == 'C' || v.IS_APPROVE == 'Y')}">
-							<tr>	
-								<td>${status.count}</td>
-								<td>${v.M_NAME}</td>
-								<td>${v.M_DEPT}</td>
-								<td>${v.PASSENGER_DEPART_TIME}</td>
-								<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
-								<td><a href="/board/approvePassenger?m_id=${v.M_ID}" class="btn btn-success btn-sm approve">승인</a></td>
-								<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">거부</a></td>
-							</tr>	
-						</c:if>
-					</c:forEach>
-				</tbody>
-			</table>
+	<h3 id="txtList" style="text-align: center;">탑승자 리스트</h3>
+	<!-- 탑승자 리스트 -->
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<div class="row">
+			<div class="col-md-12">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>탑승자</th>
+							<th>부서</th>
+							<th>탑승시간</th>
+							<th>탑승위치</th>
+							<th>승인</th>
+							<th>거부</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${passengerList}" var="v" varStatus="status">
+							<c:if test="${!(v.IS_APPROVE == 'C' || v.IS_APPROVE == 'Y')}">
+								<tr>	
+									<td>${status.count}</td>
+									<td>${v.M_NAME}</td>
+									<td>${v.M_DEPT}</td>
+									<td>${v.PASSENGER_DEPART_TIME}</td>
+									<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
+									<td><a href="/board/approvePassenger?m_id=${v.M_ID}" class="btn btn-success btn-sm approve">승인</a></td>
+									<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">거부</a></td>
+								</tr>	
+							</c:if>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
+		</div>
+		<div class="col-md-2"></div>
 	</div>
-	</div>
-	<div class="col-md-2"></div>
 </div>
-<!-- // 동승자 리스트 -->
-
-<h3 id="txtList" style="text-align: center; color: green;">승인 리스트</h3>
-<!-- 동승자 리스트 -->
-<div class="row"
-	<c:if test="${isDriver == false}">
-		style="display: none;"
+<!-- // 탑승자 리스트 -->
+<div
+	<c:if test="${passengerList == '[]' || passengerList == null}">
+		style="display: none"
 	</c:if>
+	<c:forEach items="${passengerList}" var="v">
+		<c:if test="${v == '[]' || v.IS_APPROVE != 'Y'}">
+			style="display: none"
+		</c:if>
+	</c:forEach>
 >
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
-		<div class="row">
-		<div class="col-md-12">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>탑승자</th>
-						<th>부서</th>
-						<th>탑승시간</th>
-						<th>탑승위치</th>
-						<th>승인취소</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${passengerList}" var="v" varStatus="status">
-						<c:if test="${(v.IS_APPROVE == 'Y')}">
-							<tr>	
-								<td>${status.count}</td>
-								<td>${v.M_NAME}</td>
-								<td>${v.M_DEPT}</td>
-								<td>${v.PASSENGER_DEPART_TIME}</td>
-								<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
-								<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">취소</a></td>
-							</tr>
-						</c:if>	
-					</c:forEach>
-				</tbody>
-			</table>
+	<h3 id="txtList" style="text-align: center; color: green;">승인 리스트</h3>
+	<!-- 승인 리스트 -->
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<div class="row">
+			<div class="col-md-12">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>탑승자</th>
+							<th>부서</th>
+							<th>탑승시간</th>
+							<th>탑승위치</th>
+							<th>승인취소</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${passengerList}" var="v" varStatus="status">
+							<c:if test="${(v.IS_APPROVE == 'Y')}">
+								<tr>	
+									<td>${status.count}</td>
+									<td>${v.M_NAME}</td>
+									<td>${v.M_DEPT}</td>
+									<td>${v.PASSENGER_DEPART_TIME}</td>
+									<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
+									<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">취소</a></td>
+								</tr>
+							</c:if>	
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
+		</div>
+		<div class="col-md-2"></div>
 	</div>
-	</div>
-	<div class="col-md-2"></div>
 </div>
-
-<!-- 카카오 지도 api -->
-<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
-		<div id="map" style="height: 700px; width: 100%;"></div>
-	</div>
-	<div class="col-md-2"></div>
-</div>
-<!-- // 카카오 지도 api -->
+<!-- // 승인 리스트 -->
 
 <!-- 모달창 -->
  <a id="modal-899906" style="display: none;">modal</a>
@@ -276,91 +279,103 @@
 	</div>
 <!-- // 모달창 -->
 
-<!-- 운전자 등록폼 -->
-<div class="row" style="margin-bottom: 20px;">
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
-		<form id="frmDriver" role="form" action="/board/addDriver" method="post">
-		<input type="hidden" name="driver_seq" value="${driver_seq}">
-			<div class="form-group" style="margin-bottom: 10px;">
-				<label for="startLocation"> 출발 위치 </label> 
-				<input type="text" class="form-control" id="startLoct" name="startLoct" readonly="readonly" value="${loginVo.m_address}"/>
-			</div>
-			<div class="form-group" style="margin-bottom: 10px;">
-				<label for="isSmoke"> 흡연 여부 </label><br>
-				<input type="radio" id="isSmoke" name="isSmoke" value="Y" 
-					<c:if test="${driverVo.driver_is_smoke == 'Y'}">
-						checked="checked"
-					</c:if>
-				> 흡연
-				<input type="radio" id="isSmoke" name="isSmoke" value="N"
-					<c:if test="${driverVo.driver_is_smoke == 'N'}">
-						checked="checked"
-					</c:if>
-				> 비흡연
-			</div>
-			<div class="form-group" style="margin-bottom: 10px;">
-				<label for="requirements"> 요구 사항 </label> 
-				<input type="text" class="form-control" id="requirements" name="requirements" value="${driverVo.driver_comment}"/>
-			</div>
-			<div class="form-group" style="margin-bottom: 10px;">
-				<label for="startTime"> 출발 시간 </label> 
-				<select id="startHour" name="startHour">
-					<option value="06:" 
-						<c:if test="${depart_time_hour == '06:'}">
-							selected="selected"
-						</c:if>
-					>06
-					<option value="07:"
-						<c:if test="${depart_time_hour == '07:'}">
-							selected="selected"
-						</c:if>
-					>07
-					<option value="08:"
-						<c:if test="${depart_time_hour == '08:'}">
-							selected="selected"
-						</c:if>
-					>08
-				</select>
-				<select id="startMin" name="startMin">
-					<option value="00"
-						<c:if test="${depart_time_min == '00'}">
-							selected="selected"
-						</c:if>
-					>00
-					<option value="10"
-						<c:if test="${depart_time_min == '10'}">
-							selected="selected"
-						</c:if>
-					>10
-					<option value="20"
-						<c:if test="${depart_time_min == '20'}">
-							selected="selected"
-						</c:if>
-					>20
-					<option value="30"
-						<c:if test="${depart_time_min == '30'}">
-							selected="selected"
-						</c:if>
-					>30
-					<option value="40"
-						<c:if test="${depart_time_min == '40'}">
-							selected="selected"
-						</c:if>
-					>40
-					<option value="50"
-						<c:if test="${depart_time_min == '50'}">
-							selected="selected"
-						</c:if>
-					>50
-				</select>
-			</div>
-			<button id="btnCheck" type="submit" class="btn btn-primary" style="display: ">확인</button>
-			<button id="btnModify" type="button" class="btn btn-warning" style="display: none;">운전정보수정</button>
-			<a href="/board/deleteDriver?driver_seq=${driver_seq}" id="btnDelete" type="button" class="btn btn-danger btn-sm" style="display: none;">운전취소</a>
-		</form>
+<div>
+<!-- 카카오 지도 api -->
+	<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<div id="map" style="height: 700px; width: 100%;"></div>
+		</div>
+		<div class="col-md-2"></div>
 	</div>
-	<div class="col-md-2"></div>
+	<!-- // 카카오 지도 api -->
+	
+	<!-- 운전자 등록폼 -->
+	<div class="row" style="margin-bottom: 20px;">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<form id="frmDriver" role="form" action="/board/addDriver" method="post">
+			<input type="hidden" name="driver_seq" value="${driver_seq}">
+				<div class="form-group" style="margin-bottom: 10px;">
+					<label for="startLocation"> 출발 위치 </label> 
+					<input type="text" class="form-control" id="startLoct" name="startLoct" readonly="readonly" value="${loginVo.m_address}"/>
+				</div>
+				<div class="form-group" style="margin-bottom: 10px;">
+					<label for="isSmoke"> 흡연 여부 </label><br>
+					<input type="radio" id="isSmoke" name="isSmoke" value="Y" 
+						<c:if test="${driverVo.driver_is_smoke == 'Y'}">
+							checked="checked"
+						</c:if>
+					> 흡연
+					<input type="radio" id="isSmoke" name="isSmoke" value="N"
+						<c:if test="${driverVo.driver_is_smoke == 'N'}">
+							checked="checked"
+						</c:if>
+					> 비흡연
+				</div>
+				<div class="form-group" style="margin-bottom: 10px;">
+					<label for="requirements"> 요구 사항 </label> 
+					<input type="text" class="form-control" id="requirements" name="requirements" value="${driverVo.driver_comment}"/>
+				</div>
+				<div class="form-group" style="margin-bottom: 10px;">
+					<label for="startTime"> 출발 시간 </label> 
+					<select id="startHour" name="startHour">
+						<option value="06:" 
+							<c:if test="${depart_time_hour == '06:'}">
+								selected="selected"
+							</c:if>
+						>06
+						<option value="07:"
+							<c:if test="${depart_time_hour == '07:'}">
+								selected="selected"
+							</c:if>
+						>07
+						<option value="08:"
+							<c:if test="${depart_time_hour == '08:'}">
+								selected="selected"
+							</c:if>
+						>08
+					</select>
+					<select id="startMin" name="startMin">
+						<option value="00"
+							<c:if test="${depart_time_min == '00'}">
+								selected="selected"
+							</c:if>
+						>00
+						<option value="10"
+							<c:if test="${depart_time_min == '10'}">
+								selected="selected"
+							</c:if>
+						>10
+						<option value="20"
+							<c:if test="${depart_time_min == '20'}">
+								selected="selected"
+							</c:if>
+						>20
+						<option value="30"
+							<c:if test="${depart_time_min == '30'}">
+								selected="selected"
+							</c:if>
+						>30
+						<option value="40"
+							<c:if test="${depart_time_min == '40'}">
+								selected="selected"
+							</c:if>
+						>40
+						<option value="50"
+							<c:if test="${depart_time_min == '50'}">
+								selected="selected"
+							</c:if>
+						>50
+					</select>
+				</div>
+				<button id="btnCheck" type="submit" class="btn btn-primary" style="display: ">확인</button>
+<!-- 				<button id="btnModify" type="button" class="btn btn-warning" style="display: none;">운전정보수정</button> -->
+				<a href="/board/deleteDriver?driver_seq=${driver_seq}" id="btnDelete" type="button" class="btn btn-danger btn-sm" style="display: none;">운전취소</a>
+			</form>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
 </div>
 <!-- // 운전자 등록폼 -->
 

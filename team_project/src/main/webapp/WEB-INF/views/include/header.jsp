@@ -9,6 +9,7 @@
     <title>얻어타다</title>
     <meta charset="utf-8">
 <!--     <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+
     <link rel="stylesheet" href="/resources/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/resources/assets/css/templatemo.css">
     <link rel="stylesheet" href="/resources/assets/css/custom.css">
@@ -24,7 +25,7 @@
     <link rel="stylesheet" href="/resources/assets/css/fontawesome.min.css">
     
     <!-- bootstrap 참조 시작 -->
-    													
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">													
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>													
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>													
@@ -52,10 +53,6 @@ https://templatemo.com/tm-559-zay-shop
     <script src="/resources/assets/js/templatemo.js"></script>
     <script src="/resources/assets/js/custom.js"></script>
     <!-- End Script -->
-    
-    <!-- popovers start -->
-      
-    <!-- popovers end -->
     
     <script>
     $(function() {

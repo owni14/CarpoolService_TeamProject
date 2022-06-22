@@ -19,7 +19,7 @@
 }
 
 #receiver_m_id::placeholder {
-	font-size: 14px;
+	font-size: 15px; 
 }
 </style>
 

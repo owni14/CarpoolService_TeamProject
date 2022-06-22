@@ -312,4 +312,8 @@
 		where ad_approve ='Y'
 	</select>
 	
+	<select id="isApproveDriver" resultType="string">
+		select ad_approve from approve_driver
+		where m_id = #{m_id}
+	</select>
 </mapper>

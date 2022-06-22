@@ -18,4 +18,6 @@ public interface NotifyDao {
 	public int totalNotifyCount(); // 전체 신고 갯수 확인
 	public void modifyApprovement(BlackListVo blackListVo); // 미승인 리스트 승인으로 바꾸기
 	public void updateBlackPoint(BlackListVo blackListVo); // blackList 테이블 벌점 수정하기
+	public List<BlackListVo> getReportList(String m_id);
+	public List<BlackListVo> getReportedList(String m_id);
 }

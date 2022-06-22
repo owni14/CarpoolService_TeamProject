@@ -141,8 +141,10 @@ public class MyController {
 	
 	// 평가하기
 	@RequestMapping(value = "/putStar", method = RequestMethod.POST)
-	public String putStar(int rating) {
-		System.out.println("rating : " + rating);
+	public String putStar(String m_id, int rating, RedirectAttributes rttr) {
+		boolean result = mylogService.putStar(m_id, rating);
+		System.out.println(result);
+		rttr.addFlashAttribute("star_result", result);
 		return "redirect:/my/boardedHistory";
 	}
 }

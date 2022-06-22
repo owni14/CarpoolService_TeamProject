@@ -181,6 +181,11 @@ create sequence seq_member_update;
 create sequence seq_driver_evl;
 create sequence seq_passenger_evl;
 create sequence seq_is_update_point;
+create sequence seq_evl_1;
+create sequence seq_evl_2;
+create sequence seq_evl_3;
+create sequence seq_evl_4;
+create sequence seq_evl_5;
 --동적 시퀀스
 create sequence seq_event_participation;
 

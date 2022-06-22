@@ -50,5 +50,17 @@ public class MylogDaoImpl implements MylogDao {
 		return driverlogList;
 	}
 
+	@Override
+	public boolean putStar(String m_id, int rating) {
+		Map<String, Object> parameter = new HashMap<>();
+		parameter.put("m_id", m_id);
+		parameter.put("rating", rating);
+		int count = sqlSession.update(NAMESPACE + "putStar", parameter);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
 
 }

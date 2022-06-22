@@ -34,4 +34,10 @@ public class MylogSeviceImpl implements MylogService {
 		return driver_passengerlogList;
 	}
 
+	@Override
+	public boolean putStar(String m_id, int rating) {
+		boolean result = mylogDao.putStar(m_id, rating);
+		return result;
+	}
+
 }

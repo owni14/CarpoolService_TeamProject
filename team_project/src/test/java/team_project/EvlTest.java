@@ -26,11 +26,11 @@ public class EvlTest {
 	@Autowired
 	EvlDao evlDao;
 	
-	@Test
-	public void insertDriverEvlTest() {
-		Driver_EvlVo driver_EvlVo = new Driver_EvlVo(0, 300, "user02@gmail.com", "1002");
-		evlDao.insertDriverEvl(driver_EvlVo);
-	}//Ok
+//	@Test
+//	public void insertDriverEvlTest() {
+//		Driver_EvlVo driver_EvlVo = new Driver_EvlVo(0, 300, "user02@gmail.com", "1002");
+//		evlDao.insertDriverEvl(driver_EvlVo);
+//	}//Ok
 	
 	@Test
 	public void insertPassengerEvlTest() {

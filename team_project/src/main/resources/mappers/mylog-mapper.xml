@@ -40,6 +40,8 @@
 	
 	<!-- 평점 주기 -->
 	<update id="putStar">
-		update 
+		update driver_evl set
+		evl${rating} = seq_evl_1.nextval 
+		where m_id = #{m_id}
 	</update>
 </mapper>

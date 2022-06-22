@@ -103,4 +103,16 @@
 		where blacklist_seq = #{blacklist_seq}
 	</update>
 	
+	<select id="getReportList" resultType="BlackListVo">
+		select * from blacklist
+		where m_id = #{m_id}
+		order by black_regdate desc
+	</select>
+	
+	<select id="getReportedList" resultType="BlackListVo">
+		select * from blacklist
+		where black_m_id = #{m_id}
+		and black_is_processed = 'Y'
+		order by black_regdate desc
+	</select>
 </mapper>

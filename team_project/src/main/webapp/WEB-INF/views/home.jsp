@@ -7,16 +7,17 @@ $(document).ready(function() {
 	var isExistenceFile = "${isExistence}";
 	var driverResult = "${driverResult}";
 	var registerDriver = "${registerDriver}";
+	var isPassenger = "${isPassenger}";
 	if (isExistenceFile == "true") {
 		alert("이미 등록된 면허증입니다.");
 	}
-	if (driverResult == "true") {
-		alert("운전등록이 완료되었습니다.");
+	if (driverResult == "true"  && isPassenger == "true") {
+		alert("운전등록이 완료되었습니다. \n탑승자로 등록되어 있던 경우, 해당 정보는 삭제되었으니 참고 부탁드립니다.");
 	} else if (driverResult == "false")  {
 		alert("운전등록에 실패하였습니다. \n실패가 계속 될 경우 고객센터로 문의부탁드립니다.")
 	}
 	if (registerDriver == "true") {
-		alert("운전자등록신청이 정상적으로 제출되었습니다. \n승인까지 시간이 걸릴 수 있으니 양해 부탁드립니다.")
+		alert("운전자등록신청이 정상적으로 제출되었습니다. \n승인까지 시간이 걸릴 수 있으니 양해 부탁드립니다. ")
 	} else if (registerDriver == "false") {
 		alert("운전자등록신청에 실패하였습니다. \n실패가 계속 될 경우 고객센터에 문의부탁드립니다.")
 	}
@@ -100,17 +101,22 @@ $(document).ready(function() {
 			</div>
 			<div class="carousel-item">
 				<div class="container">
-					
+					<div class="row p-5">
 						<div class="mx-auto col-md-12 col-lg-12 order-lg-last">
 						<a href="/event/detail?event_seq=${eventList.get(2).event_seq}">
 							<img class="img-fluid" src="/event/displayImage?filename=${eventList.get(2).event_img}"
 								alt="" style="max-height: 610px" width="1100px">
 								</a>
 						</div>
-						
-					
+						<div class="text-align-left">
+								
+							</div>
+					</div>
 				</div>
 			</div>
+			
+			
+			
 		</div>
 		<a class="carousel-control-prev text-decoration-none w-auto ps-3"
 			href="#template-mo-zay-hero-carousel" role="button"

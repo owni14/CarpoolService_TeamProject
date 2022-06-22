@@ -89,5 +89,17 @@ public class NotifyServiceImpl implements NotifyService{
 		return cNotifyCount;
 	}
 
+	@Override
+	public List<BlackListVo> getReportList(String m_id) {
+		List<BlackListVo> reportList = notifyDao.getReportList(m_id);
+		return reportList;
+	}
+
+	@Override
+	public List<BlackListVo> getReportedList(String m_id) {
+		List<BlackListVo> reportedList = notifyDao.getReportedList(m_id);
+		return reportedList;
+	}
+
 }
 

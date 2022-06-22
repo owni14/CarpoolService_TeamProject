@@ -51,6 +51,7 @@ public interface EventDao {
 	public List<EventWinnerVo> selectWinnerIsGet(int event_seq);
 	public int selectCountWinnerNoGet();//총 미수령 갯수 시퀀스 상관x
 	public List<EventVo> selectEventTopThree();//탑3(최근) 이벤트 얻기
+	public String getEvent_img(int event_seq);//db에 저장된 섬네일 가져오기
 	
 	
 }

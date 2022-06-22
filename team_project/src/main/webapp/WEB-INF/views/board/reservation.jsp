@@ -7,6 +7,8 @@ $(document).ready(function() {
 	// 회원의 탑승신청 결과와 탑승취소 결과를 얻어와 알림창으로 출력
 	var passengerResult = "${passengerResult}";
 	var deletePasgResult = "${deletePasgResult}";
+	// 로그인한 회원이 운전하기에 등록되어 있고 예약하기를 할 경우 결과를 받아오늘 변수
+	var duplication = "${duplication}";
 	if (passengerResult == "true") {
 		alert("탑승신청이 완료되었습니다.");
 	} else if (passengerResult == "false") {
@@ -16,6 +18,9 @@ $(document).ready(function() {
 		alert("탑승신청이 취소되었습니다.");
 	} else if (deletePasgResult == "false") {
 		alert("탑승신청취소 오류 \n고객센터로 문의부탁드립니다.");
+	}
+	if (duplication == "true") {
+		alert("익일 운전자로 등록된 회원입니다. \n예약을 원하시면 운전하기를 취소해 주시기바랍니다.");
 	}
 	
 	// 리스트에서 순번을 나타낼 숫자
@@ -132,7 +137,7 @@ $(document).ready(function() {
 				tr.attr("style", "color:#ff8c00; font-weight: bold;");
 				tds.eq(5).text("신청 불가"); // 신청상태를 신청 불가로 변경
 				tds.eq(5).attr("style", "color: red; font-weight: bold;"); // 신청상태 텍스트 빨간색 및 굵게 변경
-				tds.eq(6).children().text("탑승제한"); // 탑승신청 버튼을 탑승마감으로 변경
+				tds.eq(6).children().text("탑승제한"); // 탑승신청 버튼을 탑승제한으로 변경
 				tds.eq(6).children().attr("class", "btn btn-danger btn-sm btnBoard disabled"); // 탑승신청 버튼을 빨간색으로 바꾸고 클릭할 수 없게 변경
 				tds.eq(6).children().removeAttr("data-toggle"); // 기존에 가지고 있던 data-toggle속성 제거
 				tds.eq(6).children().attr("href", "#"); // url제거
@@ -556,7 +561,7 @@ $(document).ready(function() {
 	<div class="col-md-2"></div>
 </div>
 <!-- // 탑승자 -->
-
+<h3 style="text-align: center; margin-top: 50px;">운전자 리스트</h3>
 <div class="row">
 	<div class="col-md-2"></div>
 	<div class="col-md-8">

@@ -21,9 +21,11 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.kh.team.dao.CarDao;
 import com.kh.team.service.CarService;
 import com.kh.team.service.MemberService;
+import com.kh.team.service.MessageService;
 import com.kh.team.service.MylogService;
 import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.MemberVo;
+import com.kh.team.vo.MessageVo;
 import com.kh.team.vo.PagingDto;
 
 @Controller
@@ -35,6 +37,9 @@ public class BoardController {
 	
 	@Autowired
 	private CarService carService;
+	
+	@Autowired
+	private MessageService messageService;	
 	
 	// 운전자 등록 페이지로 이동합니다.
 	@RequestMapping(value = "/drive", method = RequestMethod.GET)
@@ -146,8 +151,16 @@ public class BoardController {
 	
 	// 탑승자 정보 입력
 	@RequestMapping(value = "/addPasgInfo", method = RequestMethod.POST)
-	public String addPassengerInfo(RedirectAttributes rttr, String boardLoct, String boardHour, String boardMin, String m_id, String driver_seq, String driver_id) {
+	public String addPassengerInfo(RedirectAttributes rttr, HttpSession session, String boardLoct, String boardHour, String boardMin, String m_id, String driver_seq, String driver_id) {
 		String boardTime = boardHour + boardMin;
+		boolean result = memberService.isDriver(m_id);
+		System.out.println("BoardController addPassengerInfo, result :" + result);
+		System.out.println("BoardController addPassengerInfo, m_id :" + m_id);
+		System.out.println("BoardController addPassengerInfo, driver_id :" + driver_id);
+		if (result) {
+			rttr.addFlashAttribute("duplication", "true");
+			return "redirect:/board/reservation";
+		}
 		boolean result_increase = carService.increaseCount(driver_id);
 		boolean result_insert = memberService.addPassengerInfo(m_id, boardLoct, boardTime, driver_seq);
 		if (result_increase && result_insert) {
@@ -163,13 +176,30 @@ public class BoardController {
 	public String addDriver(HttpSession session, RedirectAttributes rttr, String startLoct, String isSmoke, String requirements, String startHour, String startMin) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_id = loginVo.getM_id();
-		String driver_depart_time = startHour + startMin;
-		DriverVo driverVo = new DriverVo(m_id, startLoct, isSmoke, requirements, driver_depart_time);
-		boolean result = memberService.addDriver(driverVo);
-		if (result) {
-			rttr.addFlashAttribute("driverResult", result);
+		boolean approve_result = memberService.isApproveDriver(m_id);
+		if (approve_result) {
+			String state = memberService.getApproveState(m_id);
+			if (state != null || state != "") {
+				String driver_seq = memberService.getDriverSeqFromPassenger(m_id);
+				String driver_id = memberService.getDriverId(driver_seq);
+				boolean delete_result = memberService.deletePassenger(m_id, driver_seq);
+				if (delete_result) {
+					carService.decreaseCount(driver_id);
+					rttr.addFlashAttribute("isPassenger", true);
+				}
+			}
+			String driver_depart_time = startHour + startMin;
+			DriverVo driverVo = new DriverVo(m_id, startLoct, isSmoke, requirements, driver_depart_time);
+			boolean result = memberService.addDriver(driverVo);
+			if (result) {
+				rttr.addFlashAttribute("driverResult", result);
+			} else {
+				rttr.addFlashAttribute("driverResult", "false");
+			}
+			
 		} else {
-			rttr.addFlashAttribute("driverResult", "false");
+			rttr.addFlashAttribute("approve_result", false);
+			return "redirect:/board/drive";
 		}
 		
 		return "redirect:/";
@@ -227,8 +257,12 @@ public class BoardController {
 	
 	// 운전자가 탑승객을 승인
 	@RequestMapping(value = "/approvePassenger", method = RequestMethod.GET)
-	public String approvePassenger(RedirectAttributes rttr, String m_id) {
+	public String approvePassenger(RedirectAttributes rttr, String m_id, HttpSession session) {
 		boolean result = memberService.approvePassenger(m_id);
+		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
+		String user_id = loginVo.getM_id();
+		MessageVo messageVo = new MessageVo(m_id, "1004", user_id + "님이 회원님의 탑승신청이 승인하였습니다.");
+		messageService.insertNoBlackMessage(messageVo);
 		if (result)	{
 			rttr.addFlashAttribute("approveResult", result);
 		} else {
@@ -239,8 +273,12 @@ public class BoardController {
 	
 	// 운전자가 탑승객을 거부
 	@RequestMapping(value = "/rejectPassenger", method = RequestMethod.GET)
-	public String rejectPassenger(RedirectAttributes rttr, String m_id, String driverId) {
+	public String rejectPassenger(RedirectAttributes rttr, String m_id, String driverId, HttpSession session) {
 		boolean result = memberService.rejectPassenger(m_id);
+		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
+		String user_id = loginVo.getM_id();
+		MessageVo messageVo = new MessageVo(m_id, "1004", user_id + "님이 회원님의 탑승신청을 거부하였습니다.");
+		messageService.insertNoBlackMessage(messageVo);
 		if (result)	{
 			carService.decreaseCount(driverId);
 			rttr.addFlashAttribute("rejectResult", result);

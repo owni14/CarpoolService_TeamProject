@@ -31,9 +31,8 @@
 		event_content=#{event_content},
 		event_is_finish=#{event_is_finish},
 		event_enddate=#{event_enddate, jdbcType=VARCHAR},
-		
-		event_max_count=#{event_max_count},
-		event_point=#{event_point}
+		<include refid="thumbnail"></include>
+		event_max_count=#{event_max_count}
 		where event_seq=#{event_seq}
 	</update>
 	
@@ -85,6 +84,10 @@
 	
 	<select id="getContent" resultType="string">
 		select event_content from event where event_seq= #{event_seq}
+	</select>
+	
+	<select id="getEvent_img" resultType="string">
+		select event_img from event where event_seq= #{event_seq}
 	</select>
 	
 	<select id="checkWinner" resultType="int">
@@ -252,6 +255,12 @@ where m.m_id=ep${event_seq}.m_id
 				</when>
 				
 			</choose>
+		</if>
+	</sql>
+	
+	<sql id="thumbnail">
+	<if test = "event_img != null">
+			event_img=#{event_img},
 		</if>
 	</sql>
 </mapper>

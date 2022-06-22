@@ -181,4 +181,12 @@ public class MemberTest {
 		DriverVo driverVo = memberDao.getDriverInfo(4);
 		System.out.println(driverVo);
 	}
+	
+	@Test
+	public void isApproveDriver() {
+		String m_id = "hong@naver.com";
+		boolean result = memberDao.isApproveDriver(m_id);
+		System.out.println("result:" + result);
+	}
+	
 }

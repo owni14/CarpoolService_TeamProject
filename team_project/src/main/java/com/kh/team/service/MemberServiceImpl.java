@@ -252,4 +252,10 @@ public class MemberServiceImpl implements MemberService {
 	public int selectApproveCount() {
 		return memberDao.selectApproveCount();
 	}
+
+	@Override
+	public boolean isApproveDriver(String m_id) {
+		boolean result = memberDao.isApproveDriver(m_id);
+		return result;
+	}
 }

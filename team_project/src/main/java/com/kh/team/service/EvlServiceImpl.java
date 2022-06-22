@@ -1,5 +1,6 @@
 package com.kh.team.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,4 +90,30 @@ private MessageDao messageDao;
 		System.out.println("서비스 실행중 메세지 히스토리 입력 성공");
 		
 		}
+
+	@Override
+	public List<Integer> countEvl() {
+		int vvipDriver = evlDao.countvvipDriver();
+		int vvipPassenger = evlDao.countvvipPassenger();
+		int vipDriver = evlDao.countvipDriver();
+		int vipPassenger = evlDao.countvipPassenger();
+		int goldDriver = evlDao.countgoldDriver();
+		int goldPassenger = evlDao.countgoldPassenger();
+		int silverDriver = evlDao.countsilverDriver();
+		int silverPassenger = evlDao.countsilverPassenger();
+		int whiteDriver = evlDao.countwhiteDriver();
+		int whitePassenger = evlDao.countwhitePassenger();
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(vvipDriver);
+		list.add(vipDriver);
+		list.add(goldDriver);
+		list.add(silverDriver);
+		list.add(whiteDriver);
+		list.add(vvipPassenger);
+		list.add(vipPassenger);
+		list.add(goldPassenger);
+		list.add(silverPassenger);
+		list.add(whitePassenger);
+		return list;
+	}
 }

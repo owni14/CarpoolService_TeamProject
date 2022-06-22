@@ -59,6 +59,7 @@
 			<mapping path="/customer/report/**"/>
 			<mapping path="/board/drive/**"/>
 			<mapping path="/board/reservation/**"/>
+			<mapping path="/message/**/*"/>
 			<exclude-mapping path="/member/loginForm"/>
 			
 			<beans:ref bean="mainInterceptor"/>

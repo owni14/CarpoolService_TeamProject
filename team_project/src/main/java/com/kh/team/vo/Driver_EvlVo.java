@@ -109,5 +109,5 @@ public class Driver_EvlVo {
 				+ g_code + ", evl1=" + evl1 + ", evl2=" + evl2 + ", evl3=" + evl3 + ", evl4=" + evl4 + ", evl5=" + evl5
 				+ "]";
 	}
-	
+
 }

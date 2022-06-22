@@ -34,7 +34,7 @@
 	
 	<select id="cNotifyList" resultType="BlackListVo">
 		select * from blacklist
-		where black_is_processed = 'C'
+		where black_is_processed = 'C' or black_is_processed = 'R'
 	</select>
 	
 	<select id="notifyCount" resultType="int">
@@ -72,6 +72,9 @@
 				</when>
 				<when test='admin_check == "C"'>
 					set black_is_processed = 'C' 
+				</when>
+				<when test='admin_check == "R"'>
+					set black_is_processed = 'R' 
 				</when>
 			</choose>
 		</if>

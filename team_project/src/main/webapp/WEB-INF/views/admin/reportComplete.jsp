@@ -108,7 +108,7 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<textarea id="txtReportContent" class="form-control"></textarea>
+							<textarea id="txtReportContent" class="form-control" style="height: 100px"></textarea>
 							<table style="margin-top: 20px; float: right;">
 								<thead>
 								<tr>

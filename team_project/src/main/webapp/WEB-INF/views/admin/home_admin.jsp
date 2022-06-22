@@ -176,7 +176,7 @@
                                             <!-- card1 end -->
                                             <!-- Statestics Start -->
                                             <div class="col-md-12 col-xl-8">
-                                                <div class="card" style="height:620px">
+                                                <div class="card" style="height:670px">
                                                     <div class="card-header">
                                                         <h5>운전현황</h5>
                                                         <div class="card-header-left ">
@@ -254,16 +254,16 @@ const myChart = new Chart(
 
 
                                             <div class="col-md-12 col-xl-4">
-                                            	<div class="card" style="height:620px">
+                                            	<div class="card" style="height:320px">
                                     			<!-- Donut chart start -->
-                                           		<div class="row" style="align-self: center; margin-top:75px">
-                                           		<canvas id="doughnut-chart" width="600" height="450"></canvas>
+                                           		<div class="row" style="align-self: center;">
+                                           		<canvas id="doughnut-chart1" width="600" height="300"></canvas>
                                            		</div>
                                            		<script>
-												new Chart(document.getElementById("doughnut-chart"), {
+												new Chart(document.getElementById("doughnut-chart1"), {
 												    type: 'doughnut',
 												    data: {
-												      labels: ["${top1}", "${top2}", "${top3}", "${top4}", "${top5}"],
+												      labels: ["vvip", "vip", "gold", "silver", "white"],
 												      datasets: [
 												        {
 												          label: "Population (millions)",
@@ -272,14 +272,46 @@ const myChart = new Chart(
 												        	  "rgba(255, 205, 86, 0.2)",
 												        	  "rgba(75, 192, 192, 0.2)",
 												        	  "rgba(54, 162, 235, 0.2)"],
-												          data: ["${top1evl}","${top2evl}","${top3evl}","${top4evl}","${top5evl}"]
+												          data: ["${number1}","${number2}","${number3}","${number4}","${number5}"]
 												        }
 												      ]
 												    },
 												    options: {
 												      title: {
 												        display: true,
-												        text: '평점 Top 5 운전자'
+												        text: '운전자 등급'
+												      }
+												    }
+												});
+												</script> 
+                                            <!-- Donut chart Ends -->		
+                                            </div>
+                                            <div class="card" style="height:320px">
+                                    			<!-- Donut chart start -->
+                                           		<div class="row" style="align-self: center;">
+                                           		<canvas id="doughnut-chart2" width="600" height="300"></canvas>
+                                           		</div>
+                                           		<script>
+												new Chart(document.getElementById("doughnut-chart2"), {
+												    type: 'doughnut',
+												    data: {
+												      labels: ["vvip", "vip", "gold", "silver", "white"],
+												      datasets: [
+												        {
+												          label: "Population (millions)",
+												          backgroundColor: ["rgba(255, 99, 132, 0.2)",
+												        	  "rgba(255, 159, 64, 0.2)",
+												        	  "rgba(255, 205, 86, 0.2)",
+												        	  "rgba(75, 192, 192, 0.2)",
+												        	  "rgba(54, 162, 235, 0.2)"],
+												          data: ["${number6}","${number7}","${number8}","${number9}","${number10}"]
+												        }
+												      ]
+												    },
+												    options: {
+												      title: {
+												        display: true,
+												        text: '회원 등급(동승자)'
 												      }
 												    }
 												});

@@ -196,7 +196,7 @@
 									<td>${v.M_DEPT}</td>
 									<td>${v.PASSENGER_DEPART_TIME}</td>
 									<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
-									<td><a href="/board/approvePassenger?m_id=${v.M_ID}" class="btn btn-success btn-sm approve">승인</a></td>
+									<td><a href="/board/approvePassenger?m_id=${v.M_ID}&m_name=${v.M_NAME}&depart_time=${v.PASSENGER_DEPART_TIME}&depart_location=${v.PASSENGER_DEPART_LOCATION}" class="btn btn-success btn-sm approve">승인</a></td>
 									<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">거부</a></td>
 								</tr>	
 							</c:if>

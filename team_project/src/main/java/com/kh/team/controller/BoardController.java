@@ -257,11 +257,11 @@ public class BoardController {
 	
 	// 운전자가 탑승객을 승인
 	@RequestMapping(value = "/approvePassenger", method = RequestMethod.GET)
-	public String approvePassenger(RedirectAttributes rttr, String m_id, HttpSession session) {
+	public String approvePassenger(RedirectAttributes rttr, String m_id, String m_name, String depart_time, String depart_location, HttpSession session) {
 		boolean result = memberService.approvePassenger(m_id);
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String user_id = loginVo.getM_id();
-		MessageVo messageVo = new MessageVo(m_id, "1004", user_id + "님이 회원님의 탑승신청이 승인하였습니다.");
+		MessageVo messageVo = new MessageVo(user_id, "1004", user_id + "님이 승인한 탑승자 정보입니다.\n" + "탑승자 : " + m_name +"\n탑승 시간 : " + depart_time + "\n탑승 장소 : " + depart_location);
 		messageService.insertNoBlackMessage(messageVo);
 		if (result)	{
 			rttr.addFlashAttribute("approveResult", result);

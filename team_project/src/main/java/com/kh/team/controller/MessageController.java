@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.dao.MessageDao;
 import com.kh.team.service.MessageService;
+import com.kh.team.service.NotifyService;
+import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.MessageVo;
 import com.kh.team.vo.PagingDto;
@@ -26,6 +28,9 @@ public class MessageController {
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private NotifyService notifyService;
 	
 	@RequestMapping(value="/recAdminMessagePage", method= RequestMethod.GET)
 	public String receivedMessagePage(HttpSession session, PagingDto pagingDto)	{
@@ -120,6 +125,19 @@ public class MessageController {
 			}
 		}
 		return String.valueOf(result1);
+	}
+	
+	
+	@RequestMapping(value="/notifyReject", method= RequestMethod.POST)
+	public String notifyReject(MessageVo messageVo) {
+		BlackListVo blackListVo = new BlackListVo();
+		blackListVo.setAdmin_check("R");
+		blackListVo.setBlacklist_seq(messageVo.getBlacklist_seq());
+		System.out.println("messageVo1 : " + messageVo);
+		System.out.println("blackListVo : " + blackListVo);
+		messageService.insertMessage(messageVo);
+		notifyService.modifyApprovement(blackListVo);
+		return "redirect:/admin/report_management";
 	}
 	
 	@ResponseBody

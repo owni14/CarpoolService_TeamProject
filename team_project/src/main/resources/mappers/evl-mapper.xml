@@ -9,7 +9,7 @@
 	insert into driver_evl
 	(de_seq, de_drive_count, m_id, g_code)
 	values
-	(seq_driver_evl.nextval, #{de_drive_count}, #{m_id}, #{g_code} )
+	(seq_driver_evl.nextval, #{de_drive_count, jdbcType = INTEGER}, #{m_id, jdbcType = VARCHAR}, #{g_code, jdbcType = VARCHAR})
 	</insert>
 	
 	<insert id="insertPassengerEvl">
@@ -54,5 +54,55 @@ where m.m_id = pe.m_id and  pe.g_code = gb.g_code
 	set b.m_point = b.m_point + b.g_benefit
 
 	</update>
+	
+	<select id="countvvipDriver" resultType="int">
+	select count(*) from driver_evl 
+	where g_code = '1001'
+	</select>
+	
+	<select id="countvipDriver" resultType="int">
+	select count(*) from driver_evl 
+	where g_code = '1002'
+	</select>
+	
+	<select id="countgoldDriver" resultType="int">
+	select count(*) from driver_evl 
+	where g_code = '1003'
+	</select>
+	
+	<select id="countsilverDriver" resultType="int">
+	select count(*) from driver_evl 
+	where g_code = '1004'
+	</select>
+	
+	<select id="countwhiteDriver" resultType="int">
+	select count(*) from driver_evl 
+	where g_code = '1005'
+	</select>
+	
+	<select id="countvvipPassenger" resultType="int">
+	select count(*) from passenger_evl 
+	where g_code = '1006'
+	</select>
+	
+	<select id="countvipPassenger" resultType="int">
+	select count(*) from passenger_evl 
+	where g_code = '1007'
+	</select>
+	
+	<select id="countgoldPassenger" resultType="int">
+	select count(*) from passenger_evl 
+	where g_code = '1008'
+	</select>
+	
+	<select id="countsilverPassenger" resultType="int">
+	select count(*) from passenger_evl 
+	where g_code = '1009'
+	</select>
+	
+	<select id="countwhitePassenger" resultType="int">
+	select count(*) from passenger_evl 
+	where g_code = '1010'
+	</select>
 	
 </mapper>

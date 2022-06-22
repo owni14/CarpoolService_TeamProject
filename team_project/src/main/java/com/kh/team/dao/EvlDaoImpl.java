@@ -74,4 +74,66 @@ private final String NAMESPACE="com.kh.team.mappers.evl.";
 		}
 		return false;
 	}
+
+	@Override
+	public int countvvipDriver() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countvvipDriver");
+		return count;
+	}
+
+	@Override
+	public int countvipDriver() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countvipDriver");
+		return count;
+	}
+
+	@Override
+	public int countgoldDriver() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countgoldDriver");
+		return count;
+	}
+
+	@Override
+	public int countsilverDriver() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countsilverDriver");
+		return count;
+	}
+
+	@Override
+	public int countwhiteDriver() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countwhiteDriver");
+		return count;
+	}
+
+	@Override
+	public int countvvipPassenger() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countvvipPassenger");
+		return count;
+	}
+
+	@Override
+	public int countvipPassenger() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countvipPassenger");
+		return count;
+	}
+
+	@Override
+	public int countgoldPassenger() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countgoldPassenger");
+		return count;
+	}
+
+	@Override
+	public int countsilverPassenger() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countsilverPassenger");
+		return count;
+	}
+
+	@Override
+	public int countwhitePassenger() {
+		int count = (int)sqlSession.selectOne(NAMESPACE + "countwhitePassenger");
+		return count;
+	}
+
+	
 }

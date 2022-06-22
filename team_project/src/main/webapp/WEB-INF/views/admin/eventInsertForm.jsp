@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 <%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
-
+<script src="/resources/adminJs/extCheck.js"></script>
 <script>
 	let oEditors = [];
 
@@ -75,7 +75,17 @@
 				pc_code="1002";
 				valPoint="500포인트";
 			}
-			
+			var thumbnail_txt=form.find("[name=file]").val();
+			console.log("thumbnail_txt",thumbnail_txt);
+			//확장자체크
+			if(thumbnail_txt !=null && thumbnail_txt !="" ){
+				var isExtension=isExt(thumbnail_txt);
+				if(! isExtension){
+					alert('지원하지 않는 확장자 입니다 파일을 확인해주세요');
+					return;
+				}
+			}
+			// 확장자체크 끝
 			event_max_count=parseInt(event_max_count);
 			form.find("[name=event_name]").val($("#eventName").val());
 			form.find("[name=event_content]").val(content);

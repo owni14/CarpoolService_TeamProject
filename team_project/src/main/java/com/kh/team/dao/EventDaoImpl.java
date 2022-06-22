@@ -297,7 +297,10 @@ public class EventDaoImpl implements EventDao{
 		return sqlSession.selectList(NAMESPACE+"selectEventTopThree");
 	}
 
-
+	@Override
+	public String getEvent_img(int event_seq) {
+		return sqlSession.selectOne(NAMESPACE+"getEvent_img",event_seq);
+	}
 	
 
 }

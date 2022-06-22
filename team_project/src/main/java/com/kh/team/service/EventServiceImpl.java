@@ -209,7 +209,10 @@ public class EventServiceImpl implements EventService {
 		return eventDao.selectEventTopThree();
 	}
 
-	
+	@Override
+	public String getEvent_img(int event_seq) {
+		return eventDao.getEvent_img(event_seq);
+	}
 
 	
 

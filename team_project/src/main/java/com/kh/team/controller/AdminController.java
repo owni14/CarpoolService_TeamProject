@@ -401,14 +401,36 @@ public class AdminController {
 
 	@RequestMapping(value = "/event_update", method = RequestMethod.POST)
 	@ResponseBody
-	public String eventUpdate(EventVo eventVo,HttpSession session) {
+	public String eventUpdate(EventVo eventVo,HttpSession session,MultipartFile file) {
 		//session 내 널 값 체크
 		Object objSession=session.getAttribute("event_seq");
+		
 		if(objSession ==null) {
 			objSession=eventVo.getEvent_seq();
 		}
+		//비교용 디비 내용 가져오기
 		String db_event_content=eventService.getContent((int)objSession);
+		String db_event_img=eventService.getEvent_img((int)objSession);
 		System.out.println("eventUpdate db_event_Content" +db_event_content);
+		
+		//파일 처리
+		if(file!=null) {
+			//db에 내용저장되 있을시 서버폴더에서 제거
+			if(db_event_img !=null) {
+				FileUploadHelper.deleteFile(db_event_img);
+			}
+			
+			System.out.println("수정 어드민이벤트 : 파일 "+file.getOriginalFilename() );
+			String uploadPath=FileUploadHelper.getFileSaveFath(SERVERIP);
+			try {
+			String targetFile=FileUploadHelper.uploadFile(uploadPath, file.getOriginalFilename() , file.getBytes());
+			eventVo.setEvent_img(targetFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		//섬네일 파일 만들기
 		List<String> insertImgList=FileUploadHelper.eventFilnameExtraction(eventVo.getEvent_content(), SERVERIP);
 //		if(insertImgList.size()>0) {
@@ -583,7 +605,8 @@ public class AdminController {
 	@RequestMapping(value = "/eventInsertRun", method = RequestMethod.POST)
 	public String insertRun(HttpSession session,EventVo eventVo,RedirectAttributes rttr,MultipartFile file) throws IOException {
 		session.removeAttribute("event_seq");
-		if(file.getOriginalFilename() !=null) {
+		if(file.getOriginalFilename() !=null && file.getOriginalFilename() !="") {
+			
 			String originalFilename=file.getOriginalFilename();
 			System.out.println("file name"+originalFilename);
 			String uploadPath=FileUploadHelper.getFileSaveFath(SERVERIP);

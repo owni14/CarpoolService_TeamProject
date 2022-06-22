@@ -16,8 +16,9 @@ $(document).ready(function() {
 				"event_seq" : event_seq
 		};
 		$.get(url, sData, function(rData) {
-			console.log(rData);
-			if (rData == "true") {
+			if ("${loginVo}" == "") {
+				$("#check_comment").text("로그인이 필요한 서비스 입니다. 로그인을 해주세요.");
+			} else if (rData == "true") {
 				$("#check_comment").text("당첨되었습니다. 당첨 상품은 쪽지를 통해 확인 해주세요.");
 				var url = "/event/winnerMessage"
 				$.post(url, sData);

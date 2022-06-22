@@ -181,13 +181,7 @@ $(document).ready(function(){
 // 					console.log("rData : ", rData);
 // 					console.log($(this));
 
-					// 읽음 처리 start
-					var url = "/message/openMessage";
-					var sData = {
-							"message_seq" : this.MESSAGE_SEQ
-					};
-					$.get(url, sData, function() {});
-					// 읽음 처리 end
+					
 					
 					var tr = $("#clonetable tr").clone();
 					var span = tr.find("span");
@@ -214,10 +208,12 @@ $(document).ready(function(){
 					}
 					if(this.CONTENT.length >= 25) {
 						span.eq(2).text(this.CONTENT.substring(0,25) + ".....");
-						span.eq(2).attr("data-content", this.CONTENT);
 					} else {
 						span.eq(2).text(this.CONTENT);
+						
 					}
+					span.eq(0).attr("data-seq", this.MESSAGE_SEQ);
+					span.eq(2).attr("data-content", this.CONTENT);
 					$("#lastTable").append(tr);
 				});
 			}
@@ -235,8 +231,18 @@ $(document).ready(function(){
 		$("#message_read").modal("show");
 		var sender = $(this).find("span.last_sender").text();
 		var content = $(this).find("span.last_content").attr("data-content");
+		console.log("content: ", content);
 		$("#sender").val(sender);
 		$("#message_content").text(content);
+		
+		// 읽음 처리 start
+		var seq = $(this).find("span.last_sender").attr("data-seq");
+		var url = "/message/openMessage";
+		var sData = {
+				"message_seq" : seq
+		};
+		$.get(url, sData, function() {});
+		// 읽음 처리 end
 	});
 	
 	$("#readClose").click(function() {

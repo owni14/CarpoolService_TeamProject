@@ -37,7 +37,7 @@ $(document).ready(function() {
 						<td>
 							<!-- Accordion start -->
 							<div class="accordion accordion-flush" id="notFinishList">
-								<c:forEach items="${yBlackList}" var="blackListVo"
+								<c:forEach items="${reportList}" var="blackListVo"
 									varStatus="status">
 									<div class="accordion-item">
 
@@ -54,9 +54,28 @@ $(document).ready(function() {
 											aria-labelledby="notheading${status.count}"
 											data-bs-parent="#notFinishList">
 											<div class="accordion-body">
-												<p>신고 대상자 : ${blackListVo.black_m_id}</p>
-												<p>신고일 : ${blackListVo.black_regdate}</p>
-												<p>신고 내용 : ${blackListVo.black_content}</p>
+												
+												<div class="row">
+													<div class="col-md-9">
+														<p>신고 대상자 : ${blackListVo.black_m_id}</p>
+														<p>신고일 : ${blackListVo.black_regdate}</p>
+														<p>신고 내용 : ${blackListVo.black_content}</p>
+													</div>
+													<div class="col-md-3">
+														<c:choose>
+															<c:when test="${blackListVo.black_is_processed eq 'Y'}">
+																${black_is_processed }
+																<img alt="승인" src="/resources/images/stamp/approved1.jpg">
+															</c:when>
+															<c:when test="${blackListVo.black_is_processed eq 'C'}">
+																<img alt="거절" src="/resources/images/stamp/rejected1.jpg">
+															</c:when>
+															<c:when test="${blackListVo.black_is_processed eq 'N'}">
+																<img alt="대기" src="/resources/images/stamp/wait.png" width="175" height="125">
+															</c:when>
+														</c:choose>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -82,7 +101,7 @@ $(document).ready(function() {
 						<td>
 							<!-- Accordion start -->
 							<div class="accordion accordion-flush" id="finishList">
-								<c:forEach items="${nBlackList}" var="blackListVo"
+								<c:forEach items="${reportedList}" var="blackListVo"
 									varStatus="status">
 									<div class="accordion-item">
 										<h2 class="accordion-header" id="heading${status.count}">

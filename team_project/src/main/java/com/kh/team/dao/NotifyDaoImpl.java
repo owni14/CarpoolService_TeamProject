@@ -89,5 +89,17 @@ public class NotifyDaoImpl implements NotifyDao{
 		sqlSession.update(NAMESPACE + "updateBlackPoint", blackListVo);
 	}
 
+	@Override
+	public List<BlackListVo> getReportList(String m_id) {
+		List<BlackListVo> reportList = sqlSession.selectList(NAMESPACE + "getReportList", m_id);
+		return reportList;
+	}
+
+	@Override
+	public List<BlackListVo> getReportedList(String m_id) {
+		List<BlackListVo> reportedList = sqlSession.selectList(NAMESPACE + "getReportedList", m_id);
+		return reportedList;
+	}
+
 }
 

@@ -107,7 +107,9 @@ $(document).ready(function() {
 								alt="" style="max-height: 610px" width="1100px">
 								</a>
 						</div>
-						
+						<div class="text-align-left">
+								
+							</div>
 					
 				</div>
 			</div>

@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/WEB-INF/views/include_admin/header.jsp"%>
 <%@ include file="/WEB-INF/views/include_admin/alert.jsp" %>
+<script src="/resources/adminJs/extCheck.js"></script>
 
 <script>
 
@@ -29,6 +30,28 @@
 		  let content = document.getElementById("editorTxt").value;
 			var event_name=document.getElementById("eventName").value;
 			var event_enddate=document.getElementById("select_date").value;
+			var file=document.getElementById("file").files[0];
+			var fileName;
+			
+			if(file !=null){
+				fileName=file.name;
+				console.log("fileName ",fileName);
+				var isExtension=isExt(fileName);
+				if(! isExtension){
+					alert('지원하지 않는 확장자 입니다 파일을 확인해주세요');
+					return;
+				}
+			}
+			
+			console.log("fileName ",isExtension);
+			var formData= new FormData();
+			formData.append("file",file);
+			formData.append("event_seq",event_seq);
+			formData.append("event_content",content);
+			formData.append("event_name",event_name);
+			formData.append("event_enddate",event_enddate);
+			formData.append("event_is_finish","${eventVo.event_is_finish}");
+			formData.append("event_max_count","${eventVo.event_max_count}");
 			
 			if(event_enddate =="" || event_enddate.length <=0){
 				alert('날짜를 골라주세요');
@@ -41,18 +64,14 @@
 		    return
 		  } else {
 		    let post = {
-		    	"event_seq": event_seq,
-      			 "event_content": content,
-      			 "event_name":event_name,
-      			 "event_enddate":event_enddate,
-      			 "event_is_finish":"${eventVo.event_is_finish}",
-      			 "event_max_count":"${eventVo.event_max_count}",
-      			 "event_point":"${eventVo.event_point}"
+	
         			}
 		    $.ajax({
-				 url: "/admin/event_update"
-				 	,type:"post"
-			          , data: post
+				 url: "/admin/event_update",
+				 "processData": false,
+					"contentType": false,
+				 	type:"post"
+			          , "data": formData
 			          , success: function(data) {
 			            console.log(data);
 			            alert('저장하였습니다.');
@@ -150,7 +169,8 @@
 				<!-- Basic table card start -->
 				<div class="card">
 					<div class="card-header">
-						<form action="#" method="post">
+						<form action="#" method="post" enctype="multipart/form-data">
+						썸네일 넣기<input type="file" class="form-control-file" id="file" name="file" />
 							<div id="smarteditor">
 								<textarea name="editorTxt" id="editorTxt" rows="20"
 									placeholder="내용을 입력해주세요" style="width: 100%">

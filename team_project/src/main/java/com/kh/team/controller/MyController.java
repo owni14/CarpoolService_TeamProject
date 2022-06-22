@@ -139,4 +139,10 @@ public class MyController {
 		return driver_passengerlogList;
 	}
 	
+	// 평가하기
+	@RequestMapping(value = "/putStar", method = RequestMethod.POST)
+	public String putStar(int rating) {
+		System.out.println("rating : " + rating);
+		return "redirect:/my/boardedHistory";
+	}
 }

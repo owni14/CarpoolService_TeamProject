@@ -64,7 +64,6 @@ $(document).ready(function() {
 													<div class="col-md-3">
 														<c:choose>
 															<c:when test="${blackListVo.black_is_processed eq 'Y'}">
-																${black_is_processed }
 																<img alt="승인" src="/resources/images/stamp/approved1.jpg">
 															</c:when>
 															<c:when test="${blackListVo.black_is_processed eq 'C'}">

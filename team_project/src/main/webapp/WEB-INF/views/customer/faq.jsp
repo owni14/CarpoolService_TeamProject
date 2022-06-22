@@ -6,7 +6,7 @@
 <%@ include file="/WEB-INF/views/customer/customer_header.jsp" %>
 <style>
 .card-body { margin: 20px; float:left; width: 200px; height: 180px; border-color: orange; }
-.card-body:hover { color:white; background-color: orange; cursor: pointer; box-shadow: 2px 2px gray;}
+.card-body:hover { color:white; background-color: orange; cursor: pointer; box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;}
 </style>
 
 <script>
@@ -48,7 +48,7 @@ $(document).ready(function() {
 	<c:forEach var="faqVo" items="${faqList}" varStatus="status">
 		<div class="card-body border rounded " style="overflow: hidden" data-count="${status.count}" data-content="${faqVo.faq_content}">
 			<span style="font-size: 30px; font-weight: bold;" class=text-muted>${faqVo.faq_seq}</span><br>
-			<span >${faqVo.faq_title}</span>
+			<span style="font-weight: bold" >${faqVo.faq_title}</span>
 		</div>
 		<c:if test="${status.count % 5 == 0}" >
 			<textarea class="form-control" id="faq_content${status.count}" style="display: none; background-color: white; height: 500px;" readonly ></textarea>

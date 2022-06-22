@@ -16,4 +16,17 @@ public interface EvlDao {
 	public boolean insertEvlUpdate(Is_Update_PointVo is_Update_PointVo);
 	public boolean updatePointPassengerByEvl();//패신저 등급에 따른 포인트 업데이트
 	
+	// driver 등급 별 인원 수 파악
+	public int countvvipDriver();
+	public int countvipDriver();
+	public int countgoldDriver();
+	public int countsilverDriver();
+	public int countwhiteDriver();
+	// passenger 등급 별 인원 수 파악
+	public int countvvipPassenger();
+	public int countvipPassenger();
+	public int countgoldPassenger();
+	public int countsilverPassenger();
+	public int countwhitePassenger();
+	
 }

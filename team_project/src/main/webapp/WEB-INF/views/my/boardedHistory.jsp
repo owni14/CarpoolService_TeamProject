@@ -3,7 +3,38 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <%@ include file="/WEB-INF/views/my/my_header.jsp"%>
+<style>
+ #putStar { color: black; } 
 
+.star-rating {
+  margin-left: 50px;
+  display:flex;
+  flex-direction: row-reverse;
+  font-size:50px;
+  justify-content:space-around;
+  padding:0 .2em;
+  text-align:center;
+  width:50px;
+}
+
+.star-rating input {
+  display:none;
+}
+
+.star-rating label {
+  color:#ccc;
+  cursor:pointer;
+}
+
+.star-rating :checked ~ label {
+  color:#f90;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color:#fc0;
+}
+</style>
 <script>
 $(document).ready(function() {
 	var frmPaging = $("#frmPaging");
@@ -34,7 +65,7 @@ $(document).ready(function() {
 	
 	$(".evaluation").click(function(e){
 		e.preventDefault();
-		console.log("clicked");
+		
 	});
 	
 	
@@ -46,7 +77,14 @@ $(document).ready(function() {
 		$("#receiver_m_id").val(receiver);
 		
 	});
+	
+	$("#putStar").click(function(e) {
+		e.preventDefault();
+		$("#frmStar").submit();
+	});
 });
+
+
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp"%>
 <%@ include file ="/WEB-INF/views/message/message_form.jsp"%>
@@ -101,6 +139,7 @@ $(document).ready(function() {
 					<th>운전자 아이디</th>
 					<th style="width: 600px;">탑승 위치</th>
 					<th>탑승 시간</th>
+					<th>평가하기</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -116,11 +155,26 @@ $(document).ready(function() {
 						<a class="dropdown-item black" href="#" data-driver_id="${passengerlogVo.DRIVER_ID}">신고하기</a>
 						<a class="dropdown-item evaluation" href="#">평가하기</a>
 					</div>
-					
-					
 					</td>
  					<td>${passengerlogVo.PASSENGER_DEPART_LOCATION}</td>
  					<td>${passengerlogVo.PASSENGER_DEPART_TIME}</td>
+ 					<td>
+ 						<form id="frmStar" action="/my/putStar" method="post">
+						<div class="star-rating">
+								<a id="putStar" href="#" style="vertical-align: center; margin-left: 5px;"><i class="bi bi-arrow-right-circle"></i></a>
+								<input type="radio" id="5-stars" name="rating" value="5" />
+								<label for="5-stars" class="star">&#9733;</label>
+								<input type="radio" id="4-stars" name="rating" value="4" />
+								<label for="4-stars" class="star">&#9733;</label>
+								<input type="radio" id="3-stars" name="rating" value="3" />
+								<label for="3-stars" class="star">&#9733;</label>
+								<input type="radio" id="2-stars" name="rating" value="2" />
+								<label for="2-stars" class="star">&#9733;</label>
+								<input type="radio" id="1-star" name="rating" value="1" />
+								<label for="1-star" class="star">&#9733;</label>
+						</div>
+						</form>
+					</td>
 				</tr>
 				</c:forEach>
 			</tbody>

@@ -38,5 +38,8 @@
         order by passenger_depart_time
 	</select>
 	
-	
+	<!-- 평점 주기 -->
+	<update id="putStar">
+		update 
+	</update>
 </mapper>

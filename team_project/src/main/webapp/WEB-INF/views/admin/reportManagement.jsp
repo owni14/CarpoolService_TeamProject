@@ -8,7 +8,7 @@
 	$(document).ready(function (e) {
 		var frmApproveNotify = $("#frmApproveNotify");
 		var frmPaging = $("#frmPaging"); 
-		$("a.dropdown-item").click(function (e) {
+		$(".check").click(function (e) {
 			e.preventDefault();
 			var blacklist_seqValue = $(this).attr("data-blacklistSeq");
 			var admin_checkValue = $(this).attr("data-value");
@@ -29,6 +29,33 @@
 				frmApproveNotify.attr("action","/admin/modifyBlackPoint");
 				frmApproveNotify.attr("method","post");
 				frmApproveNotify.submit();
+		});
+		
+		$(".c-complete").click(function () {
+			$("#modal-97340").trigger("click");
+			var blacklist_seq = $(this).attr("data-blacklistseq");
+			var reporter = $(this).attr("data-notifying");
+			var black_content = $(this).attr("data-content");
+			$("#thReporter").text(reporter);
+			$("#btnModalSend").attr("data-blacklistseq",blacklist_seq);
+			$("#txtReportContent").val("신고 내용 : " + black_content + "<br>신고 내용이 부적절하여 신고 반려 처리 되었습니다.");
+			var str = $("#txtReportContent").val();
+			str = str.split("<br>").join("\r\n");
+			$("#txtReportContent").val(str);
+		});
+		
+		$("#btnModalSend").click(function () {
+			var content = $("#txtReportContent").val();
+			var receiver_m_id = $("#thReporter").text();
+			var sender_admin_code = "${admin_code}";
+			var blacklist_seq = $("#btnModalSend").attr("data-blacklistseq");
+			$("#frmData").find("input[name=content]").val(content);
+			$("#frmData").find("input[name=receiver_m_id]").val(receiver_m_id);
+			$("#frmData").find("input[name=sender_admin_code]").val(sender_admin_code);
+			$("#frmData").find("input[name=blacklist_seq]").val(blacklist_seq);
+			$("#frmData").submit();
+			
+			
 		});
 		
 		$("#btnSearch").click(function () {
@@ -63,6 +90,58 @@
 </script>
 <%@ include file="/WEB-INF/views/include_admin/frmApproveNotify.jsp" %>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp" %>
+<form id=frmData method=post action="/message/notifyReject">
+	<input type="hidden" name="content">
+	<input type="hidden" name="receiver_m_id">
+	<input type="hidden" name="sender_admin_code">
+	<input type="hidden" name="blacklist_seq">
+</form>
+<!-- modal start -->
+<div class="row">
+		<div class="col-md-12">
+			 <a id="modal-97340" href="#modal-container-97340" role="button" class="btn" data-toggle="modal" style="display:none">Launch demo modal</a>
+			
+			<div class="modal fade" id="modal-container-97340" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">
+								신고 반려 알림 메세지
+							</h5> 
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<textarea id="txtReportContent" class="form-control" style="height: 100px"></textarea>
+							<table style="margin-top: 20px; float: right;">
+								<thead>
+								<tr>
+									<th>받는 사람(신고자)</th>
+									<th id="thReporter" style="padding-left:10px"></th>
+								</tr>
+								</thead>
+							</table>
+						
+						</div>
+						<div class="modal-footer">
+							 
+							<button type="button" class="btn btn-primary" id="btnModalSend" data-dismiss="modal">
+								전송
+							</button> 
+							<button type="button" class="btn btn-secondary" id="btnCancel" data-dismiss="modal">
+								닫기
+							</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+<!-- modal end -->
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -279,8 +358,8 @@
 												id="dropdownMenuButton1" data-toggle="dropdown">
 												${blackListVo.black_is_processed}</button>
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-blackid="${blackListVo.black_m_id}">승인</a> 
-												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a>
+												<a class="dropdown-item check" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-blackid="${blackListVo.black_m_id}">승인</a> 
+												<a class="dropdown-item check" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a>
 											</div> 
 											<!-- dropdown end -->
 										</td>
@@ -327,8 +406,8 @@
 												id="dropdownMenuButton2" data-toggle="dropdown">
 												${blackListVo.black_is_processed}</button>
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-bScore="${blackListVo.black_score}">승인</a> 
-												<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a> 
+												<a class="dropdown-item check" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-bScore="${blackListVo.black_score}">승인</a> 
+												<a class="dropdown-item check" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a> 
 											</div> 
 											<!-- dropdown end -->
 											</td>
@@ -365,15 +444,23 @@
 											<td>${blackListVo.black_m_id}</td>
 											<td>${blackListVo.black_content}</td>
 											<td>
+											<c:choose>
+												<c:when test="${blackListVo.black_is_processed == 'C'}">
 												<!-- dropdown start -->
 												<button class="btn dropdown-toggle" type="button" style="background-color:white; padding-top:0px; color:rgba(201, 203, 207,10)"
 													id="dropdownMenuButton3" data-toggle="dropdown">
 													${blackListVo.black_is_processed}</button>
 												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="N">반려 취소</a> 
-													<a class="dropdown-item" href="#" >반려 완료</a> 
+													<a class="dropdown-item check" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="N">반려 취소</a> 
+													<a class="dropdown-item c-complete" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" 
+													data-notifying="${blackListVo.m_id}" data-content="${blackListVo.black_content}">반려 완료</a> 
 												</div> 
 												<!-- dropdown end -->
+												</c:when>
+												<c:otherwise>
+													<img src="/resources/images/blacklist/reject.png" height="50px">
+												</c:otherwise>
+											</c:choose>
 											</td>
 											<td>${blackListVo.black_regdate}</td>
 											

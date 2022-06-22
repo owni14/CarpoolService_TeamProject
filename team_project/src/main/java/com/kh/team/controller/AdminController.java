@@ -44,6 +44,7 @@ import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.AdminVo;
 import com.kh.team.vo.BlackListVo;
 import com.kh.team.vo.ComplainVo;
+import com.kh.team.vo.Driver_EvlVo;
 import com.kh.team.vo.EventVo;
 import com.kh.team.vo.EventWinnerVo;
 import com.kh.team.vo.Is_Update_PointVo;
@@ -77,13 +78,19 @@ public class AdminController {
 		List<Map<String, Object>> notApprovedDriverList = memberService.adminNotApprovedDriver();
 		model.addAttribute("notApprovedDriverList",notApprovedDriverList);
 		List<MemberVo> top5List = memberService.getTop5EvlMembers();
-		int index = 1;
-		for (MemberVo memberVo : top5List) {
+		
+//		for (MemberVo memberVo : top5List) {
 //			System.out.println("index : " + index);
 //			System.out.println(memberVo.getM_id());
 //			System.out.println(memberVo.getM_evl());
-			model.addAttribute("top" + index, memberVo.getM_id());
-			model.addAttribute("top" + index + "evl", memberVo.getM_evl());
+//			model.addAttribute("top" + index, memberVo.getM_id());
+//			model.addAttribute("top" + index + "evl", memberVo.getM_evl());
+//			index++;
+//		}
+		List<Integer> list = evlService.countEvl();
+		int index = 1;
+		for (int i :list) {
+			model.addAttribute("number" + index,i);
 			index++;
 		}
 		Object adminObject=session.getAttribute("admin_code");
@@ -188,6 +195,11 @@ public class AdminController {
 	public String approveDriver(String m_id, String check_page) {
 //		System.out.println("m_id : " + m_id);
 		memberService.approveDriver(m_id);
+		Driver_EvlVo driverEvlVo = new Driver_EvlVo();
+		driverEvlVo.setM_id(m_id);
+		driverEvlVo.setDe_drive_count(0);
+		driverEvlVo.setG_code("1005");
+		evlService.insertDriverEvl(driverEvlVo);
 		if (check_page != null && !check_page.equals("")) {
 			return "redirect:/admin/approveDriver_management";
 		} else {

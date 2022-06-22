@@ -71,11 +71,12 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/report", method = RequestMethod.GET)
-	public String report(HttpSession session,PagingDto pagingDto) {
-		List<BlackListVo> yBlackList = notifyService.yNotifyList();
-		List<BlackListVo> nBlackList = notifyService.nNotifyList(pagingDto);
-		session.setAttribute("yBlackList", yBlackList);
-		session.setAttribute("nBlackList", nBlackList);
+	public String report(HttpSession session, PagingDto pagingDto) {
+		MemberVo loginVo =  (MemberVo)session.getAttribute("loginVo");
+		List<BlackListVo> reportList = notifyService.getReportList(loginVo.getM_id());
+		List<BlackListVo> reportedList = notifyService.getReportedList(loginVo.getM_id());
+		session.setAttribute("reportList", reportList);
+		session.setAttribute("reportedList", reportedList);
 		return "customer/report";
 	}
 	

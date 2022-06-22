@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
-<style>
-.jumb_text { margin-left: 20%; }
-</style>
+<%@ include file="/WEB-INF/views/event/event_header.jsp" %>
+
 <script>
 $(document).ready(function() {
 	$("#btn_winner_check").click(function() {
@@ -32,14 +31,6 @@ $(document).ready(function() {
 });
 </script>
 
-<div class="jumbotron">
-	<h2 style="margin-bottom:50px;" class="jumb_text">
-		이벤트 &amp; 혜택
-	</h2>
-	<p class="jumb_text">
-		다양한 이벤트와 등급별 혜택을 만나보세요!!
-	</p>
-</div>
 
 <div class="row">
 	<div class="col-md-2">

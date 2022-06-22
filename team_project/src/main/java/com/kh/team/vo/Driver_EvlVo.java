@@ -8,6 +8,7 @@ public class Driver_EvlVo {
 	private int de_drive_count;
 	private String m_id;
 	private String g_code;
+	private int de_driver_evl;
 	
 	public Driver_EvlVo() {
 		super();
@@ -19,6 +20,15 @@ public class Driver_EvlVo {
 		this.de_drive_count = de_drive_count;
 		this.m_id = m_id;
 		this.g_code = g_code;
+	}
+
+	public Driver_EvlVo(int de_seq, int de_drive_count, String m_id, String g_code, int de_driver_evl) {
+		super();
+		this.de_seq = de_seq;
+		this.de_drive_count = de_drive_count;
+		this.m_id = m_id;
+		this.g_code = g_code;
+		this.de_driver_evl = de_driver_evl;
 	}
 
 	public int getDe_seq() {
@@ -53,11 +63,18 @@ public class Driver_EvlVo {
 		this.g_code = g_code;
 	}
 
+	public int getDe_driver_evl() {
+		return de_driver_evl;
+	}
+
+	public void setDe_driver_evl(int de_driver_evl) {
+		this.de_driver_evl = de_driver_evl;
+	}
+
 	@Override
 	public String toString() {
-		return "Driver_Evl [de_seq=" + de_seq + ", de_drive_count=" + de_drive_count + ", m_id=" + m_id + ", g_code="
-				+ g_code + "]";
+		return "Driver_EvlVo [de_seq=" + de_seq + ", de_drive_count=" + de_drive_count + ", m_id=" + m_id + ", g_code="
+				+ g_code + ", de_driver_evl=" + de_driver_evl + "]";
 	}
-	
-	
+
 }

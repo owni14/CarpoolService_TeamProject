@@ -100,7 +100,7 @@ $(document).ready(function() {
 			</div>
 			<div class="carousel-item">
 				<div class="container">
-					
+					<div class="row p-5">
 						<div class="mx-auto col-md-12 col-lg-12 order-lg-last">
 						<a href="/event/detail?event_seq=${eventList.get(2).event_seq}">
 							<img class="img-fluid" src="/event/displayImage?filename=${eventList.get(2).event_img}"
@@ -110,9 +110,12 @@ $(document).ready(function() {
 						<div class="text-align-left">
 								
 							</div>
-					
+					</div>
 				</div>
 			</div>
+			
+			
+			
 		</div>
 		<a class="carousel-control-prev text-decoration-none w-auto ps-3"
 			href="#template-mo-zay-hero-carousel" role="button"

@@ -27,6 +27,17 @@ public class AdminTest {
 		System.out.println("result : " + result);
 	}
 	// test ok
+	@Test
+	public void regularExp() {
+		String reg="(GM)([0-9a-zA-Z]*[\\{\\}\\[\\]?.,;:|\\)*~`!^\\-_+<>@\\#$%&\\=\\(\\'\\\"]?)*";
+		String code="gm1000000";
+		if(code.matches(reg)) {
+			System.out.println("정규식 통과");
+		}
+		else {
+			System.out.println("정규식 미통과");
+		}
+	}//test ok
 	
 	
 }

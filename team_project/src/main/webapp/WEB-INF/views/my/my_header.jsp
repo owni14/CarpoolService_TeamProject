@@ -178,7 +178,7 @@ $(document).ready(function() {
 					</c:choose>
 					</span><br>
 					<span>
-						<img id="companyImg" alt="companyLogo.png" src="/resources/images/companyLogo/DEFAULTLOGO.png"	width = "100px;" height="40px;"> 
+						<img id="companyImg" alt="companyLogo.png" src="/resources/images/companyLogo/default.png"	width = "100px;" height="40px;"> 
 						${loginVo.m_dept}
 					</span><br>
 					<span>벌점 : ${loginVo.m_blackpoint}</span><br>

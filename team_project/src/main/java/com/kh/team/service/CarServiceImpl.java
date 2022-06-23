@@ -37,4 +37,15 @@ public class CarServiceImpl implements CarService{
 		carDao.decreaseCount(m_id);
 	}
 
+	@Override
+	public String getCarCodeByM_Id(String m_id) {
+		String carCode = carDao.getCarCodeByM_Id(m_id);
+		return carCode;
+	}
+
+	@Override
+	public void resetCount(String m_id) {
+		carDao.resetCount(m_id);
+	}
+
 }

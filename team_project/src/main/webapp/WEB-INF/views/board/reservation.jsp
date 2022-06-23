@@ -305,7 +305,7 @@ $(document).ready(function() {
     }
 	
 	// 모달창에서 지도 밑 상세정보를 표시할 함수
-	function showModalMap(drvName, gender, drvDepartLocation, drvDept, drvDepartTime, mBoardLoct, driver_comment) {
+	function showModalMap(drvName, gender, drvDepartLocation, drvDept, drvDepartTime, mBoardLoct, driver_comment, ci_name) {
 		 
 		 /* 
 		 console.log("driverName:" + driverName);
@@ -319,6 +319,7 @@ $(document).ready(function() {
 		  $("#driverDept").text(drvDept);
 		  $("#driverLoct").text(drvDepartLocation);
 		  $("#driverStartTime").text(drvDepartTime);
+		  $("#driverCar").text(ci_name);
 		  $("#mBoardLoct").text(mBoardLoct);
 		  var defaultComment = "없음";
 		  if (driver_comment == null) {
@@ -413,7 +414,7 @@ $(document).ready(function() {
 				 gender = "여자";
 			 }
 			 // 모달 창에서 상세한 정보를 보여줄 함수
-			 showModalMap(rData.M_NAME, gender, rData.DRIVER_DEPART_LOCATION, rData.M_DEPT, rData.DRIVER_DEPART_TIME, mBoardLoct, rData.DRIVER_COMMENT);
+			 showModalMap(rData.M_NAME, gender, rData.DRIVER_DEPART_LOCATION, rData.M_DEPT, rData.DRIVER_DEPART_TIME, mBoardLoct, rData.DRIVER_COMMENT, rData.CI_NAME);
 		 }); // $.get(url, sData, function(rData) {})
 		 
 	 }); //  $("#tblDriver").on("click", ".btnBoard", function() {})
@@ -444,34 +445,34 @@ $(document).ready(function() {
 	 var company = "${loginVo.m_company}";
 	 switch(company) {
 	 case "DOOSAN" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/DOOSAN.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/doosan.png");
 		 break;
 	 case "HANWHA" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/HANWHA.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/hanwha.png");
 		 break;
 	 case "HYUNDAI" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/HYUNDAI.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/hyundai.png");
 		 break;
 	 case "KAKAO" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/KAKAO.jpg");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/kakao.jpg");
 		 break;
 	 case "KT" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/KT.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/kt.png");
 		 break;
 	 case "LG" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/LG.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/lg.png");
 		 break;
 	 case "NAVER" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/NAVER.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/naver.png");
 		 break;
 	 case "NEXEN" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/NEXEN.jpg");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/nexen.jpg");
 		 break;
 	 case "SAMSUNG":
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/SAMSUNG.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/samsung.png");
 		 break;
 	 case "SK":
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/SK.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/sk.png");
 		 break;
 	 }
 	 
@@ -504,6 +505,7 @@ $(document).ready(function() {
 					<h6 style="font-weight: bold; "> 부서 : <span id="driverDept"></span></h6> 
 					<h6 style="font-weight: bold; "> 출발 위치 : <span id="driverLoct"></span></h6> 
 					<h6 style="font-weight: bold; "> 출발 시간 : <span id="driverStartTime"></span></h6> 
+					<h6 style="font-weight: bold; "> 차량명 : <span id="driverCar"></span></h6> 
 					<h6 style="font-weight: bold; color: red;"> 요구 사항 : <span id="driverComment"></span></h6> 
 					<hr>
 					<h6 style="font-weight: bold; "> 내 위치 : <span id="mBoardLoct"></span></h6>

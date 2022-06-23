@@ -141,10 +141,14 @@ public class MyController {
 	
 	// 평가하기
 	@RequestMapping(value = "/putStar", method = RequestMethod.POST)
-	public String putStar(String m_id, int rating, RedirectAttributes rttr) {
-		boolean result = mylogService.putStar(m_id, rating);
-		System.out.println(result);
-		rttr.addFlashAttribute("star_result", result);
+	public String putStar(String driver_m_id, int rating, int driver_seq, RedirectAttributes rttr, HttpSession session) {
+		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
+		boolean star_result = mylogService.putStar(driver_m_id, rating);
+		boolean finish_result = mylogService.evl_finish(loginVo.getM_id(), driver_seq);
+		System.out.println(star_result);
+		System.out.println(finish_result);
+		System.out.println(driver_seq);
+		rttr.addFlashAttribute("star_result", star_result);
 		return "redirect:/my/boardedHistory";
 	}
 }

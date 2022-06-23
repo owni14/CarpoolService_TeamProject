@@ -51,11 +51,24 @@ public class MylogDaoImpl implements MylogDao {
 	}
 
 	@Override
-	public boolean putStar(String m_id, int rating) {
+	public boolean putStar(String driver_m_id, int rating) {
 		Map<String, Object> parameter = new HashMap<>();
-		parameter.put("m_id", m_id);
+		parameter.put("driver_m_id", driver_m_id);
 		parameter.put("rating", rating);
 		int count = sqlSession.update(NAMESPACE + "putStar", parameter);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	// 평점 완료 로그 찍기
+	@Override
+	public boolean evl_finish(String m_id, int driver_seq) {
+		Map<String, Object> parameter = new HashMap<>();
+		parameter.put("m_id", m_id);
+		parameter.put("driver_seq", driver_seq);
+		int count = sqlSession.update(NAMESPACE + "evl_finish", parameter);
 		if (count > 0) {
 			return true;
 		}

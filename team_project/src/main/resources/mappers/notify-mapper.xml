@@ -115,4 +115,14 @@
 		and black_is_processed = 'Y'
 		order by black_regdate desc
 	</select>
+	
+	<insert id="insertBlockPeople">
+		insert into blocklist (blocklist_seq,m_id)
+		values (seq_blocklist.nextval, #{m_id})
+	</insert>
+	
+	<select id="isBlockPeople" resultType="int">
+		select count(*) from blocklist
+		where m_id = #{m_id}
+	</select>
 </mapper>

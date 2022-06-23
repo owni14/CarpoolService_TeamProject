@@ -105,6 +105,14 @@ public class NotifyTest {
 	}
 	// test ok,
 	
+	@Test
+	public void insertBlockPeople() {
+		String m_id = "user01@gmail.com";
+		boolean result = notifyDao.insertBlockPeople(m_id);
+		System.out.println("result : " + result);
+	}
+	// test ok,
+	
 	
 }
 

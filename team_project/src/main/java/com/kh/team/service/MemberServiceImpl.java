@@ -258,4 +258,10 @@ public class MemberServiceImpl implements MemberService {
 		boolean result = memberDao.isApproveDriver(m_id);
 		return result;
 	}
+
+	@Override
+	public int countBlackPoint(String m_id) {
+		int count = memberDao.countBlackPoint(m_id);
+		return count;
+	}
 }

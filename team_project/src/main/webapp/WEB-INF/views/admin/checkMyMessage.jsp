@@ -373,6 +373,9 @@ tbody > tr:hover {background-color: aliceblue;}
 					<span><b>내용</b></span>
 					<span id="spanClose" style="float:right"><b>x</b></span><br><br>
 					<span id="spanMessage"></span>
+					<div style="float:right"><button id="btnAdminscode" type="button" class="btn btn-inverse btn-round"
+				    		style="background-color: white; font-size: 12px; color: black; text-align: center">답장</button>
+					</div>
 				</div>
 			</div>
 			<!-- 쪽지 읽기 card end -->

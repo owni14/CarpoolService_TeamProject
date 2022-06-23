@@ -189,4 +189,11 @@ public class MemberTest {
 		System.out.println("result:" + result);
 	}
 	
+	@Test
+	public void countBlackPoint() {
+		String m_id = "user01@gmail.com";
+		int count = memberDao.countBlackPoint(m_id);
+		System.out.println("count : " + count);
+	}
+	
 }

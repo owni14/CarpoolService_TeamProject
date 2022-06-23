@@ -394,4 +394,10 @@ public class MemberDaoImpl implements MemberDao {
 		return false;
 	}
 
+	@Override
+	public int countBlackPoint(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "countBlackPoint", m_id);
+		return count;
+	}
+
 }

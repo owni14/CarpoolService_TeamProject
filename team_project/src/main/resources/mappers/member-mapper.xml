@@ -316,4 +316,8 @@
 		select ad_approve from approve_driver
 		where m_id = #{m_id}
 	</select>
+	<select id="countBlackPoint" resultType="int">
+		select m_blackpoint from member
+		where m_id = #{m_id}
+	</select>
 </mapper>

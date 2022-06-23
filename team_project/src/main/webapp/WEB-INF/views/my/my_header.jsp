@@ -52,7 +52,7 @@
 
 /* Individual bars */
 .bar-5 {
-	width: 60%;
+	
 	height: 18px;
 	background-color: #04AA6D;
 }
@@ -154,7 +154,8 @@ $(document).ready(function() {
 	}
 });
 </script>
-${driver_evlVo}
+
+
 <div class="row">
 	<div class="col-md-2">
 	</div>
@@ -175,7 +176,7 @@ ${driver_evlVo}
 							<i class="fa fa-venus" style="color:pink"></i>
 						</c:otherwise>
 					</c:choose>
-					- ${loginVo.m_id}</span><br>
+					</span><br>
 					<span>
 						<img id="companyImg" alt="companyLogo.png" src="/resources/images/companyLogo/DEFAULTLOGO.png"	width = "100px;" height="40px;"> 
 						${loginVo.m_dept}
@@ -188,26 +189,48 @@ ${driver_evlVo}
 			<div class="col-md-6">
 			<!-- 나의 평점 보기 start -->
 			
-				<span class="rHeading">User Rating</span>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star"></span>
-				<p>4.1 average based on 254 reviews.</p>
+				<span class="rHeading">${loginVo.m_id}</span>
+				<span class="fa fa-star
+					<c:if test="${evl_avg >= 1}">
+						 checked
+					</c:if>"
+				></span>
+				<span class="fa fa-star 
+					<c:if test="${evl_avg >= 2}">
+						 checked
+					</c:if>"
+				></span>
+				<span class="fa fa-star 
+					<c:if test="${evl_avg >= 3}">
+						 checked
+					</c:if>"
+				></span>
+				<span class="fa fa-star 
+					<c:if test="${evl_avg >= 4}">
+						 checked
+					</c:if>"
+				></span>
+				<span class="fa fa-star 
+					<c:if test="${evl_avg >= 5}">
+						 checked
+					</c:if>"
+				></span>
+				<p>총 운행수 : ${driver_evlVo.de_drive_count}회 | 평점 : ${evl_avg}점 | 총 평가수: ${driver_evlVo.evl_count}회 </p>
 				<hr style="border:3px solid #f1f1f1">
 
 				<div class="row">
+					
 					<div class="side">
 						<div>5점</div>
 					</div>
 					<div class="middle">
 						<div class="bar-container">
-							<div class="bar-5"></div>
+							<div class="bar-5" style="width: ${(driver_evlVo.evl5) / (driver_evlVo.evl_count) * 100}%;"></div>
 						</div>
 					</div>
 					<div class="side right">
-						<div>${driver_evlList.evl5}</div>
+						
+						<div>${driver_evlVo.evl5}</div>
 					</div>
 					
 					<div class="side">
@@ -215,44 +238,44 @@ ${driver_evlVo}
 					</div>
 					<div class="middle">
 						<div class="bar-container">
-							<div class="bar-4"></div>
+							<div class="bar-4" style="width: ${(driver_evlVo.evl4) / (driver_evlVo.evl_count) * 100}%;"></div>
 						</div>
 					</div>
 					<div class="side right">
-						<div>${driver_evlList.evl4}</div>
+						<div>${driver_evlVo.evl4}</div>
 					</div>
 					<div class="side">
 						<div>3점</div>
 					</div>
 					<div class="middle">
 						<div class="bar-container">
-							<div class="bar-3"></div>
+							<div class="bar-3" style="width: ${(driver_evlVo.evl3) / (driver_evlVo.evl_count) * 100}%;"></div>
 						</div>
 					</div>
 					<div class="side right">
-						<div>${driver_evlList.evl3}</div>
+						<div>${driver_evlVo.evl3}</div>
 					</div>
 					<div class="side">
 						<div>2점</div>
 					</div>
 					<div class="middle">
 						<div class="bar-container">
-							<div class="bar-2"></div>
+							<div class="bar-2" style="width: ${(driver_evlVo.evl2) / (driver_evlVo.evl_count) * 100}%;"></div>
 						</div>
 					</div>
 					<div class="side right">
-						<div>${driver_evlList.evl2}</div>
+						<div>${driver_evlVo.evl2}</div>
 					</div>
 					<div class="side">
 						<div>1점</div>
 					</div>
 					<div class="middle">
 						<div class="bar-container">
-							<div class="bar-1"></div>
+							<div class="bar-1" style="width: ${(driver_evlVo.evl1) / (driver_evlVo.evl_count) * 100}%;"></div>
 						</div>
 					</div>
 					<div class="side right">
-						<div>${driver_evlList.evl1}</div>
+						<div>${driver_evlVo.evl1}</div>
 					</div>
 				</div>
 				<!-- 나의 평점보기 end -->

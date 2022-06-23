@@ -52,10 +52,13 @@ public class MyController {
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
 		pagingDto.setPage(pagingDto.getPage());
 		List<Map<String, Object>> passengerlogList = mylogService.passengerlogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
-		Driver_EvlVo driver_evlVo = mylogService.driver_evlListById(loginVo.getM_id());
-		System.out.println("driver_evlVo : " + driver_evlVo);
+		Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
+		int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
+		double avg = sum / (double)vo.getEvl_count();
 		model.addAttribute("passengerlogList", passengerlogList);
-		model.addAttribute("driver_evlVo", driver_evlVo);
+		model.addAttribute("driver_evlVo", vo);
+		model.addAttribute("evl_sum", sum);
+		model.addAttribute("evl_avg", avg);
 		return "my/boardedHistory";
 	}
 	

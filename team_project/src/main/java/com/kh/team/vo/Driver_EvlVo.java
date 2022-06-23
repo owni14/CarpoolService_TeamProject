@@ -11,14 +11,15 @@ public class Driver_EvlVo {
 	private int evl3;
 	private int evl4;
 	private int evl5;
+	private int evl_count;
 	
 	public Driver_EvlVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Driver_EvlVo(int de_seq, int de_drive_count, String m_id, String g_code, int evl1, int evl2, int evl3,
-			int evl4, int evl5) {
+			int evl4, int evl5, int evl_count) {
 		super();
 		this.de_seq = de_seq;
 		this.de_drive_count = de_drive_count;
@@ -29,6 +30,7 @@ public class Driver_EvlVo {
 		this.evl3 = evl3;
 		this.evl4 = evl4;
 		this.evl5 = evl5;
+		this.evl_count = evl_count;
 	}
 
 	public int getDe_seq() {
@@ -103,11 +105,19 @@ public class Driver_EvlVo {
 		this.evl5 = evl5;
 	}
 
+	public int getEvl_count() {
+		return evl_count;
+	}
+
+	public void setEvl_count(int evl_count) {
+		this.evl_count = evl_count;
+	}
+
 	@Override
 	public String toString() {
 		return "Driver_EvlVo [de_seq=" + de_seq + ", de_drive_count=" + de_drive_count + ", m_id=" + m_id + ", g_code="
 				+ g_code + ", evl1=" + evl1 + ", evl2=" + evl2 + ", evl3=" + evl3 + ", evl4=" + evl4 + ", evl5=" + evl5
-				+ "]";
+				+ ", evl_count=" + evl_count + "]";
 	}
 
 }

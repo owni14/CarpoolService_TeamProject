@@ -25,6 +25,7 @@ import com.kh.team.service.PointService;
 import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.CarInfoVo;
 import com.kh.team.vo.DriverVo;
+import com.kh.team.vo.Driver_EvlVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 import com.kh.team.vo.PassengerVo;
@@ -42,15 +43,19 @@ public class MyController {
 	@Autowired
 	private CarService carService;
 
+	
+	
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
-	public String boardedHistory(HttpSession session, PagingDto pagingDto) {
+	public String boardedHistory(HttpSession session, PagingDto pagingDto, Model model) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
 		pagingDto.setPage(pagingDto.getPage());
 		List<Map<String, Object>> passengerlogList = mylogService.passengerlogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
-//		System.out.println("myLogList : " + mylogList);
-		session.setAttribute("passengerlogList", passengerlogList);
+		Driver_EvlVo driver_evlVo = mylogService.driver_evlListById(loginVo.getM_id());
+		System.out.println("driver_evlVo : " + driver_evlVo);
+		model.addAttribute("passengerlogList", passengerlogList);
+		model.addAttribute("driver_evlVo", driver_evlVo);
 		return "my/boardedHistory";
 	}
 	

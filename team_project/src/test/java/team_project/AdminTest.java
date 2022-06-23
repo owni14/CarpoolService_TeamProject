@@ -29,8 +29,8 @@ public class AdminTest {
 	// test ok
 	@Test
 	public void regularExp() {
-		String reg="(GM)([0-9a-zA-Z]*[\\{\\}\\[\\]?.,;:|\\)*~`!^\\-_+<>@\\#$%&\\=\\(\\'\\\"]?)*";
-		String code="gm1000000";
+		String reg="(CS1)([0-9a-zA-Z]*[\\{\\}\\[\\]?.,;:|\\)*~`!^\\-_+<>@\\#$%&\\=\\(\\'\\\"]?)*";
+		String code="CS10ad^0#$";
 		if(code.matches(reg)) {
 			System.out.println("정규식 통과");
 		}

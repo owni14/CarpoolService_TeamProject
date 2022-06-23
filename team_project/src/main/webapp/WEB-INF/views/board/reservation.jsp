@@ -445,34 +445,34 @@ $(document).ready(function() {
 	 var company = "${loginVo.m_company}";
 	 switch(company) {
 	 case "DOOSAN" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/DOOSAN.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/doosan.png");
 		 break;
 	 case "HANWHA" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/HANWHA.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/hanwha.png");
 		 break;
 	 case "HYUNDAI" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/HYUNDAI.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/hyundai.png");
 		 break;
 	 case "KAKAO" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/KAKAO.jpg");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/kakao.jpg");
 		 break;
 	 case "KT" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/KT.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/kt.png");
 		 break;
 	 case "LG" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/LG.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/lg.png");
 		 break;
 	 case "NAVER" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/NAVER.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/naver.png");
 		 break;
 	 case "NEXEN" :
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/NEXEN.jpg");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/nexen.jpg");
 		 break;
 	 case "SAMSUNG":
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/SAMSUNG.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/samsung.png");
 		 break;
 	 case "SK":
-		 $("#companyImg").attr("src", "/resources/images/companyLogo/SK.png");
+		 $("#companyImg").attr("src", "/resources/images/companyLogo/sk.png");
 		 break;
 	 }
 	 

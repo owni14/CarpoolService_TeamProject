@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,28 +44,35 @@ public class BoardController {
 	
 	// 운전자 등록 페이지로 이동합니다.
 	@RequestMapping(value = "/drive", method = RequestMethod.GET)
-	public String drive(HttpSession session, Model model) {
+	public String drive(RedirectAttributes rttr, HttpSession session, Model model) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
 		String m_id = memberVo.getM_id();
-		boolean result = memberService.isDriver(m_id); 
-		if (result) {
-			String driver_seq = memberService.getDriverSeqFromDriver(m_id);
-			List<Map<String, Object>> passengerList = memberService.getPassengerList(driver_seq, memberVo.getM_company());
-			DriverVo driverVo = memberService.getDriverInfo(Integer.valueOf(driver_seq));
-			String depart_time = driverVo.getDriver_depart_time();
-			int colon = depart_time.indexOf(":");
-			String depart_time_hour = depart_time.substring(0, colon + 1);
-			String depart_time_min = depart_time.substring(colon + 1);
-			model.addAttribute("depart_time_hour", depart_time_hour);
-			model.addAttribute("depart_time_min", depart_time_min);
-			model.addAttribute("driverVo", driverVo);
-			model.addAttribute("driver_seq", driver_seq);
-			model.addAttribute("passengerList", passengerList);
-			model.addAttribute("isDriver", result);
+		boolean approve_result = memberService.isApproveDriver(m_id);
+		if(approve_result) {
+			boolean result = memberService.isDriver(m_id); 
+			if (result) {
+				String driver_seq = memberService.getDriverSeqFromDriver(m_id);
+				List<Map<String, Object>> passengerList = memberService.getPassengerList(driver_seq, memberVo.getM_company());
+				DriverVo driverVo = memberService.getDriverInfo(Integer.valueOf(driver_seq));
+				String depart_time = driverVo.getDriver_depart_time();
+				int colon = depart_time.indexOf(":");
+				String depart_time_hour = depart_time.substring(0, colon + 1);
+				String depart_time_min = depart_time.substring(colon + 1);
+				model.addAttribute("depart_time_hour", depart_time_hour);
+				model.addAttribute("depart_time_min", depart_time_min);
+				model.addAttribute("driverVo", driverVo);
+				model.addAttribute("driver_seq", driver_seq);
+				model.addAttribute("passengerList", passengerList);
+				model.addAttribute("isDriver", result);
+			} else {
+				model.addAttribute("isDriver", false);
+			}
+			return "board/drive";
 		} else {
-			model.addAttribute("isDriver", false);
+			rttr.addFlashAttribute("approve_result", false);
+			return "redirect:/";
 		}
-		return "board/drive";
+		
 	}
 	
 	// 예약하기 페이지로 이동합니다.
@@ -145,7 +153,8 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value = "/driverInfo", method = RequestMethod.GET)
 	public Map<String, Object> driverInformation(String m_id, String m_company) {
-		Map<String, Object> mapDriverInfo = memberService.getDriverById(m_id, m_company);
+		String ci_code = carService.getCarCodeByM_Id(m_id);
+		Map<String, Object> mapDriverInfo = memberService.getDriverById(m_id, m_company, ci_code);
 		return mapDriverInfo;
 	}
 	
@@ -176,32 +185,36 @@ public class BoardController {
 	public String addDriver(HttpSession session, RedirectAttributes rttr, String startLoct, String isSmoke, String requirements, String startHour, String startMin) {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String m_id = loginVo.getM_id();
-		boolean approve_result = memberService.isApproveDriver(m_id);
-		if (approve_result) {
-			String state = memberService.getApproveState(m_id);
-			if (state != null || state != "") {
-				String driver_seq = memberService.getDriverSeqFromPassenger(m_id);
-				String driver_id = memberService.getDriverId(driver_seq);
-				boolean delete_result = memberService.deletePassenger(m_id, driver_seq);
-				if (delete_result) {
-					carService.decreaseCount(driver_id);
-					rttr.addFlashAttribute("isPassenger", true);
-				}
-			}
-			String driver_depart_time = startHour + startMin;
-			DriverVo driverVo = new DriverVo(m_id, startLoct, isSmoke, requirements, driver_depart_time);
-			boolean result = memberService.addDriver(driverVo);
-			if (result) {
-				rttr.addFlashAttribute("driverResult", result);
-			} else {
-				rttr.addFlashAttribute("driverResult", "false");
-			}
-			
-		} else {
-			rttr.addFlashAttribute("approve_result", false);
-			return "redirect:/board/drive";
-		}
 		
+		// 현재 운전을 등록하려고 하는 회원이 탑승자로 등록되어 있는지 여부 확인 
+		String state = memberService.getApproveState(m_id);
+		
+		// 운전자로 등록하려고 하는 회원이 탑승자로 등록되어 있다면 탑승자 정보를 삭제시킵니다.
+		if (state != null) { // 탑승자로 등록되어 있다면
+			
+			// 등록하려고하는 운전자의 번호 및 아이디를 가지고 와서 탑승자정보를 삭제
+			String driver_seq = memberService.getDriverSeqFromPassenger(m_id);
+			String driver_id = memberService.getDriverId(driver_seq);
+			boolean delete_result = memberService.deletePassenger(m_id, driver_seq);
+			
+			// 삭제가 정상적으로 완료되면 
+			if (delete_result) {
+				// 자동차 탑승인원 하나 감소
+				carService.decreaseCount(driver_id);
+			} 
+		} 
+		
+		String driver_depart_time = startHour + startMin; // 출발시간 확인
+		DriverVo driverVo = new DriverVo(m_id, startLoct, isSmoke, requirements, driver_depart_time);
+		boolean result = memberService.addDriver(driverVo); // 운전정보 추가
+		
+		// 운전자 정보를 추가시킨 결과
+		if (result) {
+			rttr.addFlashAttribute("driverResult", "true");
+		} else {
+			rttr.addFlashAttribute("driverResult", "false");
+		}
+			
 		return "redirect:/";
 	}
 	
@@ -241,14 +254,14 @@ public class BoardController {
 	// 탑승취소 버튼 클릭할 경우 탑승객 테이블의 is_deletion을 'Y'로 바꿀 메서드
 	@RequestMapping(value = "/cancelBoarding", method = RequestMethod.GET)
 	public String cancelBoarding(RedirectAttributes rttr, String m_id, String driver_seq, String driver_id, String is_refuse) {
-//		System.out.println("BoardController cancelBoarding, m_id:" + m_id);
-//		System.out.println("BoardController cancelBoarding, driver_seq:" + driver_seq);
 		boolean result = memberService.deletePassenger(m_id, driver_seq);
 		if (result) {
 			if (!(is_refuse.equals("true"))){
 				carService.decreaseCount(driver_id);
+				MessageVo messageVo = new MessageVo(driver_id, "1004", m_id + "님이 탑승신청을 취소하였습니다.");
+				messageService.insertNoBlackMessage(messageVo);
+				rttr.addFlashAttribute("deletePasgResult", result);
 			}
-			rttr.addFlashAttribute("deletePasgResult", result);
 		} else {
 			rttr.addFlashAttribute("deletePasgResult", "false");
 		}
@@ -256,13 +269,16 @@ public class BoardController {
 	}
 	
 	// 운전자가 탑승객을 승인
+	@Transactional
 	@RequestMapping(value = "/approvePassenger", method = RequestMethod.GET)
-	public String approvePassenger(RedirectAttributes rttr, String m_id, HttpSession session) {
+	public String approvePassenger(RedirectAttributes rttr, String m_id, String m_name, String depart_time, String depart_location, HttpSession session) {
 		boolean result = memberService.approvePassenger(m_id);
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String user_id = loginVo.getM_id();
-		MessageVo messageVo = new MessageVo(m_id, "1004", user_id + "님이 회원님의 탑승신청이 승인하였습니다.");
+		MessageVo messageVo = new MessageVo(user_id, "1004", user_id + "님이 승인한 탑승자 정보입니다.\n" + "탑승자 : " + m_name +"\n탑승 시간 : " + depart_time + "\n탑승 장소 : " + depart_location);
+		MessageVo messageVo2 = new MessageVo(m_id, "1004", user_id + "님이 탑승신청을 승인하엿습니다.");
 		messageService.insertNoBlackMessage(messageVo);
+		messageService.insertNoBlackMessage(messageVo2);
 		if (result)	{
 			rttr.addFlashAttribute("approveResult", result);
 		} else {
@@ -304,8 +320,15 @@ public class BoardController {
 	
 	// 운전하기 삭제
 	@RequestMapping(value = "/deleteDriver", method = RequestMethod.GET)
-	public String deleteDriver(RedirectAttributes rttr, int driver_seq) {
+	public String deleteDriver(RedirectAttributes rttr, int driver_seq, String driver_id) {
+		// 탑승자에게 메세지를 보내기 위해 탑승자 리스트를 얻어옵니다.
+		List<String> list = memberService.getDeletingPassengerList(driver_seq);
+		for (String m_id : list) {
+			MessageVo messageVo = new MessageVo(m_id, "1004", driver_id + "님이 회원님이 운전을 취소하였습니다.");
+			messageService.insertNoBlackMessage(messageVo);
+		}
 		boolean result = memberService.deleteDriver(driver_seq);
+		carService.resetCount(driver_id);
 		rttr.addFlashAttribute("deleteResult", result);
 		return "redirect:/board/drive";
 	}

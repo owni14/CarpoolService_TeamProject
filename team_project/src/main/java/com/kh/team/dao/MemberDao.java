@@ -17,7 +17,7 @@ public interface MemberDao {
 	public List<MemberVo> admingetMemberList(PagingDto pagingDto); // 관리자 회원관리 페이지 pagination을 위한 query
 	public MemberVo getMemberPointById(String m_id);
 	public int adminGetCount(PagingDto pagingDto); // 관리자 회원관리 페이지 회원명 수 확인
-	public Map<String, Object> getDriverById(String m_id, String m_company); // 예약하기 페이지 - 운전자 정보 가져오기 위한 메서드 
+	public Map<String, Object> getDriverById(String m_id, String m_company, String ci_code); // 예약하기 페이지 - 운전자 정보 가져오기 위한 메서드 
 	public boolean insertDriverLicense(String m_id, String ad_license_img); // 운전자 등록
 	public void adminupdateBlackScore(BlackListVo blackListVo); // 관리자 신고 회원 관리 블랙포인트 변경
 	public boolean insertPassenger(String m_id, String boardLoct, String boardTime, String driver_seq); // 탑승자 정보 추가
@@ -49,5 +49,9 @@ public interface MemberDao {
 	public String getMemberPw(MemberVo memberVo); // 멤버 비밀번호 찾기
 	public int selectApproveCount();//모든 승인된 드라이버 수 가져오기
 	public boolean isApproveDriver(String m_id); // 운전자등록이 되었는지 여부 확인
+
 	public int countBlackPoint(String m_id); // 회원 벌점 확인 하기
+
+	public List<String> getDeletingPassengerList(int driver_seq); // 운전자가 운전취소를 할 경우 탑승자에게 메세지를 보내기 위해 탑승자 정보를 가져오는 메서드
+
 }

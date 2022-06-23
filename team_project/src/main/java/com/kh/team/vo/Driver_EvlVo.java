@@ -2,33 +2,35 @@ package com.kh.team.vo;
 
 public class Driver_EvlVo {
 	
-	
-	
 	private int de_seq;
 	private int de_drive_count;
 	private String m_id;
 	private String g_code;
-	private int de_driver_evl;
+	private int evl1;
+	private int evl2;
+	private int evl3;
+	private int evl4;
+	private int evl5;
+	private int evl_count;
 	
 	public Driver_EvlVo() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 	
-	public Driver_EvlVo(int de_seq, int de_drive_count, String m_id, String g_code) {
+	public Driver_EvlVo(int de_seq, int de_drive_count, String m_id, String g_code, int evl1, int evl2, int evl3,
+			int evl4, int evl5, int evl_count) {
 		super();
 		this.de_seq = de_seq;
 		this.de_drive_count = de_drive_count;
 		this.m_id = m_id;
 		this.g_code = g_code;
-	}
-
-	public Driver_EvlVo(int de_seq, int de_drive_count, String m_id, String g_code, int de_driver_evl) {
-		super();
-		this.de_seq = de_seq;
-		this.de_drive_count = de_drive_count;
-		this.m_id = m_id;
-		this.g_code = g_code;
-		this.de_driver_evl = de_driver_evl;
+		this.evl1 = evl1;
+		this.evl2 = evl2;
+		this.evl3 = evl3;
+		this.evl4 = evl4;
+		this.evl5 = evl5;
+		this.evl_count = evl_count;
 	}
 
 	public int getDe_seq() {
@@ -63,18 +65,59 @@ public class Driver_EvlVo {
 		this.g_code = g_code;
 	}
 
-	public int getDe_driver_evl() {
-		return de_driver_evl;
+	public int getEvl1() {
+		return evl1;
 	}
 
-	public void setDe_driver_evl(int de_driver_evl) {
-		this.de_driver_evl = de_driver_evl;
+	public void setEvl1(int evl1) {
+		this.evl1 = evl1;
+	}
+
+	public int getEvl2() {
+		return evl2;
+	}
+
+	public void setEvl2(int evl2) {
+		this.evl2 = evl2;
+	}
+
+	public int getEvl3() {
+		return evl3;
+	}
+
+	public void setEvl3(int evl3) {
+		this.evl3 = evl3;
+	}
+
+	public int getEvl4() {
+		return evl4;
+	}
+
+	public void setEvl4(int evl4) {
+		this.evl4 = evl4;
+	}
+
+	public int getEvl5() {
+		return evl5;
+	}
+
+	public void setEvl5(int evl5) {
+		this.evl5 = evl5;
+	}
+
+	public int getEvl_count() {
+		return evl_count;
+	}
+
+	public void setEvl_count(int evl_count) {
+		this.evl_count = evl_count;
 	}
 
 	@Override
 	public String toString() {
 		return "Driver_EvlVo [de_seq=" + de_seq + ", de_drive_count=" + de_drive_count + ", m_id=" + m_id + ", g_code="
-				+ g_code + ", de_driver_evl=" + de_driver_evl + "]";
+				+ g_code + ", evl1=" + evl1 + ", evl2=" + evl2 + ", evl3=" + evl3 + ", evl4=" + evl4 + ", evl5=" + evl5
+				+ ", evl_count=" + evl_count + "]";
 	}
 
 }

@@ -6,15 +6,11 @@
 	var isDriver = "${isDriver}";
 	var updateResult = "${updateResult}";
 	var deleteResult = "${deleteResult}";
-	var approve_result = "${approve_result}";
 	if (updateResult == "true") {
 		alert("수정이 완료되었습니다.");
 	}
 	if (deleteResult == "true") {
 		alert("삭제가 완료되었습니다.");
-	}
-	if (approve_result == "false") {
-		alert("아직 운전자 등록이 승인되지 않았습니다. \n승인이 계속 안될 경우 고객센터로 문의부탁드립니다.");
 	}
 	$(document).ready(function() {
 		var m_company = "${loginVo.m_company}";
@@ -196,7 +192,7 @@
 									<td>${v.M_DEPT}</td>
 									<td>${v.PASSENGER_DEPART_TIME}</td>
 									<td><a href="#modal-container-899906" role="button" class="btnBoard" data-toggle="modal" data-m_name="${v.M_NAME}" data-location="${v.PASSENGER_DEPART_LOCATION}">${v.PASSENGER_DEPART_LOCATION}</a></td>
-									<td><a href="/board/approvePassenger?m_id=${v.M_ID}" class="btn btn-success btn-sm approve">승인</a></td>
+									<td><a href="/board/approvePassenger?m_id=${v.M_ID}&m_name=${v.M_NAME}&depart_time=${v.PASSENGER_DEPART_TIME}&depart_location=${v.PASSENGER_DEPART_LOCATION}" class="btn btn-success btn-sm approve">승인</a></td>
 									<td><a href="/board/rejectPassenger?m_id=${v.M_ID}&driverId=${loginVo.m_id}" class="btn btn-danger btn-sm reject">거부</a></td>
 								</tr>	
 							</c:if>
@@ -308,9 +304,14 @@
 						</c:if>
 					> 흡연
 					<input type="radio" id="isSmoke" name="isSmoke" value="N"
-						<c:if test="${driverVo.driver_is_smoke == 'N'}">
-							checked="checked"
-						</c:if>
+						<c:choose>
+							<c:when test="${driverVo.driver_is_smoke == null}">
+								checked="checked"
+							</c:when>
+							<c:when test="${driverVo.driver_is_smoke == 'N'}">
+								checked="checked"
+							</c:when>
+						</c:choose>
 					> 비흡연
 				</div>
 				<div class="form-group" style="margin-bottom: 10px;">
@@ -371,7 +372,7 @@
 				</div>
 				<button id="btnCheck" type="submit" class="btn btn-primary" style="display: ">확인</button>
 <!-- 				<button id="btnModify" type="button" class="btn btn-warning" style="display: none;">운전정보수정</button> -->
-				<a href="/board/deleteDriver?driver_seq=${driver_seq}" id="btnDelete" type="button" class="btn btn-danger btn-sm" style="display: none;">운전취소</a>
+				<a href="/board/deleteDriver?driver_seq=${driver_seq}&driver_id=${loginVo.m_id}" id="btnDelete" type="button" class="btn btn-danger btn-sm" style="display: none;">운전취소</a>
 			</form>
 		</div>
 		<div class="col-md-2"></div>

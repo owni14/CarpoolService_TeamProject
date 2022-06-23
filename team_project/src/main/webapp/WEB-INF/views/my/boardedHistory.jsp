@@ -159,21 +159,30 @@ $(document).ready(function() {
  					<td>${passengerlogVo.PASSENGER_DEPART_LOCATION}</td>
  					<td>${passengerlogVo.PASSENGER_DEPART_TIME}</td>
  					<td>
- 						<form id="frmStar" action="/my/putStar" method="post">
-						<div class="star-rating">
-								<a id="putStar" href="#" style="vertical-align: center; margin-left: 5px;"><i class="bi bi-arrow-right-circle"></i></a>
-								<input type="radio" id="5-stars" name="rating" value="5" />
-								<label for="5-stars" class="star">&#9733;</label>
-								<input type="radio" id="4-stars" name="rating" value="4" />
-								<label for="4-stars" class="star">&#9733;</label>
-								<input type="radio" id="3-stars" name="rating" value="3" />
-								<label for="3-stars" class="star">&#9733;</label>
-								<input type="radio" id="2-stars" name="rating" value="2" />
-								<label for="2-stars" class="star">&#9733;</label>
-								<input type="radio" id="1-star" name="rating" value="1" />
-								<label for="1-star" class="star">&#9733;</label>
-						</div>
-						</form>
+ 						<c:choose>
+ 						<c:when test="${passengerlogVo.EVL_FINISH == 'N'}">
+	 						<form id="frmStar" action="/my/putStar" method="post">
+	 							<input type="hidden" name="driver_m_id" value="${passengerlogVo.DRIVER_ID}">
+	 							<input type="hidden" name="driver_seq" value="${passengerlogVo.DRIVER_SEQ}">
+								<div class="star-rating">
+										<a id="putStar" href="#" style="vertical-align: center; margin-left: 5px;"><i class="bi bi-arrow-right-circle"></i></a>
+										<input type="radio" id="5-stars" name="rating" value="5" />
+										<label for="5-stars" class="star">&#9733;</label>
+										<input type="radio" id="4-stars" name="rating" value="4" />
+										<label for="4-stars" class="star">&#9733;</label>
+										<input type="radio" id="3-stars" name="rating" value="3" />
+										<label for="3-stars" class="star">&#9733;</label>
+										<input type="radio" id="2-stars" name="rating" value="2" />
+										<label for="2-stars" class="star">&#9733;</label>
+										<input type="radio" id="1-star" name="rating" value="1" />
+										<label for="1-star" class="star">&#9733;</label>
+								</div>
+							</form>
+						</c:when>
+						<c:otherwise>
+							<p>평가 완료</p>
+						</c:otherwise>
+						</c:choose>
 					</td>
 				</tr>
 				</c:forEach>

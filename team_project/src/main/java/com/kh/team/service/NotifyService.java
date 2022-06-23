@@ -19,5 +19,7 @@ public interface NotifyService {
 	public void modifyApprovement(BlackListVo blackListVo); // 미승인 리스트 승인으로 바꾸기
 	public List<BlackListVo> getReportList(String m_id);
 	public List<BlackListVo> getReportedList(String m_id);
+	public boolean insertBlockPeople(String m_id); // 벌점 10점 이상 회원 blockList에 추가하기
+	public boolean isBlockPeople(String m_id); //블랙리스트에 이미 있는 회원인지 확인하기
 }
 

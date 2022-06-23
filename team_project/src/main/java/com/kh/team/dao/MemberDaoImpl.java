@@ -395,11 +395,16 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+	public int countBlackPoint(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "countBlackPoint", m_id);
+		return count;
+	}
 	public List<String> getDeletingPassengerList(int driver_seq) {
 		System.out.println("driver_seq:" + driver_seq);
 		List<String> list = sqlSession.selectList(NAMESPACE + "getDeletingPassengerList", driver_seq);
 		System.out.println("daoimpl" + list);
 		return list;
+
 	}
 
 }

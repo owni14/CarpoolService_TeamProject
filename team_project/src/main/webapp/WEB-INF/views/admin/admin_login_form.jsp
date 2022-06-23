@@ -83,14 +83,14 @@
                                 </div>
                                 <hr/>
                                 <div class="row">
-                                    <div class="col-md-10">
+                                    <div class="col-md-7">
                                         <p class="text-inverse text-left m-b-0">Thank you for your effort</p>
                                         <p class="text-inverse text-left" style="margin-top:5px"><b>얻어타다</b></p>
                                     </div>
                                     <!-- 회사 이미지 첨부 -->
-<!--                                     <div class="col-md-2"> -->
-<!--                                         <img src="#" alt="small-logo.png"> -->
-<!--                                     </div> -->
+                                    <div class="col-md-5">
+                                        <img src="/resources/images/companyLogo/logo.jpg" alt="회사 로고" height="48px">
+                                    </div>
                                 </div>
 
                             </div>

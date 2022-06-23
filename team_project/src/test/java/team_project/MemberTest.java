@@ -190,9 +190,15 @@ public class MemberTest {
 	}
 	
 	@Test
+	public void countBlackPoint() {
+		String m_id = "user01@gmail.com";
+		int count = memberDao.countBlackPoint(m_id);
+		System.out.println("count : " + count);
+	}
 	public void getDeletingPassengerListTest() {
 		int driver_seq = 90;
 		List<String> list = memberDao.getDeletingPassengerList(driver_seq);
+
 	}
 	
 }

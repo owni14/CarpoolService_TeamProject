@@ -259,8 +259,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public int countBlackPoint(String m_id) {
+		int count = memberDao.countBlackPoint(m_id);
+		return count;
+	}
 	public List<String> getDeletingPassengerList(int driver_seq) {
 		List<String> list = memberDao.getDeletingPassengerList(driver_seq);
 		return list;
+
 	}
 }

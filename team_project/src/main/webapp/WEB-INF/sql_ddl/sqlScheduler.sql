@@ -1,5 +1,5 @@
 --프로시저 만들기
-CREATE OR REPLACE PROCEDURE test_1Pr
+CREATE OR REPLACE PROCEDURE test_1Pr()
 AS
 BEGIN
 	--입력할곳

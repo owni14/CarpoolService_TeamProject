@@ -23,6 +23,8 @@ public class AdminCodeGMInterceptor extends HandlerInterceptorAdapter{
 //		System.out.println("url"+url);
 //		System.out.println("인터셉터 작동");
 		String admin_code = (String)session.getAttribute("admin_code");
+	//테스트후 적용예정	
+//		String regExp="(GM)([0-9a-zA-Z]*[\\{\\}\\[\\]?.,;:|\\)*~`!^\\-_+<>@\\#$%&\\=\\(\\'\\\"]?)*";
 		if (admin_code == null || admin_code.equals("")) {
 			response.sendRedirect("/admin/admin_login");
 			return false;

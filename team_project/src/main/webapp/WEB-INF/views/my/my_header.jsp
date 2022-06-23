@@ -1,12 +1,95 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <style>
-.my_card {
-	display:flex; align-items: center;
+/* 나의 평점보기 css  */
+.rHeading {
+	font-size: 25px;
+	margin-right: 25px;
 }
-#p_logout {
-	font-size: 30px;
+
+.fa {
+	font-size: 25px;
+}
+
+.checked {
+	color: orange;
+}
+
+/* Three column layout */
+.side {
+	float: left;
+	width: 15%;
+	margin-top: 10px;
+}
+
+.middle {
+	float: left;
+	width: 70%;
+	margin-top: 10px;
+}
+
+/* Place text to the right */
+.right {
+	text-align: right;
+}
+
+/* Clear floats after the columns */
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* The bar container */
+.bar-container {
+	width: 100%;
+	background-color: #f1f1f1;
+	text-align: center;
+	color: white;
+}
+
+/* Individual bars */
+.bar-5 {
+	width: 60%;
+	height: 18px;
+	background-color: #04AA6D;
+}
+
+.bar-4 {
+	width: 30%;
+	height: 18px;
+	background-color: #2196F3;
+}
+
+.bar-3 {
+	width: 10%;
+	height: 18px;
+	background-color: #00bcd4;
+}
+
+.bar-2 {
+	width: 4%;
+	height: 18px;
+	background-color: #ff9800;
+}
+
+.bar-1 {
+	width: 15%;
+	height: 18px;
+	background-color: #f44336;
+}
+
+/* Responsive layout - make the columns stack on top of each other instead of next to each other */
+@media ( max-width : 400px) {
+	.side, .middle {
+		width: 100%;
+	}
+	/* Hide the right column on small screens */
+	.right {
+	display: none;
+	}
 }
 </style>
 <script>
@@ -18,34 +101,34 @@ $(document).ready(function() {
 	
 	switch(m_company) {
 	case "DOOSAN":
-		companyImg.attr("src", "/resources/images/companyLogo/DOOSAN.png");
+		companyImg.attr("src", "/resources/images/companyLogo/doosan.png");
 		break;
 	case "HANWHA":
-		companyImg.attr("src", "/resources/images/companyLogo/HANWHA.png");
+		companyImg.attr("src", "/resources/images/companyLogo/hanwha.png");
 		break;
 	case "HYUNDAI":
-		companyImg.attr("src", "/resources/images/companyLogo/HYUNDAI.png");
+		companyImg.attr("src", "/resources/images/companyLogo/hyundai.png");
 		break;
 	case "KAKAO":
-		companyImg.attr("src", "/resources/images/companyLogo/KAKAO.jpg");
+		companyImg.attr("src", "/resources/images/companyLogo/kakao.jpg");
 		break;
 	case "KT":
-		companyImg.attr("src", "/resources/images/companyLogo/KT.png");
+		companyImg.attr("src", "/resources/images/companyLogo/kt.png");
 		break;
 	case "LG":
-		companyImg.attr("src", "/resources/images/companyLogo/LG.png");
+		companyImg.attr("src", "/resources/images/companyLogo/lg.png");
 		break;
 	case "NAVER":
-		companyImg.attr("src", "/resources/images/companyLogo/NAVER.png");
+		companyImg.attr("src", "/resources/images/companyLogo/naver.png");
 		break;
 	case "NEXEN":
-		companyImg.attr("src", "/resources/images/companyLogo/NEXEN.jpg");
+		companyImg.attr("src", "/resources/images/companyLogo/nexen.jpg");
 		break;
 	case "SAMSUNG":
-		companyImg.attr("src", "/resources/images/companyLogo/SAMSUNG.png");
+		companyImg.attr("src", "/resources/images/companyLogo/samsung.png");
 		break;
 	case "SK":
-		companyImg.attr("src", "/resources/images/companyLogo/SK.png");
+		companyImg.attr("src", "/resources/images/companyLogo/sk.png");
 		break;
 	}
 	
@@ -71,33 +154,108 @@ $(document).ready(function() {
 	}
 });
 </script>
+${driver_evlVo}
 <div class="row">
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
-		<div class="row">
-			<div class="col-md-6 my_card">
-				<img id="characterImg" src="/resources/images/character/default.png" width="400px;" height="250px;">
-			</div>
-			<div class="col-md-6 my_card">
-				<div>
-					<div style="text-align: center;">
-						<img id="companyImg" alt="companyLogo.png" src="/resources/images/companyLogo/DEFAULTLOGO.png" height="150px;" width="350px;">
-					</div>
-					<span style="font-size: 30px;">${loginVo.m_name} 
+		<div class="row" style="margin: 50px 0px 50px 0px;">
+			<div class="col-md-6">
+				<div class="row">
+				<div class="col-md-5" style="text-align: right;">
+				<img id="characterImg" src="/resources/images/character/default.png" width="200px;" height="150px;">
+				</div>
+				<div class="col-md-7">
+					<span style="font-size: 25px;">${loginVo.m_name} 
 					<c:choose>
 						<c:when test="${loginVo.gender eq 'M'}">
-							<i class="fa fa-mars" style="font-size:35px; color:skyblue;"></i> 
+							<i class="fa fa-mars" style="color:skyblue;"></i> 
 						</c:when>
 						<c:otherwise>
-							<i class="fa fa-venus" style="font-size:35px; color:pink"></i>
+							<i class="fa fa-venus" style="color:pink"></i>
 						</c:otherwise>
 					</c:choose>
 					- ${loginVo.m_id}</span><br>
-				<span>회사 및 부서 : ${loginVo.m_company} ${loginVo.m_dept}</span><br>
-				<span>평점 : ${loginVo.m_evl }</span><br>
-				<span>가입일자 : ${loginVo.m_joindate}</span>
+					<span>
+						<img id="companyImg" alt="companyLogo.png" src="/resources/images/companyLogo/DEFAULTLOGO.png"	width = "100px;" height="40px;"> 
+						${loginVo.m_dept}
+					</span><br>
+					<span>벌점 : ${loginVo.m_blackpoint}</span><br>
+					<span>가입일자 : ${loginVo.m_joindate}</span>
 				</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+			<!-- 나의 평점 보기 start -->
+			
+				<span class="rHeading">User Rating</span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star"></span>
+				<p>4.1 average based on 254 reviews.</p>
+				<hr style="border:3px solid #f1f1f1">
+
+				<div class="row">
+					<div class="side">
+						<div>5점</div>
+					</div>
+					<div class="middle">
+						<div class="bar-container">
+							<div class="bar-5"></div>
+						</div>
+					</div>
+					<div class="side right">
+						<div>${driver_evlList.evl5}</div>
+					</div>
+					
+					<div class="side">
+						<div>4점</div>
+					</div>
+					<div class="middle">
+						<div class="bar-container">
+							<div class="bar-4"></div>
+						</div>
+					</div>
+					<div class="side right">
+						<div>${driver_evlList.evl4}</div>
+					</div>
+					<div class="side">
+						<div>3점</div>
+					</div>
+					<div class="middle">
+						<div class="bar-container">
+							<div class="bar-3"></div>
+						</div>
+					</div>
+					<div class="side right">
+						<div>${driver_evlList.evl3}</div>
+					</div>
+					<div class="side">
+						<div>2점</div>
+					</div>
+					<div class="middle">
+						<div class="bar-container">
+							<div class="bar-2"></div>
+						</div>
+					</div>
+					<div class="side right">
+						<div>${driver_evlList.evl2}</div>
+					</div>
+					<div class="side">
+						<div>1점</div>
+					</div>
+					<div class="middle">
+						<div class="bar-container">
+							<div class="bar-1"></div>
+						</div>
+					</div>
+					<div class="side right">
+						<div>${driver_evlList.evl1}</div>
+					</div>
+				</div>
+				<!-- 나의 평점보기 end -->
 			</div>
 		</div>
 	</div>

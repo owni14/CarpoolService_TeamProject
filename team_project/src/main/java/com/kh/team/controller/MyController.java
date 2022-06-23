@@ -25,6 +25,7 @@ import com.kh.team.service.PointService;
 import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.CarInfoVo;
 import com.kh.team.vo.DriverVo;
+import com.kh.team.vo.Driver_EvlVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 import com.kh.team.vo.PassengerVo;
@@ -42,15 +43,19 @@ public class MyController {
 	@Autowired
 	private CarService carService;
 
+	
+	
 	// 탑승 내역 페이지로 이동
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
-	public String boardedHistory(HttpSession session, PagingDto pagingDto) {
+	public String boardedHistory(HttpSession session, PagingDto pagingDto, Model model) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
 		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
 		pagingDto.setPage(pagingDto.getPage());
 		List<Map<String, Object>> passengerlogList = mylogService.passengerlogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
-//		System.out.println("myLogList : " + mylogList);
-		session.setAttribute("passengerlogList", passengerlogList);
+		Driver_EvlVo driver_evlVo = mylogService.driver_evlListById(loginVo.getM_id());
+		System.out.println("driver_evlVo : " + driver_evlVo);
+		model.addAttribute("passengerlogList", passengerlogList);
+		model.addAttribute("driver_evlVo", driver_evlVo);
 		return "my/boardedHistory";
 	}
 	
@@ -141,8 +146,14 @@ public class MyController {
 	
 	// 평가하기
 	@RequestMapping(value = "/putStar", method = RequestMethod.POST)
-	public String putStar(int rating) {
-		System.out.println("rating : " + rating);
+	public String putStar(String driver_m_id, int rating, int driver_seq, RedirectAttributes rttr, HttpSession session) {
+		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
+		boolean star_result = mylogService.putStar(driver_m_id, rating);
+		boolean finish_result = mylogService.evl_finish(loginVo.getM_id(), driver_seq);
+		System.out.println(star_result);
+		System.out.println(finish_result);
+		System.out.println(driver_seq);
+		rttr.addFlashAttribute("star_result", star_result);
 		return "redirect:/my/boardedHistory";
 	}
 }

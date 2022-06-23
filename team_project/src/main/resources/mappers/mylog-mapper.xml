@@ -53,4 +53,11 @@
 		where m_id = #{m_id}
 		and driver_seq = #{driver_seq}
 	</update>
+	
+	<!-- 운전자 평점불러오기 -->
+	<select id="driver_evlListById" resultType="Driver_EvlVo">
+		select * from driver_evl
+		where m_id = #{m_id}
+	</select>
+	
 </mapper>

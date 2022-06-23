@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.team.dao.MylogDao;
 import com.kh.team.vo.DriverVo;
+import com.kh.team.vo.Driver_EvlVo;
 import com.kh.team.vo.PassengerVo;
 
 @Service
@@ -44,6 +45,11 @@ public class MylogSeviceImpl implements MylogService {
 	public boolean evl_finish(String m_id, int driver_seq) {
 		boolean result = mylogDao.evl_finish(m_id, driver_seq);
 		return result;
+	}
+
+	@Override
+	public Driver_EvlVo driver_evlListById(String m_id) {
+		return mylogDao.driver_evlListById(m_id);
 	}
 
 }

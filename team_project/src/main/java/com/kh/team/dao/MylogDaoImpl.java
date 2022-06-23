@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.team.vo.DriverVo;
+import com.kh.team.vo.Driver_EvlVo;
 import com.kh.team.vo.PassengerVo;
 
 @Repository
@@ -73,6 +74,12 @@ public class MylogDaoImpl implements MylogDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Driver_EvlVo driver_evlListById(String m_id) {
+		Driver_EvlVo driver_evlList = sqlSession.selectOne(NAMESPACE + "driver_evlListById", m_id);
+		return driver_evlList;
 	}
 
 

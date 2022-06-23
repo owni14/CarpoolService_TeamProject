@@ -305,7 +305,7 @@ $(document).ready(function() {
     }
 	
 	// 모달창에서 지도 밑 상세정보를 표시할 함수
-	function showModalMap(drvName, gender, drvDepartLocation, drvDept, drvDepartTime, mBoardLoct, driver_comment) {
+	function showModalMap(drvName, gender, drvDepartLocation, drvDept, drvDepartTime, mBoardLoct, driver_comment, ci_name) {
 		 
 		 /* 
 		 console.log("driverName:" + driverName);
@@ -319,6 +319,7 @@ $(document).ready(function() {
 		  $("#driverDept").text(drvDept);
 		  $("#driverLoct").text(drvDepartLocation);
 		  $("#driverStartTime").text(drvDepartTime);
+		  $("#driverCar").text(ci_name);
 		  $("#mBoardLoct").text(mBoardLoct);
 		  var defaultComment = "없음";
 		  if (driver_comment == null) {
@@ -413,7 +414,7 @@ $(document).ready(function() {
 				 gender = "여자";
 			 }
 			 // 모달 창에서 상세한 정보를 보여줄 함수
-			 showModalMap(rData.M_NAME, gender, rData.DRIVER_DEPART_LOCATION, rData.M_DEPT, rData.DRIVER_DEPART_TIME, mBoardLoct, rData.DRIVER_COMMENT);
+			 showModalMap(rData.M_NAME, gender, rData.DRIVER_DEPART_LOCATION, rData.M_DEPT, rData.DRIVER_DEPART_TIME, mBoardLoct, rData.DRIVER_COMMENT, rData.CI_NAME);
 		 }); // $.get(url, sData, function(rData) {})
 		 
 	 }); //  $("#tblDriver").on("click", ".btnBoard", function() {})
@@ -504,6 +505,7 @@ $(document).ready(function() {
 					<h6 style="font-weight: bold; "> 부서 : <span id="driverDept"></span></h6> 
 					<h6 style="font-weight: bold; "> 출발 위치 : <span id="driverLoct"></span></h6> 
 					<h6 style="font-weight: bold; "> 출발 시간 : <span id="driverStartTime"></span></h6> 
+					<h6 style="font-weight: bold; "> 차량명 : <span id="driverCar"></span></h6> 
 					<h6 style="font-weight: bold; color: red;"> 요구 사항 : <span id="driverComment"></span></h6> 
 					<hr>
 					<h6 style="font-weight: bold; "> 내 위치 : <span id="mBoardLoct"></span></h6>

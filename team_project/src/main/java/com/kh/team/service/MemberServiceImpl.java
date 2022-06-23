@@ -58,8 +58,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Map<String, Object> getDriverById(String m_id, String m_company) {
-		Map<String, Object> mapDriverInfo = memberDao.getDriverById(m_id, m_company);
+	public Map<String, Object> getDriverById(String m_id, String m_company, String ci_code) {
+		Map<String, Object> mapDriverInfo = memberDao.getDriverById(m_id, m_company, ci_code);
 		return mapDriverInfo;
 	}
 
@@ -115,7 +115,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-
 	@Transactional
 	public boolean adminUpdateMemberInfo(MemberVo memberVo, MemberUpdateVo memberUpdateVo) {
 		boolean result = false;
@@ -257,5 +256,11 @@ public class MemberServiceImpl implements MemberService {
 	public boolean isApproveDriver(String m_id) {
 		boolean result = memberDao.isApproveDriver(m_id);
 		return result;
+	}
+
+	@Override
+	public List<String> getDeletingPassengerList(int driver_seq) {
+		List<String> list = memberDao.getDeletingPassengerList(driver_seq);
+		return list;
 	}
 }

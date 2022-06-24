@@ -101,5 +101,17 @@ public class NotifyServiceImpl implements NotifyService{
 		return reportedList;
 	}
 
+	@Override
+	public boolean insertBlockPeople(String m_id) {
+		boolean result = notifyDao.insertBlockPeople(m_id);
+		return result;
+	}
+
+	@Override
+	public boolean isBlockPeople(String m_id) {
+		boolean result = notifyDao.isBlockPeople(m_id);
+		return result;
+	}
+
 }
 

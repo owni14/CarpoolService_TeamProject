@@ -152,6 +152,30 @@ $(document).ready(function() {
 		characterImg.attr("src", "/resources/images/character/male3.png");
 		break;
 	}
+	
+	
+	// 등급 이미지
+	var driver_evl = "${driver_evlVo.g_code}";
+	var driver_evlImg = $("#evlImg");
+	
+	switch(driver_evl) {
+	case "1001":
+		driver_evlImg.attr("src", "/resources/images/evl/vvip.png");
+		break;
+	case "1002":
+		driver_evlImg.attr("src", "/resources/images/evl/vip.jpg");
+		break;
+	case "1003":
+		driver_evlImg.attr("src", "/resources/images/evl/gold.jpg");
+		break;
+	case "1004":
+		driver_evlImg.attr("src", "/resources/images/evl/silver.jpg");
+		break;
+	case "1005":
+		driver_evlImg.attr("src", "/resources/images/evl/white.jpg");
+		break;
+	}
+	
 });
 </script>
 
@@ -161,13 +185,12 @@ $(document).ready(function() {
 	</div>
 	<div class="col-md-8">
 		<div class="row" style="margin: 50px 0px 50px 0px;">
-			<div class="col-md-6">
-				<div class="row">
-				<div class="col-md-5" style="text-align: right;">
+			<div class="col-md-5" >
+			<div>
 				<img id="characterImg" src="/resources/images/character/default.png" width="200px;" height="150px;">
-				</div>
-				<div class="col-md-7">
-					<span style="font-size: 25px;">${loginVo.m_name} 
+			</div>
+			<div>
+				<span style="font-size: 25px;">${loginVo.m_name} 
 					<c:choose>
 						<c:when test="${loginVo.gender eq 'M'}">
 							<i class="fa fa-mars" style="color:skyblue;"></i> 
@@ -176,46 +199,51 @@ $(document).ready(function() {
 							<i class="fa fa-venus" style="color:pink"></i>
 						</c:otherwise>
 					</c:choose>
-					</span><br>
-					<span>
-						<img id="companyImg" alt="companyLogo.png" src="/resources/images/companyLogo/default.png"	width = "100px;" height="40px;"> 
-						${loginVo.m_dept}
-					</span><br>
-					<span>벌점 : ${loginVo.m_blackpoint}</span><br>
-					<span>가입일자 : ${loginVo.m_joindate}</span>
-				</div>
-				</div>
+				</span><br>
+				<span>
+					<img id="companyImg" alt="companyLogo.png" src="/resources/images/companyLogo/default.png"	width = "100px;" height="40px;"> 
+					${loginVo.m_dept}
+				</span><br>
+				<span>벌점 : ${loginVo.m_blackpoint}</span><br>
+				<span>가입일자 : ${loginVo.m_joindate}</span>
 			</div>
-			<div class="col-md-6">
+			</div>
+			<div class="col-md-7">
 			<!-- 나의 평점 보기 start -->
-			
-				<span class="rHeading">${loginVo.m_id}</span>
-				<span class="fa fa-star
-					<c:if test="${evl_avg >= 1}">
-						 checked
-					</c:if>"
-				></span>
-				<span class="fa fa-star 
-					<c:if test="${evl_avg >= 2}">
-						 checked
-					</c:if>"
-				></span>
-				<span class="fa fa-star 
-					<c:if test="${evl_avg >= 3}">
-						 checked
-					</c:if>"
-				></span>
-				<span class="fa fa-star 
-					<c:if test="${evl_avg >= 4}">
-						 checked
-					</c:if>"
-				></span>
-				<span class="fa fa-star 
-					<c:if test="${evl_avg >= 5}">
-						 checked
-					</c:if>"
-				></span>
-				<p>총 운행수 : ${driver_evlVo.de_drive_count}회 | 평점 : ${evl_avg}점 | 총 평가수: ${driver_evlVo.evl_count}회 </p>
+				<div class="row">
+					<div class="col-md-7">
+						<span class="rHeading">${loginVo.m_id}</span>
+						<span class="fa fa-star
+							<c:if test="${evl_avg >= 1}">
+								 checked
+							</c:if>"
+						></span>
+						<span class="fa fa-star 
+							<c:if test="${evl_avg >= 2}">
+								 checked
+							</c:if>"
+						></span>
+						<span class="fa fa-star 
+							<c:if test="${evl_avg >= 3}">
+								 checked
+							</c:if>"
+						></span>
+						<span class="fa fa-star 
+							<c:if test="${evl_avg >= 4}">
+								 checked
+							</c:if>"
+						></span>
+						<span class="fa fa-star 
+							<c:if test="${evl_avg >= 5}">
+								 checked
+							</c:if>"
+						></span>
+						<p>총 운행수 : ${driver_evlVo.de_drive_count}회 | 평점 : ${evl_avg}점 | 총 평가수: ${driver_evlVo.evl_count}회 </p>
+					</div>
+					<div class="col-md-5">
+						<img id="evlImg" src="운전자 등급" width="200px;" height="75px;">
+					</div>
+				</div>
 				<hr style="border:3px solid #f1f1f1">
 
 				<div class="row">

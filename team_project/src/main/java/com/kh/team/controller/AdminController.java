@@ -138,44 +138,7 @@ public class AdminController {
 		dayPassengerCounts.add(daycount);
 		strList.add(targetDateStr);
 		}//end for
-//		//모든 유저에게 한달후 포인트 자동으로 등급에 따라 지급 드라이버
 
-		boolean isgivingDay=DateHelper.isPointMonthDay();//포인트 지급날 매달 첫째날임
-		String formattedToday=DateHelper.getforamttedStr();
-		String iup_what="D";
-		
-		int isPointUpdateCount=evlService.selectCountIsUpdate(formattedToday, iup_what);
-		System.out.println("isPointUpdateCount amdinController "+isPointUpdateCount);
-		if(isgivingDay && isPointUpdateCount<=0 ) {
-			Is_Update_PointVo is_Update_PointVo=
-					DateHelper.getIsUPdatePointVo("D");//드라이버용
-			evlService.transactionGivingPoint(is_Update_PointVo);
-			AddAllMemberHistoryNMessage(CodeEnum.SYSTEMDRIVERPOINT.getCode());
-			
-		}
-//        // 포인트 자동 지급 끝
-		
-		//모든 유저에게 자동으로 포인트 지급 패신저
-		// 7월 1일 이랑 1월 1일 에 모든 유저들에게 포인트 지급
-		
-			String formmatedSixStr=DateHelper.getforamttedSixStr();
-			int isPointUpdateCountPassenger=evlService.selectCountIsUpdate(formmatedSixStr, "P");
-			boolean isgivingSixMonth=DateHelper.isPointSixMonthDay();
-			System.out.println("어드민 컨트롤 formmated "+formmatedSixStr);
-			System.out.println("어드민 컨트롤 isPointUpdateCountPassenger "+isPointUpdateCountPassenger);
-			//오늘이 1월 1일 7월1일 일때 테이블에 해당하는 데이터가 없으면 포인트 업데이트및 테이블 데이터입력
-			//한번만 돌아가야 하는 부분
-			if(isPointUpdateCountPassenger <=0 && isgivingSixMonth ) {
-				Date iup_date=DateHelper.castSqlDate(formmatedSixStr);
-				//포인트 트랜잭셕 들어갈곳
-				Is_Update_PointVo is_Update_PointVo=new Is_Update_PointVo(0, iup_date, "P");
-				System.out.println("home Admin 6개월 if문 실행 :is_Update_PointVo "+is_Update_PointVo);
-				evlService.transactionGivingSixPoint(is_Update_PointVo);
-				AddAllMemberHistoryNMessage(CodeEnum.SYSTEMALL.getCode());
-			}
-		
-		
-		//모든유저에게 포인트 자동지급 끝
 		
 		//드라이버 몇명?
 		int approve_count=memberService.selectApproveCount();
@@ -364,7 +327,7 @@ public class AdminController {
 		System.out.println("modifyBlackPoint blackListVo : " + blackListVo);
 		if (blackListVo.getBlacklist_seq() > 0 && 
 				blackListVo.getBlack_score() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
-				notifyService.modifyApprovement(blackListVo);			
+				notifyService.modifyApprovement(blackListVo);	
 			return "redirect:/admin/report_management";
 		} else if (blackListVo.getBlacklist_seq() > 0 && 
 				blackListVo.getBlack_score() < 0) {

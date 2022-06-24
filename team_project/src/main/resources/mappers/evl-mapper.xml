@@ -46,7 +46,7 @@ where m.m_id = de.m_id and  de.g_code = gb.g_code
 	(seq_is_update_point.nextval, #{iup_date}, #{iup_what})
 	</insert>
 	
-	<!-- drive등급에 따른 포인트 지급 -->
+	<!-- 동승자등급에 따른 포인트 지급 -->
 	<update id="updatePointPassengerByEvl">
 	update (select m.m_id, m.m_point, pe.g_code, gb.g_benefit from member m, passenger_evl pe , grade_benefit gb
 where m.m_id = pe.m_id and  pe.g_code = gb.g_code

@@ -125,4 +125,48 @@
 		select count(*) from blocklist
 		where m_id = #{m_id}
 	</select>
+	
+	<select id="Blockscore1" resultType="int">
+		select count (*)
+		from blacklist black , blocklist block
+		where black.black_m_id = block.m_id and black.black_is_processed != 'C' and 
+		black.black_is_processed != 'R' and black.black_m_id = #{m_id}
+		and black.black_score = '1'
+	</select>
+	
+	<select id="Blockscore2" resultType="int">
+		select count (*)
+		from blacklist black , blocklist block
+		where black.black_m_id = block.m_id and black.black_is_processed != 'C' and 
+		black.black_is_processed != 'R' and black.black_m_id = #{m_id}
+		and black.black_score = '2'
+	</select>
+	
+	<select id="Blockscore3" resultType="int">
+		select count (*)
+		from blacklist black , blocklist block
+		where black.black_m_id = block.m_id and black.black_is_processed != 'C' and 
+		black.black_is_processed != 'R' and black.black_m_id = #{m_id}
+		and black.black_score = '3'
+	</select>
+	
+	<select id="Blockscore4" resultType="int">
+		select count (*)
+		from blacklist black , blocklist block
+		where black.black_m_id = block.m_id and black.black_is_processed != 'C' and 
+		black.black_is_processed != 'R' and black.black_m_id = #{m_id}
+		and black.black_score = '4'
+	</select>
+	
+	<select id="Blockscore5" resultType="int">
+		select count (*)
+		from blacklist black , blocklist block
+		where black.black_m_id = block.m_id and black.black_is_processed != 'C' and 
+		black.black_is_processed != 'R' and black.black_m_id = #{m_id}
+		and black.black_score = '5'
+	</select>
+	
+	<select id="ListBlockPeople" resultType="String">
+		select m_id from blocklist 
+	</select>
 </mapper>

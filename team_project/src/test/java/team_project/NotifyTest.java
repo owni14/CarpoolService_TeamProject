@@ -107,8 +107,68 @@ public class NotifyTest {
 	
 	@Test
 	public void insertBlockPeople() {
-		String m_id = "user01@gmail.com";
+		String m_id = "user09@gmail.com";
 		boolean result = notifyDao.insertBlockPeople(m_id);
+		System.out.println("result : " + result);
+	}
+	// test ok,
+	
+	@Test
+	public void Blockscore1() {
+		String m_id = "hong@naver.com";
+		int count = notifyDao.Blockscore1(m_id);
+		System.out.println("count : " + count);
+	}
+	// test ok,
+	
+	@Test
+	public void ListBlockPeople() {
+		List<String> m_ids = notifyDao.ListBlockPeople();
+//		for (String m_id : m_ids) {
+//			System.out.println("m_id : " + m_id);
+//		}
+		for (int i = 0; i < m_ids.size(); i++) {
+			System.out.println("m_id : " + m_ids.get(0));
+		}
+	}
+	// test ok,
+	
+	@Test
+	public void Blockscore2() {
+		String m_id = "hong@naver.com";
+		int count = notifyDao.Blockscore2(m_id);
+		System.out.println("count : " + count);
+	}
+	// test ok,
+	
+	@Test
+	public void Blockscore3() {
+		String m_id = "hong@naver.com";
+		int count = notifyDao.Blockscore3(m_id);
+		System.out.println("count : " + count);
+	}
+	// test ok,
+	@Test
+	
+	public void Blockscore4() {
+		String m_id = "hong@naver.com";
+		int count = notifyDao.Blockscore4(m_id);
+		System.out.println("count : " + count);
+	}
+	// test ok,
+	
+	@Test
+	public void Blockscore5() {
+		String m_id = "hong@naver.com";
+		int count = notifyDao.Blockscore5(m_id);
+		System.out.println("count : " + count);
+	}
+	// test ok,
+	
+	@Test
+	public void isBlockPeople() {
+		String m_id = "hong@naver.com";
+		boolean result = notifyDao.isBlockPeople(m_id);
 		System.out.println("result : " + result);
 	}
 	// test ok,

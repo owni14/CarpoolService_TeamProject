@@ -57,8 +57,14 @@
 		
 		$(".blackPointImg").click(function () {
 			var blackPoint = $(this).attr("data-blackpoint");
-			if (blackPoint == 3) {
+			if (blackPoint == 5) {
+				$("#spanBlackPoint").text(blackPoint).css("color","#2A0A0A");
+				$("#spanBlackPoint").attr("data-blackpoint",blackPoint);
+			} else if (blackPoint == 4) {
 				$("#spanBlackPoint").text(blackPoint).css("color","red");
+				$("#spanBlackPoint").attr("data-blackpoint",blackPoint);
+			} else if (blackPoint == 3) {
+				$("#spanBlackPoint").text(blackPoint).css("color","#D7DF01");
 				$("#spanBlackPoint").attr("data-blackpoint",blackPoint);
 			} else if (blackPoint == 2) {
 				$("#spanBlackPoint").text(blackPoint).css("color","green");
@@ -331,9 +337,11 @@ const myChart = new Chart(
 							id="dropdownMenuButton1" data-toggle="dropdown">
 							벌점</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/anger.jpg" height="120px" data-blackpoint="3"><b style="color:red; float:right;">3점</b>
-								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/disgust.jpg" height="120px" data-blackpoint="2"><b style="color:green; float:right;">2점</b>
-								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/sadness.jpg" height="120px" data-blackpoint="1"><b style="color:blue; float:right;">1점</b>
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/anger.jpg" height="80px" data-blackpoint="5"><b style="color:#2A0A0A; float:right;">5점</b>
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/littleanger.jpg" height="80px" data-blackpoint="4"><b style="color:red; float:right;">4점</b>
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/disgust.jpg" height="80px" data-blackpoint="3"><b style="color:#D7DF01; float:right;">3점</b>
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/fear.jpg" height="80px" data-blackpoint="2"><b style="color:green; float:right;">2점</b>
+								<img class="dropdown-item blackPointImg" src="/resources/images/blacklist/sadness.jpg" height="80px" data-blackpoint="1"><b style="color:blue; float:right;">1점</b>
 							</div>
                                                         <div class="card-header-left ">
                                                             <h3 id="test">신고자 리스트</h3>
@@ -354,7 +362,7 @@ const myChart = new Chart(
                                                     <div class="card-block p-b-10">
                           
 							<div>
-								<b style="float:left; font-size: 20px;"><span>벌점 : </span><span id="spanBlackPoint" style="color:red" data-blackpoint="3">3</span><span>점</span></b>
+								<b style="float:left; font-size: 20px;"><span>벌점 : </span><span id="spanBlackPoint" style="color:black" data-blackpoint="5">5</span><span>점</span></b>
 							</div>
 						<!-- dropdown end -->
                                                         <div class="table-responsive">

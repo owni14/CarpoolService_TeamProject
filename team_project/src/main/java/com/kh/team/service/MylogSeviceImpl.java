@@ -10,6 +10,7 @@ import com.kh.team.dao.MylogDao;
 import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.Driver_EvlVo;
 import com.kh.team.vo.PassengerVo;
+import com.kh.team.vo.Passenger_EvlVo;
 
 @Service
 public class MylogSeviceImpl implements MylogService {
@@ -50,6 +51,16 @@ public class MylogSeviceImpl implements MylogService {
 	@Override
 	public Driver_EvlVo driver_evlListById(String m_id) {
 		return mylogDao.driver_evlListById(m_id);
+	}
+
+	@Override
+	public Passenger_EvlVo passenger_evlListById(String m_id) {
+		return mylogDao.passenger_evlListById(m_id);
+	}
+
+	@Override
+	public Map<String, Object> nextPoint(String m_id) {
+		return mylogDao.nextPoint(m_id);
 	}
 
 }

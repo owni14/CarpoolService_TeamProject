@@ -29,6 +29,7 @@ import com.kh.team.vo.Driver_EvlVo;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.PagingDto;
 import com.kh.team.vo.PassengerVo;
+import com.kh.team.vo.Passenger_EvlVo;
 
 @Controller
 @RequestMapping("/my")
@@ -49,14 +50,20 @@ public class MyController {
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
 	public String boardedHistory(HttpSession session, PagingDto pagingDto, Model model) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
-		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
+		String m_id = loginVo.getM_id();
+		pagingDto.setCount(pointService.getCountPointById(m_id));
 		pagingDto.setPage(pagingDto.getPage());
-		List<Map<String, Object>> passengerlogList = mylogService.passengerlogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
+		List<Map<String, Object>> passengerlogList = mylogService.passengerlogListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
+		model.addAttribute("passengerlogList", passengerlogList);
+		
 		Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
+		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
+		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
 		int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
 		double avg = sum / (double)vo.getEvl_count();
-		model.addAttribute("passengerlogList", passengerlogList);
 		model.addAttribute("driver_evlVo", vo);
+		model.addAttribute("passenger_evlVo", passengerVo);
+		model.addAttribute("pointVo", pointVo);
 		model.addAttribute("evl_sum", sum);
 		model.addAttribute("evl_avg", avg);
 		return "my/boardedHistory";
@@ -65,28 +72,49 @@ public class MyController {
 	
 	// 운전내역 페이지로 이동
 	@RequestMapping(value = "/driveHistory", method = RequestMethod.GET)
-	public String driveHistroy(HttpSession session, PagingDto pagingDto) {
+	public String driveHistroy(HttpSession session, PagingDto pagingDto, Model model) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
-		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
+		String m_id = loginVo.getM_id();
+		pagingDto.setCount(pointService.getCountPointById(m_id));
 		pagingDto.setPage(pagingDto.getPage());
-		List<DriverVo> driverlogList = mylogService.driverlogListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
-//		List<PassengerVo> driver_passengerlogList = mylogService.driver_passengerlogListById();
-//		System.out.println("myLogList : " + mylogList);
+		List<DriverVo> driverlogList = mylogService.driverlogListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
 		session.setAttribute("driverlogList", driverlogList);
-//		session.setAttribute("driver_passengerlogList", driver_passengerlogList);
+		
+		Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
+		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
+		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
+		int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
+		double avg = sum / (double)vo.getEvl_count();
+		model.addAttribute("driver_evlVo", vo);
+		model.addAttribute("passenger_evlVo", passengerVo);
+		model.addAttribute("pointVo", pointVo);
+		model.addAttribute("evl_sum", sum);
+		model.addAttribute("evl_avg", avg);
+		
 		return "my/driveHistroy";
 	}
 		
 	
 	// 포인트 페이지로 이동
 	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
-	public String pointHistory(HttpSession session, PagingDto pagingDto) {
+	public String pointHistory(HttpSession session, PagingDto pagingDto, Model model) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
-		pagingDto.setCount(pointService.getCountPointById(loginVo.getM_id()));
+		String m_id = loginVo.getM_id();
+		pagingDto.setCount(pointService.getCountPointById(m_id));
 		pagingDto.setPage(pagingDto.getPage());
-		List<Map<String, Object>> pointList = pointService.getPointListById(loginVo.getM_id(), pagingDto.getStartRow(), pagingDto.getEndRow());
-//		System.out.println("pointList : " + pointList);
-		session.setAttribute("pointList", pointList);
+		List<Map<String, Object>> pointList = pointService.getPointListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
+		model.addAttribute("pointList", pointList);
+		
+		Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
+		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
+		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
+		int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
+		double avg = sum / (double)vo.getEvl_count();
+		model.addAttribute("driver_evlVo", vo);
+		model.addAttribute("passenger_evlVo", passengerVo);
+		model.addAttribute("pointVo", pointVo);
+		model.addAttribute("evl_sum", sum);
+		model.addAttribute("evl_avg", avg);
 		return "my/pointHistory";
 	}
 	

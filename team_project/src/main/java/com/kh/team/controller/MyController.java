@@ -56,16 +56,23 @@ public class MyController {
 		List<Map<String, Object>> passengerlogList = mylogService.passengerlogListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
 		model.addAttribute("passengerlogList", passengerlogList);
 		
-		Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
+		boolean result = mylogService.isDriver(m_id);
+		System.out.println(result);
+		if (result) {
+			Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
+			int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
+			double avg = sum / (double)vo.getEvl_count();
+			model.addAttribute("driver_evlVo", vo);
+			model.addAttribute("evl_sum", sum);
+			model.addAttribute("evl_avg", avg);
+		}
+		
 		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
 		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
-		int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
-		double avg = sum / (double)vo.getEvl_count();
-		model.addAttribute("driver_evlVo", vo);
 		model.addAttribute("passenger_evlVo", passengerVo);
 		model.addAttribute("pointVo", pointVo);
-		model.addAttribute("evl_sum", sum);
-		model.addAttribute("evl_avg", avg);
+		model.addAttribute("isDriver", result);
+		
 		return "my/boardedHistory";
 	}
 	
@@ -80,16 +87,23 @@ public class MyController {
 		List<DriverVo> driverlogList = mylogService.driverlogListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
 		session.setAttribute("driverlogList", driverlogList);
 		
-		Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
+		boolean result = mylogService.isDriver(m_id);
+		System.out.println(result);
+		if (result) {
+			Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
+			int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
+			double avg = sum / (double)vo.getEvl_count();
+			model.addAttribute("driver_evlVo", vo);
+			model.addAttribute("evl_sum", sum);
+			model.addAttribute("evl_avg", avg);
+		}
+		
 		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
 		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
-		int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
-		double avg = sum / (double)vo.getEvl_count();
-		model.addAttribute("driver_evlVo", vo);
 		model.addAttribute("passenger_evlVo", passengerVo);
 		model.addAttribute("pointVo", pointVo);
-		model.addAttribute("evl_sum", sum);
-		model.addAttribute("evl_avg", avg);
+		model.addAttribute("isDriver", result);
+		
 		
 		return "my/driveHistroy";
 	}
@@ -105,16 +119,23 @@ public class MyController {
 		List<Map<String, Object>> pointList = pointService.getPointListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
 		model.addAttribute("pointList", pointList);
 		
-		Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
+		boolean result = mylogService.isDriver(m_id);
+		System.out.println(result);
+		if (result) {
+			Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
+			int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
+			double avg = sum / (double)vo.getEvl_count();
+			model.addAttribute("driver_evlVo", vo);
+			model.addAttribute("evl_sum", sum);
+			model.addAttribute("evl_avg", avg);
+		}
+		
 		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
 		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
-		int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
-		double avg = sum / (double)vo.getEvl_count();
-		model.addAttribute("driver_evlVo", vo);
 		model.addAttribute("passenger_evlVo", passengerVo);
 		model.addAttribute("pointVo", pointVo);
-		model.addAttribute("evl_sum", sum);
-		model.addAttribute("evl_avg", avg);
+		model.addAttribute("isDriver", result);
+		
 		return "my/pointHistory";
 	}
 	

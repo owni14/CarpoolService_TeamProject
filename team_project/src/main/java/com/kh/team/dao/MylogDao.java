@@ -18,4 +18,5 @@ public interface MylogDao {
 	public Driver_EvlVo driver_evlListById (String m_id); // 운전자 등급 정보 불러오기
 	public Passenger_EvlVo passenger_evlListById (String m_id); // 동승자 등급 정보 불러오기
 	public Map<String, Object> nextPoint (String m_id); // 다음달 받을 포인트
+	public boolean isDriver (String m_id); // 운전자 승인 확인
 }

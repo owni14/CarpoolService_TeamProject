@@ -63,4 +63,9 @@ public class MylogSeviceImpl implements MylogService {
 		return mylogDao.nextPoint(m_id);
 	}
 
+	@Override
+	public boolean isDriver(String m_id) {
+		return mylogDao.isDriver(m_id);
+	}
+
 }

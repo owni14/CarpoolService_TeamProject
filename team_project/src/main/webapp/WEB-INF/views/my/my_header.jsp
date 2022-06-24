@@ -258,12 +258,20 @@ $(document).ready(function() {
 			</div>
 			
 			<div class="col-md-7">
-			<!-- 나의 평점 보기 start -->
+				<c:if test="${isDriver == false}">
+				<div id="blind" style="text-align: center; position: absolute; width: 100%; height: 100%; ">
+					<p style="
+						background-color: rgba( 51, 51, 51, 0.8 ); position: relative; width: 100%; height: 100%;
+						text-align: center;
+					"><span style="font-size: 35px; font-weight: bold; color: white;  ">운전자 등록을 해주세요.</span></p>
+				</div>
+				</c:if>
+				<!-- 나의 평점 보기 start -->
 				<div class="row" style="text-align: center;">
-					<p ><strong>운행 정보</strong></p>
+					<p><strong>운행 정보</strong></p>
 						<hr>
 					<div class="col-md-5">
-						<img id="driver_evlImg" src="운전자 등급" width="200px;" height="75px;">
+						<img id="driver_evlImg" alt="운전자 등급" width="200px;" height="75px;">
 					</div>
 					<div class="col-md-7">
 						<span class="rHeading">${loginVo.m_id}</span>

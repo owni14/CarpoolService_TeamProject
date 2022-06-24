@@ -93,5 +93,14 @@ public class MylogDaoImpl implements MylogDao {
 		return sqlSession.selectOne(NAMESPACE + "nextPoint", m_id);
 	}
 
+	@Override
+	public boolean isDriver(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "isDriver", m_id);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
 
 }

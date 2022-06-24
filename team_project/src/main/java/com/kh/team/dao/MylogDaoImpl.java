@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.team.vo.DriverVo;
 import com.kh.team.vo.Driver_EvlVo;
 import com.kh.team.vo.PassengerVo;
+import com.kh.team.vo.Passenger_EvlVo;
 
 @Repository
 public class MylogDaoImpl implements MylogDao {
@@ -80,6 +81,25 @@ public class MylogDaoImpl implements MylogDao {
 	public Driver_EvlVo driver_evlListById(String m_id) {
 		Driver_EvlVo driver_evlList = sqlSession.selectOne(NAMESPACE + "driver_evlListById", m_id);
 		return driver_evlList;
+	}
+
+	@Override
+	public Passenger_EvlVo passenger_evlListById(String m_id) {
+		return sqlSession.selectOne(NAMESPACE + "passenger_evlListById", m_id);
+	}
+
+	@Override
+	public Map<String, Object> nextPoint(String m_id) {
+		return sqlSession.selectOne(NAMESPACE + "nextPoint", m_id);
+	}
+
+	@Override
+	public boolean isDriver(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "isDriver", m_id);
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 

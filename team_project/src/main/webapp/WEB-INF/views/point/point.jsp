@@ -30,7 +30,14 @@ $(document).ready(function() {
 			$("#p_price_comment").text("");
 			$("#modalSuccess").show();
 		}
+		$("#modalSuccess").click(function() {
+			var frmPayment = $("#frmPayment");
+			frmPayment.find("input[name=m_point]").val(after_point);
+			frmPayment.submit();
+		});
 	});
+	
+	
 	
 	$("#modalClose").click(function() {
 		$("#modal-container-678121").modal('hide');
@@ -41,7 +48,8 @@ $(document).ready(function() {
 
 <!-- modal start -->
 	<div class="col-md-12">
-		
+		<form id="frmPayment" action="/point/payment" method="post">
+		<input type="hidden" name="m_point">
 		<div class="modal fade" id="modal-container-678121" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -77,6 +85,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>
+		</form>
 		
 	</div>
 	<!-- modal end -->

@@ -36,4 +36,10 @@
 	<select id="selectAllPointCodeList">
 			select * from point_code
 	</select>
+	
+	<update id="payment">
+		update member set
+		m_point = #{m_point}
+		where m_id = #{m_id}
+	</update>
 </mapper>

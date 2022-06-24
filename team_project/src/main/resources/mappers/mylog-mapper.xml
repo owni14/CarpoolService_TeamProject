@@ -20,7 +20,7 @@
 		        from driver d, passenger p
 		        where d.driver_seq = p.driver_seq
 		        and p.m_id = #{m_id}
-		        and drive_state = 'Y' 
+		        and p.drive_state = 'Y' 
 		        order by p.passenger_depart_time desc) a)
 		where rnum between #{startRow} and #{endRow}
 	</select>

@@ -327,7 +327,7 @@ public class AdminController {
 		System.out.println("modifyBlackPoint blackListVo : " + blackListVo);
 		if (blackListVo.getBlacklist_seq() > 0 && 
 				blackListVo.getBlack_score() > 0) { // seq값은 0보다 크기 때문에 0보다 큰 값이 있다면 존재한다는 의미
-				notifyService.modifyApprovement(blackListVo);			
+				notifyService.modifyApprovement(blackListVo);	
 			return "redirect:/admin/report_management";
 		} else if (blackListVo.getBlacklist_seq() > 0 && 
 				blackListVo.getBlack_score() < 0) {

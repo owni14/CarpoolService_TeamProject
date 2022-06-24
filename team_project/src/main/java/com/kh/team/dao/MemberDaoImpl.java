@@ -66,11 +66,12 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public Map<String, Object> getDriverById(String m_id, String m_company) {
+	public Map<String, Object> getDriverById(String m_id, String m_company, String ci_code) {
 		Map<String, String> map = new HashMap<>();
 		String formattedToday = todayDate();
 		map.put("m_id", m_id);
 		map.put("m_company", m_company);
+		map.put("ci_code", ci_code);
 		map.put("formattedToday", formattedToday);
 		Map<String, Object> mapDriverInfo = sqlSession.selectOne(NAMESPACE + "getDriverById", map);
 		return mapDriverInfo;
@@ -363,7 +364,6 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectOne(NAMESPACE+"selectApproveCount");
 	}
 	
-	
 	// 오늘 날짜를 얻어오는 메서드
 	private String todayDate() {
 		// 오늘 날짜를 얻어와서 db에 오늘 날짜에 탑승신청하기가 된 아이디를 찾아 is_approve를 'Y'로 업데이트
@@ -392,6 +392,19 @@ public class MemberDaoImpl implements MemberDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int countBlackPoint(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "countBlackPoint", m_id);
+		return count;
+	}
+	public List<String> getDeletingPassengerList(int driver_seq) {
+		System.out.println("driver_seq:" + driver_seq);
+		List<String> list = sqlSession.selectList(NAMESPACE + "getDeletingPassengerList", driver_seq);
+		System.out.println("daoimpl" + list);
+		return list;
+
 	}
 
 }

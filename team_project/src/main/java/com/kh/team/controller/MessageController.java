@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.dao.MessageDao;
+import com.kh.team.service.MemberService;
 import com.kh.team.service.MessageService;
 import com.kh.team.service.NotifyService;
 import com.kh.team.vo.BlackListVo;
@@ -31,6 +32,9 @@ public class MessageController {
 	
 	@Autowired
 	private NotifyService notifyService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping(value="/recAdminMessagePage", method= RequestMethod.GET)
 	public String receivedMessagePage(HttpSession session, PagingDto pagingDto)	{
@@ -117,10 +121,17 @@ public class MessageController {
 //		System.out.println("messageVo1 : " + messageVo);
 		boolean result1 = messageService.insertMessage(messageVo);
 		if (messageVo.getReceiver_black_id() != null && !messageVo.getReceiver_black_id().equals("")) {
+			String m_id = messageVo.getReceiver_black_id();
+			int blackCount = memberService.countBlackPoint(m_id);
+			boolean isBlockResult = notifyService.isBlockPeople(m_id);
+			if (blackCount >= 10 && isBlockResult == false) {
+				notifyService.insertBlockPeople(m_id);
+			}
 			messageVo.setReceiver_m_id(messageVo.getReceiver_black_id());
 //			System.out.println("messageVo2 : " + messageVo);
 			boolean result2 = messageService.insertMessage(messageVo);
 			if (result1 == true && result2 == true) {
+				
 				result1 = true;
 			}
 		}

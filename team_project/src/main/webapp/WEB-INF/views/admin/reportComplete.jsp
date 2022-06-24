@@ -68,7 +68,7 @@
 		function checkSended () {
 			var url = "/message/checkSendedMessage";
 			$.post(url, function (rData) {
-				console.log(rData);
+				console.log("rData : " + rData);
 				for (var v = 0; v < $(".sendMessage").length; v++) {
 					for (var w=0; w < rData.length; w++) {
 						console.log("w = " + w);

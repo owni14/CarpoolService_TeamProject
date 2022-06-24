@@ -101,5 +101,23 @@ public class NotifyDaoImpl implements NotifyDao{
 		return reportedList;
 	}
 
+	@Override
+	public boolean insertBlockPeople(String m_id) {
+		int count = sqlSession.insert(NAMESPACE + "insertBlockPeople", m_id);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isBlockPeople(String m_id) {
+		int count = sqlSession.insert(NAMESPACE + "isBlockPeople", m_id);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
 }
 

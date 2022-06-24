@@ -81,12 +81,13 @@
 	</sql>
 	
 	<select id="getDriverById" resultType="map">
-		select m.m_id, m.m_name, m.gender, m.m_dept, d.driver_depart_location, d.driver_depart_time, d.driver_comment
-		from member m, driver d
+		select m.m_id, m.m_name, m.gender, m.m_dept, d.driver_depart_location, d.driver_depart_time, d.driver_comment, i.ci_name
+		from member m, driver d, carinfo i
 		where m.m_id = d.m_id
 		and m.m_company = #{m_company}
 		and m.m_id = #{m_id}
 		and to_char(d.apply_date, 'yyyy/mm/dd') = #{formattedToday}
+		and i.ci_code = #{ci_code}
 	</select>
 	
 	<select id="insertDriverLicense">
@@ -316,4 +317,17 @@
 		select ad_approve from approve_driver
 		where m_id = #{m_id}
 	</select>
+
+	<select id="countBlackPoint" resultType="int">
+		select m_blackpoint from member
+		where m_id = #{m_id}
+	</select>
+
+	
+	<select id="getDeletingPassengerList" resultType="string">
+		select m_id from passenger
+		where driver_seq = #{driver_seq}
+	</select>
+	
+
 </mapper>

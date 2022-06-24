@@ -75,8 +75,8 @@ public class MemberTest {
 	public void getDriverList() {
 		String m_id = "user03@gmail.com";
 		String m_company = "KAKAO";
-		Map<String, Object> mapDriverInfo = memberDao.getDriverById(m_id, m_company);
-		System.out.println("mapDriverInfo:" + mapDriverInfo);
+//		Map<String, Object> mapDriverInfo = memberDao.getDriverById(m_id, m_company);
+//		System.out.println("mapDriverInfo:" + mapDriverInfo);
 	}
 	
 	@Test
@@ -187,6 +187,18 @@ public class MemberTest {
 		String m_id = "hong@naver.com";
 		boolean result = memberDao.isApproveDriver(m_id);
 		System.out.println("result:" + result);
+	}
+	
+	@Test
+	public void countBlackPoint() {
+		String m_id = "user01@gmail.com";
+		int count = memberDao.countBlackPoint(m_id);
+		System.out.println("count : " + count);
+	}
+	public void getDeletingPassengerListTest() {
+		int driver_seq = 90;
+		List<String> list = memberDao.getDeletingPassengerList(driver_seq);
+
 	}
 	
 }

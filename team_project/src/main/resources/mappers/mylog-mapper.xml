@@ -20,6 +20,7 @@
 		        from driver d, passenger p
 		        where d.driver_seq = p.driver_seq
 		        and p.m_id = #{m_id}
+		        and p.drive_state = 'Y' 
 		        order by p.passenger_depart_time desc) a)
 		where rnum between #{startRow} and #{endRow}
 	</select>
@@ -54,10 +55,30 @@
 		and driver_seq = #{driver_seq}
 	</update>
 	
-	<!-- 운전자 평점불러오기 -->
+	<!-- 운전자 승인 확인 -->
+	<select id="isDriver" resultType="int">
+		select count(*) from approve_driver
+		where m_id = #{m_id}
+		and ad_approve = 'Y'
+	</select>
+	
+	<!-- 운전자 등급 정보(평점)불러오기 -->
 	<select id="driver_evlListById" resultType="Driver_EvlVo">
 		select * from driver_evl
 		where m_id = #{m_id}
+	</select>
+	
+	<!-- 탑승자  등급 정보 불러오기-->
+	<select id="passenger_evlListById" resultType="Passenger_EvlVo">
+		select * from passenger_evl
+		where m_id = #{m_id}
+	</select>
+	
+	<!-- 다음달 받을 포인트 -->
+	<select id="nextPoint" resultType="map">
+		select * from driver_evl d, grade_benefit g
+		where d.m_id = #{m_id}
+		and d.g_code = g.g_code
 	</select>
 	
 </mapper>

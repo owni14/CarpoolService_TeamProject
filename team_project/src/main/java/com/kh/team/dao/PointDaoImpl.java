@@ -56,6 +56,18 @@ public class PointDaoImpl implements PointDao {
 		return count;
 	}
 
+	@Override
+	public boolean paymet(String m_id, int m_point) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("m_point", m_point);
+		int count = sqlSession.update(NAMESPACE + "payment", map);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
 	
 
 }

@@ -90,6 +90,7 @@
 	.right {
 	display: none;
 	}
+
 }
 </style>
 <script>

@@ -28,4 +28,9 @@ public class PointServiceImpl implements PointService {
 		return count;
 	}
 
+	@Override
+	public boolean paymet(String m_id, int m_point) {
+		return pointDao.paymet(m_id, m_point);
+	}
+
 }

@@ -345,7 +345,17 @@ public class AdminController {
 	
 	@RequestMapping(value="/report_complete_management", method = RequestMethod.GET)
 	public String report_complete_management (BlackListVo blackListVo,Model model) {
-		
+		List<String> m_ids = notifyService.ListBlockPeople();
+		int size = m_ids.size();
+		model.addAttribute("blockMemberCount", size);
+		for (int i = 0; i < m_ids.size(); i++) {
+			String m_id = m_ids.get(i);
+			List<Integer> blackPoints = notifyService.BlockPoints(m_id);
+			model.addAttribute("m_id" + (i+1), m_id);
+			for (int j = 0; j < blackPoints.size(); j++) {
+				model.addAttribute("m_id" + (i+1) + "point" + (j+1), blackPoints.get(j));
+			}
+		}
 		List<BlackListVo> yNotifyList = notifyService.yNotifyList();
 		int dayNotifyCount = notifyService.dayNotifyCount();
 		int nNotifyCount = notifyService.notifyCount();

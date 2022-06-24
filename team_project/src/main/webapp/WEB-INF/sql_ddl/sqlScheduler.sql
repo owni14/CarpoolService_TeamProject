@@ -16,13 +16,17 @@ drop PROCEDURE test_1pr;--프로시저 삭제
 --스케줄러 등록
 BEGIN
     DBMS_SCHEDULER.CREATE_JOB (
-        JOB_NAME => 'PR_TEST_JOB'--스케줄 이름
-        , START_DATE => TRUNC(SYSDATE)--언제 시작할지
-        , REPEAT_INTERVAL => 'FREQ = MINUTELY; INTERVAL = 1'--반복간격
+        --스케줄 이름
+        JOB_NAME => 'PR_TEST_JOB'
+        --언제 시작할지
+        , START_DATE => TRUNC(SYSDATE)
+        --반복간격
+        , REPEAT_INTERVAL => 'FREQ = MINUTELY; INTERVAL = 1'
         , END_DATE => NULL
         , JOB_CLASS => 'DEFAULT_JOB_CLASS'
         , JOB_TYPE => 'PLSQL_BLOCK'
-        , JOB_ACTION => 'BEGIN test_1Pr; END;'--프로시저 입력
+        --프로시저 입력
+        , JOB_ACTION => 'BEGIN test_1Pr; END;'
         , COMMENTS => 'JOB 등록 예제'
     );
     DBMS_SCHEDULER.ENABLE('PR_TEST_JOB');
@@ -30,7 +34,8 @@ END;
 
 select * from user_jobs;
 select * from user_scheduler_programs;
- select * from user_scheduler_jobs ;--스케줄 조회
+ --스케줄 조회
+ select * from user_scheduler_jobs ;
  --스케줄 지우기
  begin
    dbms_scheduler.drop_job(
@@ -38,7 +43,8 @@ select * from user_scheduler_programs;
  force => false) ;
 end ;
 /
-exec dbms_scheduler.enable('PR_TEST_JOB');  --스케줄 등록
+--스케줄 등록
+exec dbms_scheduler.enable('PR_TEST_JOB');  
 --테스트용 멤버 포인트
 select * from member;
 

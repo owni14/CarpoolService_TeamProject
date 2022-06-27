@@ -29,4 +29,5 @@ public interface EvlDao {
 	public int countsilverPassenger();
 	public int countwhitePassenger();
 	
+	
 }

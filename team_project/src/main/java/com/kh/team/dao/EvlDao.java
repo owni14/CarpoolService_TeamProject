@@ -29,5 +29,8 @@ public interface EvlDao {
 	public int countsilverPassenger();
 	public int countwhitePassenger();
 	
+	public boolean driverEvlUpdate(String m_id, int rating); // 탑승자가 평가하기 클릭 시 운전자에 대한 평가
+	public Driver_EvlVo getDriverEvlInfo(String m_id); // 윤전자의 평가 점수 및 현재 운행횟수 확인
+	public void driverGradeUpdate(String m_id, String g_code); // 운전자의 등급 업데이트
 	
 }

@@ -20,4 +20,6 @@ public interface EvlService {
 	public void transactionPointHistoryNMessage(String m_id,String pc_code);
 	
 	public List<Integer> countEvl(); // 운전자, 동승자 등급에 따른 인원수 가져오기 
+	
+	public void updateDriverEvl(String m_id, int rating); // 탑승자가 평가하기 클릭 시 운전자에 대한 평가
 }

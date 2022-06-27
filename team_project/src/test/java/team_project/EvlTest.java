@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kh.team.dao.EvlDao;
+import com.kh.team.util.CodeEnum;
 import com.kh.team.util.DateHelper;
 import com.kh.team.vo.Driver_EvlVo;
 import com.kh.team.vo.Is_Update_PointVo;
@@ -123,5 +124,39 @@ public class EvlTest {
 		System.out.println(evlDao.selectCountIsUpdate(formattedToday, iup_what));
 	}//Ok
 	
+	@Test
+	public void driverEvlUpdateTest() {
+		String m_id = "hong@naver.com";
+		int rating = 4;
+		boolean result = evlDao.driverEvlUpdate(m_id, rating);
+		System.out.println("result:" + result);
+	} // Ok
+	
+	@Test
+	public void getDriverEvlInfoTest() {
+		String m_id = "hong@naver.com";
+		Driver_EvlVo evlVo = evlDao.getDriverEvlInfo(m_id);
+		System.out.println("driver_evlVo :" + evlVo);
+	}
+	
+	@Test
+	public void updateDriverGradeTest() {
+		String m_id = "hong@naver.com";
+		String g_code = CodeEnum.DRIVERWHITE.getCode();
+		Driver_EvlVo evlVo = evlDao.getDriverEvlInfo(m_id);
+		int totalDriveCount = evlVo.getDe_drive_count();
+		double evlAvg = ((evlVo.getEvl1() * 1) + (evlVo.getEvl2() * 2) + (evlVo.getEvl3() * 3) + (evlVo.getEvl4() * 4) + (evlVo.getEvl5() * 5)) / (double)(evlVo.getEvl_count());
+		System.out.println("totalDriverCount: " + totalDriveCount);
+		System.out.println("evlAvg: " + evlAvg);
+		if (totalDriveCount >= 65 && evlAvg >= 4.5) {
+			g_code = CodeEnum.DRIVERVVIP.getCode();
+		} else if (totalDriveCount >= 50 && evlAvg >= 4) {
+			g_code = CodeEnum.DRIVERVIP.getCode();
+		} else if (totalDriveCount >= 35 && evlAvg >= 3.5) {
+			g_code = CodeEnum.DRIVERGOLD.getCode();
+		} else if (totalDriveCount >= 8 && evlAvg >= 3) {
+			g_code = CodeEnum.DRIVERSILVER.getCode();
+		}
+		evlDao.driverGradeUpdate(m_id, g_code);
+	}
 }
-

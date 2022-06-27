@@ -51,25 +51,49 @@ IS
 code varchar2(50);
 cnt number;
 blck_id varchar2(50);
-
+psg_code varchar2(10);
+point number;
 BEGIN
 
-       select p.pe_ride_count, b.m_id into cnt, blck_id from passenger_evl p, blocklist b 
+       select p.pe_ride_count, b.m_id, p.g_code into cnt, blck_id, psg_code from passenger_evl p, blocklist b 
        where p.m_id = b.m_id(+)
        and p.m_id = psg_id; 
-
+    
+        point := 0;
             
-            if cnt >= 150 and blck_id is null then code := '1006';
-            elsif cnt >= 100 then code := '1007';
-            elsif cnt >= 40 then code := '1008';
-            elsif cnt >= 8 then code := '1009';
+            if cnt >= 150 and blck_id is null 
+                then code := '1006';
+            elsif cnt >= 100
+                then code := '1007';
+                    if(psg_code !=  '1006')
+                        then point := 250;
+                        end if;
+            elsif cnt >= 40 
+                then code := '1008';
+                     point := 150;
+            elsif cnt >= 8 
+                then code := '1009';
+                     point := 100;
             else code := '1010';
             
             END if;
-
-            update passenger_evl set
-            g_code = code
-            where m_id = psg_id;
+            
+            dbms_output.put_line(' point : ' || point); 
+            
+            if (psg_code != code)
+                then update passenger_evl set
+                        g_code = code
+                     where m_id = psg_id;
+            
+                        update member set
+                            m_point = m_point + point
+                        where m_id = psg_id;
+            
+                        insert into point_history
+                        values (seq_point_history.nextval, psg_id, '1005', sysdate);
+            
+            end if;
+            
   
 END;
 
@@ -159,6 +183,18 @@ BEGIN
             g_code = code
             where m_id = drv_id;
 
+END;
+
+-- 자동차 탑승인원 1로 초기화
+create or replace PROCEDURE pr_everydate_reset_car_people_count
+ 
+IS
+
+BEGIN
+
+    update car set
+    c_people_count = 1;
+  
 END;
 
 -- 스케쥴러

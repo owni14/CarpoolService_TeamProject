@@ -6,11 +6,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.team.service.EvlService;
 import com.kh.team.service.MemberService;
 import com.kh.team.vo.MemberVo;
 
@@ -21,6 +24,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private EvlService evlService;
 	
 	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
 	public String loginForm() {
@@ -61,10 +66,17 @@ public class MemberController {
 		return "member/join_form";
 	}
 	
+	
 	@RequestMapping(value = "/join_run", method = RequestMethod.POST)
-	public String joinRun(MemberVo memberVo) {
-		System.out.println("MemberController, join_run, memberVo: " + memberVo);
+	@Transactional
+	public String joinRun(MemberVo memberVo, RedirectAttributes rttr) {
+		if (memberVo.getM_company().equals("null")) {
+			rttr.addFlashAttribute("join_result", "false");
+			return "redirect:/member/joinForm";
+		}
 		memberService.insertMember(memberVo);
+		evlService.insertPassengerEvl(memberVo.getM_id());
+		rttr.addFlashAttribute("join_result", "true");
 		return "redirect:/";
 	}
 	

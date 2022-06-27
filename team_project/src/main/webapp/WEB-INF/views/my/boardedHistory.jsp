@@ -33,6 +33,48 @@
 .star-rating label:hover,
 .star-rating label:hover ~ label {
   color:#fc0;
+  
+}
+
+/* tab css start */
+nav > .nav.nav-tabs{
+
+  border: none;
+    color:#fff;
+    background:#aa80ff;
+    border-radius:0;
+
+}
+nav > div a.nav-item.nav-link,
+nav > div a.nav-item.nav-link.active
+{
+  border: none;
+    padding: 18px 25px;
+    color:#fff;
+    background:#aa80ff;
+    border-radius:0;
+}
+
+nav > div a.nav-item.nav-link.active:after
+ {
+  content: "";
+  position: relative;
+  bottom: -60px;
+  left: -10%;
+  border: 15px solid transparent;
+  border-top-color: #aa80ff ;
+}
+
+nav > div a.nav-item.nav-link:hover,
+nav > div a.nav-item.nav-link:focus
+{
+  border: none;
+    background: #5c5c8a;
+    color:#fff;
+    border-radius:0;
+    transition:background 0.20s linear;
+}
+/* tab css end */
 }
 </style>
 <script>
@@ -96,24 +138,18 @@ $(document).ready(function() {
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
-		<div class="tabbable" id="tabs-391804">
-			<ul class="nav nav-tabs">
-				<li class="nav-item">
-					<a class="nav-link active" href="#">탑승 내역</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/my/driveHistory">운전 내역</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/my/pointHistory">포인트 내역</a>
-				</li>
-			</ul>
-		</div>
+		<nav style="margin: 20px;">
+          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" href="#" aria-controls="nav-home" aria-selected="true">탑승 내역</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" href="/my/driveHistory" aria-controls="nav-profile" aria-selected="false">운전 내역</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" href="/my/pointHistory" aria-controls="nav-contact" aria-selected="false">포인트 내역</a>
+          </div>
+        </nav>
 		<!-- table start -->
 		<table class="table" style="text-align: center;">
 			<thead>
 				<tr>
-					<th style="text-align: right;" colspan="4">
+					<th style="text-align: right;" colspan="5">
 					
 						<!-- perPage select start -->
 						<select name="perPage" id="perPage">
@@ -143,49 +179,58 @@ $(document).ready(function() {
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="passengerlogVo" items="${passengerlogList}" > 
-				<tr> 
-				<td>${passengerlogVo.PASSENGER_SEQ}</td> 
-					<td>
-					<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-						${passengerlogVo.DRIVER_ID}
- 					</button>
- 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item message_form" href="#" id="send_message" data-receiver="${passengerlogVo.DRIVER_ID}">쪽지보내기</a>
-						<a class="dropdown-item black" href="#" data-driver_id="${passengerlogVo.DRIVER_ID}">신고하기</a>
-						<a class="dropdown-item evaluation" href="#">평가하기</a>
-					</div>
-					</td>
- 					<td>${passengerlogVo.PASSENGER_DEPART_LOCATION}</td>
- 					<td>${passengerlogVo.PASSENGER_DEPART_TIME}</td>
- 					<td>
- 						<c:choose>
- 						<c:when test="${passengerlogVo.EVL_FINISH == 'N'}">
-	 						<form id="frmStar" action="/my/putStar" method="post">
-	 							<input type="hidden" name="driver_m_id" value="${passengerlogVo.DRIVER_ID}">
-	 							<input type="hidden" name="driver_seq" value="${passengerlogVo.DRIVER_SEQ}">
-								<div class="star-rating">
-										<a id="putStar" href="#" style="vertical-align: center; margin-left: 5px;"><i class="bi bi-arrow-right-circle"></i></a>
-										<input type="radio" id="5-stars" name="rating" value="5" />
-										<label for="5-stars" class="star">&#9733;</label>
-										<input type="radio" id="4-stars" name="rating" value="4" />
-										<label for="4-stars" class="star">&#9733;</label>
-										<input type="radio" id="3-stars" name="rating" value="3" />
-										<label for="3-stars" class="star">&#9733;</label>
-										<input type="radio" id="2-stars" name="rating" value="2" />
-										<label for="2-stars" class="star">&#9733;</label>
-										<input type="radio" id="1-star" name="rating" value="1" />
-										<label for="1-star" class="star">&#9733;</label>
-								</div>
-							</form>
-						</c:when>
-						<c:otherwise>
-							<p>평가 완료</p>
-						</c:otherwise>
-						</c:choose>
-					</td>
-				</tr>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${passengerList == null}">
+						<tr>
+							<td colspan="5">탑승내역이 없습니다.</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="passengerlogVo" items="${passengerlogList}" > 
+						<tr> 
+						<td>${passengerlogVo.PASSENGER_SEQ}</td> 
+							<td>
+							<button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+								${passengerlogVo.DRIVER_ID}
+		 					</button>
+		 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item message_form" href="#" id="send_message" data-receiver="${passengerlogVo.DRIVER_ID}">쪽지보내기</a>
+								<a class="dropdown-item black" href="#" data-driver_id="${passengerlogVo.DRIVER_ID}">신고하기</a>
+								<a class="dropdown-item evaluation" href="#">평가하기</a>
+							</div>
+							</td>
+		 					<td>${passengerlogVo.PASSENGER_DEPART_LOCATION}</td>
+		 					<td>${passengerlogVo.PASSENGER_DEPART_TIME}</td>
+		 					<td>
+		 						<c:choose>
+		 						<c:when test="${passengerlogVo.EVL_FINISH == 'N'}">
+			 						<form id="frmStar" action="/my/putStar" method="post">
+			 							<input type="hidden" name="driver_m_id" value="${passengerlogVo.DRIVER_ID}">
+			 							<input type="hidden" name="driver_seq" value="${passengerlogVo.DRIVER_SEQ}">
+										<div class="star-rating">
+												<a id="putStar" href="#" style="vertical-align: center; margin-left: 5px;"><i class="bi bi-arrow-right-circle"></i></a>
+												<input type="radio" id="5-stars" name="rating" value="5" />
+												<label for="5-stars" class="star">&#9733;</label>
+												<input type="radio" id="4-stars" name="rating" value="4" />
+												<label for="4-stars" class="star">&#9733;</label>
+												<input type="radio" id="3-stars" name="rating" value="3" />
+												<label for="3-stars" class="star">&#9733;</label>
+												<input type="radio" id="2-stars" name="rating" value="2" />
+												<label for="2-stars" class="star">&#9733;</label>
+												<input type="radio" id="1-star" name="rating" value="1" />
+												<label for="1-star" class="star">&#9733;</label>
+										</div>
+									</form>
+								</c:when>
+								<c:otherwise>
+									<p>평가 완료</p>
+								</c:otherwise>
+								</c:choose>
+							</td>
+						</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</tbody>
 		</table>
 		<!-- table end -->

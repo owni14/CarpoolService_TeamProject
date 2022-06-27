@@ -9,7 +9,7 @@ import com.kh.team.vo.Passenger_EvlVo;
 
 public interface EvlService {
 	public boolean insertDriverEvl(Driver_EvlVo driver_EvlVo);
-	public boolean insertPassengerEvl(Passenger_EvlVo passenger_Evl);
+	public boolean insertPassengerEvl(String m_id);
 	public List<String> selectEvlCodeList();
 	public boolean updatePointByEvl();
 	public int selectCountIsUpdate(String formattedToday, String iup_what);// 포인트 업데이트 유무
@@ -20,4 +20,6 @@ public interface EvlService {
 	public void transactionPointHistoryNMessage(String m_id,String pc_code);
 	
 	public List<Integer> countEvl(); // 운전자, 동승자 등급에 따른 인원수 가져오기 
+	
+	public void updateDriverEvl(String m_id, int rating); // 탑승자가 평가하기 클릭 시 운전자에 대한 평가
 }

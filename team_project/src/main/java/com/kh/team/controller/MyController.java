@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.kh.team.dao.CarDao;
 import com.kh.team.service.CarService;
+import com.kh.team.service.EvlService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
@@ -43,6 +45,8 @@ public class MyController {
 	private MylogService mylogService;
 	@Autowired
 	private CarService carService;
+	@Autowired
+	private EvlService evlService;	
 
 	
 	
@@ -198,14 +202,12 @@ public class MyController {
 	
 	// 평가하기
 	@RequestMapping(value = "/putStar", method = RequestMethod.POST)
+	@Transactional
 	public String putStar(String driver_m_id, int rating, int driver_seq, RedirectAttributes rttr, HttpSession session) {
 		MemberVo loginVo = (MemberVo)session.getAttribute("loginVo");
-		boolean star_result = mylogService.putStar(driver_m_id, rating);
+		System.out.println("rating:" + rating);
+		evlService.updateDriverEvl(driver_m_id, rating);
 		boolean finish_result = mylogService.evl_finish(loginVo.getM_id(), driver_seq);
-		System.out.println(star_result);
-		System.out.println(finish_result);
-		System.out.println(driver_seq);
-		rttr.addFlashAttribute("star_result", star_result);
 		return "redirect:/my/boardedHistory";
 	}
 }

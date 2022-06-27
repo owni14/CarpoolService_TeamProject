@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.team.util.CodeEnum;
 import com.kh.team.vo.Driver_EvlVo;
 import com.kh.team.vo.Is_Update_PointVo;
 import com.kh.team.vo.Passenger_EvlVo;
@@ -19,7 +20,7 @@ private SqlSession sqlSession;
 private final String NAMESPACE="com.kh.team.mappers.evl.";
 	@Override
 	public boolean insertDriverEvl(Driver_EvlVo driver_EvlVo) {
-		int count=sqlSession.insert(NAMESPACE+"insertDriverEvl", driver_EvlVo);
+		int count=sqlSession.insert(NAMESPACE + "insertDriverEvl", driver_EvlVo);
 		if(count>0) {
 			return true;
 		}
@@ -27,8 +28,8 @@ private final String NAMESPACE="com.kh.team.mappers.evl.";
 	}
 
 	@Override
-	public boolean insertPassengerEvl(Passenger_EvlVo passenger_Evl) {
-		int count=sqlSession.insert(NAMESPACE+"insertPassengerEvl", passenger_Evl);
+	public boolean insertPassengerEvl(String m_id) {
+		int count=sqlSession.insert(NAMESPACE + "insertPassengerEvl", m_id);
 		if(count>0) {
 			return true;
 		}
@@ -135,5 +136,30 @@ private final String NAMESPACE="com.kh.team.mappers.evl.";
 		return count;
 	}
 
+	@Override
+	public boolean driverEvlUpdate(String m_id, int rating) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("rating", rating);
+		int count = sqlSession.update(NAMESPACE + "driverEvlUpdate", map);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Driver_EvlVo getDriverEvlInfo(String m_id) {
+		Driver_EvlVo evlVo = sqlSession.selectOne(NAMESPACE + "getDriverEvlInfo", m_id);
+		return evlVo;
+	}
+
+	@Override
+	public void driverGradeUpdate(String m_id, String g_code) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("g_code", g_code);
+		sqlSession.update(NAMESPACE + "driverGradeUpdate", map);
+	}
 	
 }

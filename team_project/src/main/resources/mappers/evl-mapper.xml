@@ -13,10 +13,8 @@
 	</insert>
 	
 	<insert id="insertPassengerEvl">
-	insert into passenger_evl
-	(pe_seq, pe_ride_count, m_id, g_code)
-	values
-	(seq_passenger_evl.nextval, #{pe_ride_count}, #{m_id}, #{g_code})
+	insert into passenger_evl (pe_seq, m_id)
+		values (seq_passenger_evl.nextval, #{m_id})
 	</insert>
 	
 	<select id="selectEvlCodeList" resultType="string">
@@ -104,5 +102,39 @@ where m.m_id = pe.m_id and  pe.g_code = gb.g_code
 	select count(*) from passenger_evl 
 	where g_code = '1010'
 	</select>
+	
+	<update id="driverEvlUpdate">
+		update driver_evl set
+		<choose>
+			<when test="rating == 1">
+				evl1 = evl1 + 1
+			</when>
+			<when test="rating == 2">
+				evl2 = evl2 + 1
+			</when>
+			<when test="rating == 3">
+				evl3 = evl3 + 1
+			</when>
+			<when test="rating == 4">
+				evl4 = evl4 + 1
+			</when>
+			<when test="rating == 5">
+				evl5 = evl5 + 1
+			</when>
+		</choose>
+		, evl_count = evl_count + 1
+		where m_id = #{m_id}
+	</update>
+	
+	<select id="getDriverEvlInfo" resultType="Driver_EvlVo">
+		select * from driver_evl
+		where m_id = #{m_id}
+	</select>
+	
+	<update id="driverGradeUpdate">
+		update driver_evl set
+		g_code = #{g_code}
+		where m_id = #{m_id}
+	</update>
 	
 </mapper>

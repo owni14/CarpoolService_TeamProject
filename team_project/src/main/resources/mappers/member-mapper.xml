@@ -8,7 +8,7 @@
 		insert into member
 			(m_id, m_name, m_pw, gender, m_company, m_dept, m_is_smoke, m_address, m_cellphone, character)
 		values 
-			(#{m_id}, #{m_name}, #{m_pw}, #{gender}, #{m_company}, #{m_dept}, #{m_is_smoke}, #{m_address, jdbcType=VARCHAR}, #{m_cellphone}, #{character})
+			(#{m_id}, #{m_name}, #{m_pw}, #{gender}, #{m_company}, #{m_dept}, #{m_is_smoke}, #{m_address, jdbcType=VARCHAR}, #{m_cellphone}, #{character, jdbcType=VARCHAR})
 	</insert>
 	
 	<select id="getMemberByIdAndPw" resultType="MemberVo">
@@ -129,15 +129,14 @@
 		where m_id = #{m_id}
 	</update>
 	
-	<select id="getTop5EvlMembers" resultType="MemberVo">
-		select m_id, m_evl from
-			(select rownum rnum, a.* from
-				(select * from member
-				order by m_evl desc)a)
-		<![CDATA[
-		where rnum <= 5
-		]]>
-	</select>
+<!-- 	<select id="getTop5EvlMembers" resultType="MemberVo"> -->
+<!-- 		select m_id from -->
+<!-- 			(select rownum rnum, a.* from -->
+<!-- 				(select * from member)a) -->
+<!-- 		<![CDATA[ -->
+<!-- 		where rnum <= 5 -->
+<!-- 		]]> -->
+<!-- 	</select> -->
 
 	<select id="isApplication" resultType="_int">
 		select count(*) from passenger

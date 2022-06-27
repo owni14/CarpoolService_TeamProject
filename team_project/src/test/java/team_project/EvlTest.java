@@ -35,7 +35,10 @@ public class EvlTest {
 	
 	@Test
 	public void insertPassengerEvlTest() {
-		evlDao.insertPassengerEvl("user06@gmail.com");
+		for (int i = 1; i <= 40; i++ ) {
+			evlDao.insertPassengerEvl("user0" + i + "@email.com");
+		}
+		
 	}
 	//ok
 	

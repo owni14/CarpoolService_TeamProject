@@ -77,7 +77,7 @@ public class AdminController {
 	public String homeAdmin(Model model,HttpSession session,PagingDto pagingDto) {
 		List<Map<String, Object>> notApprovedDriverList = memberService.adminNotApprovedDriver();
 		model.addAttribute("notApprovedDriverList",notApprovedDriverList);
-		List<MemberVo> top5List = memberService.getTop5EvlMembers();
+//		List<MemberVo> top5List = memberService.getTop5EvlMembers();
 		
 //		for (MemberVo memberVo : top5List) {
 //			System.out.println("index : " + index);
@@ -143,7 +143,7 @@ public class AdminController {
 		//드라이버 몇명?
 		int approve_count=memberService.selectApproveCount();
 		int totalMember=memberService.adminGetCount(null);
-		model.addAttribute("top5List", top5List);
+//		model.addAttribute("top5List", top5List);
 		model.addAttribute("noEventGetCount", noEventGetCount);
 		model.addAttribute("noAnswer", noAnswer);
 		model.addAttribute("dayPassengerCounts", dayPassengerCounts);

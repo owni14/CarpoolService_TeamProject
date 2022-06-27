@@ -103,7 +103,7 @@ var updateAnswer="${result}";
 								<i class="ti-face-smile" style="background-color:#54BD54"></i>
 								<div class="d-inline">
 									<h4>고객 문의 답변 완료 리스트</h4>
-									<span></span>
+									<a href="/admin/complainAnswerComplete"><span>전체보기</span></a>
 								</div>
 							</div>
 						<select style="height:26px; float: right; align-items: flex-end; margin: 50px 0px 0px" id="sel_adminCode">
@@ -151,8 +151,8 @@ var updateAnswer="${result}";
 					
 					</select>
 					&nbsp;
-					<input type="text" id="txtkeyword" style="background-color:white; border-color: #d2d2d2; margin-right:50px" placeholder="유저아이디로 검색합니다">
-					<button type="button" id="btnSearch" style="background-color:white; border-color: #d2d2d2;">검색&nbsp;&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
+					<input type="text" id="txtkeyword" style="background-color:white; border-color: #d2d2d2; " placeholder="유저아이디로 검색합니다">
+					<button type="button" id="btnSearch" style="background-color:white; border-color: #d2d2d2;">검색&nbsp;<i class="icofont icofont-search-alt-2"></i></button>
 						</div>
 					<div class="col-lg-3">
 						<div class="page-header-breadcrumb">

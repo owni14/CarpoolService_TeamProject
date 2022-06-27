@@ -64,7 +64,7 @@
 			<exclude-mapping path="/message/notifyReject"/>
 			<exclude-mapping path="/message/notifyComplete"/>
 			<exclude-mapping path="/message/checkSendedMessage"/>
-			
+			<exclude-mapping path="/message/EventIsNoGet"/>
 			<beans:ref bean="mainInterceptor"/>
 		</interceptor>
 		

@@ -65,15 +65,15 @@
 	
 	<select id="getAllFinishList" resultType="ComplainVo">
 	select * from complain where complain_is_finish ='Y'
-	order by complain_answer_date desc
+	
 	<include refid="search"></include>
+	order by complain_answer_date desc
 	</select>
 	
 	<select id="getAllFinishListByCode" resultType="ComplainVo">
 	select * from complain 
 	where complain_is_finish ='Y'
-	and
-	admin_code=#{admin_code}
+
 	<include refid="search"></include>
 	</select>
 	

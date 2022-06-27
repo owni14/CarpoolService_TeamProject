@@ -112,11 +112,47 @@ public class NotifyDaoImpl implements NotifyDao{
 
 	@Override
 	public boolean isBlockPeople(String m_id) {
-		int count = sqlSession.insert(NAMESPACE + "isBlockPeople", m_id);
+		int count = sqlSession.selectOne(NAMESPACE + "isBlockPeople", m_id);
 		if (count > 0) {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int Blockscore1(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "Blockscore1", m_id);
+		return count;
+	}
+
+	@Override
+	public int Blockscore2(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "Blockscore2", m_id);
+		return count;
+	}
+
+	@Override
+	public int Blockscore3(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "Blockscore3", m_id);
+		return count;
+	}
+
+	@Override
+	public int Blockscore4(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "Blockscore4", m_id);
+		return count;
+	}
+
+	@Override
+	public int Blockscore5(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "Blockscore5", m_id);
+		return count;
+	}
+
+	@Override
+	public List<String> ListBlockPeople() {
+		List<String> m_id = sqlSession.selectList(NAMESPACE + "ListBlockPeople");
+		return m_id;
 	}
 
 }

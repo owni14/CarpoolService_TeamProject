@@ -64,10 +64,10 @@ $(document).ready(function() {
 													<div class="col-md-3">
 														<c:choose>
 															<c:when test="${blackListVo.black_is_processed eq 'Y'}">
-																<img alt="승인" src="/resources/images/stamp/approved1.jpg">
+																<img alt="승인" src="/resources/images/stamp/approved.jpg">
 															</c:when>
 															<c:when test="${blackListVo.black_is_processed eq 'C'}">
-																<img alt="거절" src="/resources/images/stamp/rejected1.jpg">
+																<img alt="거절" src="/resources/images/stamp/rejected.jpg">
 															</c:when>
 															<c:when test="${blackListVo.black_is_processed eq 'N'}">
 																<img alt="대기" src="/resources/images/stamp/wait.png" width="175" height="125">

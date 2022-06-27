@@ -30,8 +30,8 @@ private MessageDao messageDao;
 	}
 
 	@Override
-	public boolean insertPassengerEvl(Passenger_EvlVo passenger_Evl) {
-		return evlDao.insertPassengerEvl(passenger_Evl);
+	public boolean insertPassengerEvl(String m_id) {
+		return evlDao.insertPassengerEvl(m_id);
 	}
 
 	@Override

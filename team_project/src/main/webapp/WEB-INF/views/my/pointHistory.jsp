@@ -3,7 +3,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <%@ include file="/WEB-INF/views/my/my_header.jsp"%>
+<style>
+/* tab css start */
+nav > .nav.nav-tabs{
 
+  border: none;
+    color:#fff;
+    background:#aa80ff;
+    border-radius:0;
+
+}
+nav > div a.nav-item.nav-link,
+nav > div a.nav-item.nav-link.active
+{
+  border: none;
+    padding: 18px 25px;
+    color:#fff;
+    background:#aa80ff;
+    border-radius:0;
+}
+
+nav > div a.nav-item.nav-link.active:after
+ {
+  content: "";
+  position: relative;
+  bottom: -60px;
+  left: -10%;
+  border: 15px solid transparent;
+  border-top-color: #aa80ff ;
+}
+
+nav > div a.nav-item.nav-link:hover,
+nav > div a.nav-item.nav-link:focus
+{
+  border: none;
+    background: #5c5c8a;
+    color:#fff;
+    border-radius:0;
+    transition:background 0.20s linear;
+}
+/* tab css end */
+</style>
 <script>
 $(document).ready(function() {
 	var frmPaging = $("#frmPaging");
@@ -37,23 +77,13 @@ $(document).ready(function() {
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
-	
-		<!-- tab start -->
-		<div class="tabbable" id="tabs-391804">
-			<ul class="nav nav-tabs">
-				<li class="nav-item">
-					<a class="nav-link" href="/my/boardedHistory">탑승 내역</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/my/driveHistory">운전 내역</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="#">포인트 내역</a>
-				</li>
-			</ul>
-		</div>
-		<!-- tab end -->
-		
+		<nav style="margin: 20px;">
+          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link" id="nav-home-tab" href="/my/boardedHistory" aria-controls="nav-home" aria-selected="false">탑승 내역</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" href="/my/driveHistory" aria-controls="nav-profile" aria-selected="false">운전 내역</a>
+            <a class="nav-item nav-link active" id="nav-contact-tab" href="/my/pointHistory" aria-controls="nav-contact" aria-selected="true">포인트 내역</a>
+          </div>
+        </nav>
 		<!-- table start -->
 		<table class="table" style="text-align: center;">
 			<thead>

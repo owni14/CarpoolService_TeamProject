@@ -14,7 +14,45 @@
 
 .e_tr:hover { background-color: aliceblue; cursor: pointer; }
 
+/* tab css start */
+nav > .nav.nav-tabs{
 
+  border: none;
+    color:#fff;
+    background:#3731C9;
+    border-radius:0;
+
+}
+nav > div a.nav-item.nav-link,
+nav > div a.nav-item.nav-link.active
+{
+  border: none;
+    padding: 18px 25px;
+    color:#fff;
+    background:#3731C9;
+    border-radius:0;
+}
+
+nav > div a.nav-item.nav-link.active:after
+ {
+  content: "";
+  position: relative;
+  bottom: -60px;
+  left: -10%;
+  border: 15px solid transparent;
+  border-top-color: #3731C9;
+}
+
+nav > div a.nav-item.nav-link:hover,
+nav > div a.nav-item.nav-link:focus
+{
+  border: none;
+    background: #5c5c8a;
+    color:#fff;
+    border-radius:0;
+    transition:background 0.20s linear;	
+}
+/* tab css end */
 </style>
 
 <script>
@@ -46,6 +84,14 @@ $(document).ready(function() {
 			<div class="col-md-2">
 			</div>
 			<div class="col-md-8">
+				<nav style="margin-bottom: 40px;">
+					<div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+			            <a class="nav-item nav-link active" id="nav-home-tab" href="#" aria-controls="nav-home" aria-selected="true">진행중인 이벤트</a>
+			            <a class="nav-item nav-link" id="nav-profile-tab" href="/event/winner" aria-controls="nav-profile" aria-selected="false">당첨자 발표</a>
+			            <a class="nav-item nav-link" id="nav-contact-tab" href="/event/info" aria-controls="nav-contact" aria-selected="false">등급별 혜택</a>
+		          	</div>
+		        </nav>
+			
 				<div class="tabbable" id="tabs-391804">
 					<ul class="nav nav-tabs">
 						<li class="nav-item">

@@ -34,8 +34,7 @@ public class EvlTest {
 	
 	@Test
 	public void insertPassengerEvlTest() {
-		Passenger_EvlVo passenger_EvlVo= new Passenger_EvlVo(0, 120, "user06@gmail.com", "1006");
-		evlDao.insertPassengerEvl(passenger_EvlVo);
+		evlDao.insertPassengerEvl("user06@gmail.com");
 	}
 	//ok
 	

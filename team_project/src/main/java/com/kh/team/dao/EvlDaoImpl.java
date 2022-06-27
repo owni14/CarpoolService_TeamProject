@@ -19,7 +19,7 @@ private SqlSession sqlSession;
 private final String NAMESPACE="com.kh.team.mappers.evl.";
 	@Override
 	public boolean insertDriverEvl(Driver_EvlVo driver_EvlVo) {
-		int count=sqlSession.insert(NAMESPACE+"insertDriverEvl", driver_EvlVo);
+		int count=sqlSession.insert(NAMESPACE + "insertDriverEvl", driver_EvlVo);
 		if(count>0) {
 			return true;
 		}
@@ -27,8 +27,8 @@ private final String NAMESPACE="com.kh.team.mappers.evl.";
 	}
 
 	@Override
-	public boolean insertPassengerEvl(Passenger_EvlVo passenger_Evl) {
-		int count=sqlSession.insert(NAMESPACE+"insertPassengerEvl", passenger_Evl);
+	public boolean insertPassengerEvl(String m_id) {
+		int count=sqlSession.insert(NAMESPACE + "insertPassengerEvl", m_id);
 		if(count>0) {
 			return true;
 		}

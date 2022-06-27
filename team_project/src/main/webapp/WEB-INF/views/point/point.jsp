@@ -7,6 +7,19 @@
 .coupon_img { width: 243px; height: 153px;}
 .modal_content { text-align: center; }
 #p_price_comment { color: red; }
+
+
+.jumbotron {
+    margin-bottom: 0px;
+    background-image: url(/resources/images/banner/point_home_banner.jpg);
+    background-position: center;
+    height: 300px;
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #2723A1;
+}
+
+
 </style>
 <script>
 $(document).ready(function() {
@@ -89,19 +102,13 @@ $(document).ready(function() {
 		
 	</div>
 	<!-- modal end -->
-	
+	<div class="jumbotron">
+		<p style="text-align: right;">현재 내 포인트 : ${loginVo.m_point}</p>
+	</div>
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
-		<div class="jumbotron">
-			<h2>
-				포인트
-			</h2>
-			<p>
-				~~~~~~~~~~~~~~~~~~~~~~~~~~ 설명 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			</p>
-			<p style="text-align: right;">현재 내 포인트 : ${loginVo.m_point}</p>
-		</div>
+		
 		<table class="table">
 			<tr class="point_td" data-text="스타벅스 쿠폰">
 				<td colspan="3" class="coupon_title" id="startbugs">

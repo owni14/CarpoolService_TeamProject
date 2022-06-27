@@ -368,14 +368,12 @@ tbody > tr:hover {background-color: aliceblue;}
 			</div>
 			<!-- 쪽지 보내기 card end -->
 			<!-- 쪽지 읽기 card start -->
-			<div  class="col-md-12 col-xl-3" style="display:inline-block; margin-left:20px">
+			<div  class="col-md-12 col-xl-3" style="display:inline; margin-left:20px">
+				<img alt="스마트폰 이미지" src="/resources/images/managerimage/smartPhone.jpg" height="500px">
 				<div id="divMessage" class="card-header" style="display:none; background-color:white">
 					<span><b>내용</b></span>
 					<span id="spanClose" style="float:right"><b>x</b></span><br><br>
 					<span id="spanMessage"></span>
-					<div style="float:right"><button id="btnAdminscode" type="button" class="btn btn-inverse btn-round"
-				    		style="background-color: white; font-size: 12px; color: black; text-align: center">답장</button>
-					</div>
 				</div>
 			</div>
 			<!-- 쪽지 읽기 card end -->

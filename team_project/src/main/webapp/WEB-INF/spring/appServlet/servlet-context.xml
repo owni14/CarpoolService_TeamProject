@@ -64,6 +64,8 @@
 			<exclude-mapping path="/message/notifyReject"/>
 			<exclude-mapping path="/message/notifyComplete"/>
 			<exclude-mapping path="/message/checkSendedMessage"/>
+			<exclude-mapping path="/message/sendMessageBetweenAdmins"/>
+			<exclude-mapping path="/message/readMessage"/>
 			
 			<beans:ref bean="mainInterceptor"/>
 		</interceptor>

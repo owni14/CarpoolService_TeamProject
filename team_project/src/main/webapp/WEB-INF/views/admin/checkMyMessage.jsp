@@ -9,6 +9,8 @@
 tbody > tr:hover {background-color: aliceblue;}  
 #trNoHover:hover {background-color: white;}
 #spanClose:hover {cursor: pointer;}
+#aSender:hover {cursor: pointer;}
+#spanSender:hover {color: #F09494;}
 </style>
 <script>
 	$(document).ready(function () {
@@ -129,10 +131,10 @@ tbody > tr:hover {background-color: aliceblue;}
 			var contentLength = content.length;
 // 			console.log("글자 : " + content);
 // 			console.log("글자수 : " + contentLength);
-			if (contentLength < 500) {
+			if (contentLength < 200) {
 				$("#nowLength").text(contentLength);
 				$("#nowLength").css("color","green");
-			} else if (contentLength = 500) {
+			} else if (contentLength = 200) {
 				$("#nowLength").text(contentLength);
 				$("#nowLength").css("color","red");
 			}
@@ -211,9 +213,12 @@ tbody > tr:hover {background-color: aliceblue;}
 		$(".tdContents").click(function () {
 			var content = $(this).attr("data-content");
 			var message_seq = $(this).attr("data-messageseq");
+			var sender = $(this).attr("data-sender");
 			$("#divMessage").show("slow");
 			$("#spanMessage").text("");
 			$("#spanMessage").text(content);
+			$("#spanSender").text("");
+			$("#spanSender").text(sender);
 			
 			var url = "/message/readMessage";
 			var sData = {"message_seq" : message_seq};
@@ -225,6 +230,12 @@ tbody > tr:hover {background-color: aliceblue;}
 		
 		$("#spanClose").click(function () {
 			$("#divMessage").hide("slow");
+			$("#inputSendToMe").val("");
+		});
+		$("#aSender").click(function () {
+			console.log("click");
+			var admin_code = $("#spanSender").text();
+			$("#inputSendToMe").val(admin_code);
 		});
 	});
 </script>
@@ -273,7 +284,7 @@ tbody > tr:hover {background-color: aliceblue;}
 								<textarea id="taAdminCodes" style="width: 100%; height: 150px; background-color: white; text-align: center" disabled="disabled"></textarea>
 							</div>
 						</div>
-						<!-- 주소록 만들기  start -->
+						<!-- 주소록 만들기  end -->
 					</div>
 					<div class="modal-footer">
 
@@ -331,8 +342,10 @@ tbody > tr:hover {background-color: aliceblue;}
 			<!-- Page-body start -->
 			<div class="page-body">
 			<!-- 쪽지 보내기 card start -->
+			<div class="row">
 			<!-- col-lg-5 -->
-			<div class="card col-md-12 col-xl-5" style="display:inline-block;">
+			<div class="col-md-12 col-xl-5" >
+				<div class="card">
 				<div class="card-header">
 				<form id="frmMessage" action="/message/sendMessageBetweenAdmins" method="post">
 				<input type="hidden" name="sender_admin_code" value="${admin_code}">
@@ -359,23 +372,42 @@ tbody > tr:hover {background-color: aliceblue;}
 				    </tr>
 			    </table>
 <!-- 			    <textarea id="taMessage" name="content" style="width:403px; height: 300px; margin-left:20px" maxlength="500"></textarea> -->
-			    <textarea id="taMessage" name="content" style="width:480px; height: 300px; margin-left:20px; margin-top: 1px" maxlength="500"></textarea>
+			    <textarea id="taMessage" name="content" style="width:480px; height: 300px; margin-left:20px; margin-top: 1px" maxlength="200"></textarea>
 			    </form>
 			    <div style="margin-left:20px">
-			    	<span id="nowLength" style="display:inline;">0</span><span style="display:inline">/500자</span>
+			    	<span id="nowLength" style="display:inline;">0</span><span style="display:inline">/200자</span>
+				</div>
 				</div>
 				</div>
 			</div>
 			<!-- 쪽지 보내기 card end -->
 			<!-- 쪽지 읽기 card start -->
-			<div  class="col-md-12 col-xl-3" style="display:inline; margin-left:20px">
-				<img alt="스마트폰 이미지" src="/resources/images/managerimage/smartPhone.jpg" height="500px">
-				<div id="divMessage" class="card-header" style="display:none; background-color:white">
-					<span><b>내용</b></span>
-					<span id="spanClose" style="float:right"><b>x</b></span><br><br>
+			<div  class="col-md-12 col-xl-3" >
+<!-- 				<img alt="스마트폰 이미지" src="/resources/images/managerimage/smartPhone.jpg" height="500px"> -->
+				<div class="card">
+				<div id="divMessage" class="card-header" 
+					style="
+					background-image:url(/resources/images/managerimage/smartPhone.jpg); background-repeat:no-repeat;
+					background-size: 90% 100%;
+					background-position: center center;
+					height:456px;
+					background-color:white; display: none; ">
+					<div style="display: inline-block; position: absolute; top: 40px; width: 50%; left: 90px">
+					<h5>내용</h5>
+					<span id="spanClose" style="float: right; margin-right: 5px"><b>x</b></span>
+					<div style="position: absolute; top: 50px;">
+					<a id="aSender"><span id="spanSender"></span></a>
+					</div>
+					<div style="position: absolute; top: 80px;">
 					<span id="spanMessage"></span>
+					</div>
+					</div>
+				</div>
 				</div>
 			</div>
+			</div>
+			
+			
 			<!-- 쪽지 읽기 card end -->
 			<!-- Basic table card start -->
 			<div class="card">
@@ -413,10 +445,15 @@ tbody > tr:hover {background-color: aliceblue;}
 								</thead>
 								<tbody>
 									<c:forEach var="messageVo" items="${getMessageList}" varStatus="status">
-									<tr>	
+									<tr
+										<c:if test="${messageVo.opendate == null}">
+											style="color:#3296D7"
+										</c:if>
+									>	
 										<th scope="row">${status.count}</th>
 										<td>${messageVo.sender_admin_code}</td>
-										<td class="tdContents" data-content="${messageVo.content}" data-messageseq="${messageVo.message_seq}">
+										<td class="tdContents" data-content="${messageVo.content}" data-messageseq="${messageVo.message_seq}"
+											data-sender="${messageVo.sender_admin_code}">
 											<c:choose>
 											<c:when test="${messageVo.content.length() < 30}">
 												${messageVo.content}

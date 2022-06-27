@@ -92,7 +92,6 @@
 	}
 	
 
-
 }
 </style>
 <script>
@@ -265,8 +264,9 @@ $(document).ready(function() {
 				<div id="blind" style="text-align: center; position: absolute; width: 100%; height: 100%; ">
 					<p style="
 						background-color: rgba( 51, 51, 51, 0.8 ); position: relative; width: 100%; height: 100%;
-						text-align: center;
-					"><span style="font-size: 35px; font-weight: bold; color: white;  ">운전자 등록을 해주세요.</span></p>
+						text-align: center;">
+						<span style="font-size: 35px; font-weight: bold; color: white;  ">운전자 등록을 해주세요.</span><br>
+					</p>
 				</div>
 				</c:if>
 				<!-- 나의 평점 보기 start -->

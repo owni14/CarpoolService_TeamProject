@@ -8,6 +8,7 @@ $(document).ready(function() {
 	var driverResult = "${driverResult}";
 	var registerDriver = "${registerDriver}";
 	var approve_result = "${approve_result}";
+	var join_result = "${join_result}";
 	if (isExistenceFile == "true") {
 		alert("이미 등록된 면허증입니다.");
 	}
@@ -23,6 +24,11 @@ $(document).ready(function() {
 	}
 	if (approve_result == "false") {
 		alert("아직 운전자 등록이 승인되지 않았습니다. \n신청 후 3일 이내 승인이 완료되지 않을 경우 고객센터로 문의부탁드립니다.");
+	}
+	
+	// 회원가입
+	if(join_result == "true") {
+		alert("회원가입에 성공하였습니다.");
 	}
 });
 </script>

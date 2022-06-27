@@ -12,9 +12,12 @@
 </style>
 <script>
 $(document).ready(function() {
-	
+	var join_result = "${join_result}";
+	if(join_result == "false") {
+		alert("회원가입에 실패하였습니다. 다시 시도해주세요.");
+	}
 });
-$("#select").selectpicker();
+
 </script>
 <div class="row">
 	<div class="col-md-12">
@@ -39,7 +42,7 @@ $("#select").selectpicker();
 					</div>
 					<div class="form-group">
 						<label for="m_cellphone">휴대폰 번호</label>
-						<input type="text" class="form-control" id="m_cellphone" name="m_cellphone" placeholder="ex) 01012345678" required/>
+						<input type="text" class="form-control" id="m_cellphone" name="m_cellphone" placeholder="ex) 01012345678" required />
 					</div>
 					<div class="form-group">
 						<label style="margin-right: 15px;">성별</label>
@@ -50,7 +53,7 @@ $("#select").selectpicker();
 					<div class="form-group">
 						<label for="m_company">회사</label>
 						<select class="form-control btn" name="m_company">
-							<option>회사를 선택해주세요</option>
+							<option value="null">회사를 선택해주세요</option>
 							<option value="SAMSUNG">삼성</option>
 							<option value="HYUNDAI">현대</option>
 							<option value="SK">SK</option>
@@ -79,7 +82,7 @@ $("#select").selectpicker();
 					<div class="form-group">
 						<label style="margin-right: 15px;">캐릭터 설정</label><br>
 						<div style="text-align: center;">
-							<input type="radio" name="character" value="male"><img alt="male.png" src="/resources/images/character/male.png" width="70px;" height="70px;">
+							<input type="radio" name="character" value="male" checked><img alt="male.png" src="/resources/images/character/male.png" width="70px;" height="70px;">
 							<input type="radio" name="character" value="male2"><img alt="male1.png" src="/resources/images/character/male2.png" width="70px;" height="70px;">
 							<input type="radio" name="character" value="male3"><img alt="male2.png" src="/resources/images/character/male3.png" width="70px;" height="70px;">
 							<input type="radio" name="character" value="female"><img alt="female.png" src="/resources/images/character/female.png" width="70px;" height="70px;">

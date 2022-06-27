@@ -89,6 +89,7 @@ $(document).ready(function() {
 			<thead>
 				<tr>
 					<th style="text-align: right;" colspan="4">
+						현재 포인트 : ${loginVo.m_point}
 						<select name="perPage" id="perPage">
 							<c:forEach var="v" begin="5" end="15" step="5">
 								<option value="${v}"
@@ -103,7 +104,6 @@ $(document).ready(function() {
 							</c:if>
 							>전체보기</option>
 						</select>
-						현재 포인트 : ${loginVo.m_point}
 					</th>
 				</tr>
 				<tr>

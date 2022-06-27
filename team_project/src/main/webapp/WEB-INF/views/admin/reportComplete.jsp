@@ -141,6 +141,7 @@
 		</div>
 	</div>
 <!-- modal end -->
+
 <!-- start inner header -->
 	<div class="pcoded-inner-content">
 		<!-- Main-body start -->
@@ -286,6 +287,142 @@
 							</script>
 							<!-- chart Ends -->
 						</div>
+						
+						<div class="col-md-12 col-xl-4" style="margin-left:20px">
+							<table>
+								<thead>
+								<tr>
+									<td><b><a href="#">블랙리스트 회원 (총 벌점 10점 이상 회원)</a></b></td>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+								<c:forEach begin="1" end="2" var="v" step="1">
+									<c:set var="m_id" value="m_id${v}"></c:set>
+									<c:set var="m_idPoint1" value="m_id${v}point1"></c:set>
+									<c:set var="m_idPoint2" value="m_id${v}point2"></c:set>
+									<c:set var="m_idPoint3" value="m_id${v}point3"></c:set>
+									<c:set var="m_idPoint4" value="m_id${v}point4"></c:set>
+									<c:set var="m_idPoint5" value="m_id${v}point5"></c:set>
+									<td>
+									<canvas id="marksChart${v}" width="400" height="400"></canvas>
+									<div>
+										<span style="font-size: 15px; margin-left: 150px">${requestScope[m_id]}</span>
+										<span style="font-size: 15px; margin-left: 10px">총 ${1*requestScope[m_idPoint1] + 2*requestScope[m_idPoint2] + 3*requestScope[m_idPoint3]
+										+ 4*requestScope[m_idPoint4] + 5*requestScope[m_idPoint5]}점</span>
+									</div>
+									<c:choose>
+										<c:when test="${v == 1}">
+									<script>
+										var marksData = {
+											  labels: ["1점", "2점", "3점","4점","5점"],
+											  datasets: [{
+											    label: "벌점",
+											    backgroundColor: "rgba(255, 99, 132, 0.2)",
+											    borderColor: "rgba(255, 99, 132, 1)",
+											    fill: true,
+											    radius: 3,
+											    pointRadius: 3,
+											    pointBorderWidth: 1,
+											    pointBackgroundColor: "rgba(255, 99, 132, 1)",
+											    pointBorderColor: "rgba(255, 99, 132, 1)",
+											    pointHoverRadius: 10,
+											    data: ["${requestScope[m_idPoint1]}","${requestScope[m_idPoint2]}","${requestScope[m_idPoint3]}",
+											    	"${requestScope[m_idPoint4]}","${requestScope[m_idPoint5]}"]
+											  }]
+											};
+											var chartOptions = {
+											  scale: {
+											    gridLines: {
+											      color: "rgba(201, 203, 207, 0.2)",
+											      lineWidth: 2.5
+											    },
+											    angleLines: {
+											      display: true
+											    },
+											    ticks: {
+											      beginAtZero: true,
+											      min: 0,
+											      max: 5,
+											      stepSize: 1
+											    },
+											    pointLabels: {
+											      fontSize: 13,
+											      fontColor: "#2A0A0A"
+											    }
+											  },
+											  legend: {
+											    position: 'left'
+											  }
+											};
+		
+											new Chart(document.getElementById("marksChart${v}"), {
+												  type: 'radar',
+												  data: marksData,
+												  options: chartOptions
+												});
+							</script>
+								</c:when>
+								<c:otherwise>
+								<script>
+										var marksData = {
+											  labels: ["1점", "2점", "3점","4점","5점"],
+											  datasets: [{
+											    label: "벌점",
+											    backgroundColor: "rgba(255, 159, 64, 0.2)",
+											    borderColor: "rgba(255, 159, 64, 1)",
+											    fill: true,
+											    radius: 3,
+											    pointRadius: 3,
+											    pointBorderWidth: 1,
+											    pointBackgroundColor: "rgba(255, 159, 64, 1)",
+											    pointBorderColor: "rgba(255, 159, 64, 1)",
+											    pointHoverRadius: 10,
+											    data: ["${requestScope[m_idPoint1]}","${requestScope[m_idPoint2]}","${requestScope[m_idPoint3]}",
+											    	"${requestScope[m_idPoint4]}","${requestScope[m_idPoint5]}"]
+											  }]
+											};
+											var chartOptions = {
+											  scale: {
+											    gridLines: {
+											      color: "rgba(201, 203, 207, 0.2)",
+											      lineWidth: 2.5
+											    },
+											    angleLines: {
+											      display: true
+											    },
+											    ticks: {
+											      beginAtZero: true,
+											      min: 0,
+											      max: 5,
+											      stepSize: 1
+											    },
+											    pointLabels: {
+											      fontSize: 13,
+											      fontColor: "#2A0A0A"
+											    }
+											  },
+											  legend: {
+											    position: 'left'
+											  }
+											};
+		
+											new Chart(document.getElementById("marksChart${v}"), {
+												  type: 'radar',
+												  data: marksData,
+												  options: chartOptions
+												});
+							</script>
+								</c:otherwise>
+							</c:choose>
+							</td>
+							</c:forEach>
+							</tr>
+							
+							</tbody>
+							</table>
+						</div>
+					
 					</div>
 				<!-- 처리 결과 Y table start -->
 						<div class="row" style="padding-top:35px">

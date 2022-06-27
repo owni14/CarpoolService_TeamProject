@@ -7,26 +7,75 @@
 <style>
 strong { color: rgb(255, 83, 26); font-size: large; text-shadow: 2px 2px 3px gray;}
 .tdtdtdtd {vertical-align: middle;}
+
+/* tab css start */
+nav > .nav.nav-tabs{
+
+  border: none;
+    color:#fff;
+    background:#3731C9;
+    border-radius:0;
+
+}
+nav > div a.nav-item.nav-link,
+nav > div a.nav-item.nav-link.active
+{
+  border: none;
+    padding: 18px 25px;
+    color:#fff;
+    background:#3731C9;
+    border-radius:0;
+}
+
+nav > div a.nav-item.nav-link.active:after
+ {
+  content: "";
+  position: relative;
+  bottom: -60px;
+  left: -10%;
+  border: 15px solid transparent;
+  border-top-color: #3731C9;
+}
+
+nav > div a.nav-item.nav-link:hover,
+nav > div a.nav-item.nav-link:focus
+{
+  border: none;
+    background: #5c5c8a;
+    color:#fff;
+    border-radius:0;
+    transition:background 0.20s linear;
+}
+/* tab css end */
 </style>
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="row">
 			<div class="col-md-2">
 			</div>
 			<div class="col-md-8">
-				<div class="tabbable" id="tabs-391804">
-					<ul class="nav nav-tabs">
-						<li class="nav-item">
-							<a class="nav-link" href="/event/now">진행중인 이벤트</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/event/winner">당첨자 발표</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" href="#">등급별 혜택</a>
-						</li>
-					</ul>
-				</div>
+				<nav style="margin-bottom: 40px;">
+					<div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+			            <a class="nav-item nav-link" id="nav-home-tab" href="/event/now" aria-controls="nav-home" aria-selected="false">진행중인 이벤트</a>
+			            <a class="nav-item nav-link" id="nav-profile-tab" href="/event/winner" aria-controls="nav-profile" aria-selected="false">당첨자 발표</a>
+			            <a class="nav-item nav-link active" id="nav-contact-tab" href="/event/info" aria-controls="nav-contact" aria-selected="true">등급별 혜택</a>
+		          	</div>
+		        </nav>
+	          
+<!-- 				<div class="tabbable" id="tabs-391804"> -->
+<!-- 					<ul class="nav nav-tabs"> -->
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link" href="/event/now">진행중인 이벤트</a> -->
+<!-- 						</li> -->
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link" href="/event/winner">당첨자 발표</a> -->
+<!-- 						</li> -->
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link active" href="#">등급별 혜택</a> -->
+<!-- 						</li> -->
+<!-- 					</ul> -->
+<!-- 				</div> -->
 				
 				<table class="table" style="text-align: center;">
 					<thead>
@@ -76,7 +125,7 @@ strong { color: rgb(255, 83, 26); font-size: large; text-shadow: 2px 2px 3px gra
 							<td><img src="/resources/images/evl/silver.jpg" width="200px;" height="130px"></td>
 							<td style="vertical-align: middle;">
 								<p> 등급 조건 : 1년간 운전 횟수 8회 이상, 평점 3 이상 </p>
-								<p> 혜택 : 매달 1일 1000point 지급 </p>
+								<p> 혜택 : 매달 1일 100point 지급 </p>
 							</td>
 							<td style="vertical-align: middle;">
 								<p> 등급 조건 : 1년간 탑승 횟수 8회 이상 </p>

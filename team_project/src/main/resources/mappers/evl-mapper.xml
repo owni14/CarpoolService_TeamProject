@@ -13,10 +13,8 @@
 	</insert>
 	
 	<insert id="insertPassengerEvl">
-	insert into passenger_evl
-	(pe_seq, pe_ride_count, m_id, g_code)
-	values
-	(seq_passenger_evl.nextval, #{pe_ride_count}, #{m_id}, #{g_code})
+	insert into passenger_evl (pe_seq, m_id)
+		values (seq_passenger_evl.nextval, #{m_id})
 	</insert>
 	
 	<select id="selectEvlCodeList" resultType="string">

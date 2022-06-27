@@ -8,7 +8,7 @@ import com.kh.team.vo.Passenger_EvlVo;
 
 public interface EvlDao {
 	public boolean insertDriverEvl(Driver_EvlVo driver_EvlVo);
-	public boolean insertPassengerEvl(Passenger_EvlVo passenger_Evl);
+	public boolean insertPassengerEvl(String m_id);
 	public List<String> selectEvlCodeList();
 	public boolean updatePointByEvl();//드라이버 등급에 따른 포인트 업데이트
 	
@@ -28,5 +28,6 @@ public interface EvlDao {
 	public int countgoldPassenger();
 	public int countsilverPassenger();
 	public int countwhitePassenger();
+	
 	
 }

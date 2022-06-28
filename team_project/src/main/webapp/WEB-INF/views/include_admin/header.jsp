@@ -400,7 +400,7 @@ var nav = $('.fixed-button');
                                      <ul class="pcoded-submenu">
                                          
                                         <li class="more-details">                                       
-                                        		<a href="/admin/member_management"><i class="icofont icofont-listing-box"></i> &nbsp; 회원 테이블</a>
+                                        		<a href="/admin/member_management?page=1"><i class="icofont icofont-listing-box"></i> &nbsp; 회원 테이블</a>
                                         </li>
                                         <li class="more-details">
                                         		<a href="/admin/member_update_management"><i class="icofont icofont-tasks"></i> &nbsp; 회원 정보 수정 내역</a>

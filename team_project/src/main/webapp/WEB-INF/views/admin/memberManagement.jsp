@@ -83,23 +83,28 @@
 // 			console.log(m_is_drop);
 // 			console.log(update_reason);
 // 			console.log(admin_code);
-			var url = "/admin/memberInfoUpdate";
-			var sData = {
-				"m_id" : m_id,
-				"m_address" : m_address,
-				"m_cellphone" : m_cellphone,
-				"m_is_drop" : m_is_drop,
-				"update_reason" : update_reason,
-				"admin_code" : admin_code
-			};
-			$.post(url, sData, function (rData) {
-				console.log(rData);
-				if (rData == "true") {
-					frmPaging.attr("action","/admin/member_management");
-					frmPaging.attr("method","get");
-					frmPaging.submit();
-				}
-			});
+			if (update_reason != null && update_reason != "") {
+				var url = "/admin/memberInfoUpdate";
+				var sData = {
+					"m_id" : m_id,
+					"m_address" : m_address,
+					"m_cellphone" : m_cellphone,
+					"m_is_drop" : m_is_drop,
+					"update_reason" : update_reason,
+					"admin_code" : admin_code
+				};
+				$.post(url, sData, function (rData) {
+					console.log(rData);
+					if (rData == "true") {
+						frmPaging.attr("action","/admin/member_management");
+						frmPaging.attr("method","get");
+						frmPaging.submit();
+					}
+				});
+			} else {
+				alert("수정 사유를 작성해 주세요");
+			}
+		
 		});
 		
 	});

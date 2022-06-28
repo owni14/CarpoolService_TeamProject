@@ -54,7 +54,10 @@
 		});
 		$("#btnEventInsert").click(function(){
 			var content=getData();
-			console.log("c");
+			if(content ==null || content ==""){
+				content="빈칸";
+			}
+			
 			var event_enddate=$("#select_date").val();
 			if(event_enddate ==null){
 				alert('날짜를 골라주세요');
@@ -76,6 +79,12 @@
 				valPoint="500포인트";
 			}
 			var thumbnail_txt=form.find("[name=file]").val();
+			if(thumbnail_txt ==null || thumbnail_txt =="" ){
+				
+					alert('썸네일을 넣어주세요');
+					return;
+				
+			}
 			console.log("thumbnail_txt",thumbnail_txt);
 			//확장자체크
 			if(thumbnail_txt !=null && thumbnail_txt !="" ){

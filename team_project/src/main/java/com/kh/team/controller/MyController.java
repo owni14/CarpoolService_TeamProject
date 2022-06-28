@@ -102,6 +102,8 @@ public class MyController {
 		List<DriverVo> driverlogList = mylogService.driverlogListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
 		session.setAttribute("driverlogList", driverlogList);
 		
+		System.out.println(driverlogList);
+		
 		boolean result = mylogService.isDriver(m_id);
 		System.out.println(result);
 		if (result) {

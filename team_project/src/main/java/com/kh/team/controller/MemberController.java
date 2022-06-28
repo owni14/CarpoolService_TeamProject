@@ -111,5 +111,12 @@ public class MemberController {
 		return "member/foundPw";
 	}
 	
+	@RequestMapping(value = "/duplId", method = RequestMethod.POST)
+	@ResponseBody
+	public String isDuplicationId(String m_id) {
+		boolean result = memberService.isDuplicationId(m_id);
+		return String.valueOf(result);
+	}
+	
 	
 }

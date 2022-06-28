@@ -335,5 +335,9 @@
 		where m_id = #{m_id}
 	</update>
 	
+	<select id="isDuplicationId" resultType="_int">
+		select count(*) from member 
+		where m_id = #{m_id}
+	</select>
 
 </mapper>

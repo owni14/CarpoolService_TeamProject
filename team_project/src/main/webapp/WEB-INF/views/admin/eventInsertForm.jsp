@@ -54,6 +54,9 @@
 		});
 		$("#btnEventInsert").click(function(){
 			var content=getData();
+			if(content ==null || content ==""){
+				content="빈칸";
+			}
 			console.log("c");
 			var event_enddate=$("#select_date").val();
 			if(event_enddate ==null){

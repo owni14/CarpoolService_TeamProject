@@ -165,7 +165,7 @@
 		update approve_driver set 
 		ad_approve = 'Y',
 		ad_detail = '승인 완료'
-		where m_id = #{m_id}
+		where m_id = #{m_id} and ad_approve != 'N'
 	</update>
 
 	<select id="getTotalDriverCount" resultType="_int">

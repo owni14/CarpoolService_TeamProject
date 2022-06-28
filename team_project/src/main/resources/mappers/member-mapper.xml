@@ -328,5 +328,12 @@
 		where driver_seq = #{driver_seq}
 	</select>
 	
+	<update id="cancelDriver">
+		update approve_driver set
+		ad_approve = 'N',
+		ad_detail = '승인 취소'
+		where m_id = #{m_id}
+	</update>
+	
 
 </mapper>

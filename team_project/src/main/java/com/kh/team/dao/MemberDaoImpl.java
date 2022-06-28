@@ -407,4 +407,9 @@ public class MemberDaoImpl implements MemberDao {
 
 	}
 
+	@Override
+	public void cancelDriver(String m_id) {
+		sqlSession.update(NAMESPACE + "cancelDriver", m_id);
+	}
+
 }

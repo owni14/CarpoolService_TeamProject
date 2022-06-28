@@ -77,6 +77,11 @@
 			var m_is_drop = $("#inputMisDrop").val();
 			var update_reason = $("#inputReason").val();
 			var admin_code = "${sessionScope.admin_code}";
+			var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+			if (!regPhone.test(m_cellphone) || m_cellphone.length > 11) {
+		          alert("휴대폰 번호 양식이 올바르지 않습니다.");
+		    	return;  
+				}
 // 			console.log(m_id);
 // 			console.log(m_address);
 // 			console.log(m_cellphone);

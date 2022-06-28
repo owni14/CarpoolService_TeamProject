@@ -55,6 +55,20 @@
 							<i class="fa fa-map-marker" aria-hidden="true"></i>
 							울산광역시 남구 삼산로35번길 19  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Copyright <i class="fa fa-copyright" aria-hidden="true"></i> 2022 <a href="https://github.com/owni14/team_project">얻어타다</a> All Rights Reserved.
 						</p>
+						<div class="row">
+							<div class="col-5 text-right">
+								<img alt="회사로고" src="/resources/images/companyLogo/logo.jpg" width="250px" height="80px;">
+							</div>
+							<div class="col-7">
+								<p class="text-light">
+									김민우 kmwoo0514@naver.com &nbsp; &nbsp; 김형동 gudehd30425@naver.com
+								</p>
+								<p class="text-light">
+									 양희원 milk18621@gmail.com &nbsp; &nbsp; &nbsp; &nbsp; 이재곤 gin960@naver.com
+								</p>
+							</div>
+						</div>
+						
 					</div>
 				</div>
 			</div>

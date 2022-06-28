@@ -55,6 +55,8 @@ nav > div a.nav-item.nav-link:focus
 
 <script>
 $(document).ready(function() {
+	
+	// 페이징 처리
 	var frmPaging = $("#frmPaging");
 	
 	$("a.page-link").click(function(e) {
@@ -76,6 +78,7 @@ $(document).ready(function() {
 		frmPaging.submit();
 	});
 	
+	// 테이블 클릭
 	$(".tr_table").click(function() {
 		$("#modal-container-678121").modal('show');
 		var driver_seq = $(this).attr("data-seq");
@@ -87,13 +90,17 @@ $(document).ready(function() {
 // 			console.log(rData);
 			$("#modal_body tr").remove();
 			$.each(rData, function() {
+					console.log(rData);
 					var tr = $("#table_clone tr").clone();
+					console.log("tr:", tr);
 					var tds = tr.find("td");
-					$("#driver_drop").text(this.m_id);
+					var m_id = this.m_id;
+					console.log("m_id", m_id);
+					tr.find("#driver_drop").text(m_id);
 					tds.eq(1).text(this.passenger_depart_location);
 					tds.eq(2).text(this.passenger_depart_time);
 					$("#modal_body").append(tr);
-					tds.attr("data-receiver", this.m_id);
+					tds.attr("data-receiver", m_id);
 			});
 		});
 	});
@@ -103,6 +110,7 @@ $(document).ready(function() {
 	});
 });
 
+// 신고하기 클릭
 $(document).on("click", ".black", function(e) {
 	e.preventDefault();
 	$("#modal-container-678121").modal("hide");
@@ -111,6 +119,7 @@ $(document).on("click", ".black", function(e) {
 	$("#black_m_id").val(receiver);
 });
 
+// 쪽지 보내기 클릭
 $(document).on("click", ".message_form", function(e) {
 	e.preventDefault();
 	$("#modal-container-678121").modal("hide");
@@ -151,9 +160,7 @@ $(document).on("click", ".message_form", function(e) {
 						<table style="display:none;" id="table_clone">
 							<tr>
 								<td class="tds">
-									<button id="driver_drop" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-										
-				 					</button>
+									<button id="driver_drop" class="btn dropdown-toggle" type="button" data-toggle="dropdown"></button>
 				 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 										<a class="dropdown-item message_form" href="#" id="send_message" data-receiver="${passengerlogVo.DRIVER_ID}">쪽지보내기</a>
 										<a class="dropdown-item black" href="#" data-driver_id="${passengerlogVo.DRIVER_ID}">신고하기</a>

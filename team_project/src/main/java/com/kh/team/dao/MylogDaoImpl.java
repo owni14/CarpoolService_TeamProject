@@ -33,6 +33,7 @@ public class MylogDaoImpl implements MylogDao {
 		map.put("startRow", String.valueOf(startRow));
 		map.put("endRow", String.valueOf(endRow));
 		List<Map<String, Object>> passengerlogList = sqlSession.selectList(NAMESPACE + "passengerlogListById", map);
+		System.out.println(passengerlogList);
 		return passengerlogList;
 	}
 

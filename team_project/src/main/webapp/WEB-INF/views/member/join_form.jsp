@@ -16,6 +16,32 @@ $(document).ready(function() {
 	if(join_result == "false") {
 		alert("회원가입에 실패하였습니다. 다시 시도해주세요.");
 	}
+
+	$("#btnJoin").click(function() {
+		var m_cellphone = $("#m_cellphone").val();
+		var m_id = $("#m_id").val();
+		var url = "/member/duplId?m_id=" + m_id;
+		var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+		
+		$.post(url, function(rData) {
+			console.log(rData);
+			if(rData == "true") {
+				alert('아이디가 중복됩니다.');
+			} else {
+				if (!(regPhone.test(m_cellphone))) {
+					alert('휴대폰번호를 올바르게 입력해주세요.');
+					} else {
+						$("#frmJoin").submit();
+					}
+			}
+		});
+		
+		
+// 		if (!(regPhone.test(m_cellphone))) {
+// 			alert('휴대폰번호를 올바르게 입력해주세요.');
+// 			state = false;
+// 			}
+	});
 });
 
 </script>
@@ -24,7 +50,7 @@ $(document).ready(function() {
 		<div class="row" style="display: flex; height:1000px; margin-bottom: 150px;">
 			<div class="col-md-4"></div>
 			<div class="col-md-4" style="margin-top: 50px;">
-				<form role="form" action="join_run" method="post">
+				<form id="frmJoin" role="form" action="/member/join_run" method="post">
 					<div class="form-group" style="text-align: center;">
 						<span style="font-size: 50px;">회원 가입</span>
 					</div>
@@ -90,7 +116,7 @@ $(document).ready(function() {
 							<input type="radio" name="character" value="female3"><img alt="female3.png" src="/resources/images/character/female3.png" width="70px;" height="70px;">
 						</div>
 					</div>
-					<button type="submit" class="btn btn-primary" style="width:100%; height:50px; margin-top:20px;">
+					<button id="btnJoin" type="button" class="btn btn-primary" style="width:100%; height:50px; margin-top:20px;">
 						회원 가입
 					</button>
 				</form>

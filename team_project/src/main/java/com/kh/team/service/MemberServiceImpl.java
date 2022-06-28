@@ -274,4 +274,10 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.cancelDriver(m_id);
 		
 	}
+
+	@Override
+	public boolean isDuplicationId(String m_id) {
+		boolean result = memberDao.isDuplicationId(m_id);
+		return result;
+	}
 }

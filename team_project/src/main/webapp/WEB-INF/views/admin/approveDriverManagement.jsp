@@ -27,6 +27,8 @@
 		
 		$(".btn-cancel").click(function () {
 			var m_id = $(this).attr("data-m_id");
+			var ad_license_img =$(this).attr("data-ad_license_img");
+			console.log(ad_license_img);
 			var sender_admin_code = "${sessionScope.admin_code}";
 			var content = "운전자 등록이 취소 되었습니다.";
 			$("#frmCancel").attr("action", "/admin/cancelDriver");
@@ -34,7 +36,8 @@
 			$("#frmCancel").find("input[name=m_id]").val(m_id);
 			$("#frmCancel").find("input[name=sender_admin_code]").val(sender_admin_code);
 			$("#frmCancel").find("input[name=content]").val(content);
-// 			$("#frmCancel").submit();
+			$("#frmCancel").find("input[name=ad_license_img]").val(ad_license_img);
+			$("#frmCancel").submit();
 		});
 	});
 </script>
@@ -93,6 +96,7 @@
 				<input type="hidden" name="m_id">
 				<input type="hidden" name="sender_admin_code">
 				<input type="hidden" name="content">
+				<input type="hidden" name="ad_license_img">
 			</form>
 				<!-- card -->
 				<c:forEach items="${notApprovedDriverList}" var="map">
@@ -123,7 +127,7 @@
 <!-- 							</span> -->
 							<button type="button" class="btn btn-inverse btn-sm btn-cancel" 
 							style="margin-right: 70px; float: right" 
-								data-m_id = "${map.M_ID}" data-ad_license_img="${map.ad_license_img}">승인취소</button>
+								data-m_id = "${map.M_ID}" data-ad_license_img="${map.AD_LICENSE_IMG}">승인취소</button>
 						</div>
 					</div>
 				</c:forEach>

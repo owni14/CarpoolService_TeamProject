@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.team.service.AdminService;
+import com.kh.team.service.CarService;
 import com.kh.team.service.ComplainService;
 import com.kh.team.service.EventService;
 import com.kh.team.service.EvlService;
@@ -72,6 +73,8 @@ public class AdminController {
 	MessageService messageService;
 	@Autowired
 	EvlService evlService;
+	@Autowired
+	CarService carService;
 	private final String SERVERIP="192.168.0.232";
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homeAdmin(Model model,HttpSession session,PagingDto pagingDto) {
@@ -171,10 +174,14 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/cancelDriver", method = RequestMethod.POST)
-	public String cancelDriver(String m_id) {
-//		System.out.println("cancelDriver, m_id : " + m_id);
+	public String cancelDriver(String m_id,MessageVo messageVo,String ad_license_img) {
+		messageVo.setReceiver_m_id(m_id);
+//		System.out.println("cancelDriver, messageVo : " + messageVo);
+		messageService.insertNoBlackMessage(messageVo);
+		boolean result = FileUploadHelper.deleteFile(ad_license_img);
+//		System.out.println("cancelDriver, 파일 지우기 확인 : " + result);
+		carService.deleteCar(m_id);
 		memberService.cancelDriver(m_id);
-//		System.out.println("cancelDriver, dao 확인");
 		return "redirect:/admin/approveDriver_management";
 	}
 	

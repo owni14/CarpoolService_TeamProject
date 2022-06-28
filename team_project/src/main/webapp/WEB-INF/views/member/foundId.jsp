@@ -11,9 +11,11 @@
 		<c:choose>
 			<c:when test="${m_id != null}">
 				<div style="text-align: center;">회원님의 아이디는 <span style="color: blue;">${m_id}</span> 입니다.</div>
+				<a href="/member/loginForm"><i class="fa fa-arrow-left" aria-hidden="true"> 로그인 페이지로 이동</i></a>
 			</c:when>
 			<c:otherwise>
 				<div style="text-align: center;">회원정보가 존재하지 않습니다.</div>
+				<a href="/member/loginForm"><i class="fa fa-arrow-left" aria-hidden="true"> 로그인 페이지로 이동</i></a>
 			</c:otherwise>
 		</c:choose>
 	</div>

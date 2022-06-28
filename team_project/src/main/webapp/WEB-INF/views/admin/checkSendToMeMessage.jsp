@@ -219,6 +219,7 @@ tbody > tr:hover {background-color: aliceblue;}
 		$("#spanClose").click(function () {
 			$("#divMessage").hide("slow");
 		});
+		
 	});
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp" %>
@@ -324,7 +325,9 @@ tbody > tr:hover {background-color: aliceblue;}
 			<!-- Page-body start -->
 			<div class="page-body">
 			<!-- 쪽지 보내기 card start -->
-			<div class="card col-md-12 col-xl-5" style="display:inline-block;">
+			<div class="row">
+			<div class="col-md-12 col-xl-5">
+				<div class="card">
 				<div class="card-header">
 				<form id="frmMessage" action="/message/sendMessageBetweenAdmins" method="post">
 				<input type="hidden" name="sender_admin_code" value="${admin_code}">
@@ -357,15 +360,32 @@ tbody > tr:hover {background-color: aliceblue;}
 			    	<span id="nowLength" style="display:inline;">0</span><span style="display:inline">/500자</span>
 				</div>
 				</div>
+				</div>
 			</div>
 			<!-- 쪽지 보내기 card end -->
 			<!-- 쪽지 읽기 card start -->
-			<div  class="col-md-12 col-xl-3" style="display:inline-block; margin-left:20px">
-				<div id="divMessage" class="card-header" style="display:none; background-color:white">
-					<span><b>내용</b></span>
-					<span id="spanClose" style="float:right"><b>x</b></span><br><br>
-					<span id="spanMessage"></span>
+			<div  class="col-md-12 col-xl-3" >
+				<div class="card">
+					<div id="divMessage" class="card-header" 
+						style="
+						background-image:url(/resources/images/managerimage/smartPhone.jpg); background-repeat:no-repeat;
+						background-size: 90% 100%;
+						background-position: center center;
+						height:456px;
+						background-color:white; display: none; ">
+						<div style="display: inline-block; position: absolute; top: 40px; width: 50%; left: 90px">
+						<h5>내용</h5>
+						<span id="spanClose" style="float: right; margin-right: 5px"><b>x</b></span>
+<!-- 						<div style="position: absolute; top: 50px;"> -->
+<!-- 						<a id="aSender"><span id="spanSender"></span></a> -->
+<!-- 						</div> -->
+						<div style="position: absolute; top: 80px;">
+						<span id="spanMessage"></span>
+						</div>
+						</div>
+					</div>
 				</div>
+			</div>
 			</div>
 			<!-- 쪽지 읽기 card end -->
 			<!-- Basic table card start -->

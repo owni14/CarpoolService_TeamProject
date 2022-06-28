@@ -92,19 +92,6 @@ $(document).ready(function() {
 		          	</div>
 		        </nav>
 			
-				<div class="tabbable" id="tabs-391804">
-					<ul class="nav nav-tabs">
-						<li class="nav-item">
-							<a class="nav-link active" href="#">진행중인 이벤트</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/event/winner">당첨자 발표</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/event/info">등급별 혜택</a>
-						</li>
-					</ul>
-				</div>
 				<form id="frm_detail" action="/event/detail" method="get">
 					<input type="hidden" name="event_seq">
 				<table class="table">

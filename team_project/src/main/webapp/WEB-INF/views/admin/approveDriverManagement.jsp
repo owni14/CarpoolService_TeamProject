@@ -116,7 +116,8 @@
 <%-- 								<a href="#">${map.AD_DETAIL}</a> --%>
 <!-- 							</span> -->
 							<button type="button" class="btn btn-inverse btn-sm btn-cancel" 
-							style="margin-right: 70px; float: right" data-m_id = "${map.M_ID}">승인취소</button>
+							style="margin-right: 70px; float: right" 
+								data-m_id = "${map.M_ID}" data-ad_license_img="${map.ad_license_img}">승인취소</button>
 						</div>
 					</div>
 				</c:forEach>

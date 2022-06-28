@@ -27,10 +27,14 @@
 		
 		$(".btn-cancel").click(function () {
 			var m_id = $(this).attr("data-m_id");
+			var sender_admin_code = "${sessionScope.admin_code}";
+			var content = "운전자 등록이 취소 되었습니다.";
 			$("#frmCancel").attr("action", "/admin/cancelDriver");
 			$("#frmCancel").attr("method", "post");
 			$("#frmCancel").find("input[name=m_id]").val(m_id);
-			$("#frmCancel").submit();
+			$("#frmCancel").find("input[name=sender_admin_code]").val(sender_admin_code);
+			$("#frmCancel").find("input[name=content]").val(content);
+// 			$("#frmCancel").submit();
 		});
 	});
 </script>
@@ -87,6 +91,8 @@
 			</form>
 			<form id="frmCancel">
 				<input type="hidden" name="m_id">
+				<input type="hidden" name="sender_admin_code">
+				<input type="hidden" name="content">
 			</form>
 				<!-- card -->
 				<c:forEach items="${notApprovedDriverList}" var="map">

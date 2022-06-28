@@ -13,8 +13,6 @@ cursor: pointer;
 }
 </style>
 <script>
-var updateAnswer="${result}";
-
 	
 	
 	if(updateAnswer =="true"){
@@ -23,6 +21,7 @@ var updateAnswer="${result}";
 	else if(updateAnswer =="false"){
 		alert("답변 전송에 문제가 발생했습니다");
 	}
+
 	$(document).ready(function () {
 		var frm=$("#frmComplainPaging");
 		$(".trList").click(function(){
@@ -249,7 +248,7 @@ var updateAnswer="${result}";
 											  <h4 style="text-align: center;">유저(${complainVo.m_id})글에 대한 답변 &nbsp;&nbsp; 등록일&nbsp;:&nbsp;${complainVo.complain_answer_date}</h4>
 											  
 											   <textarea class="form-control tareContent"
-											   	rows="30" style="font-size: 20px"
+											   	rows="30" style="font-size: 20px" 
 											   readonly="readonly"
 											   >답변 : &nbsp;${complainVo.complain_answer }</textarea>
 											   <br>

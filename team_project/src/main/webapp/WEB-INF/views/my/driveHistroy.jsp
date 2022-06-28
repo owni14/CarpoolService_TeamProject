@@ -122,7 +122,7 @@ $(document).on("click", ".message_form", function(e) {
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp"%>
 <%@ include file ="/WEB-INF/views/message/message_form.jsp"%>
 <%@ include file ="/WEB-INF/views/customer/report_form.jsp" %>
-<div class="row">
+<div class="row" style="margin-bottom: 50px;">
 
 	<!-- modal start -->
 	<div class="col-md-12">
@@ -221,14 +221,14 @@ $(document).on("click", ".message_form", function(e) {
 			</thead>
 			<tbody>
 				<c:forEach var="driverVo" items="${driverlogList}" >
-				<tr class="tr_table" data-seq="${driverVo.driver_seq}"> 
-					
-					<td>${driverVo.driver_seq}</td>
-					<td>${driverVo.driver_depart_time}</td>
-					<td>${driverVo.driver_depart_location}</td>
-					<td>${driverVo.driver_comment}</td>
-					
-				</tr>
+					<tr class="tr_table" data-seq="${driverVo.driver_seq}"> 
+						
+						<td>${driverVo.driver_seq}</td>
+						<td>${driverVo.driver_depart_time}</td>
+						<td>${driverVo.driver_depart_location}</td>
+						<td>${driverVo.driver_comment}</td>
+						
+					</tr>
 				</c:forEach>
 			</tbody>
 		</table>

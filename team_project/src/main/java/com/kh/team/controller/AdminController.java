@@ -423,6 +423,9 @@ public class AdminController {
 				e.printStackTrace();
 			}
 		}
+		else {
+			eventVo.setEvent_img(db_event_img);
+		}
 		
 		//섬네일 파일 만들기
 		List<String> insertImgList=FileUploadHelper.eventFilnameExtraction(eventVo.getEvent_content(), SERVERIP);

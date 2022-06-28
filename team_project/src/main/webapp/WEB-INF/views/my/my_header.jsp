@@ -236,7 +236,7 @@ $(document).ready(function() {
 						<div>
 							<p style="text-align: center;"><strong>탑승 정보</strong></p>
 							<hr>
-							<p><img id="passenger_evlImg" src="운전자 등급" width="200px;" height="75px;"></p>
+							<p><img id="passenger_evlImg" width="200px;" height="75px;"></p>
 							<p>총 탑승 횟수 : ${passenger_evlVo.pe_ride_count}회</p>
 							<p style="text-align: center;"><strong>포인트 정보</strong></p>
 							<hr>

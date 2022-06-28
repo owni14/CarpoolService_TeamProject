@@ -50,4 +50,5 @@ public interface MemberService {
 	public List<String> getDeletingPassengerList(int driver_seq); // 운전자가 운전취소를 할 경우 탑승자에게 메세지를 보내기 위해 탑승자 정보를 가져오는 메서드
 	public void cancelDriver(String m_id); // 승인 대기 운전자 승인 취소 하기
 	public boolean isDuplicationId(String m_id); // 회원가입시 아이디 중복 확인
+	public boolean submitDriver(String m_id); // 운전자등록을 한적 있는지 여부
 }

@@ -280,4 +280,10 @@ public class MemberServiceImpl implements MemberService {
 		boolean result = memberDao.isDuplicationId(m_id);
 		return result;
 	}
+
+	@Override
+	public boolean submitDriver(String m_id) {
+		boolean result = memberDao.submitDriver(m_id);
+		return result;
+	}
 }

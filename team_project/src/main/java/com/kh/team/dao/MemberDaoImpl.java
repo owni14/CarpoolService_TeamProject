@@ -421,4 +421,13 @@ public class MemberDaoImpl implements MemberDao {
 		return false;
 	}
 
+	@Override
+	public boolean submitDriver(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "submitDriver", m_id);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
 }

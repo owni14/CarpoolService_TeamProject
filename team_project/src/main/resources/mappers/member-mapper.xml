@@ -335,8 +335,13 @@
 		where m_id = #{m_id}
 	</update>
 	
-	<select id="isDuplicationId" resultType="_int">
+	<select id="isDuplicationId" resultType="int">
 		select count(*) from member 
+		where m_id = #{m_id}
+	</select>
+	
+	<select id="submitDriver" resultType="int">
+		select count(*) from approve_driver 
 		where m_id = #{m_id}
 	</select>
 

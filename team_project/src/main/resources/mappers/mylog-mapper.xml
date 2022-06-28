@@ -28,9 +28,12 @@
 	<select id="driverlogListById" resultType="driverVo">
 		select * from
 			(select rownum rnum, a.* from
-				(select * from driver
-				where m_id = #{m_id}
-				order by driver_depart_time desc) a)
+				(select d.driver_seq, d.m_id, d.driver_depart_location, d.driver_depart_time, d.driver_comment, d.apply_date + 1 from driver d, passenger p
+				where d.driver_seq = p.driver_seq
+                and d.m_id = #{m_id}
+                and p.is_cancel = 'N'
+                and p.drive_state = 'Y'
+				order by d.driver_depart_time desc) a)
 		where rnum between #{startRow} and #{endRow}
 	</select>
 	

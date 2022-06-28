@@ -16,7 +16,7 @@ $(document).ready(function() {
 	<div class="col-md-4"></div>
 	<div class="col-md-4">
 		<form role="form" action="/my/submitFile" method="post" enctype="multipart/form-data">
-			<div class="form-group" style="text-align: center;">
+			<div class="form-group" style="text-align: center; margin-bottom: 25px;">
 				<span style="font-size: 50px;">운전자 등록</span>
 			</div>
 			<div class="form-group">
@@ -47,4 +47,4 @@ $(document).ready(function() {
 	</div>
 	<div class="col-md-4"></div>
 </div>
-<%@ include file="/WEB-INF/views/include/footer.jsp"%>>
+<%@ include file="/WEB-INF/views/include/footer.jsp"%>

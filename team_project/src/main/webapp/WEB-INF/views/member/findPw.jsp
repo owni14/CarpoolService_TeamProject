@@ -5,7 +5,7 @@
 <div class="row">
 	<div class="col-md-4"></div>
 	<div class="col-md-4" style="margin-top: 100px; margin-bottom: 527px;">
-		<form role="form" action="/member/findPw_run" method="post">
+		<form role="form" action="/member/foundPw" method="post">
 			<div class="form-group" style="text-align: center;">
 				<span style="font-size: 50px;">비밀번호 찾기</span>
 			</div>

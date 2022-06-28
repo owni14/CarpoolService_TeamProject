@@ -170,6 +170,14 @@ public class AdminController {
 		}
 	}
 	
+	@RequestMapping(value = "/cancelDriver", method = RequestMethod.POST)
+	public String cancelDriver(String m_id) {
+//		System.out.println("cancelDriver, m_id : " + m_id);
+		memberService.cancelDriver(m_id);
+//		System.out.println("cancelDriver, dao 확인");
+		return "redirect:/admin/approveDriver_management";
+	}
+	
 	@RequestMapping(value="/admin_login", method=RequestMethod.GET)
 	public String adminLogin() {
 		return "admin/admin_login_form";

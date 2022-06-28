@@ -24,6 +24,14 @@
 			$("#frmApprove").find("input[name=m_id]").val(m_id);
 			$("#frmApprove").submit();
 		});
+		
+		$(".btn-cancel").click(function () {
+			var m_id = $(this).attr("data-m_id");
+			$("#frmCancel").attr("action", "/admin/cancelDriver");
+			$("#frmCancel").attr("method", "post");
+			$("#frmCancel").find("input[name=m_id]").val(m_id);
+			$("#frmCancel").submit();
+		});
 	});
 </script>
 <%@ include file="/WEB-INF/views/include/frmPaging.jsp" %>
@@ -77,6 +85,9 @@
 				<input type="hidden" name="m_id">
 				<input type="hidden" name="check_page" value="approveDriver_management">
 			</form>
+			<form id="frmCancel">
+				<input type="hidden" name="m_id">
+			</form>
 				<!-- card -->
 				<c:forEach items="${notApprovedDriverList}" var="map">
 				<div class="col-md-6" style="margin-top:15px;">
@@ -101,10 +112,11 @@
 				                </c:otherwise>
 			                    </c:choose>
 			                </span>
-							<span class="card__category" style="margin-top: 15px">
-								<a href="#">${map.AD_DETAIL}</a>
-							</span>
-							<span class="card__rate">${map.AD_REGDATE}</span>
+<!-- 							<span class="card__category" style="margin-top: 15px"> -->
+<%-- 								<a href="#">${map.AD_DETAIL}</a> --%>
+<!-- 							</span> -->
+							<button type="button" class="btn btn-inverse btn-sm btn-cancel" 
+							style="margin-right: 70px; float: right" data-m_id = "${map.M_ID}">승인취소</button>
 						</div>
 					</div>
 				</c:forEach>

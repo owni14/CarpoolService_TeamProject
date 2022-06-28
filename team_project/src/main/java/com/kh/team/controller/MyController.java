@@ -69,7 +69,10 @@ public class MyController {
 		if (result) {
 			Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
 			int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
-			double avg = sum / (double)vo.getEvl_count();
+			double avg = 0;
+			if (vo.getEvl_count() != 0) {
+				 avg = sum / (double)vo.getEvl_count();
+			}
 			model.addAttribute("driver_evlVo", vo);
 			model.addAttribute("evl_sum", sum);
 			model.addAttribute("evl_avg", avg);
@@ -104,7 +107,10 @@ public class MyController {
 		if (result) {
 			Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
 			int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
-			double avg = sum / (double)vo.getEvl_count();
+			double avg = 0;
+			if (vo.getEvl_count() != 0) {
+				 avg = sum / (double)vo.getEvl_count();
+			}
 			model.addAttribute("driver_evlVo", vo);
 			model.addAttribute("evl_sum", sum);
 			model.addAttribute("evl_avg", avg);
@@ -140,7 +146,10 @@ public class MyController {
 		if (result) {
 			Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
 			int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
-			double avg = sum / (double)vo.getEvl_count();
+			double avg = 0;
+			if (vo.getEvl_count() != 0) {
+				 avg = sum / (double)vo.getEvl_count();
+			}
 			model.addAttribute("driver_evlVo", vo);
 			model.addAttribute("evl_sum", sum);
 			model.addAttribute("evl_avg", avg);

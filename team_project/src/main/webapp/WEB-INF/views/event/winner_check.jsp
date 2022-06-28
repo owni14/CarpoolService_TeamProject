@@ -30,40 +30,15 @@ $(document).ready(function() {
 	});
 });
 </script>
-
-
-<div class="row">
-	<div class="col-md-2">
-	</div>
-	<div class="col-md-8">
-		<div class="tabbable" id="tabs-391804">
-			<ul class="nav nav-tabs">
-				<li class="nav-item">
-					<a class="nav-link" href="/event/now">진행중인 이벤트</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active show" href="#">당첨자 발표</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/event/info">등급별 혜택</a>
-				</li>
-			</ul>                                                                                                                                                                                                                    
-		</div>
-	</div>
-	<div class="col-md-2">
-	</div>
-</div>
-
 	
 <div class="container-fluid" style="display: inline-block; text-align: center;">
 	<div class="row">
 		<div class="col-md-3">
 		</div>
 		<div class="col-md-6">
-			<div class="border rounded" style="height: 80px;">
-				<button class="btn btn-primary" id="btn_winner_check" style="float: left; width: 20%; height: 80px; font-size: 30px;">당첨자 확인</button>
-				<span id="check_comment" style="font-size: 25px; vertical-align: middle; line-height: 80px;">이벤트 당첨여부를 확인 해주세요</span>
-				
+			<div class="border rounded" style="height: 80px; margin: 15px;">
+				<button class="btn btn-primary" id="btn_winner_check" style="float: left; width: 21%; height: 80px; font-size: 30px;">당첨자 확인</button>
+				<span id="check_comment" style="font-size: 25px; vertical-align: middle; line-height: 79px;">이벤트 당첨여부를 확인 해주세요</span>
 			</div>
 			${content}
 		</div>

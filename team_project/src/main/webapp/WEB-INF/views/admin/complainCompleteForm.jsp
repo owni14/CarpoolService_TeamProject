@@ -15,6 +15,8 @@ cursor: pointer;
 <script>
 var updateAnswer="${result}";
 
+	
+	
 	if(updateAnswer =="true"){
 		alert("답변 전송성공");
 	}
@@ -26,7 +28,9 @@ var updateAnswer="${result}";
 		$(".trList").click(function(){
 			$(this).next("tr").toggle();
 			$(this).next("tr").siblings(".trCollapse").hide();
-	
+			var str = $(".tareContent").val();
+			str = str.replaceAll("<br>", "\r\n");
+			$(".tareContent").val(str);
 		});
 		
 		$(".trCollapse").click(function(){
@@ -86,6 +90,8 @@ var updateAnswer="${result}";
 			frm.submit();
 			
 		});
+		
+		
 	
 	});
 </script>

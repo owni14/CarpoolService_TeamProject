@@ -201,4 +201,10 @@ public class MemberTest {
 
 	}
 	
+	@Test
+	public void canclDriver() {
+		String m_id = "user032@email.com";
+		memberDao.cancelDriver(m_id);
+	}
+	
 }

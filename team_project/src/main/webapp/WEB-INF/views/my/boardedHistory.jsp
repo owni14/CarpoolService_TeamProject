@@ -180,7 +180,7 @@ $(document).ready(function() {
 			</thead>
 			<tbody>
 				<c:choose>
-					<c:when test="${passengerList == null}">
+					<c:when test="${passengerList.size() <= 0 }">
 						<tr>
 							<td colspan="5">탑승내역이 없습니다.</td>
 						</tr>

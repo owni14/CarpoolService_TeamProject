@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
+<script src="/resources/adminJs/extCheck.js"></script>
 <script>
 $(document).ready(function() {
 	var carImg = $("#carImg");
@@ -10,12 +11,34 @@ $(document).ready(function() {
 		console.log(car_name);
 		carImg.attr("src", "/resources/images/carImage/" + car_name + ".png");
 	});
+	
+	$("#frmRgstDriver").submit(function() {
+		var driverLicense = $("#driverLicense").val();
+		var c_no = $("#c_no").val();
+		const regex = /[0-9]{2,3}[가-힣]{1}[0-9]{4}/;
+		
+		if(driverLicense != null && driverLicense !="" ){
+			var isExtension=isExt(driverLicense);
+			if(! isExtension){
+				alert('지원하지 않는 확장자 입니다 파일을 확인해주세요');
+				return false;
+			}
+		}
+		
+		console.log(c_no);
+		if(!(regex.test(c_no))) {
+			alert('차량번호를 올바르게 입력해주세요.');
+			return false;
+		}
+	});
+	
+	
 });
 </script>
 <div class="row">
 	<div class="col-md-4"></div>
 	<div class="col-md-4">
-		<form role="form" action="/my/submitFile" method="post" enctype="multipart/form-data">
+		<form id="frmRgstDriver" role="form" action="/my/submitFile" method="post" enctype="multipart/form-data">
 			<div class="form-group" style="text-align: center; margin-bottom: 25px;">
 				<span style="font-size: 50px;">운전자 등록</span>
 			</div>
@@ -36,7 +59,7 @@ $(document).ready(function() {
 			</div>
 			<div class="form-group">
 				<label for="c_no"> 차량번호 </label> 
-				<input type="text" class="form-control" name="c_no" placeholder="ex)001가0001">
+				<input type="text" class="form-control" id="c_no" name="c_no" placeholder="ex)001가0001">
 			</div>
 			<div class="form-group">
 				<label for="driverLicense"> 운전면허증 </label> 

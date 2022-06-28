@@ -11,9 +11,11 @@
 		<c:choose>
 			<c:when test="${m_pw != null}">
 				<div style="text-align: center;">회원님의 비밀번호는 <span style="color: blue;">${m_pw}</span> 입니다.</div>
+				<a href="/member/loginForm"><i class="fa fa-arrow-left" aria-hidden="true"> 로그인 페이지로 이동</i></a>
 			</c:when>
 			<c:otherwise>
 				<div style="text-align: center;">아이디 및 전화번호를 다시한번 확인해주세요.</div>
+				<a href="/member/loginForm"><i class="fa fa-arrow-left" aria-hidden="true"> 로그인 페이지로 이동</i></a>
 			</c:otherwise>
 		</c:choose>
 	</div>

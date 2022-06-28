@@ -54,6 +54,10 @@ public class MyController {
 	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
 	public String boardedHistory(HttpSession session, PagingDto pagingDto, Model model) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
+		if (loginVo != null) {
+			loginVo = memberService.getMemberByIdAndPw(loginVo.getM_id(), loginVo.getM_pw());
+			session.setAttribute("loginVo", loginVo);
+		}
 		String m_id = loginVo.getM_id();
 		pagingDto.setCount(pointService.getCountPointById(m_id));
 		pagingDto.setPage(pagingDto.getPage());
@@ -85,6 +89,10 @@ public class MyController {
 	@RequestMapping(value = "/driveHistory", method = RequestMethod.GET)
 	public String driveHistroy(HttpSession session, PagingDto pagingDto, Model model) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
+		if (loginVo != null) {
+			loginVo = memberService.getMemberByIdAndPw(loginVo.getM_id(), loginVo.getM_pw());
+			session.setAttribute("loginVo", loginVo);
+		}
 		String m_id = loginVo.getM_id();
 		pagingDto.setCount(pointService.getCountPointById(m_id));
 		pagingDto.setPage(pagingDto.getPage());
@@ -117,6 +125,10 @@ public class MyController {
 	@RequestMapping(value = "/pointHistory", method = RequestMethod.GET)
 	public String pointHistory(HttpSession session, PagingDto pagingDto, Model model) {
 		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
+		if (loginVo != null) {
+			loginVo = memberService.getMemberByIdAndPw(loginVo.getM_id(), loginVo.getM_pw());
+			session.setAttribute("loginVo", loginVo);
+		}
 		String m_id = loginVo.getM_id();
 		pagingDto.setCount(pointService.getCountPointById(m_id));
 		pagingDto.setPage(pagingDto.getPage());

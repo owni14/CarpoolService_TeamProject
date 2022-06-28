@@ -91,7 +91,7 @@ public class MemberController {
 		return "member/findId";
 	}
 	
-	@RequestMapping(value = "/findId_run", method = RequestMethod.POST)
+	@RequestMapping(value = "/foundId", method = RequestMethod.POST)
 	public String findId_run(MemberVo memberVo, Model model) {
 		String m_id = memberService.getMemberId(memberVo);
 		System.out.println("m_id:" + m_id);
@@ -104,7 +104,7 @@ public class MemberController {
 		return "member/findPw";
 	}
 	
-	@RequestMapping(value = "/findPw_run", method = RequestMethod.POST)
+	@RequestMapping(value = "/foundPw", method = RequestMethod.POST)
 	public String findPw_run(MemberVo memberVo, Model model) {
 		String m_pw = memberService.getMemberPw(memberVo);
 		model.addAttribute("m_pw", m_pw);

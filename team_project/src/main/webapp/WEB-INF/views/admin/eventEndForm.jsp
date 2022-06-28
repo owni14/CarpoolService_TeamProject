@@ -274,7 +274,7 @@ console.log("winnerNums" ,winnerNums);
 							<th>당첨여부</th>
 						<c:if test="${eventVo.event_is_bylot eq 'Y'}">
 							<th>이벤트 물품 수령 여부</th>
-							<th>미수령자 쪽지 보내기</th>
+							<th>당첨자 쪽지 보내기</th>
 							
 						</c:if>	
 						<th>회원 정보 찾아가기</th>

@@ -19,7 +19,7 @@ public class CounselTest {
 	
 	@Test
 	public void insertComplainTest() {
-		for (int i = 1; i < 10; i++) {
+		for (int i = 1; i < 2; i++) {
 			ComplainVo complainVo = new ComplainVo("1001", "hong@naver.com", "포인트 좀 많이줘라 왜 이렇게 조금 줌??? 불편하네 ㅎㅎ" + i, "불편");
 //			System.out.println("complainVo: " + complainVo);
 			complainDao.insertComplain(complainVo);

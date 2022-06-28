@@ -23,6 +23,13 @@
 </style>
 <script>
 $(document).ready(function() {
+	var message_result = "${message_result}";
+	if (message_result) {
+		alert("쿠폰이 지급되었습니다.\n 쪽지를 확인해주세요.")
+	}
+	
+	
+	
 	$(".a_coupon").click(function(e) {
 		e.preventDefault();
 		$("#modal-container-678121").modal('show');
@@ -46,6 +53,8 @@ $(document).ready(function() {
 		$("#modalSuccess").click(function() {
 			var frmPayment = $("#frmPayment");
 			frmPayment.find("input[name=m_point]").val(after_point);
+			frmPayment.find("input[name=coupon]").val(title);
+			frmPayment.find("input[name=price]").val(price);
 			frmPayment.submit();
 		});
 	});
@@ -63,6 +72,10 @@ $(document).ready(function() {
 	<div class="col-md-12">
 		<form id="frmPayment" action="/point/payment" method="post">
 		<input type="hidden" name="m_point">
+		<input type="hidden" name="coupon">
+		<input type="hidden" name="price">		
+		
+		
 		<div class="modal fade" id="modal-container-678121" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -102,8 +115,8 @@ $(document).ready(function() {
 		
 	</div>
 	<!-- modal end -->
-	<div class="jumbotron">
-		<p style="text-align: right;">현재 내 포인트 : ${loginVo.m_point}</p>
+	<div class="jumbotron" style="">
+		<p style="position: relative; top: 100%; transform: translateY(-50%); text-align: right; color: white;">현재 내 포인트 : ${loginVo.m_point}</p>
 	</div>
 	<div class="col-md-2">
 	</div>

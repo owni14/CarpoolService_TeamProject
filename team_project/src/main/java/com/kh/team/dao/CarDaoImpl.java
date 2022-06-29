@@ -79,4 +79,10 @@ public class CarDaoImpl implements CarDao{
 		sqlSession.update(NAMESPACE + "decreaseCount", m_id);
 	}
 
+	@Override
+	public void deleteCar(String m_id) {
+		sqlSession.delete(NAMESPACE + "deleteCar", m_id);
+		
+	}
+
 }

@@ -48,4 +48,10 @@ public class CarServiceImpl implements CarService{
 		carDao.resetCount(m_id);
 	}
 
+	@Override
+	public void deleteCar(String m_id) {
+		carDao.deleteCar(m_id);
+		
+	}
+
 }

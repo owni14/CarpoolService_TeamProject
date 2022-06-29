@@ -9,6 +9,7 @@ $(document).ready(function() {
 	var registerDriver = "${registerDriver}";
 	var approve_result = "${approve_result}";
 	var join_result = "${join_result}";
+	var submitDriver_result = "${submitDriver_result}";
 	if (isExistenceFile == "true") {
 		alert("이미 등록된 면허증입니다.");
 	}
@@ -24,6 +25,9 @@ $(document).ready(function() {
 	}
 	if (approve_result == "false") {
 		alert("아직 운전자 등록이 승인되지 않았습니다. \n신청 후 3일 이내 승인이 완료되지 않을 경우 고객센터로 문의부탁드립니다.");
+	}
+	if (submitDriver_result == "false") {
+		alert("운전자등록이 된 사람만 이용할 수 있습니다.");
 	}
 	
 	// 회원가입

@@ -51,5 +51,10 @@
 		c_people_count = c_people_count - 1
 		where m_id = #{m_id}
 	</update>
+	
+	<delete id="deleteCar">
+		delete from car
+		where m_id = #{m_id}
+	</delete>
 
 </mapper>

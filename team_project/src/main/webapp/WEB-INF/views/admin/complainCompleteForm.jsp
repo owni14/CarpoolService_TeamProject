@@ -15,13 +15,6 @@ cursor: pointer;
 <script>
 	
 	
-	if(updateAnswer =="true"){
-		alert("답변 전송성공");
-	}
-	else if(updateAnswer =="false"){
-		alert("답변 전송에 문제가 발생했습니다");
-	}
-
 	$(document).ready(function () {
 		var frm=$("#frmComplainPaging");
 		$(".trList").click(function(){
@@ -111,6 +104,7 @@ cursor: pointer;
 									<a href="/admin/complainAnswerComplete"><span>전체보기</span></a>
 								</div>
 							</div>
+						<c:if test="${admin_code eq '1004' }">
 						<select style="height:26px; float: right; align-items: flex-end; margin: 50px 0px 0px" id="sel_adminCode">
 			<option selected="selected" value="" disabled="disabled">관리자 코드를 선택하여 주세요</option>
 					<c:forEach items="${amdinCodes}" var="adminVo">
@@ -121,6 +115,7 @@ cursor: pointer;
 					>관리자 코드 &nbsp;${adminVo}</option>
 					</c:forEach>
 					</select>
+					</c:if>
 						</div>
 						<!-- 새로 추가된 div -->
 							<div class="col-lg-4" style="text-align: right;">

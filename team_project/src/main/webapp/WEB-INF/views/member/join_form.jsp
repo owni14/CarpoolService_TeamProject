@@ -14,7 +14,7 @@
 $(document).ready(function() {
 	var join_result = "${join_result}";
 	if(join_result == "false") {
-		alert("회원가입에 실패하였습니다. 다시 시도해주세요.");
+		alert("회사를 선택해주세요.");
 	}
 
 	$("#isDupId").click(function() {
@@ -59,30 +59,30 @@ $(document).ready(function() {
 						<span style="font-size: 50px;">회원 가입</span>
 					</div>
 					<div class="form-group">
-						<label for="m_id">아이디</label>
+						<label for="m_id">아이디<span style="color: red;">*</span></label>
 						<input type="email" class="form-control" id="m_id" name="m_id" placeholder="ex) hong@email.com" required/>
 						<button type="button" class="btn btn-success" id="isDupId">아이디 중복확인</button><span id="isDupIdSpan" style="margin-left: 15px;"></span>
 					</div>
 					<div class="form-group">
-						<label for="m_pw">비밀번호</label>
+						<label for="m_pw">비밀번호<span style="color: red;">*</span></label>
 						<input type="password" class="form-control" id="m_pw" name="m_pw" placeholder="비밀번호를 입력해 주세요" required/>
 					</div>
 					<div class="form-group">
-						<label for="m_name">이름</label>
+						<label for="m_name">이름<span style="color: red;">*</span></label>
 						<input type="text" class="form-control" id="m_name" name="m_name" placeholder="ex) 홍길동" required/>
 					</div>
 					<div class="form-group">
-						<label for="m_cellphone">휴대폰 번호</label>
+						<label for="m_cellphone">휴대폰 번호<span style="color: red;">*</span></label>
 						<input type="text" class="form-control" id="m_cellphone" name="m_cellphone" placeholder="ex) 01012345678" required />
 					</div>
 					<div class="form-group">
-						<label style="margin-right: 15px;">성별</label>
+						<label style="margin-right: 15px;">성별<span style="color: red;">*</span></label>
 						<input type="radio" name="gender" style="margin-right:10px;" value="M" checked><label style="margin-right: 15px;">남자</label>
 						<input type="radio" name="gender" style="margin-right:10px;" value="W">여자
 					</div>
 					
 					<div class="form-group">
-						<label for="m_company">회사</label>
+						<label for="m_company">회사<span style="color: red;">*</span></label>
 						<select class="form-control btn" name="m_company">
 							<option value="null">회사를 선택해주세요</option>
 							<option value="SAMSUNG">삼성</option>
@@ -102,16 +102,16 @@ $(document).ready(function() {
 						<input type="text" class="form-control" id="m_dept" name="m_dept" placeholder="ex) 회계부, 홍보부, 생산부"/>
 					</div>
 					<div class="form-group">
-						<label for="m_address">주소</label>
+						<label for="m_address">주소<span style="color: red;">*</span></label>
 						<input type="text" class="form-control" id="m_address" name="m_address" placeholder="도로명 주소 ex) 울산광역시 북구 아진로75" required/>
 					</div>
 					<div class="form-group">
-						<label style="margin-right: 15px;">흡연 여부</label>
+						<label style="margin-right: 15px;">흡연 여부<span style="color: red;">*</span></label>
 						<input type="radio" name="m_is_smoke" style="margin-right:10px;" value="Y"><label style="margin-right: 15px;">흡연자</label>
 						<input type="radio" name="m_is_smoke" style="margin-right:10px;" value="N" checked>비흡연자
 					</div>
 					<div class="form-group">
-						<label style="margin-right: 15px;">캐릭터 설정</label><br>
+						<label style="margin-right: 15px;">캐릭터 설정<span style="color: red;">*</span></label><br>
 						<div style="text-align: center;">
 							<input type="radio" name="character" value="male" checked><img alt="male.png" src="/resources/images/character/male.png" width="70px;" height="70px;">
 							<input type="radio" name="character" value="male2"><img alt="male1.png" src="/resources/images/character/male2.png" width="70px;" height="70px;">

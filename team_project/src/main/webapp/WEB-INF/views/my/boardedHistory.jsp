@@ -196,7 +196,6 @@ $(document).ready(function() {
 		 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 								<a class="dropdown-item message_form" href="#" id="send_message" data-receiver="${passengerlogVo.DRIVER_ID}">쪽지보내기</a>
 								<a class="dropdown-item black" href="#" data-driver_id="${passengerlogVo.DRIVER_ID}">신고하기</a>
-								<a class="dropdown-item evaluation" href="#">평가하기</a>
 							</div>
 							</td>
 		 					<td>${passengerlogVo.PASSENGER_DEPART_LOCATION}</td>

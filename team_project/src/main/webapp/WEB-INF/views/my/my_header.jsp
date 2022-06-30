@@ -53,7 +53,7 @@
 /* Individual bars */
 .bar-5 {
 	width: 0%;
-	height: 0px;
+	height: 18px;
 	background-color: #04AA6D;
 }
 
@@ -320,7 +320,6 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div class="side right">
-						
 						<div>${driver_evlVo.evl5}</div>
 					</div>
 					

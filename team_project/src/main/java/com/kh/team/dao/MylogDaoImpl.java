@@ -50,6 +50,7 @@ public class MylogDaoImpl implements MylogDao {
 		map.put("startRow", String.valueOf(startRow));
 		map.put("endRow", String.valueOf(endRow));
 		List<DriverVo> driverlogList = sqlSession.selectList(NAMESPACE + "driverlogListById", map);
+		System.out.println("driverLogList:" + driverlogList);
 		return driverlogList;
 	}
 

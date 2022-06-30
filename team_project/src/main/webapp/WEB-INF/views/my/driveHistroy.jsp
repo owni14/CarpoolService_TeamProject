@@ -63,7 +63,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var page = $(this).attr("href")
 		frmPaging.find("input[name=page]").val(page);
-		frmPaging.attr("action", "/my/boardedHistory");
+		frmPaging.attr("action", "/my/driveHistory");
 		frmPaging.attr("method", "get");
 		frmPaging.submit();
 	});
@@ -73,7 +73,7 @@ $(document).ready(function() {
 		
 // 		console.log(perpage);
 		frmPaging.find("input[name=perPage]").val(perPage);
-		frmPaging.attr("action", "/my/boardedHistory");
+		frmPaging.attr("action", "/my/driveHistory");
 		frmPaging.attr("method", "get");
 		frmPaging.submit();
 	});
@@ -231,7 +231,7 @@ $(document).on("click", ".message_form", function(e) {
 					<tr class="tr_table" data-seq="${driverVo.driver_seq}"> 
 						
 						<td>${driverVo.driver_seq}</td>
-						<td>${driverVo.driver_depart_time}</td>
+						<td>${driverVo.apply_date} / ${driverVo.driver_depart_time}</td>
 						<td>${driverVo.driver_depart_location}</td>
 						<td>${driverVo.driver_comment}</td>
 						

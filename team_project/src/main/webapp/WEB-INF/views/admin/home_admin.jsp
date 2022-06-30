@@ -476,7 +476,7 @@ const myChart = new Chart(
 							                                             <div style="float: right;">
 																		<button class="btn dropdown-toggle approve" type="button" style="background-color:white; padding-top:0px; color:red;"
 																			id="dropdownMenuButton1" data-toggle="dropdown">
-																			${blackListVo.black_is_processed}</button>
+																			처리하기</button>
 																		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 																			<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="Y" data-bScore="${blackListVo.black_score}" data-blackid="${blackListVo.black_m_id}">승인</a> 
 																			<a class="dropdown-item" href="#" data-blacklistSeq="${blackListVo.blacklist_seq}" data-value="C">반려</a>

@@ -13,6 +13,7 @@ import com.kh.team.service.MessageService;
 import com.kh.team.service.PointService;
 import com.kh.team.vo.MemberVo;
 import com.kh.team.vo.MessageVo;
+import com.kh.team.vo.PointHistoryVo;
 
 @Controller
 @RequestMapping("/point")
@@ -47,7 +48,20 @@ public class PointController {
 			messageVo.setReceiver_m_id(loginVo.getM_id());
 			messageVo.setContent("포인트 스토어에서" + coupon + price + "원권이 도착하였습니다.\n 교환 후 포인트 : " + m_point + "point\n 이용해주셔서 감사합니다.");
 			boolean message_result = messageService.insertNoBlackMessage(messageVo);
-			System.out.println("message_result : " + message_result);
+			String pc_code = "";
+			if (price == 3000) {
+				pc_code = "1006";
+			} else if (price == 10000) {
+				pc_code = "1007";
+			} else if (price == 30000) {
+				pc_code = "1008";
+			} else if (price == 50000) {
+				pc_code = "1009";
+			}
+			PointHistoryVo pointHistoryVo = new PointHistoryVo();
+			pointHistoryVo.setM_id(loginVo.getM_id());
+			pointHistoryVo.setPc_code(pc_code);
+			pointService.insertPointHistory(pointHistoryVo);
 			rttr.addFlashAttribute("message_result", message_result);
 		}
 		

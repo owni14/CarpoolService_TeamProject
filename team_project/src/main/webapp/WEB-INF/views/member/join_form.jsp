@@ -17,36 +17,40 @@ $(document).ready(function() {
 		alert("회원가입에 실패하였습니다. 다시 시도해주세요.");
 	}
 
-	$("#btnJoin").click(function() {
-		var m_cellphone = $("#m_cellphone").val();
+	$("#isDupId").click(function() {
 		var m_id = $("#m_id").val();
 		var url = "/member/duplId?m_id=" + m_id;
-		var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-		
 		$.post(url, function(rData) {
 			console.log(rData);
 			if(rData == "true") {
-				alert('아이디가 중복됩니다.');
+				$("#isDupIdSpan").text("이미 있는 아이디입니다.").css("color", "red");
+			} else if ($("#m_id").val() == "" || $("#m_id").val() == null) {
+				$("#isDupIdSpan").text("아이디를 입력해주세요.").css("color", "red");
 			} else {
-				if (!(regPhone.test(m_cellphone))) {
-					alert('휴대폰번호를 올바르게 입력해주세요.');
-					} else {
-						$("#frmJoin").submit();
-					}
+				$("#isDupIdSpan").text("사용 가능한 아이디입니다.").css("color", "green");
 			}
 		});
-		
-		
-// 		if (!(regPhone.test(m_cellphone))) {
-// 			alert('휴대폰번호를 올바르게 입력해주세요.');
-// 			state = false;
-// 			}
 	});
+	$("#frmJoin").submit(function() {
+		var m_cellphone = $("#m_cellphone").val();
+		var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+		var idSpan = $("#isDupIdSpan").text();
+		if (!(regPhone.test(m_cellphone))) {
+			alert('휴대폰번호를 올바르게 입력해주세요.');
+			return false;
+		} else if (idSpan == "이미 있는 아이디입니다.") {
+			alert("아이디 중복확인을 해주세요");
+			return false;
+		}
+		return true;
+		
+	});
+	
 });
 
 </script>
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-12" style="margin-bottom: 20px;">
 		<div class="row" style="display: flex; height:1000px; margin-bottom: 150px;">
 			<div class="col-md-4"></div>
 			<div class="col-md-4" style="margin-top: 50px;">
@@ -57,6 +61,7 @@ $(document).ready(function() {
 					<div class="form-group">
 						<label for="m_id">아이디</label>
 						<input type="email" class="form-control" id="m_id" name="m_id" placeholder="ex) hong@email.com" required/>
+						<button type="button" class="btn btn-success" id="isDupId">아이디 중복확인</button><span id="isDupIdSpan" style="margin-left: 15px;"></span>
 					</div>
 					<div class="form-group">
 						<label for="m_pw">비밀번호</label>
@@ -116,7 +121,7 @@ $(document).ready(function() {
 							<input type="radio" name="character" value="female3"><img alt="female3.png" src="/resources/images/character/female3.png" width="70px;" height="70px;">
 						</div>
 					</div>
-					<button id="btnJoin" type="button" class="btn btn-primary" style="width:100%; height:50px; margin-top:20px;">
+					<button id="btnJoin" type="submit" class="btn btn-primary" style="width:100%; height:50px; margin-top:20px;">
 						회원 가입
 					</button>
 				</form>

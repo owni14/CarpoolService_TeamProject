@@ -25,7 +25,7 @@ public class NotifyTest {
 	
 	@Test
 	public void insertNotification() {
-		BlackListVo blackListVo = new BlackListVo("user04@gmail.com", "user09@gmail.com", "차 운전을 난 폭하게 함");
+		BlackListVo blackListVo = new BlackListVo("user053@email.com", "hong@naver.com", "마스크 착용을 안하고 계속 대화를 함");
 		notifyDao.insertNotification(blackListVo);
 	}
 	// test ok, 

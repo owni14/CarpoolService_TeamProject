@@ -20,9 +20,9 @@ cursor: pointer;
 		$(".trList").click(function(){
 			$(this).next("tr").toggle();
 			$(this).next("tr").siblings(".trCollapse").hide();
-			var str = $(".tareContent").val();
-			str = str.replaceAll("<br>", "\r\n");
-			$(".tareContent").val(str);
+// 			var str = $(".tareContent").val();
+// 			str = str.replaceAll("<br>", "\r\n");
+// 			$(".tareContent").val(str);
 		});
 		
 		$(".trCollapse").click(function(){
@@ -171,6 +171,7 @@ cursor: pointer;
 			
 			<!-- Page-body start -->
 			<div class="page-body">
+			
 				<!-- Basic table card start -->
 				<div class="card">
 					<div class="card-header">
@@ -241,12 +242,8 @@ cursor: pointer;
 											  <h5></h5>
 											  <br><br>
 											  <h4 style="text-align: center;">유저(${complainVo.m_id})글에 대한 답변 &nbsp;&nbsp; 등록일&nbsp;:&nbsp;${complainVo.complain_answer_date}</h4>
-											  
-											   <textarea class="form-control tareContent"
-											   	rows="30" style="font-size: 20px" 
-											   readonly="readonly"
-											   >답변 : &nbsp;${complainVo.complain_answer }</textarea>
-											   <br>
+											  <p>${complainVo.complain_answer }</p>
+									   <br>
 											  
 											   <br>
 											   <button class="btn btn-info btnAnswer" type="button">닫기</button>

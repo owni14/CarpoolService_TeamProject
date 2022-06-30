@@ -1,3 +1,4 @@
+-- 메인으로 실행할 프로시져
 create or replace PROCEDURE pr_everyday_info
  
 IS
@@ -9,6 +10,7 @@ BEGIN
 
         CURSOR cr_mjoin
         IS
+        -- 전날 passenger 테이블에 있는 데이터중 탑승 취소를 하지 않고 승인이 된 경우를 가져오는 쿼리문 
         select m_id, driver_seq from passenger
         where to_char(apply_date, 'yyyy/mm/dd') = to_char(sysdate-1, 'yyyy/mm/dd')
         and is_cancel = 'N'
@@ -21,20 +23,24 @@ BEGIN
             FETCH cr_mjoin INTO psg_id, drv_no;
             EXIT WHEN cr_mjoin %NOTFOUND;
 
+            -- 전날 passenger 테이블에 있는 운전상태를 Y로 변경
              update passenger set
              drive_state = 'Y'
              where to_char(apply_date, 'yyyy/mm/dd') = to_char(sysdate-1, 'yyyy/mm/dd')
              and m_id = psg_id;
              
+            -- 전날 driver 테이블에 있는 운전상태를 Y로 변경
             update driver set
             drive_state = 'Y'
             where to_char(apply_date, 'yyyy/mm/dd') = to_char(sysdate-1, 'yyyy/mm/dd')
             and driver_seq = drv_no;
              
+            -- 전날 탑승한 승객의 탑승횟수를 하나 증가
              update passenger_evl set
              pe_ride_count = pe_ride_count + 1
              where m_id = psg_id;
              
+             -- 프로시저를 호출하고 파라미터로 값을 넘겨준다
              pr_everyday_get_drv_id(drv_no);
              pr_everyday_update_grade_passenger(psg_id);
              
@@ -45,6 +51,7 @@ BEGIN
     commit;
 END;
 
+-- 숭객의 등급을 올려줄 프로시저
 create or replace PROCEDURE pr_everyday_update_grade_passenger(psg_id varchar2)
  
 IS
@@ -55,6 +62,7 @@ psg_code varchar2(10);
 point number;
 BEGIN
 
+	   -- 승객의 탑승횟수와 현재 등급을 얻어오는 쿼리
        select p.pe_ride_count, b.m_id, p.g_code into cnt, blck_id, psg_code from passenger_evl p, blocklist b 
        where p.m_id = b.m_id(+)
        and p.m_id = psg_id; 
@@ -78,8 +86,6 @@ BEGIN
             
             END if;
             
-            dbms_output.put_line(' point : ' || point); 
-            
             if (psg_code != code)
                 then update passenger_evl set
                         g_code = code
@@ -97,6 +103,7 @@ BEGIN
   
 END;
 
+-- 운전자의 카운트를 증가시킬 프로시저
 create or replace PROCEDURE pr_everyday_get_drv_id(drv_no number)
  
 IS
@@ -135,6 +142,7 @@ BEGIN
  
 END;
 
+-- 운전자의 등급을 올려줄 프로시저
 create or replace PROCEDURE pr_everyday_update_grade_driver(drv_id varchar2)
  
 IS
@@ -186,7 +194,7 @@ BEGIN
 END;
 
 -- 자동차 탑승인원 1로 초기화
-create or replace PROCEDURE pr_everydate_reset_car_people_count
+create or replace PROCEDURE pr_everyday_reset_car_people_count
  
 IS
 
@@ -204,13 +212,13 @@ BEGIN
         JOB_NAME => 'JOB_EVERY'
         --언제 시작할지
         , START_DATE => TRUNC(SYSDATE)
-        --반복간격(지금은 1분간격으로 실행)
+        --반복간격(매일 오전 10시에 실행)
         , REPEAT_INTERVAL => 'FREQ = DAILY; BYHOUR = 10'
         , END_DATE => NULL
         , JOB_CLASS => 'DEFAULT_JOB_CLASS'
         , JOB_TYPE => 'PLSQL_BLOCK'
         --프로시저 입력
-        , JOB_ACTION => 'BEGIN pr_everyday_info; END;'
+        , JOB_ACTION => 'BEGIN pr_everyday_info; pr_everydate_reset_car_people_count; END;'
         , COMMENTS => '매일 10시에 실행할 스케줄러'
     );
     DBMS_SCHEDULER.ENABLE('JOB_EVERY');

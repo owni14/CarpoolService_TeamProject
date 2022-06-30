@@ -310,17 +310,17 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value = "/updateDriver", method = RequestMethod.POST)
-	public String updateDriver(RedirectAttributes rttr, String startLoct, String isSmoke, String requirements, String startHour, String startMin, String driver_seq) {
-		String driver_depart_time = startHour + startMin;
-		System.out.println("driver_seq:" + driver_seq);
-		DriverVo driverVo = new DriverVo(Integer.valueOf(driver_seq), startLoct, isSmoke, requirements, driver_depart_time);
-		
-		System.out.println(driverVo);
-		boolean result = memberService.updateDriver(driverVo);
-		rttr.addFlashAttribute("updateResult", result);
-		return "redirect:/board/drive";
-	}
+//	@RequestMapping(value = "/updateDriver", method = RequestMethod.POST)
+//	public String updateDriver(RedirectAttributes rttr, String startLoct, String isSmoke, String requirements, String startHour, String startMin, String driver_seq) {
+//		String driver_depart_time = startHour + startMin;
+//		System.out.println("driver_seq:" + driver_seq);
+//		DriverVo driverVo = new DriverVo(Integer.valueOf(driver_seq), startLoct, isSmoke, requirements, driver_depart_time);
+//		
+//		System.out.println(driverVo);
+//		boolean result = memberService.updateDriver(driverVo);
+//		rttr.addFlashAttribute("updateResult", result);
+//		return "redirect:/board/drive";
+//	}
 	
 	
 	// 운전하기 삭제

@@ -175,7 +175,7 @@ enctype="multipart/form-data">
 				<select id="select_event_count"
 					style="margin-top: 15px; margin-bottom: 1.5px">
 						
-					<option selected="selected" disabled="disabled" value="">이벤트 최대 참석인원 미선택시 (${Math.ceil(memberCount*0.05) })명</option>
+					<option selected="selected" disabled="disabled" value="">이벤트 최대 추첨인원 미선택시 (${Math.ceil(memberCount*0.05) })명</option>
 						<option value="${Math.ceil(memberCount*0.01) }">1프로(${Math.ceil(memberCount*0.01) })명</option>
 						<option value="${Math.ceil(memberCount*0.03) }">3프로(${Math.ceil(memberCount*0.03) })명</option>
 						<option value="${Math.ceil(memberCount*0.05) }">5프로(${Math.ceil(memberCount*0.05) })명</option>

@@ -4,11 +4,11 @@
 <%@ include file="/WEB-INF/views/include/header.jsp"%>
 <script>
 	var isDriver = "${isDriver}";
-	var updateResult = "${updateResult}";
+// 	var updateResult = "${updateResult}";
 	var deleteResult = "${deleteResult}";
-	if (updateResult == "true") {
-		alert("수정이 완료되었습니다.");
-	}
+// 	if (updateResult == "true") {
+// 		alert("수정이 완료되었습니다.");
+// 	}
 	if (deleteResult == "true") {
 		alert("삭제가 완료되었습니다.");
 	}
@@ -151,11 +151,11 @@
 		$("#txtList").attr("style", "display: false; text-align: center;");
 	}
 	
-	$("#btnModify").click(function() {
-		$("#btnCheck").attr("type", "button");
-		$("#frmDriver").attr("action", "/board/updateDriver");
-		$(this).attr("type", "submit");
-	});
+// 	$("#btnModify").click(function() {
+// 		$("#btnCheck").attr("type", "button");
+// 		$("#frmDriver").attr("action", "/board/updateDriver");
+// 		$(this).attr("type", "submit");
+// 	});
 	
 }); // $(document).ready(function(){})
 </script>
@@ -207,11 +207,11 @@
 </div>
 <!-- // 탑승자 리스트 -->
 <div
-	<c:if test="${passengerList == '[]' || passengerList == null}">
+	<c:if test="${passengerList == null || passengerList == '[]'}">
 		style="display: none"
 	</c:if>
 	<c:forEach items="${passengerList}" var="v">
-		<c:if test="${v == '[]' || v.IS_APPROVE != 'Y'}">
+		<c:if test="${v == '[]'}">
 			style="display: none"
 		</c:if>
 	</c:forEach>

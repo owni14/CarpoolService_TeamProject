@@ -72,7 +72,9 @@ public class MyController {
 			double avg = 0;
 			if (vo.getEvl_count() != 0) {
 				 avg = sum / (double)vo.getEvl_count();
+				 
 			}
+			avg = Math.round(avg*100)/100.0;
 			model.addAttribute("driver_evlVo", vo);
 			model.addAttribute("evl_sum", sum);
 			model.addAttribute("evl_avg", avg);
@@ -113,6 +115,7 @@ public class MyController {
 			if (vo.getEvl_count() != 0) {
 				 avg = sum / (double)vo.getEvl_count();
 			}
+			avg = Math.round(avg*100)/100.0;
 			model.addAttribute("driver_evlVo", vo);
 			model.addAttribute("evl_sum", sum);
 			model.addAttribute("evl_avg", avg);
@@ -152,6 +155,7 @@ public class MyController {
 			if (vo.getEvl_count() != 0) {
 				 avg = sum / (double)vo.getEvl_count();
 			}
+			avg = Math.round(avg*100)/100.0;
 			model.addAttribute("driver_evlVo", vo);
 			model.addAttribute("evl_sum", sum);
 			model.addAttribute("evl_avg", avg);

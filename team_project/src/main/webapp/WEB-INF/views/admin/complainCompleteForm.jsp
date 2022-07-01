@@ -15,21 +15,14 @@ cursor: pointer;
 <script>
 	
 	
-	if(updateAnswer =="true"){
-		alert("답변 전송성공");
-	}
-	else if(updateAnswer =="false"){
-		alert("답변 전송에 문제가 발생했습니다");
-	}
-
 	$(document).ready(function () {
 		var frm=$("#frmComplainPaging");
 		$(".trList").click(function(){
 			$(this).next("tr").toggle();
 			$(this).next("tr").siblings(".trCollapse").hide();
-			var str = $(".tareContent").val();
-			str = str.replaceAll("<br>", "\r\n");
-			$(".tareContent").val(str);
+// 			var str = $(".tareContent").val();
+// 			str = str.replaceAll("<br>", "\r\n");
+// 			$(".tareContent").val(str);
 		});
 		
 		$(".trCollapse").click(function(){
@@ -111,6 +104,7 @@ cursor: pointer;
 									<a href="/admin/complainAnswerComplete"><span>전체보기</span></a>
 								</div>
 							</div>
+						<c:if test="${admin_code eq '1004' }">
 						<select style="height:26px; float: right; align-items: flex-end; margin: 50px 0px 0px" id="sel_adminCode">
 			<option selected="selected" value="" disabled="disabled">관리자 코드를 선택하여 주세요</option>
 					<c:forEach items="${amdinCodes}" var="adminVo">
@@ -121,6 +115,7 @@ cursor: pointer;
 					>관리자 코드 &nbsp;${adminVo}</option>
 					</c:forEach>
 					</select>
+					</c:if>
 						</div>
 						<!-- 새로 추가된 div -->
 							<div class="col-lg-4" style="text-align: right;">
@@ -176,6 +171,7 @@ cursor: pointer;
 			
 			<!-- Page-body start -->
 			<div class="page-body">
+			
 				<!-- Basic table card start -->
 				<div class="card">
 					<div class="card-header">
@@ -246,12 +242,8 @@ cursor: pointer;
 											  <h5></h5>
 											  <br><br>
 											  <h4 style="text-align: center;">유저(${complainVo.m_id})글에 대한 답변 &nbsp;&nbsp; 등록일&nbsp;:&nbsp;${complainVo.complain_answer_date}</h4>
-											  
-											   <textarea class="form-control tareContent"
-											   	rows="30" style="font-size: 20px" 
-											   readonly="readonly"
-											   >답변 : &nbsp;${complainVo.complain_answer }</textarea>
-											   <br>
+											  <p>${complainVo.complain_answer }</p>
+									   <br>
 											  
 											   <br>
 											   <button class="btn btn-info btnAnswer" type="button">닫기</button>

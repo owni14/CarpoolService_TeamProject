@@ -207,4 +207,11 @@ public class MemberTest {
 		memberDao.cancelDriver(m_id);
 	}
 	
+	@Test
+	public void isDuplicationIdTest() {
+		String m_id = "hong@naver.com";
+		boolean result = memberDao.isDuplicationId(m_id);
+		System.out.println("result:" + result);
+	}
+	
 }

@@ -130,15 +130,15 @@ $(document).ready(function() {
 			</tr>
 			<tr class="point_td">
 				<td>
-					<a class="a_coupon" href="/resources/assets/img/coffee_30000_coupon.jpg" data-price="10000"><img class="coupon_img" alt="" src="/resources/assets/img/coffee_30000_coupon.jpg"><br>
+					<a class="a_coupon" href="/resources/images/coupon/coffee_10000_coupon.png" data-price="10000"><img class="coupon_img" alt="" src="/resources/images/coupon/coffee_10000_coupon.png"><br>
 					<span>1만point</span></a>
 				</td>
 				<td>
-					<a class="a_coupon" href="/resources/assets/img/coffee_30000_coupon.jpg" data-price="30000"><img class="coupon_img" alt="" src="/resources/assets/img/coffee_30000_coupon.jpg"><br>
+					<a class="a_coupon" href="/resources/images/coupon/coffee_30000_coupon.jpg" data-price="30000"><img class="coupon_img" alt="" src="/resources/images/coupon/coffee_30000_coupon.jpg"><br>
 					<span>3만point</span></a>
 				</td>
 				<td>
-					<a class="a_coupon" href="/resources/assets/img/coffee_30000_coupon.jpg" data-price="50000"><img class="coupon_img" alt="" src="/resources/assets/img/coffee_30000_coupon.jpg"><br>
+					<a class="a_coupon" href="/resources/images/coupon/coffee_50000_coupon.png" data-price="50000"><img class="coupon_img" alt="" src="/resources/images/coupon/coffee_50000_coupon.png"><br>
 					<span>5만point</span></a>
 				</td>
 				
@@ -150,22 +150,19 @@ $(document).ready(function() {
 			</tr>
 			<tr class="point_td">
 				<td>
-					<a class="a_coupon" href="/resources/assets/img/wash_car_coupon.jpg" data-price="3000"><img class="coupon_img" alt="" src="/resources/assets/img/wash_car_coupon.jpg"><br>
+					<a class="a_coupon" href="/resources/images/coupon/wash_car_coupon.jpg" data-price="3000"><img class="coupon_img" alt="" src="/resources/images/coupon/wash_car_coupon.jpg"><br>
 					<span>3000point</span></a>
 				</td>
 				<td>
-					<a class="a_coupon" href="/resources/assets/img/oil_50000_coupon.jpg" data-price="30000"><img class="coupon_img" alt="" src="/resources/assets/img/oil_50000_coupon.jpg"><br>
+					<a class="a_coupon" href="/resources/images/coupon/oil_30000_coupon.png" data-price="30000"><img class="coupon_img" alt="" src="/resources/images/coupon/oil_30000_coupon.png"><br>
 					<span>3만point</span></a>
 				</td>
 				<td>
-					<a class="a_coupon" href="/resources/assets/img/oil_50000_coupon.jpg" data-price="50000"><img class="coupon_img" alt="" src="/resources/assets/img/oil_50000_coupon.jpg"><br>
+					<a class="a_coupon" href="/resources/images/coupon/oil_50000_coupon.jpg" data-price="50000"><img class="coupon_img" alt="" src="/resources/images/coupon/oil_50000_coupon.jpg"><br>
 					<span>5만point</span></a>
 				</td>
 			</tr>
 		</table>
-		
-		
-		
 	</div>
 	<div class="col-md-2">
 	</div>

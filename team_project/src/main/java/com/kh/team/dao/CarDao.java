@@ -14,4 +14,5 @@ public interface CarDao {
 	public String getCurrentCountOfCar(String m_id); // 현재 차량의 탑승인원
 	public String getCarCodeByM_Id(String m_id); // 회원 이메일로 자동차 코드 얻기
 	public void decreaseCount(String m_id); // 현재 차량의 탑승인원 감소
+	public void deleteCar(String m_id); //운전자 등록 취소할 경우 car 테이블 내용 삭제
 }

@@ -412,4 +412,22 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.update(NAMESPACE + "cancelDriver", m_id);
 	}
 
+	@Override
+	public boolean isDuplicationId(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "isDuplicationId", m_id);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean submitDriver(String m_id) {
+		int count = sqlSession.selectOne(NAMESPACE + "submitDriver", m_id);
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
 }

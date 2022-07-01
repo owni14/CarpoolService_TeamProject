@@ -47,32 +47,37 @@ public class BoardController {
 	public String drive(RedirectAttributes rttr, HttpSession session, Model model) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginVo");
 		String m_id = memberVo.getM_id();
-		boolean approve_result = memberService.isApproveDriver(m_id);
-		if(approve_result) {
-			boolean result = memberService.isDriver(m_id); 
-			if (result) {
-				String driver_seq = memberService.getDriverSeqFromDriver(m_id);
-				List<Map<String, Object>> passengerList = memberService.getPassengerList(driver_seq, memberVo.getM_company());
-				DriverVo driverVo = memberService.getDriverInfo(Integer.valueOf(driver_seq));
-				String depart_time = driverVo.getDriver_depart_time();
-				int colon = depart_time.indexOf(":");
-				String depart_time_hour = depart_time.substring(0, colon + 1);
-				String depart_time_min = depart_time.substring(colon + 1);
-				model.addAttribute("depart_time_hour", depart_time_hour);
-				model.addAttribute("depart_time_min", depart_time_min);
-				model.addAttribute("driverVo", driverVo);
-				model.addAttribute("driver_seq", driver_seq);
-				model.addAttribute("passengerList", passengerList);
-				model.addAttribute("isDriver", result);
+		boolean submitDriver_result = memberService.submitDriver(m_id);
+		if(submitDriver_result) { 
+ 			boolean approve_result = memberService.isApproveDriver(m_id);
+			if (approve_result) {
+				boolean result = memberService.isDriver(m_id); 
+				if (result) {
+					String driver_seq = memberService.getDriverSeqFromDriver(m_id);
+					List<Map<String, Object>> passengerList = memberService.getPassengerList(driver_seq, memberVo.getM_company());
+					DriverVo driverVo = memberService.getDriverInfo(Integer.valueOf(driver_seq));
+					String depart_time = driverVo.getDriver_depart_time();
+					int colon = depart_time.indexOf(":");
+					String depart_time_hour = depart_time.substring(0, colon + 1);
+					String depart_time_min = depart_time.substring(colon + 1);
+					model.addAttribute("depart_time_hour", depart_time_hour);
+					model.addAttribute("depart_time_min", depart_time_min);
+					model.addAttribute("driverVo", driverVo);
+					model.addAttribute("driver_seq", driver_seq);
+					model.addAttribute("passengerList", passengerList);
+					model.addAttribute("isDriver", result);
+				} else {
+					model.addAttribute("isDriver", false);
+				}
+				return "board/drive";
 			} else {
-				model.addAttribute("isDriver", false);
+				rttr.addFlashAttribute("approve_result", false);
+				return "redirect:/";
 			}
-			return "board/drive";
 		} else {
-			rttr.addFlashAttribute("approve_result", false);
+			rttr.addFlashAttribute("submitDriver_result", false);
 			return "redirect:/";
 		}
-		
 	}
 	
 	// 예약하기 페이지로 이동합니다.
@@ -305,17 +310,17 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value = "/updateDriver", method = RequestMethod.POST)
-	public String updateDriver(RedirectAttributes rttr, String startLoct, String isSmoke, String requirements, String startHour, String startMin, String driver_seq) {
-		String driver_depart_time = startHour + startMin;
-		System.out.println("driver_seq:" + driver_seq);
-		DriverVo driverVo = new DriverVo(Integer.valueOf(driver_seq), startLoct, isSmoke, requirements, driver_depart_time);
-		
-		System.out.println(driverVo);
-		boolean result = memberService.updateDriver(driverVo);
-		rttr.addFlashAttribute("updateResult", result);
-		return "redirect:/board/drive";
-	}
+//	@RequestMapping(value = "/updateDriver", method = RequestMethod.POST)
+//	public String updateDriver(RedirectAttributes rttr, String startLoct, String isSmoke, String requirements, String startHour, String startMin, String driver_seq) {
+//		String driver_depart_time = startHour + startMin;
+//		System.out.println("driver_seq:" + driver_seq);
+//		DriverVo driverVo = new DriverVo(Integer.valueOf(driver_seq), startLoct, isSmoke, requirements, driver_depart_time);
+//		
+//		System.out.println(driverVo);
+//		boolean result = memberService.updateDriver(driverVo);
+//		rttr.addFlashAttribute("updateResult", result);
+//		return "redirect:/board/drive";
+//	}
 	
 	
 	// 운전하기 삭제

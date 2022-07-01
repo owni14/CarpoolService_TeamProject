@@ -33,4 +33,10 @@ public class PointServiceImpl implements PointService {
 		return pointDao.paymet(m_id, m_point);
 	}
 
+	@Override
+	public void insertPointHistory(PointHistoryVo pointHistoryVo) {
+		pointDao.insertPointHistory(pointHistoryVo);
+		
+	}
+
 }

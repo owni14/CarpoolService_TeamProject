@@ -65,12 +65,6 @@ margin-left: 5px;
 	                <li>
 	                    <a class="a_messageMenu" href="/message/sendMessagePage"><span class="message_font">보낸 쪽지함<i class="bi bi-arrow-right-circle-fill"></i></span></a>
 	                </li>
-	                <li>
-	                    <a class="a_messageMenu" href="#"><span class="message_font">보관함<i class="bi bi-arrow-right-circle-fill"></i></span></a>
-	                </li>
-	                <li>
-	                    <a class="a_messageMenu" href="#"><span class="message_font">설정<i class="bi bi-arrow-right-circle-fill"></i></span></a>
-	                </li>
 	            </ul>
 	            <a class="message_form" href="#"><span id="message_send"><i class="bi bi-pen"></i>쪽지보내기</span></a>
 			</div>

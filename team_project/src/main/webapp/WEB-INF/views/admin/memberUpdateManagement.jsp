@@ -241,7 +241,7 @@
 								<a href="/admin/home"><i class="icofont icofont-home"></i></a>
 								</li>
 								<li class="breadcrumb-item"><a href="#!">회원 관리</a></li>
-								<li class="breadcrumb-item"><a href="#!">회원 테이블</a></li>
+								<li class="breadcrumb-item"><a href="#!">회원 정보 수정 테이블</a></li>
 							</ul>
 						</div>
 					</div>

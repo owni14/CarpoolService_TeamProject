@@ -2,7 +2,7 @@
 
 
 ## 📈 전체 관계도
-![Relationship diagram](./database/total_relationship_diagram.png)
+![Relationship diagram](./database/total_relationship_diagram.jpg)
 
 ## ⏳ 개발기간
 - 2022.06.03 - 2022.07.03

@@ -1,4 +1,5 @@
 # 🚗얻어타다 | 카풀 서비스
+
 ## ✋카풀❗ 왜 필요할까❓
 >출근길에서의 불편함을 해소하기 위해서 같은 회사사람들끼리 카풀을 이용하여 **기름값** 상승으로 인한 부담 감소, **교통혼잡** 해소, **환경보호**까지 다양한 이점을 취할 수 있음
 
@@ -17,7 +18,13 @@
 - **Programming Language** : Java, HTML, CSS, JavaScript, JSP, SQL, jQuery
 - **Version management** : Github
 
-## 👨‍💻 구성원
+## 👐🗺 사이트 요약
+### 메인 페이지
+![mainpage](./database/mainpage_summary_map.jpg)
+### 관리자 페이지
+![adminpage](./database/adminpage_summary_map.jpg)
+
+## 🤝 구성원
 
 - [김민우](https://github.com/owni14) : 메인 페이지, 운전하기 및 탑승자 확인, 탑승하기, 아이디 및 비밀번호 찾기, 운전자 등록, 카카오 지도 API <br>
 - [김형동](https://github.com/devKimHD) : 이벤트 관리, 이벤트 당첨자 관리, 문의 관리, 완료된 문의 페이지, 관리자 메인 페이지 <br>

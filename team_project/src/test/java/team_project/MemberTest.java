@@ -31,8 +31,8 @@ public class MemberTest {
 	
 	@Test
 	public void insertMember() {
-		for (int i=31; i <= 40; i++) {
-			MemberVo memberVo = new MemberVo("user0" + i +"@email.com", "유저" + i, "1234", "M", "KAKAO", "인사관리부", "Y", "울산 중구 반구정 9길 10", "01056789123");
+		for (int i=81; i <= 100; i++) {
+			MemberVo memberVo = new MemberVo("user0" + i +"@email.com", "유저" + i, "1234", "W", "SK", "인사관리부", "Y", "울산 북구 송내14길", "01056789123");
 			memberDao.insertMember(memberVo);
 		}
 	}

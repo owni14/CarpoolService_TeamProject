@@ -315,7 +315,10 @@
 										<c:forEach var="v" begin="5" end="25" step="5">
 										<option value="${v}"
 											<c:choose>
-												<c:when test="${v == 10}">
+												<c:when test="${v == 10 and pagingDto.perPage == null}">
+													selected
+												</c:when>
+												<c:when test="${v == pagingDto.perPage}">
 													selected
 												</c:when>
 											</c:choose>
@@ -425,5 +428,5 @@
 	</div>
 </div>
 <!-- end inner header -->
-				
+		
 <%@ include file="/WEB-INF/views/include_admin/footer.jsp"%>

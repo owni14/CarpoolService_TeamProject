@@ -15,7 +15,18 @@ $(document).ready(function() {
 	$("#frmRgstDriver").submit(function() {
 		var driverLicense = $("#driverLicense").val();
 		var c_no = $("#c_no").val();
-		const regex = /[0-9]{2,3}[가-힣]{1}[0-9]{4}/;
+		if(c_no =="" || c_no ==null){ 
+			alert('차량번호를 입력해주세요');
+			return false;
+				
+		} else{
+			var checkCar=carNumCheck(c_no);
+			if(!checkCar){
+				return false;
+			}
+		}
+		
+// 		const regex = /[0-9]{2,3}[가-힣]{1}[0-9]{4}/;
 		
 		if(driverLicense != null && driverLicense !="" ){
 			var isExtension=isExt(driverLicense);
@@ -27,11 +38,27 @@ $(document).ready(function() {
 		
 		console.log(c_no);
 		if(!(regex.test(c_no))) {
-			alert('차량번호를 올바르게 입력해주세요.');
+			
 			return false;
 		}
 	});
-	
+	function carNumCheck(str) {
+
+		if (/^\d{2}[가-힣]\d{4}/.exec(str) !== null && str.length === 7) {
+
+		return true;
+
+		}
+
+		if (/^\d{3}[가-힣]\d{4}/.exec(str) !== null && str.length === 8) {
+
+		return true;
+
+		}
+		alert('차량번호를 올바르게 입력해주세요.');
+		return false
+
+		}
 	
 });
 </script>

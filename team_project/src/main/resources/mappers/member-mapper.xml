@@ -315,7 +315,7 @@
 	
 	<select id="isApproveDriver" resultType="string">
 		select ad_approve from approve_driver
-		where m_id = #{m_id}
+		where m_id = #{m_id} and ad_approve='Y'
 	</select>
 
 	<select id="countBlackPoint" resultType="int">

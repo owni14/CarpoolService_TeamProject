@@ -1,9 +1,15 @@
 # 🚗얻어타다 | 카풀 서비스
 
-## ✋카풀❗ 왜 필요할까❓🤷‍♂️
+## 카풀❗ 왜 필요할까❓🤷‍♂️
 >출근길에서의 불편함을 해소하기 위해서 같은 회사사람들끼리 카풀을 이용하여 **기름값** 상승으로 인한 부담 감소, **교통혼잡** 해소, **환경보호**까지 다양한 이점을 취할 수 있음
 
-## 📈 전체 관계도
+## 🖐 이런분들이 이용하면 좋아요❗❗
+- 회사까지 출근하는데 시간이 오래 걸린다❗
+- 통근버스는 타기싫고 회사까지 편하게 가고싶다❗
+- 다른사람들과 친밀감을 쌓고 싶다❗
+
+
+## 📄 전체 관계도
 ![Relationship diagram](./database/total_relationship_diagram.jpg)
 
 ## ⏳ 개발기간
@@ -17,7 +23,7 @@
 - **Development platform** : Spring framework(ver.4.1.7.RELEASE), my batis(ver.3.2.8)
 - **Database** : Oracle SQL Developer (ver.21c)
 - **Programming Language** : Java, HTML, CSS, JavaScript, JSP, SQL, jQuery
-- **Version management** : Github
+- **VCS(Version Control System)** : Github
 
 ## 🗺 사이트 요약
 - 메인 페이지

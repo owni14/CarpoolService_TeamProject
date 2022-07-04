@@ -14,7 +14,7 @@
 
 ## 👨‍💻 Member
 
-- [김민우](https://github.com/owni14) : 자기 맡은 역할 작성 <br>
-- [김형동](https://github.com/devKimHD) : 자기 맡은 역할 작성 <br>
-- [양희원](https://github.com/yanghuiwon) : 자기 맡은 역할 작성 <br>
-- [이재곤](https://github.com/jaegonLee1) : 자기 맡은 역할 작성  <br>
+- [김민우](https://github.com/owni14) : 운전하기 및 탑승자 확인, 탑승하기, 아이디 및 비밀번호 찾기, 운전자 등록, 카카오 지도 API <br>
+- [김형동](https://github.com/devKimHD) : 이벤트 관리, 이벤트 당첨자 관리, 문의 관리, 완료된 문의 페이지, 관리자 메인 페이지 <br>
+- [양희원](https://github.com/yanghuiwon) : 회원관리, 신고 회원 관리, 쪽지 보내기, 등급 그래프, 관리자 메인 페이지 <br>
+- [이재곤](https://github.com/jaegonLee1) : 메인 페이지, 회원가입 및 로그인 페이지, 이벤트&혜택 페이지, 고객센터 페이지, 마이카풀 페이지, 포인트 페이지, 유저 쪽지  <br>

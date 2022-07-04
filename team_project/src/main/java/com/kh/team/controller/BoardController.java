@@ -281,7 +281,7 @@ public class BoardController {
 		MemberVo loginVo = (MemberVo) session.getAttribute("loginVo");
 		String user_id = loginVo.getM_id();
 		MessageVo messageVo = new MessageVo(user_id, "1004", user_id + "님이 승인한 탑승자 정보입니다.\n" + "탑승자 : " + m_name +"\n탑승 시간 : " + depart_time + "\n탑승 장소 : " + depart_location);
-		MessageVo messageVo2 = new MessageVo(m_id, "1004", user_id + "님이 탑승신청을 승인하엿습니다.");
+		MessageVo messageVo2 = new MessageVo(m_id, "1004", user_id + "님이 탑승신청을 승인하였습니다.");
 		messageService.insertNoBlackMessage(messageVo);
 		messageService.insertNoBlackMessage(messageVo2);
 		if (result)	{

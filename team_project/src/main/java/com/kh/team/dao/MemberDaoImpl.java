@@ -424,6 +424,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean submitDriver(String m_id) {
 		int count = sqlSession.selectOne(NAMESPACE + "submitDriver", m_id);
+		System.out.println("count:" + count);
 		if (count > 0) {
 			return true;
 		}

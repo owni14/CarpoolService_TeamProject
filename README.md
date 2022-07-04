@@ -11,7 +11,7 @@
 ## ⚙ 개발환경
 - **O/S** : Windows 10
 - **Server** : Apache Tomcat 8.5
-  - **Java EE IDE** : Eclipse (ver.4.8.0)
+- **Java EE IDE** : Eclipse (ver.4.8.0)
 - **Development platform** : Spring framework(ver.4.1.7.RELEASE), my batis(ver.3.2.8)
 - **Database** : Oracle SQL Developer (ver.21c)
 - **Programming Language** : Java, HTML, CSS, JavaScript, JSP, SQL, jQuery

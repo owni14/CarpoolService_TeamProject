@@ -119,8 +119,11 @@ $(document).ready(function() {
 					<td>${pointVo.P_SEQ}</td>
 					<td>${pointVo.PC_DESC}</td>
 					<td><c:choose>
-					<c:when test="${pointVo.PC_DESC.contains('시스템')}">
+					<c:when test="${pointVo.PC_DESC.contains('동승자 등업')}">
 					${benefitPoint }포인트
+					</c:when>
+					<c:when test="${pointVo.PC_DESC.contains('운전자 감사')}">
+					${driverBenefitPoint }포인트
 					</c:when>
 					<c:otherwise>
 					${pointVo.PC_POINT}

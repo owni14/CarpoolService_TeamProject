@@ -123,10 +123,12 @@ public class MyController {
 		}
 		
 		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
+		
 		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
 		model.addAttribute("passenger_evlVo", passengerVo);
 		model.addAttribute("pointVo", pointVo);
 		model.addAttribute("isDriver", result);
+		
 		
 		
 		return "my/driveHistroy";
@@ -164,19 +166,35 @@ public class MyController {
 		
 		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
 		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
+		Driver_EvlVo driver_EvlVo=mylogService.driver_evlListById(m_id);
+		
 		String benefitPoint=null;
+		String driverBenefitPoint=null;
 		for(BenefitCode bfc:BenefitCode.values()) {
-			if(passengerVo.getG_code().equals(bfc.getCode())) {
-				benefitPoint=bfc.getPoint();
-				break;
+			if(passengerVo != null) {
+				if(passengerVo.getG_code().equals(bfc.getCode())) {
+					benefitPoint=bfc.getPoint();
+					break;
+				}
 			}
+			
+			
+		}
+		for(BenefitCode bfc:BenefitCode.values()) {
+			if(driver_EvlVo !=null) {
+				if(driver_EvlVo.getG_code().equals(bfc.getCode())) {
+					driverBenefitPoint=bfc.getPoint();
+					break;
+				}
+			}
+			
 			
 		}
 		model.addAttribute("passenger_evlVo", passengerVo);
 		model.addAttribute("pointVo", pointVo);
 		model.addAttribute("isDriver", result);
 		model.addAttribute("benefitPoint", benefitPoint);
-		
+		model.addAttribute("driverBenefitPoint", driverBenefitPoint);
 		return "my/pointHistory";
 	}
 	

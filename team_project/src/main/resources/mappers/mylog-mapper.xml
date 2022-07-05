@@ -40,6 +40,7 @@
 		select * from passenger
         where driver_seq = #{driver_seq}
         and is_cancel = 'N'
+        and is_approve = 'Y'
         order by passenger_depart_time
 	</select>
 	

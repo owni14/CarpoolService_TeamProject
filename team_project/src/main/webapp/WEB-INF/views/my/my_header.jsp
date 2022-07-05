@@ -5,7 +5,7 @@
 <style>
 /* 나의 평점보기 css  */
 .rHeading {
-	font-size: 25px;
+	font-size: 20px;
 	margin-right: 25px;
 }
 
@@ -274,7 +274,9 @@ $(document).ready(function() {
 					<p><strong>운행 정보</strong></p>
 						<hr>
 					<div class="col-md-5">
-						<img id="driver_evlImg" alt="운전자 등급" width="200px;" height="75px;">
+						
+							<img id="driver_evlImg" width="200px;" height="75px;">
+						
 					</div>
 					<div class="col-md-7">
 						<span class="rHeading">${loginVo.m_id}</span>

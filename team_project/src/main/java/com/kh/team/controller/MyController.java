@@ -24,6 +24,7 @@ import com.kh.team.service.EvlService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
+import com.kh.team.util.BenefitCode;
 import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.CarInfoVo;
 import com.kh.team.vo.DriverVo;
@@ -48,22 +49,10 @@ public class MyController {
 	@Autowired
 	private EvlService evlService;	
 
-	
-	
-	// 탑승 내역 페이지로 이동
-	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
-	public String boardedHistory(HttpSession session, PagingDto pagingDto, Model model) {
-		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
-		if (loginVo != null) {
-			loginVo = memberService.getMemberByIdAndPw(loginVo.getM_id(), loginVo.getM_pw());
-			session.setAttribute("loginVo", loginVo);
-		}
+	public void myheader(MemberVo loginVo, HttpSession session, Model model, PagingDto pagingDto) {
 		String m_id = loginVo.getM_id();
 		pagingDto.setCount(pointService.getCountPointById(m_id));
 		pagingDto.setPage(pagingDto.getPage());
-		List<Map<String, Object>> passengerlogList = mylogService.passengerlogListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
-		model.addAttribute("passengerlogList", passengerlogList);
-		
 		boolean result = mylogService.isDriver(m_id);
 		System.out.println(result);
 		if (result) {
@@ -78,13 +67,30 @@ public class MyController {
 			model.addAttribute("driver_evlVo", vo);
 			model.addAttribute("evl_sum", sum);
 			model.addAttribute("evl_avg", avg);
+			model.addAttribute("isDriver", result);
 		}
+	}
+	
+	// 탑승 내역 페이지로 이동
+	@RequestMapping(value = "/boardedHistory", method = RequestMethod.GET)
+	public String boardedHistory(HttpSession session, Model model, PagingDto pagingDto) {
+		MemberVo loginVo =(MemberVo)session.getAttribute("loginVo");
+		if (loginVo != null) {
+			loginVo = memberService.getMemberByIdAndPw(loginVo.getM_id(), loginVo.getM_pw());
+			session.setAttribute("loginVo", loginVo);
+		}
+		String m_id = loginVo.getM_id();
+		
+		myheader(loginVo, session, model, pagingDto);
+		
+		List<Map<String, Object>> passengerlogList = mylogService.passengerlogListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
+		model.addAttribute("passengerlogList", passengerlogList);
 		
 		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
 		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
 		model.addAttribute("passenger_evlVo", passengerVo);
 		model.addAttribute("pointVo", pointVo);
-		model.addAttribute("isDriver", result);
+		
 		
 		return "my/boardedHistory";
 	}
@@ -99,34 +105,17 @@ public class MyController {
 			session.setAttribute("loginVo", loginVo);
 		}
 		String m_id = loginVo.getM_id();
-		pagingDto.setCount(pointService.getCountPointById(m_id));
-		pagingDto.setPage(pagingDto.getPage());
+		
+		myheader(loginVo, session, model, pagingDto);
+		
 		List<DriverVo> driverlogList = mylogService.driverlogListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
 		session.setAttribute("driverlogList", driverlogList);
 		
-		System.out.println(driverlogList);
-		
-		boolean result = mylogService.isDriver(m_id);
-		System.out.println(result);
-		if (result) {
-			Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
-			int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
-			double avg = 0;
-			if (vo.getEvl_count() != 0) {
-				 avg = sum / (double)vo.getEvl_count();
-			}
-			avg = Math.round(avg*100)/100.0;
-			model.addAttribute("driver_evlVo", vo);
-			model.addAttribute("evl_sum", sum);
-			model.addAttribute("evl_avg", avg);
-		}
-		
 		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
+		
 		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
 		model.addAttribute("passenger_evlVo", passengerVo);
 		model.addAttribute("pointVo", pointVo);
-		model.addAttribute("isDriver", result);
-		
 		
 		return "my/driveHistroy";
 	}
@@ -141,32 +130,40 @@ public class MyController {
 			session.setAttribute("loginVo", loginVo);
 		}
 		String m_id = loginVo.getM_id();
-		pagingDto.setCount(pointService.getCountPointById(m_id));
-		pagingDto.setPage(pagingDto.getPage());
+		
+		myheader(loginVo, session, model, pagingDto);
+		
 		List<Map<String, Object>> pointList = pointService.getPointListById(m_id, pagingDto.getStartRow(), pagingDto.getEndRow());
 		model.addAttribute("pointList", pointList);
 		
-		boolean result = mylogService.isDriver(m_id);
-		System.out.println(result);
-		if (result) {
-			Driver_EvlVo vo = mylogService.driver_evlListById(loginVo.getM_id());
-			int sum = vo.getEvl1() * 1 + vo.getEvl2() * 2 + vo.getEvl3() * 3 + vo.getEvl4() * 4 + vo.getEvl5() * 5;
-			double avg = 0;
-			if (vo.getEvl_count() != 0) {
-				 avg = sum / (double)vo.getEvl_count();
-			}
-			avg = Math.round(avg*100)/100.0;
-			model.addAttribute("driver_evlVo", vo);
-			model.addAttribute("evl_sum", sum);
-			model.addAttribute("evl_avg", avg);
-		}
-		
 		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
 		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
+		Driver_EvlVo driver_EvlVo=mylogService.driver_evlListById(m_id);
+		
+		String benefitPoint=null;
+		String driverBenefitPoint=null;
+		for(BenefitCode bfc:BenefitCode.values()) {
+			if(passengerVo != null) {
+				if(passengerVo.getG_code().equals(bfc.getCode())) {
+					benefitPoint=bfc.getPoint();
+					break;
+				}
+			}
+			
+			
+		}
+		for(BenefitCode bfc:BenefitCode.values()) {
+			if(driver_EvlVo !=null) {
+				if(driver_EvlVo.getG_code().equals(bfc.getCode())) {
+					driverBenefitPoint=bfc.getPoint();
+					break;
+				}
+			}
+		}
 		model.addAttribute("passenger_evlVo", passengerVo);
 		model.addAttribute("pointVo", pointVo);
-		model.addAttribute("isDriver", result);
-		
+		model.addAttribute("benefitPoint", benefitPoint);
+		model.addAttribute("driverBenefitPoint", driverBenefitPoint);
 		return "my/pointHistory";
 	}
 	

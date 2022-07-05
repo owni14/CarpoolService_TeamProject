@@ -118,7 +118,14 @@ $(document).ready(function() {
 				<tr>
 					<td>${pointVo.P_SEQ}</td>
 					<td>${pointVo.PC_DESC}</td>
-					<td>${pointVo.PC_POINT}</td>
+					<td><c:choose>
+					<c:when test="${pointVo.PC_DESC.contains('시스템')}">
+					${benefitPoint }포인트
+					</c:when>
+					<c:otherwise>
+					${pointVo.PC_POINT}
+					</c:otherwise>
+					</c:choose></td>
 					<td>${pointVo.P_DATE}</td>
 				</tr>
 				</c:forEach>

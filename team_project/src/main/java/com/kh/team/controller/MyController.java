@@ -24,6 +24,7 @@ import com.kh.team.service.EvlService;
 import com.kh.team.service.MemberService;
 import com.kh.team.service.MylogService;
 import com.kh.team.service.PointService;
+import com.kh.team.util.BenefitCode;
 import com.kh.team.util.FileUploadHelper;
 import com.kh.team.vo.CarInfoVo;
 import com.kh.team.vo.DriverVo;
@@ -163,9 +164,18 @@ public class MyController {
 		
 		Passenger_EvlVo passengerVo = mylogService.passenger_evlListById(m_id);
 		Map<String, Object> pointVo = mylogService.nextPoint(m_id);
+		String benefitPoint=null;
+		for(BenefitCode bfc:BenefitCode.values()) {
+			if(passengerVo.getG_code().equals(bfc.getCode())) {
+				benefitPoint=bfc.getPoint();
+				break;
+			}
+			
+		}
 		model.addAttribute("passenger_evlVo", passengerVo);
 		model.addAttribute("pointVo", pointVo);
 		model.addAttribute("isDriver", result);
+		model.addAttribute("benefitPoint", benefitPoint);
 		
 		return "my/pointHistory";
 	}

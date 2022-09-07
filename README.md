@@ -44,5 +44,5 @@
 - [Interceptor](https://github.com/owni14/team_project/tree/master/team_project/src/main/java/com/kh/team/interceptor)
 - [Service](https://github.com/owni14/team_project/tree/master/team_project/src/main/java/com/kh/team/service)
 - [Util](https://github.com/owni14/team_project/tree/master/team_project/src/main/java/com/kh/team/util)
-- [Vo](https://github.com/owni14/team_project/tree/master/team_project/src/main/java/com/kh/team/util)
+- [Vo](https://github.com/owni14/team_project/tree/master/team_project/src/main/java/com/kh/team/vo)
 - [SQL](https://github.com/owni14/team_project/tree/master/team_project/src/main/webapp/WEB-INF/sql_ddl)

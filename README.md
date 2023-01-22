@@ -46,3 +46,4 @@
 - [Util](https://github.com/owni14/team_project/tree/master/team_project/src/main/java/com/kh/team/util)
 - [Vo](https://github.com/owni14/team_project/tree/master/team_project/src/main/java/com/kh/team/vo)
 - [SQL](https://github.com/owni14/team_project/tree/master/team_project/src/main/webapp/WEB-INF/sql_ddl)
+- [PDF File](https://github.com/owni14/CarpoolService_TeamProject/blob/master/%E1%84%8F%E1%85%A1%E1%84%91%E1%85%AE%E1%86%AF_%E1%84%89%E1%85%A5%E1%84%87%E1%85%B5%E1%84%89%E1%85%B3_(%E1%84%8B%E1%85%A5%E1%86%AE%E1%84%8B%E1%85%A5%E1%84%90%E1%85%A1%E1%84%83%E1%85%A1).pdf)
